@@ -10,9 +10,8 @@
 	{!! Form::label('Password', 'Password') !!}
 	{!! Form::text(null,null, ['class'=>'form-control', 'placeholder'=>'Ingresa Contraseña']) !!}
 </div>
-</div>
 <div class="form-group">
 
 	{!! Form::label('Roles', 'Roles') !!}
 	{!! Form::select('roles_id', $roles) !!}
-</div>
+</div> 

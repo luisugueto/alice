@@ -26,17 +26,3 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
 });
-// Route::get('/', function () {
-// //     return view('auth.login');
-// // });
-// Route::get('/logout', 'LoginController@logout');
-// //URLS REST
-// Route::resource('app', 'AppController');
-// Route::resource('asistencias', 'AsistenciasController');
-// Route::resource('horarios', 'HorariosController');
-// Route::resource('usuarios', 'UsuariosController');
-// Route::resource('login', 'LoginController');
-
-// Route::get('/usuario', 'UsuariosController@index');
-
-// Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
