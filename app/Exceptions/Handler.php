@@ -44,14 +44,17 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-    {
+    {       
         if($this->isHttpException($e))
         {
             switch ($e->getStatusCode()) 
                 {
                 // not found
                 case 404:
-                return redirect()->guest('/login');
+                    return redirect()->guest('/login');
+                break;
+                case 403:
+                    return redirect()->to('/login');
                 break;
 
                 // internal error
