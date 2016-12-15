@@ -22,5 +22,12 @@
                         <i class="fa fa-power-off fa-fw">Salir
                     </a>
                 </li>
+                <li>
+                    <a href="/usuarios">
+                        <i class="fa fa-power-off fa-fw">Usuarios
+                    </a>
+                </li>
+
+                @yield('content')
 </body>
 </html>

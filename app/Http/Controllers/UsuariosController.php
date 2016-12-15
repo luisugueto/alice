@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\UsuarioRequest;
+use App\User;
+use App\Personal;
+use App\Roles;
+use Session;
+use Response;
 
 class UsuariosController extends Controller
 {
@@ -15,9 +21,14 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::paginate(5);
+        return view('usuarios.usuario', compact('user'));
     }
-
+    public function nuevo(){
+        //$roles = Roles::lists('nombre', 'id');
+        $roles = Roles::all();
+        return view('usuarios.nuevousuario', compact('roles'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -34,9 +45,18 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuarioRequest $request)
     {
-        //
+        $user = new User();
+        $user->name = $request['nombre'];
+        $user->email = $request['email'];
+        $user->password = bcrypt($request['contraseña']);
+        $user->roles_id = $request['roles'];
+        $user->remember_token = Session::token();
+        $user->save();
+        Session::flash('mensaje', 'Usuario Creado Correctamente');
+        $user = User::all();
+        return view('usuarios.usuario', compact('user'));
     }
 
     /**

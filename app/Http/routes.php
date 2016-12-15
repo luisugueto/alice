@@ -21,3 +21,6 @@ Route::resource('asistencias', 'AsistenciasController');
 Route::resource('horarios', 'HorariosController');
 Route::resource('usuarios', 'UsuariosController');
 Route::resource('login', 'LoginController');
+
+
+Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
