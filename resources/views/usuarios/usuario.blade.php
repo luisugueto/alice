@@ -35,7 +35,7 @@
                                 <tbody align="center">
                                 
                                 @foreach($user as $usuario)
-                                    @if($usuario->name != Auth::user()->name && Auth::user()->roles_id != 1)
+                                    @if($usuario->name != Auth::user()->name && $usuario->roles->id != '1')
                                     <tr>
                                         <td>{{$usuario->name}}</td>
                                         <td>{{$usuario->email}}</td>
