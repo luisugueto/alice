@@ -2,26 +2,24 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Illuminate\Support\Facades\Auth;
+use Session;
+use Closure;
 
-class RedirectIfAuthenticated
+class Administrador
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
-        }
 
+    public function handle($request, Closure $next)
+    {
+       if($request->user()->roles_id != 1)
+            abort(403, 'Acceso Denegado');
         return $next($request);
     }
 }

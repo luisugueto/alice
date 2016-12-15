@@ -24,7 +24,7 @@
                         <div class="col-md-12">
                             <hr>
                             <table class="table table-condensed table-hover">
-                                <thead align="center">
+                                <thead align="center" style="background-color: white;">
                                     <tr>
                                         <td>Nombre</td>
                                         <td>Usuario</td>

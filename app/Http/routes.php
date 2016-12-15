@@ -12,6 +12,7 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
+
     Route::auth();
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
@@ -26,3 +27,4 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
 });
+	
