@@ -33,13 +33,16 @@
                                     </tr>
                                 </thead>
                                 <tbody align="center">
+                                
                                 @foreach($user as $usuario)
+                                    @if($usuario->name != Auth::user()->name && Auth::user()->roles_id != 1)
                                     <tr>
                                         <td>{{$usuario->name}}</td>
                                         <td>{{$usuario->email}}</td>
                                         <td>{{$usuario->roles->nombre }}</td>
                                         <td>{!!link_to_route('usuarios.edit', $title = 'Editar', $parameters = $usuario->id, $attributes = ['class'=>'btn btn-primary'])!!}
                                     </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>
