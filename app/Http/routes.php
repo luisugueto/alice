@@ -16,7 +16,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
-	Route::resource('app', 'AppController');
+	#Route::resource('app', 'AppController');
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
