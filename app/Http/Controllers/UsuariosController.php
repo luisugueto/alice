@@ -11,6 +11,7 @@ use App\Personal;
 use App\Roles;
 use Session;
 use Response;
+use Redirect;
 
 class UsuariosController extends Controller
 {
@@ -78,7 +79,9 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = Roles::lists('nombre', 'id');
+        return view('usuarios.edit', ['user'=>$user, 'roles'=>$roles]);
     }
 
     /**
@@ -90,7 +93,12 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+        Session::flash('message', 'Usuario Editado Correctamente');
+
+        return redirect::to('/usuarios');
     }
 
     /**
@@ -101,6 +109,9 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        Session::flash('message', 'Usuario Eliminado Correctamente');
+
+        return redirect::to('/usuarios');
     }
 }

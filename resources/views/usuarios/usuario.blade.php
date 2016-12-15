@@ -15,25 +15,11 @@
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     Nuevo</button>
                             </div>
-                            <div class="col-md-6 text-right">
-                                    <div class="form-inline">
-                                        <h4 class="buscar">Buscar</h4>
-                                        <div class="form-group">
-                                           <div class="input-group col-md-12">
-                                                <input class="form-control input-sm" placeholder="" type="text" pattern="[A-Z0-9\-]{8,32}" title="Este código sólo puede contener letras mayúsculas, dígitos o guiones." />
-                                            </div>
-                                        </div>
-                                        <span class="fa-stack fa-lg">
-                                          <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                          <i class="fa fa-search fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </div>
-                            </div>
                         </div>
                         <div class="col-md-12">
                             <hr>
                             <table class="table table-condensed table-hover">
-                                <thead>
+                                <thead align="center">
                                     <tr>
                                         <td>Nombre</td>
                                         <td>Usuario</td>
@@ -47,7 +33,7 @@
                                         <td>{{$usuario->name}}</td>
                                         <td>{{$usuario->email}}</td>
                                         <td>{{$usuario->roles->nombre }}</td>
-                                        <td>X</td>
+                                        <td>{!!link_to_route('usuarios.edit', $title = 'Editar', $parameters = $usuario->id, $attributes = ['class'=>'btn btn-primary'])!!}
                                     </tr>
                                 @endforeach
                                 </tbody>
