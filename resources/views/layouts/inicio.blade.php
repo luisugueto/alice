@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" ng-app="mainApp">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,7 +17,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css"> -->
 
 </head>
-<body role="document" ng-app="appVS">
+<body role="document">
     <div class="page-header col-md-12">
         <div class="logo"></div>
         <h1><strong>Proyecto Alice</strong></h1>
@@ -39,7 +39,6 @@
                 </li>
 
                 @yield('content')
-    <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
