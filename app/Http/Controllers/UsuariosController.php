@@ -94,7 +94,12 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
          $user = User::find($id);
-        $user->fill($request->all());
+         $user->name = $request['name'];
+         $user->email = $request['email'];
+         $user->password = $request['password'];
+         $user->roles_id = $request['roles_id'];
+         
+        #$user->fill($request->all());
         $user->save();
         Session::flash('message', 'Usuario Editado Correctamente');
 
