@@ -40,18 +40,18 @@ class LoginController extends Controller
         if(Auth::check())
         {
             Session::flash('message-error', 'Usuario ya conectado.');
-            return Redirect::to('/app');
+            return Redirect::to('/home');
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
-            return Redirect::to('/app');
+            return Redirect::to('/home');
         }
         Session::flash('message-error', 'Datos incorrectos');
         return Redirect::to('/');
     }
     public function logout(){
         Auth::logout();
-        return Redirect::to('/');
+        return Redirect::to('/login');
     }
     /**
      * Display the specified resource.

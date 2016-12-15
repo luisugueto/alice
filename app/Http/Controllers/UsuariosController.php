@@ -57,7 +57,7 @@ class UsuariosController extends Controller
         $user->save();
         Session::flash('mensaje', 'Usuario Creado Correctamente');
         $user = User::all();
-        return view('usuarios.usuario', compact('user'));
+        return Redirect::to('usuarios.usuario', compact('user'));
     }
 
     /**

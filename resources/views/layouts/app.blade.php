@@ -39,7 +39,7 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('layouts.partials.contentheader')
+        <!-- @include('layouts.partials.contentheader') -->
 
         <!-- Main content -->
         <section class="content">
@@ -50,10 +50,10 @@ desired effect
 
     @include('layouts.partials.controlsidebar')
 
-    @include('layouts.partials.footer')
+   
 
 </div><!-- ./wrapper -->
-
+ @include('layouts.partials.footer')
 @section('scripts')
     @include('layouts.partials.scripts')
 @show

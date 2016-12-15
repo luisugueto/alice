@@ -35,4 +35,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function usuarios()
+    {
+        return view('usuarios.usuario');
+    }
+
 }

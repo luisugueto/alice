@@ -1,7 +1,12 @@
-@extends('layouts.inicio')
+@extends('layouts.app')
 
-@section('content')
-                    <div class="col-md-12">
+@section('htmlheader_title')
+    Home
+@endsection
+
+
+@section('main-content')                    
+<div class="col-md-12">
 
                         <h2 class="titulo">
                             Usuarios
