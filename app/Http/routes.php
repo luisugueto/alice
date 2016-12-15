@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.index');
 });
+Route::get('/logout', 'LoginController@logout');
+//URLS REST
+Route::resource('app', 'AppController');
+Route::resource('asistencias', 'AsistenciasController');
+Route::resource('horarios', 'HorariosController');
+Route::resource('usuarios', 'UsuariosController');
+Route::resource('login', 'LoginController');
