@@ -14,6 +14,7 @@ use App\Http\Requests\PersonalRequest;
 use Session;
 use Response;
 use Redirect;
+use DB;
 
 class PersonalController extends Controller
 {
@@ -73,8 +74,10 @@ class PersonalController extends Controller
         $per->correo = $request['correo'];
         $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
-        $per->id_tipo = $request['id_tipo'];
-        $per->clave = $request['clave'];
+        $per->id_tipo = $request['tipo_registro'];
+        if($request['seleccionar']=='on'){
+            $per->clave = $request['clave'];
+        }else $per->clave = '';
         $per->save();
 
         $per = Personal::where('correo', $request['correo'])
@@ -107,13 +110,14 @@ class PersonalController extends Controller
         $ren->devolver_fondos = $request['devolverFondos'];
         $ren->save();
 
-
-        $user = new User();
-        $user->name = $request['nombres'];
-        $user->email = $request['correo'];
-        $user->password = bcrypt($request['clave']);
-        $user->roles_id = '3';
-        $user->save();
+        if($request['seleccionar']=='on'){
+            $user = new User();
+            $user->name = $request['nombres'];
+            $user->email = $request['correo'];
+            $user->password = bcrypt($request['clave']);
+            $user->roles_id = '3';
+            $user->save();
+        }
 
         return Redirect::to('personal.personal');
     }
@@ -140,6 +144,7 @@ class PersonalController extends Controller
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
         $personal = Personal::find($id);
+
         return view('personal.edit', compact('cargo', 'tipo', 'personal'));
     }
 

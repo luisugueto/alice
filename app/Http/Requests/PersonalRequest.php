@@ -24,22 +24,21 @@ class PersonalRequest extends Request
     public function rules()
     {
         return [
-            'codigo' => 'required|unique:datos_generales_personal',
+            'codigo_pesonal' => 'required|unique:datos_generales_personal',
             'nombres' => 'required',
-            'apellidop' => 'required',
-            'apellidom' => 'required',
+            'apellido_paterno' => 'required',
             'cedula' => 'required|unique:datos_generales_personal',
-            'nacimiento' => 'required',
-            'ingreso' => 'required',
+            'fecha_nacimiento' => 'required',
+            'fecha_ingreso' => 'required',
             'edad' => 'required',
-            'sexo' => 'required',
-            'ecivil' => 'required',
-            'eactual' => 'required',
-            'tiporeg' => 'required',
+            'genero' => 'required',
+            'edo_civil' => 'required',
+            'estado_actual' => 'required',
+            'tipo_registro' => 'required',
             'especialidad' => 'required',
             'telefono' => 'required',
-            'cargo' => 'required',
-            'clave' => 'required',
+            'id_cargo' => 'required',
+            'correo' => 'required|unique:datos_generales_personal'
         ];
     }
 }

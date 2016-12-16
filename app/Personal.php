@@ -34,4 +34,15 @@ class Personal extends Model
     {
         return $this->belongsToMany('App\Tipo', 'id_tipo');
     }
+
+    public function informacionAcademica()
+    {
+        return $this->hasOne('App\InformacionAcademica', 'id');
+    }
+
+    public function remuneracion()
+    {
+        return $this->hasOne('App\Remuneracion', 'id');
+    }
+    
 }

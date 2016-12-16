@@ -12,7 +12,8 @@
     <section class="content">
     <div class="row">
       <div class="col-md-14">
-          <form action="{{ route('personal.store') }}" method="POST">
+          <form action="{{ route('personal.store') }}" method="POST" id="f1" name="f1">
+          {{ csrf_field() }}
             <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                     <ul class="nav nav-tabs">

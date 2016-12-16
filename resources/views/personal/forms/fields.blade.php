@@ -75,8 +75,12 @@
 				{!! Form::select('id_cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
+				<input type="checkbox" id="seleccionar" name="seleccionar" onclick="verificar()">
+				{!! Form::label('clave', 'Habilitar Usuario') !!}
+			</div>
+			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
 				{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small>
-				{!! Form::text('clave', null, ['class' => 'form-control', 'title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
+				{!! Form::text('clave', null, ['class' => 'form-control', 'id' => 'clave', 'disabled' => 'true','title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
 			</div>
 		</div>
 		<div class="col-md-12 text-center">
@@ -174,4 +178,22 @@
 			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
 		</div>
 	</div>
+
+<script type="text/javascript">
+	function verificar(){ 
+		for (i=0;i<document.f1.elements.length;i++) 
+			if(document.f1.elements[i].type == "checkbox") 
+				if(document.f1.seleccionar.checked == 1){
+					document.f1.elements[i].checked=1;
+					document.getElementById('clave').disabled = false;
+					document.getElementById('clave').required = true;
+				}
+				else if(document.f1.seleccionar.checked == 0){
+					document.f1.elements[i].checked=0;
+					document.getElementById('clave').disabled = true;
+					document.getElementById('clave').required = false;
+				}
+	}
+</script>
+
 </div>
