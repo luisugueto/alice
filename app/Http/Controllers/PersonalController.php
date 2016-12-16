@@ -10,6 +10,7 @@ use App\Remuneracion;
 use App\Cargo;
 use App\Tipo;
 use App\Http\Requests;
+use App\Http\Requests\PersonalRequest;
 use Session;
 use Response;
 use Redirect;
@@ -51,7 +52,7 @@ class PersonalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonalRequest $request)
     {
         $per = new Personal();
         $per->codigo_pesonal = $request['codigo'];

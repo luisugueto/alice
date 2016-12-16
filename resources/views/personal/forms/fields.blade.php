@@ -7,7 +7,6 @@
 			</div>
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-
 				<div class="form-group">
 					{!! Form::text('cedula', null, ['class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
 				</div>

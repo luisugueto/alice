@@ -26,10 +26,7 @@
                     <div class="tab-content">
                       @include('personal.forms.fields')
                     </div>
-                      <input type="hidden" name="_token" value="{{ CSRF_TOKEN()}}">
-
-              
-                        
+                      <input type="hidden" name="_token" value="{{ CSRF_TOKEN()}}">                        
                                               
                         <div align="center">
                             <div class="form-group">
