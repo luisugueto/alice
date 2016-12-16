@@ -55,25 +55,25 @@ class PersonalController extends Controller
     public function store(PersonalRequest $request)
     {
         $per = new Personal();
-        $per->codigo_pesonal = $request['codigo'];
+        $per->codigo_pesonal = $request['codigo_pesonal'];
         $per->nombres = $request['nombres'];
-        $per->apellido_paterno = $request['apellidop'];
-        $per->apellido_materno = $request['apellidom'];
+        $per->apellido_paterno = $request['apellido_paterno'];
+        $per->apellido_materno = $request['apellido_materno'];
         $per->cedula = $request['cedula'];
-        $per->fecha_nacimiento = $request['nacimiento'];
-        $per->fecha_ingreso = $request['ingreso'];
+        $per->fecha_nacimiento = $request['fecha_nacimiento'];
+        $per->fecha_ingreso = $request['fecha_ingreso'];
         $per->edad = $request['edad'];
-        $per->genero = $request['sexo'];
-        $per->edo_civil = $request['ecivil'];
-        $per->estado_actual = $request['eactual'];
-        $per->tipo_registro = $request['tiporeg'];
+        $per->genero = $request['genero'];
+        $per->edo_civil = $request['edo_civil'];
+        $per->estado_actual = $request['estado_actual'];
+        $per->tipo_registro = $request['tipo_registro'];
         $per->especialidad = $request['especialidad'];
         $per->direccion = $request['direccion'];
         $per->telefono = $request['telefono'];
         $per->correo = $request['correo'];
-        $per->id_cargo = $request['cargo'];
+        $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
-        $per->id_tipo = $request['tiporeg'];
+        $per->id_tipo = $request['id_tipo'];
         $per->clave = $request['clave'];
         $per->save();
 
@@ -137,7 +137,10 @@ class PersonalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cargo = Cargo::lists('nombre', 'id');
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+        $personal = Personal::find($id);
+        return view('personal.edit', compact('cargo', 'tipo', 'personal'));
     }
 
     /**
@@ -149,7 +152,12 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $per = Personal::find($id);
+        $per->fill($request->all());
+        $per->save();
+        Session::put('message', 'Usuario Editado Correctamente');
+
+        return redirect::to('/personal');
     }
 
     /**
@@ -160,6 +168,10 @@ class PersonalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Personal::destroy($id);
+        InformacionAcademica::where('id_personal', $id)->delete();
+        Session::put('message', 'Personal Eliminado Correctamente');
+
+        return redirect::to('/personal');
     }
 }

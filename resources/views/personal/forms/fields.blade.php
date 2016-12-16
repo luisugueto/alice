@@ -3,7 +3,7 @@
 		<div class="col-md-6">
 			<div class="form-group{{ $errors->has('codigo') ? ' has-error' : '' }}">
 				{!! Form::label('codigo', 'Código Personal') !!} <small class="text-red">*</small>
-				{!! Form::text('codigo', null, ['class' => 'form-control', 'title' => 'Introduzca el codigo del personal', 'placeholder' => 'Ejm: 1189124']) !!}
+				{!! Form::text('codigo_pesonal', null, ['class' => 'form-control', 'title' => 'Introduzca el codigo del personal', 'placeholder' => 'Ejm: 1189124']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
@@ -11,13 +11,13 @@
 					{!! Form::text('cedula', null, ['class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
 				</div>
 			</div>
-			<div class="form-group{{ $errors->has('apellidop') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
 				{!! Form::label('apellidop', 'Apellido paterno') !!} <small class="text-red">*</small>
-				{!! Form::text('apellidop', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido paterno del personal', 'placeholder' => 'Ejm: Matute']) !!}
+				{!! Form::text('apellido_paterno', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido paterno del personal', 'placeholder' => 'Ejm: Matute']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('apellidom') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('apellido_materno') ? ' has-error' : '' }}">
 				{!! Form::label('apellidom', 'Apellido Materno') !!} <small class="text-red">*</small>
-				{!! Form::text('apellidom', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido materno del personal', 'placeholder' => 'Ejm: Matute']) !!}
+				{!! Form::text('apellido_materno', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido materno del personal', 'placeholder' => 'Ejm: Matute']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('nombres') ? ' has-error' : '' }}">
 				{!! Form::label('nombres', 'Nombres') !!} <small class="text-red">*</small>
@@ -27,32 +27,32 @@
 				{!! Form::label('nacimiento', 'Edad') !!} <small class="text-red">*</small>
 				{!! Form::text('edad', null, ['class' => 'form-control', 'title' => 'Introduzca la edad del personal', 'placeholder' => 'Ejm: ']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('nacimiento') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Fecha nacimiento') !!} <small class="text-red">*</small>
-				{!! Form::date('nacimiento', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de nacimiento del personal', 'placeholder' => 'Ejm: ']) !!}
+				{!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de nacimiento del personal', 'placeholder' => 'Ejm: ']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('ingreso') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('fecha_ingreso') ? ' has-error' : '' }}">
 				{!! Form::label('ingreso', 'Fecha ingreso') !!} <small class="text-red">*</small>
-				{!! Form::date('ingreso', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de ingreso del personal', 'placeholder' => 'Ejm: ']) !!}
+				{!! Form::date('fecha_ingreso', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de ingreso del personal', 'placeholder' => 'Ejm: ']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('sexo') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('genero') ? ' has-error' : '' }}">
 				{!! Form::label('sexo', 'Género') !!} <small class="text-red">*</small>
-				{!! Form::select('sexo', array('M' => 'Masculino', 'F' => 'Femenino'), null, ['class' => 'form-control', 'title' => 'Introduzca el sexo del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
+				{!! Form::select('genero', array('M' => 'Masculino', 'F' => 'Femenino'), null, ['class' => 'form-control', 'title' => 'Introduzca el Género del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="form-group{{ $errors->has('ecivil') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('edo_civil') ? ' has-error' : '' }}">
 				{!! Form::label('ecivil', 'Estado Civil') !!} <small class="text-red">*</small>
-				{!! Form::select('ecivil', array('casado' => 'Casado', 'viudo' => 'Viudo', 'soltero' => 'Soltero'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Civil del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
+				{!! Form::select('edo_civil', array('casado' => 'Casado', 'viudo' => 'Viudo', 'soltero' => 'Soltero'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Civil del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('eactual') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('estado_actual') ? ' has-error' : '' }}">
 				{!! Form::label('eactual', 'Estado Actual') !!} <small class="text-red">*</small>
-				{!! Form::select('eactual', array('casado' => 'Casado', 'viudo' => 'Viudo', 'soltero' => 'Soltero'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Actual del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
+				{!! Form::select('estado_actual', array('casado' => 'Casado', 'viudo' => 'Viudo', 'soltero' => 'Soltero'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Actual del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
 			</div>
 
-			<div class="form-group{{ $errors->has('tiporeg') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
 				{!! Form::label('tiporeg', 'Tipo de Registro') !!} <small class="text-red">*</small>
-				{!! Form::select('tiporeg',$tipo, null, ['class' => 'form-control', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">
 				{!! Form::label('especialidad', 'Especialidad') !!} <small class="text-red">*</small>
@@ -72,7 +72,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('cargo') ? ' has-error' : '' }}">
 				{!! Form::label('cargo', 'Cargo') !!} <small class="text-red">*</small>
-				{!! Form::select('cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
+				{!! Form::select('id_cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
 				{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small>

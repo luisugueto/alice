@@ -40,10 +40,9 @@
                                         <td>Nombres</td>
                                         <td>Apellidos</td>
                                         <td>Cedula</td>
-                                        <td>Correo</td>
                                         <td>Cargo</td>
-                                        <td>Especialidad</td>
                                         <td>Fecha Ingreso</td>
+                                        <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
@@ -53,10 +52,9 @@
                                         <td>{{$per->nombres}}</td>
                                         <td>{{$per->apellido_paterno}} {{ $per->apellido_materno }}</td>
                                         <td>{{$per->cedula}}</td>
-                                        <td>{{$per->correo}}</td>
                                         <td>{{$per->cargo->nombre}}</td>
-                                        <td>{{$per->especialidad}}</td>
-                                        <td>{{$per->fecha_ingreso}}</td>                                    
+                                        <td>{{$per->fecha_ingreso}}</td>      
+                                        <td>{!!link_to_route('personal.edit', $title = 'Editar', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>
