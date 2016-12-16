@@ -52,7 +52,7 @@
 
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
 				{!! Form::label('tiporeg', 'Tipo de Registro') !!} <small class="text-red">*</small>
-				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'id' =>'tipoRegistro', 'onChange' => 'validarTipo()', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">
 				{!! Form::label('especialidad', 'Especialidad') !!} <small class="text-red">*</small>
@@ -74,6 +74,7 @@
 				{!! Form::label('cargo', 'Cargo') !!} <small class="text-red">*</small>
 				{!! Form::select('id_cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
 			</div>
+		<div id="registroUser" >
 			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
 				<input type="checkbox" id="seleccionar" name="seleccionar" onclick="verificar()">
 				{!! Form::label('clave', 'Habilitar Usuario') !!}
@@ -82,6 +83,7 @@
 				{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small>
 				{!! Form::text('clave', null, ['class' => 'form-control', 'id' => 'clave', 'disabled' => 'true','title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
 			</div>
+		</div>
 		</div>
 		<div class="col-md-12 text-center">
 			<hr>
@@ -193,6 +195,13 @@
 					document.getElementById('clave').disabled = true;
 					document.getElementById('clave').required = false;
 				}
+	}
+
+	function validarTipo(){
+		if($('#tipoRegistro').val() == 3){
+			$('#registroUser').css('display', 'none');
+		}else $('#registroUser').css('display', '');
+
 	}
 </script>
 

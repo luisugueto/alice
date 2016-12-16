@@ -6,7 +6,8 @@
 @endsection
 
 
-@section('main-content')                    
+@section('main-content')           
+  @include('alerts.errors')         
             <div class="col-md-12">
     <section class="content">
     <div class="row">
