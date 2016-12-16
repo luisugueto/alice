@@ -21,7 +21,7 @@
                       <li class="li"><a data-toggle="tab" href="#remuneracion">Remuneración</a></li>
                       <li class="li"><a data-toggle="tab" href="#familiares">Datos Familiares</a></li>
                       <li class="li"><a data-toggle="tab" href="#laboral">Historial Laboral Interno</a></li>
-                      <li class="li"><a data-toggle="tab" href="#file">File Personal</a></li>
+                      <li class="li"><a data-toggle="tab" href="#file">Archivo Personal</a></li>
                       <li class="li"><a data-toggle="tab" href="#anticipos">Anticipos</a></li>
                       <li class="li"><a data-toggle="tab" href="#permisos">Permisos</a></li>
                       <li class="li"><a data-toggle="tab" href="#digitales">Digitales</a></li>
@@ -31,7 +31,31 @@
                     <div class="tab-content">
                       <div id="generales" class="tab-pane fade in active">
                         <h3>Datos Generales</h3><br>
-                        Codigo Personal: <input type="text" required class="form-control">
+                        <table class="table">
+                          <tr>
+                            <th>Codigo Personal: </th>
+                            <td><input type="text" required class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <th>Nombres: </th>
+                            <td><input type="text" required class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <th>Apellidos: </th>
+                            <td><input type="text" required class="form-control"></td>
+                          </tr>
+                          <tr>
+                            <th>Nº de Cédula de Id.: </th>
+                            <td><input type="text" required class="form-control"></td>
+                          </tr>
+                          <tr colspan="2">
+                            <th>Fecha de Nacimiento: </th>
+                            <td><input type="text" required class="form-control"></td>
+                            <th>Fecha de Ingreso: </th>
+                            <td><input type="text" required class="form-control"></td>
+                          </tr>
+                        </table>
+
                       </div>
                       <div id="medicos" class="tab-pane fade">
                         <h3>Datos Médicos</h3>
@@ -54,7 +78,7 @@
                           <input type="text" required>
                       </div>
                       <div id="file" class="tab-pane fade">
-                          <h3>File Personal</h3>
+                          <h3>Archivo Personal</h3>
                           <input type="text" required>
                       </div>
                       <div id="anticipos" class="tab-pane fade">
