@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use Session;
-use Redirect;
+
 use App\Http\Requests;
-use App\Http\Requests\LoginRequest;
-use App\Http\Controllers\Controller;
-class LoginController extends Controller
+
+class PersonalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +15,14 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
+        return view('personal.personal');
     }
+
+    public function nuevo()
+    {
+        return view('personal.nuevopersonal');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,30 +32,18 @@ class LoginController extends Controller
     {
         //
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-        if(Auth::check())
-        {
-            Session::flash('message-error', 'Usuario ya conectado.');
-            return Redirect::to('/home');
-        }
-        if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
-        {
-            return Redirect::to('/home');
-        }
-        Session::flash('message-error', 'Datos incorrectos');
-        return Redirect::to('/');
+        //
     }
-    public function logout(){
-        Auth::logout();
-        return Redirect::to('/login');
-    }
+
     /**
      * Display the specified resource.
      *
@@ -63,6 +54,7 @@ class LoginController extends Controller
     {
         //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -73,6 +65,7 @@ class LoginController extends Controller
     {
         //
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -84,6 +77,7 @@ class LoginController extends Controller
     {
         //
     }
+
     /**
      * Remove the specified resource from storage.
      *
