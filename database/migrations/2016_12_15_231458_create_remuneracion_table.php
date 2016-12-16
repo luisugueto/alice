@@ -14,6 +14,8 @@ class CreateRemuneracionTable extends Migration
     {
         Schema::create('remuneracion', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_personal')->unsigned();
+            $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('Cascade');
             $table->double('sueldo_1era_quincena', 10,2);
             $table->double('sueldo_2da_quincena', 10,2);
             $table->double('sueldo_mens', 10,2);

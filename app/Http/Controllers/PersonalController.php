@@ -98,6 +98,7 @@ class PersonalController extends Controller
         $ina->save();
 
         $ren = new Remuneracion();
+        $ren->id_personal = $id;
         $ren->sueldo_1era_quincena = $request['prQuincena'];
         $ren->sueldo_2da_quincena = $request['seQuincena'];
         $ren->sueldo_mens  = $request['sueldoMensual'];
