@@ -13,7 +13,7 @@ class CreateInformacionAcademicaTable extends Migration
     public function up()
     {
         Schema::create('informacion_academica', function (Blueprint $table) {
-            $table->increment('id');
+            $table->increments('id');
             $table->integer('id_personal')->unsigned();
             $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('Cascade');
             $table->string('primaria', 55);

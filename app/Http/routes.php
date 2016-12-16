@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
@@ -21,10 +20,12 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
+	Route::resource('personal', 'PersonalController');
 	Route::resource('login', 'LoginController');
 
 	Route::get('/usuario', 'UsuariosController@index');
 
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
+	Route::get('/nuevo_personal', 'PersonalController@nuevo');
 });
 	

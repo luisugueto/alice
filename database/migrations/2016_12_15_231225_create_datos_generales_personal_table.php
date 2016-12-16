@@ -13,7 +13,7 @@ class CreateDatosGeneralesPersonalTable extends Migration
     public function up()
     {
         Schema::create('datos_generales_personal', function (Blueprint $table) {
-            $table->inrements('id');
+            $table->increments('id');
             $table->string('codigo_pesonal', 25);
             $table->string('apellido_paterno', 25);
             $table->string('apellido_materno', 25);
@@ -35,7 +35,7 @@ class CreateDatosGeneralesPersonalTable extends Migration
             $table->string('clave', 15);
             $table->string('ingreso_notas', 2);
             $table->integer('id_tipo')->unsigned();
-            $tabñe->foreign('id_tipo')->references('id')->on('tipo_empleado');
+            $table->foreign('id_tipo')->references('id')->on('tipo_empleado');
             $table->timestamps();
         });
     }
