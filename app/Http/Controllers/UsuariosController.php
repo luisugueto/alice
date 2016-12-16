@@ -58,7 +58,7 @@ class UsuariosController extends Controller
         $user->roles_id = $request['roles'];
         $user->remember_token = Session::token();
         $user->save();
-        Session::flash('mensaje', 'Usuario Creado Correctamente');
+        Session::put('message', 'Usuario Creado Correctamente');
         $user = User::all();
         return Redirect::to('usuarios.usuario', compact('user'));
     }
@@ -104,7 +104,7 @@ class UsuariosController extends Controller
          
         #$user->fill($request->all());
         $user->save();
-        Session::flash('message', 'Usuario Editado Correctamente');
+        Session::put('message', 'Usuario Editado Correctamente');
 
         return redirect::to('/usuarios');
     }
@@ -118,7 +118,7 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        Session::flash('message', 'Usuario Eliminado Correctamente');
+        Session::put('message', 'Usuario Eliminado Correctamente');
 
         return redirect::to('/usuarios');
     }

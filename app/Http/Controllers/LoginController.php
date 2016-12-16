@@ -44,6 +44,7 @@ class LoginController extends Controller
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
+            Session::put('message', 'Hola');
             return Redirect::to('/home');
         }
         Session::flash('message-error', 'Datos incorrectos');
