@@ -173,7 +173,7 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
         $per = Personal::find($id);
-        $per->fill(strtoupper($request->all()));
+        $per->fill($request->all());
         $per->save();
         Session::put('message', 'Usuario Editado Correctamente');
 
