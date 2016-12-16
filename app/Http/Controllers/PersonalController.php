@@ -110,6 +110,7 @@ class PersonalController extends Controller
         $user->name = $request['nombres'];
         $user->email = $request['correo'];
         $user->password = bcrypt($request['clave']);
+        $user->roles_id = '3';
         $user->save();
 
         return Redirect::to('personal.personal');
