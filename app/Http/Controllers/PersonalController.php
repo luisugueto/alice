@@ -15,6 +15,7 @@ use Session;
 use Response;
 use Redirect;
 use DB;
+use PDO;
 
 class PersonalController extends Controller
 {
@@ -57,21 +58,21 @@ class PersonalController extends Controller
     {
         $per = new Personal();
         $per->codigo_pesonal = $request['codigo_pesonal'];
-        $per->nombres = $request['nombres'];
-        $per->apellido_paterno = $request['apellido_paterno'];
-        $per->apellido_materno = $request['apellido_materno'];
+        $per->nombres = strtoupper($request['nombres']);
+        $per->apellido_paterno = strtoupper($request['apellido_paterno']);
+        $per->apellido_materno = strtoupper($request['apellido_materno']);
         $per->cedula = $request['cedula'];
         $per->fecha_nacimiento = $request['fecha_nacimiento'];
         $per->fecha_ingreso = $request['fecha_ingreso'];
         $per->edad = $request['edad'];
-        $per->genero = $request['genero'];
+        $per->genero = strtoupper($request['genero']);
         $per->edo_civil = $request['edo_civil'];
         $per->estado_actual = $request['estado_actual'];
         $per->tipo_registro = $request['tipo_registro'];
-        $per->especialidad = $request['especialidad'];
-        $per->direccion = $request['direccion'];
+        $per->especialidad = strtoupper($request['especialidad']);
+        $per->direccion = strtoupper($request['direccion']);
         $per->telefono = $request['telefono'];
-        $per->correo = $request['correo'];
+        $per->correo = strtolower($request['correo']);
         $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
         $per->id_tipo = $request['tipo_registro'];
@@ -89,12 +90,12 @@ class PersonalController extends Controller
         
         $ina = new InformacionAcademica();
         $ina->id_personal = $id;
-        $ina->primaria = $request['primaria'];
-        $ina->secundaria = $request['secundaria'];
-        $ina->superior = $request['superi'];
-        $ina->titulo = $request['titulos'];
-        $ina->cursos = $request['cursos'];
-        $ina->historial_laboral = $request['historia'];
+        $ina->primaria = strtoupper($request['primaria']);
+        $ina->secundaria = strtoupper($request['secundaria']);
+        $ina->superior = strtoupper($request['superi']);
+        $ina->titulo = strtoupper($request['titulos']);
+        $ina->cursos = strtoupper($request['cursos']);
+        $ina->historial_laboral = strtoupper($request['historia']);
         $ina->save();
 
         $ren = new Remuneracion();
@@ -113,8 +114,8 @@ class PersonalController extends Controller
 
         if($request['seleccionar']=='on'){
             $user = new User();
-            $user->name = $request['nombres'];
-            $user->email = $request['correo'];
+            $user->name = strtoupper($request['nombres']);
+            $user->email = strtolower($request['correo']);
             $user->password = bcrypt($request['clave']);
             $user->roles_id = '3';
             $user->save();
@@ -142,6 +143,19 @@ class PersonalController extends Controller
      */
     public function edit($id)
     {
+        // DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
+        // $persona = DB::table('datos_generales_personal')
+        // ->join('informacion_academica', function($join)
+        // {
+        //     $join->on('datos_generales_personal.id', '=', 'informacion_academica.id_personal')
+        //          ->where('informacion_academica.id_personal', '=', 1);
+        // })
+        // ->get();
+
+        
+        // $prueba = array($persona);
+        // return $prueba->id;
+
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
         $personal = Personal::find($id);
@@ -159,7 +173,7 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
         $per = Personal::find($id);
-        $per->fill($request->all());
+        $per->fill(strtoupper($request->all()));
         $per->save();
         Session::put('message', 'Usuario Editado Correctamente');
 

@@ -11,6 +11,7 @@
     @include('alerts.request')
     <section class="content">
     <div class="row">
+
       <div class="col-md-14">
           {!!Form::model($personal, ['route'=>['personal.update', $personal->id], 'method'=>'PUT', 'files'=>false])!!}
             <div class="nav-tabs-custom">

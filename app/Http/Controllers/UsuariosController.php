@@ -52,8 +52,8 @@ class UsuariosController extends Controller
     public function store(UsuarioRequest $request)
     {
         $user = new User();
-        $user->name = $request['nombre'];
-        $user->email = $request['email'];
+        $user->name = strtoupper($request['nombre']);
+        $user->email = strtolower($request['email']);
         $user->password = bcrypt($request['contraseña']);
         $user->roles_id = $request['roles'];
         $user->remember_token = Session::token();
@@ -97,8 +97,8 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
          $user = User::find($id);
-         $user->name = $request['name'];
-         $user->email = $request['email'];
+         $user->name = strtoupper($request['name']);
+         $user->email = strtolower($request['email']);
          $user->password = $request['password'];
          $user->roles_id = $request['roles_id'];
          
