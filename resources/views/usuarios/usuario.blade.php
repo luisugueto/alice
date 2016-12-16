@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('contentheader_title', 'Usuarios')
 
 @section('htmlheader_title')
     Usuarios
@@ -16,32 +17,30 @@
         </div>
     @endif
     @include('alerts.errors')
-
-                        <h2 class="titulo">
-                            Usuarios
-                            <br><small>Datos de los usuarios.</small>
-                        </h2>
-                        <hr>
-
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary" title="Registrar personal" onclick="window.location.href = '{{ URL::to('/nuevo_usuario') }}'";>
+    <div class="col-md-14">
+    <button class="btn btn-primary" title="Registrar personal" onclick="window.location.href = '{{ URL::to('/nuevo_usuario') }}'";>
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     Nuevo</button>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <hr>
-                            <table class="table table-condensed table-hover">
-                                <thead align="center" style="background-color: white;">
-                                    <tr>
+    </div>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-14">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Tabla</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
                                         <td>Nombre</td>
                                         <td>Usuario</td>
                                         <td>Rol</td>
                                         <td>Acción</td>
                                     </tr>
-                                </thead>
-                                <tbody align="center">
+                            </thead>
+                            <tbody align="center">
                                 
                                 @foreach($user as $usuario)
                                     <tr>
@@ -51,13 +50,9 @@
                                         <td>{!!link_to_route('usuarios.edit', $title = 'Editar', $parameters = $usuario->id, $attributes = ['class'=>'btn btn-primary'])!!}
                                     </tr>
                                 @endforeach
-                                </tbody>
-                            </table>
-                             <nav>
-                              <ul class="pagination">
-                                <li>{{ $user->links() }}
-                              </ul>
-                            </nav>
+                            </tbody>
+                        </table>
+    
                         </div>
                     </div>
 @stop

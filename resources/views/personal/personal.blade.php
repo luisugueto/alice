@@ -4,6 +4,8 @@
     Personal
 @endsection
 
+@section('contentheader_title', 'Personal')
+
 
 @section('main-content')                    
 <div class="col-md-12">
@@ -16,25 +18,25 @@
         </div>
     @endif
     @include('alerts.errors')
-
-                        <h2 class="titulo">
-                            Personal
-                            <br><small>Datos del personal.</small>
-                        </h2>
-                        <hr>
-
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <button class="btn btn-primary" title="Registrar personal" onclick="window.location.href = '{{ URL::to('/nuevo_personal') }}'";>
+    
+    <div class="col-md-14">
+            <button class="btn btn-primary" title="Registrar personal" onclick="window.location.href = '{{ URL::to('/nuevo_personal') }}'";>
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     Nuevo</button>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <hr>
-                            <table class="table table-condensed table-hover">
-                                <thead align="center" style="background-color: white;">
-                                    <tr>
+    </div>
+    
+    <section class="content">
+        <div class="row">
+            <div class="col-md-14">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Tabla</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
                                         <td>Nombres</td>
                                         <td>Apellidos</td>
                                         <td>Cedula</td>
@@ -43,8 +45,8 @@
                                         <td>Especialidad</td>
                                         <td>Fecha Ingreso</td>
                                     </tr>
-                                </thead>
-                                <tbody align="center">
+                            </thead>
+                            <tbody align="center">
                                 
                                 @foreach($personal as $per)
                                     <tr>
@@ -57,13 +59,9 @@
                                         <td>{{$per->fecha_ingreso}}</td>                                    
                                     </tr>
                                 @endforeach
-                                </tbody>
-                            </table>
-                             <nav>
-                              <ul class="pagination">
-                                <li>{{ $personal->links() }}
-                              </ul>
-                            </nav>
+                            </tbody>
+                         </table>
+                           
                         </div>
                         
                     </div>

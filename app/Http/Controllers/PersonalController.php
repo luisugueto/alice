@@ -23,14 +23,15 @@ class PersonalController extends Controller
      */
     public function index()
     {
-        $personal = Personal::paginate(5);
+        $personal = Personal::all();
         return view('personal.personal', compact('personal'));
     }
 
     public function nuevo()
     {
-        $cargo = Cargo::all();
-        $tipo = Tipo::all();
+        $cargo = Cargo::lists('nombre', 'id');
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+
         return view('personal.nuevopersonal', compact('cargo', 'tipo'));
     }
 
