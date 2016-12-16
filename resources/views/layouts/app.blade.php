@@ -36,10 +36,11 @@ desired effect
 
     @include('layouts.partials.sidebar')
 
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        <!-- @include('layouts.partials.contentheader') -->
+        @include('layouts.partials.contentheader')
 
         <!-- Main content -->
         <section class="content" style="height: 100vw">
@@ -53,7 +54,8 @@ desired effect
    
 
 </div><!-- ./wrapper -->
- @include('layouts.partials.footer')
+@include('layouts.partials.footer')
+
 @section('scripts')
     @include('layouts.partials.scripts')
 @show

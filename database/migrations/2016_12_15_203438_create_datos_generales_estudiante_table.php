@@ -14,9 +14,12 @@ class CreateDatosGeneralesEstudianteTable extends Migration
     {
         Schema::create('datos_generales_estudiante', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_representante')->unsigned();
+            $table->foreign('id_representante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
             $table->string('codigo_matricula', 255)->unique();
             $table->string('apellido_paterno', 50);
             $table->string('apellido_materno', 50);
+            $table->string('nombres', 25);
             $table->string('cedula', 25)->unique();
             $table->date('fecha_nacimiento');
             $table->date('fecha_registro');

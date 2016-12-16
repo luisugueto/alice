@@ -21,6 +21,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
 	Route::resource('personal', 'PersonalController');
+	Route::resource('estudiantes', 'EstudiantesController');
 	Route::resource('login', 'LoginController');
 
 	Route::get('/usuario', 'UsuariosController@index');
