@@ -30,8 +30,11 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('login', 'LoginController');
 	Route::resource('iess', 'IESSController');
 	Route::resource('prestamos', 'PrestamosAnticiposController');
+	Route::resource('pagos', 'PagosController');
 
 
+
+	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
 	Route::get('/usuario', 'UsuariosController@index');
 
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');

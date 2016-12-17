@@ -34,7 +34,14 @@
             <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-user'></i> <span>Usuarios</span></a></li>
             <li><a href="{{ route('personal.index') }}"><i class='fa fa-user'></i> <span>Personal</span></a></li>
             <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-user'></i> <span>Estudiantes</span></a></li>
-            <li><a href="{{ route('prestamos.index') }}"><i class='fa fa-user'></i> <span>Prestamos y Anticipos</span></a></li>
+            <li class="treeview">
+                <a href="#"><i class='fa fa-link'></i> <span>Prestamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('prestamos.create') }}">Nuevo</a></li>
+                    <li><a href="{{ url('/prestamosTotal') }}">Listado Total</a></li>
+                    <li><a href="{{ route('prestamos.index') }}">Listado del Mes Actual</a></li>
+                </ul>
+            </li>
             <!-- <li class="header">{{ trans('adminlte_lang::message.header') }}</li> -->
             <!-- Optionally, you can add icons to the links -->
             <!-- <li class="active"><a href="{{ url('home') }}"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li> -->

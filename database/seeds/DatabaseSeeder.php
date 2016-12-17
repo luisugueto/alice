@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
     {
     	Model::unguard();
 
+        DB::table('cargos')->insert([
+            'nombre' => 'Secretaria'
+        ]);
+
     	$this->call(UsersTableSeeder::class); 
         $this->call(CursosTableSeeder::class);
         $this->call(AsignaturasTableSeeder::class);
