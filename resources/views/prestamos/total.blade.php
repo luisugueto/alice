@@ -36,23 +36,20 @@
                                         <td>Apellidos</td>
                                         <td>Tipo</td>
                                         <td>Monto</td>
-                                        <td>Capital</td>
-                                        <td>Saldo</td>
+                                       
                                         <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
-                                    @foreach($prestamos as $per)
+                                    @foreach($prestamo as $per)
                                     <tr>
                                         <td>{{$per->fecha }}</td>
                                         <td>{{$per->personal->nombres}}</td>
                                         <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
-                                        <td>{{$per->remuneracion->sueldo_mens }}</td>
-                                        <td>{{ ($per->remuneracion->sueldo_mens - $per->monto) }}</td>
                                         @if($per->tipo == 'Prestamo')
-                                        <td> {!!link_to_route('pagos.store', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                        <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
                                         @else <td></td> 
                                         @endif                             
                                     </tr>

@@ -20,8 +20,6 @@ class PrestamosAnticiposController extends Controller
     public function index()
     {
         define('mesActual', date('m'));
-
-        
         $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
         #$prestamo = Prestamo::all();
         return view('prestamos.index', compact('prestamo'));
@@ -38,26 +36,34 @@ class PrestamosAnticiposController extends Controller
         return view('prestamos.create', compact('personal'));
     }
 
-    public function total(){
-        $prestamo = DB::table('prestamos')
-                     ->select(DB::raw('count(monto) as monto, id_personal, tipo, fecha'))
-                     ->groupBy('id_personal')
-                     ->get();
-        $prestamo = DB::select( DB::raw("SELECT prestamos.*, datos_generales_personal.*
-FROM prestamos
-INNER JOIN datos_generales_personal
-ON prestamos.id_personal=datos_generales_personal.id
-ORDER BY prestamos.id_personal; "));
-        
-        $prestamos = array();
-foreach ($prestamo as $f) {
-        foreach ($f as $k => $v) {
-                $prestamos[$k] = $v;
-        }
-}
+    public function ver()
+    {
+        $personal = Personal::all();
+        return view('prestamos.ver', compact('personal'));
+    }
 
-        $prestamos = Prestamo::all();
-        return view('prestamos.total', compact('prestamos'));
+    public function total(){
+
+        #$prestamo = Prestamo::select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))->groupBy('id_personal')->get();
+        // $prestamo = DB::table('prestamos')
+        //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
+        //              ->groupBy('tipo')
+        //              ->get();
+//         $prestamo = DB::select( DB::raw("SELECT prestamos.*, datos_generales_personal.*
+// FROM prestamos
+// INNER JOIN datos_generales_personal
+// ON prestamos.id_personal=datos_generales_personal.id
+// ORDER BY prestamos.id_personal; "));
+//         $pr = json_decode($prestamo);
+//         $prestamos = array();
+// foreach ($pr as $f) {
+//         foreach ($f as $k => $v) {
+//                 $prestamos[$k] = $v;
+//         }
+// }    
+        $prestamo = Prestamo::all();
+
+        return view('prestamos.total', compact('prestamo'));
     }
 
     /**
@@ -128,6 +134,17 @@ foreach ($prestamo as $f) {
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function listado(Request $request)
+    {   
+        $prestamo = Prestamo::select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))->groupBy('id_personal')->get();
+        // $prestamo = DB::table('prestamos')
+        //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
+        //              ->groupBy('tipo')
+        //              ->get();
+        $pres = Prestamo::find($request['persona'])->get();
+        return view('prestamos.listado', ['total' => $prestamo, 'prestamo' => $pres]);
     }
 
     /**

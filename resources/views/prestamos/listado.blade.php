@@ -21,10 +21,17 @@
     
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-14">
+
+                </div>
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Tabla</h3>
+                        <h3 class="box-title"> @foreach($total as $per)
+                            <div class="form-group">
+                              {!! Form::label('Capital', 'Capital:') !!} 
+                               <b> {{ $per->monto }}</b>
+                            </div>
+                            @endforeach   </h3>
                     </div>
 
                     <div class="box-body">
@@ -36,11 +43,12 @@
                                         <td>Apellidos</td>
                                         <td>Tipo</td>
                                         <td>Monto</td>
+                                       
                                         <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
-                                   @foreach($prestamo as $per)
+                                    @foreach($prestamo as $per)
                                     <tr>
                                         <td>{{$per->fecha }}</td>
                                         <td>{{$per->personal->nombres}}</td>
@@ -48,13 +56,16 @@
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
                                         @if($per->tipo == 'Prestamo')
-                                        <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                       <td>{!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}
                                         @else <td></td> 
-                                        @endif                               
+                                        @endif                             
                                     </tr>
-                                    @endforeach
+                                    @endforeach  
+
+                                                       
                             </tbody>
                          </table>
+                          
                            
                         </div>
                         

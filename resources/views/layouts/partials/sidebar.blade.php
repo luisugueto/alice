@@ -38,6 +38,7 @@
                 <a href="#"><i class='fa fa-link'></i> <span>Prestamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('prestamos.create') }}">Nuevo</a></li>
+                    <li><a href="{{ url('verificarPrestamos') }}">Verificar Prestamo</a></li>
                     <li><a href="{{ url('/prestamosTotal') }}">Listado Total</a></li>
                     <li><a href="{{ route('prestamos.index') }}">Listado del Mes Actual</a></li>
                 </ul>
