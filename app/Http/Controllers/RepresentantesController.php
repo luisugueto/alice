@@ -5,21 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Estudiante;
 use App\Representante;
+use App\Http\Requests\RepresentanteRequest;
+use App\Http\Requests\CedulaRequest;
 
-class EstudiantesController extends Controller
+class RepresentantesController extends Controller
 {
-	/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-    	$estudiantes = Estudiante::all();
-
-        return view('estudiantes.index', compact('estudiantes'));
+    	//
     }
 
     /**
@@ -27,20 +26,9 @@ class EstudiantesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-    	$representante = Representante::where('id', $request->representante)->first();
-
-    	if(!empty($representante)) 
-    	{
-
-    		return view('estudiantes.create', compact('representante'));
-
-    	}else{
-
-        	return view('estudiantes.create');
-
-    	}
+        return view('representantes.create');
     }
 
     /**
@@ -49,9 +37,12 @@ class EstudiantesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RepresentanteRequest $request)
     {
-        //
+        
+        $representante = Representante::create($request->all())->save();
+        dd($representante);
+
     }
 
     /**
@@ -97,5 +88,22 @@ class EstudiantesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(CedulaRequest $request)
+    {
+
+    	$representante = Representante::where('cedula_re', $request->cedula_re)->first();
+
+    	if(!empty($representante)) 
+    	{
+    		return redirect()->action('EstudiantesController@create', compact('representante'));
+
+    	}else{
+
+    		$cedula_re = $request->cedula_re;
+
+    		return view('representantes.create', compact('cedula_re'));
+    	}
     }
 }

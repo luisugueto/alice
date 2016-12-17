@@ -9,6 +9,7 @@ use Redirect;
 use App\Http\Requests;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+
 class LoginController extends Controller
 {
     /**
@@ -49,6 +50,7 @@ class LoginController extends Controller
         Session::flash('message-error', 'Datos incorrectos');
         return Redirect::to('/');
     }
+    
     public function logout(){
         Auth::logout();
         return Redirect::to('/login');

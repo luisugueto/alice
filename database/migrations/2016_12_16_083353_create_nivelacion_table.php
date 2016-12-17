@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNovedadesTable extends Migration
+class CreateNivelacionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,15 @@ class CreateNovedadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('novedades', function (Blueprint $table) {
+        Schema::create('nivelacion', function (Blueprint $table) {
             $table->increments('id');
+            $table->double('recuperacion');
+            $table->double('supletorio');
+            $table->double('remedial');
+            $table->double('gracia');
             $table->integer('id_estudiante')->unsigned();
-            $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
-            $table->date('fecha');
-            $table->text('detalles');
+
+            $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateNovedadesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('novedades');
+        Schema::drop('nivelacion');
     }
 }
