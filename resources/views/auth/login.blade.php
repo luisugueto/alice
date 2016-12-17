@@ -34,6 +34,10 @@
             <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
+        <div class="form-group has-feedback">
+            {!! Form::select('periodos',$periodos, null, ['class' => 'form-control','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
         <div class="row">
             <div class="col-xs-8">
                 <div class="checkbox icheck">
