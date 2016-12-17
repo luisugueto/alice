@@ -17,11 +17,16 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
 	#Route::resource('app', 'AppController');
+
+	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
+
+
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
 	Route::resource('personal', 'PersonalController');
 	Route::resource('estudiantes', 'EstudiantesController');
+	Route::resource('representantes', 'RepresentantesController');
 	Route::resource('login', 'LoginController');
 
 	Route::get('/usuario', 'UsuariosController@index');

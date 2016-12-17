@@ -1,13 +1,12 @@
 @extends('layouts.app')
-@section('contentheader_title', 'Nuevo Personal')
 
-@section('htmlheader_title')
-    Nuevo Personal
-@endsection
+@section('contentheader_title', 'Personal')
+@section('contentheader_description', 'Registro')
+
 
 
 @section('main-content')                    
-            <div class="col-md-12">
+            <div class="col-md-14">
     <section class="content">
     <div class="row">
       <div class="col-md-14">

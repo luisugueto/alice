@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('1234'),
             'roles_id' => '1'
         ]);
+        
         DB::table('tipo_empleado')->insert([
             'tipo_empleado' => 'Administrativo'
         ]);
