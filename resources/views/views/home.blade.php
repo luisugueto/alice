@@ -13,6 +13,7 @@
 					<div class="panel-heading">Home</div>
 
 					<div class="panel-body">
+
 					
 						{{ trans('adminlte_lang::message.logged') }}
 					</div>

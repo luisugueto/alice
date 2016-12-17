@@ -70,6 +70,32 @@ class DatabaseSeeder extends Seeder
             'tipo_empleado' => 'Obrero'
         ]);
         
+        $valor = 2014;
+        for($i = 0; $i < 30; $i++)
+        {
+            if($i == 2){
+                DB::table('periodos')->insert([
+                    'nombre' => $valor+$i,
+                    'status' => 'activo'
+                ]); 
+            }else{
+                DB::table('periodos')->insert([
+                    'nombre' => $valor+$i,
+                    'status' => 'inactivo'
+                ]); 
+            }
+        }
+
+        DB::table('i_e_s_s')->insert([
+            'nombre' => 'Patrono',
+            'valor' => '12.40'
+        ]);
+
+        DB::table('i_e_s_s')->insert([
+            'nombre' => 'Personal',
+            'valor' => '9.40'
+        ]);
+        
     	// $this->call(UsersTableSeeder::class);
      //    $this->call(CursosTableSeeder::class);
      //    $this->call(AsignaturasTableSeeder::class);

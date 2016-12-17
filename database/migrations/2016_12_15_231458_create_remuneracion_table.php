@@ -16,11 +16,7 @@ class CreateRemuneracionTable extends Migration
             $table->increments('id');
             $table->integer('id_personal')->unsigned();
             $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('Cascade');
-            $table->double('sueldo_1era_quincena', 10,2);
-            $table->double('sueldo_2da_quincena', 10,2);
             $table->double('sueldo_mens', 10,2);
-            $table->double('iess_patronal', 10,2);
-            $table->double('iess_personal', 10,2);
             $table->double('descuento_iess', 10,2);
             $table->double('bono_responsabilidad', 10,2);
             $table->string('horas_extras', 2);

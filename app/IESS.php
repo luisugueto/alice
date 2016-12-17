@@ -4,17 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Remuneracion extends Model
+class IESS extends Model
 {
-    /**
+     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-     protected $table = 'remuneracion';
-     
+    
+    protected $table = 'i_e_s_s';
+
     protected $fillable = [
-        'sueldo_mens', 'descuento_iess','bono_responsabilidad', 'horas_extras', 'cuenta_bancaria','devolver_fondos'
+        'nombre', 'valor'
     ];
 
     /**
@@ -25,6 +26,4 @@ class Remuneracion extends Model
     protected $hidden = [
         
     ];
-     public $timestamps = false;
-    
 }

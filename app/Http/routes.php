@@ -23,6 +23,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('personal', 'PersonalController');
 	Route::resource('estudiantes', 'EstudiantesController');
 	Route::resource('login', 'LoginController');
+	Route::resource('iess', 'IESSController');
+
 
 	Route::get('/usuario', 'UsuariosController@index');
 
