@@ -27,20 +27,20 @@ class PersonalRequest extends Request
             'codigo_pesonal' => 'required|unique:datos_generales_personal',
             'nombres' => 'required',
             'apellido_paterno' => 'required',
-            'cedula' => 'required|unique:datos_generales_personal',
+            'cedula' => 'required|numeric|unique:datos_generales_personal',
             'fecha_nacimiento' => 'required',
             'fecha_ingreso' => 'required',
-            'edad' => 'required',
+            'edad' => 'required|numeric',
             'genero' => 'required',
             'edo_civil' => 'required',
             'estado_actual' => 'required',
             'tipo_registro' => 'required',
             'especialidad' => 'required',
-            'telefono' => 'required',
+            'telefono' => 'required|numeric|digits_between:10,11',
             'id_cargo' => 'required',
-            'correo' => 'required|unique:datos_generales_personal',
-            'sueldo_mens' => 'required',
-            'cuenta_bancaria' => 'required|unique:remuneracion'
+            'correo' => 'required|email|unique:datos_generales_personal',
+            'sueldo_mens' => 'required|numeric',
+            'cuenta_bancaria' => 'required|numeric|unique:remuneracion'
         ];
     }
 }

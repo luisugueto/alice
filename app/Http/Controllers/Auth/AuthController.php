@@ -10,6 +10,8 @@ use App\Http\Requests\LoginRequest;
 use Redirect;
 use Session;
 use App\Periodos;
+use App\Prestamo;
+use DB;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +79,7 @@ class AuthController extends Controller
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
+            Session::put('valor', DB::table('prestamos')->count());
             Session::flash('message', 'Bienvenido');
             Session::put('periodo', $request['periodo']);
             return Redirect::to('/home');
