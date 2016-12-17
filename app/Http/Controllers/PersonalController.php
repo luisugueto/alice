@@ -54,7 +54,7 @@ class PersonalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PersonalRequest $request)
+    public function store(Request $request)
     {
         $per = new Personal();
         $per->codigo_pesonal = $request['codigo_pesonal'];
@@ -92,24 +92,22 @@ class PersonalController extends Controller
         $ina->id_personal = $id;
         $ina->primaria = strtoupper($request['primaria']);
         $ina->secundaria = strtoupper($request['secundaria']);
-        $ina->superior = strtoupper($request['superi']);
-        $ina->titulo = strtoupper($request['titulos']);
+        $ina->superior = strtoupper($request['superior']);
+        $ina->titulo = strtoupper($request['titulo']);
         $ina->cursos = strtoupper($request['cursos']);
-        $ina->historial_laboral = strtoupper($request['historia']);
+        $ina->historial_laboral = strtoupper($request['historial_laboral']);
         $ina->save();
 
         $ren = new Remuneracion();
         $ren->id_personal = $id;
-        $ren->sueldo_1era_quincena = $request['prQuincena'];
-        $ren->sueldo_2da_quincena = $request['seQuincena'];
-        $ren->sueldo_mens  = $request['sueldoMensual'];
-        $ren->iess_patronal = $request['ieePatronal'];
-        $ren->iess_personal = $request['ieePersonal'];
-        $ren->descuento_iess = $request['descuento'];
-        $ren->bono_responsabilidad  = $request['bono'];
-        $ren->horas_extras  = $request['horasExtras'];
-        $ren->cuenta_bancaria  = $request['cuenta'];
-        $ren->devolver_fondos = $request['devolverFondos'];
+        $ren->sueldo_mens  = $request['sueldo_mens'];
+        $ren->descuento_iess = $request['descuento_iess'];
+        $ren->bono_responsabilidad  = $request['bono_responsabilidad'];
+        if($request['horas_extras']=='on') $ren->horas_extras  = 'Y';
+        else $ren->horas_extras  = 'N';
+        $ren->cuenta_bancaria  = $request['cuenta_bancaria'];
+        if($request['devolver_fondos']=='on') $ren->devolver_fondos = 'Y';
+        else $ren->devolver_fondos = 'N';
         $ren->save();
 
         if($request['seleccionar']=='on'){
@@ -143,22 +141,17 @@ class PersonalController extends Controller
      */
     public function edit($id)
     {
-        // DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
-        // $persona = DB::table('datos_generales_personal')
-        // ->join('informacion_academica', function($join)
-        // {
-        //     $join->on('datos_generales_personal.id', '=', 'informacion_academica.id_personal')
-        //          ->where('informacion_academica.id_personal', '=', 1);
-        // })
-        // ->get();
-
-        
-        // $prueba = array($persona);
-        // return $prueba->id;
+        define('id', $id);
+        DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
+    
+        $personal = DB::table('datos_generales_personal')
+            ->join('informacion_academica', 'informacion_academica.id_personal', '=', 'datos_generales_personal.id')
+            ->join('remuneracion', 'remuneracion.id_personal', '=', 'informacion_academica.id')
+            ->where('remuneracion.id_personal', '=', id)
+            ->first();
 
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
-        $personal = Personal::find($id);
 
         return view('personal.edit', compact('cargo', 'tipo', 'personal'));
     }
@@ -173,11 +166,54 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
         $per = Personal::find($id);
-        $per->fill($request->all());
+        $per->codigo_pesonal = $request['codigo_pesonal'];
+        $per->nombres = strtoupper($request['nombres']);
+        $per->apellido_paterno = strtoupper($request['apellido_paterno']);
+        $per->apellido_materno = strtoupper($request['apellido_materno']);
+        $per->cedula = $request['cedula'];
+        $per->fecha_nacimiento = $request['fecha_nacimiento'];
+        $per->fecha_ingreso = $request['fecha_ingreso'];
+        $per->edad = $request['edad'];
+        $per->genero = strtoupper($request['genero']);
+        $per->edo_civil = $request['edo_civil'];
+        $per->estado_actual = $request['estado_actual'];
+        $per->tipo_registro = $request['tipo_registro'];
+        $per->especialidad = strtoupper($request['especialidad']);
+        $per->direccion = strtoupper($request['direccion']);
+        $per->telefono = $request['telefono'];
+        $per->correo = strtolower($request['correo']);
+        $per->id_cargo = $request['id_cargo'];
+        $per->ingreso_notas = 1;
+        $per->id_tipo = $request['tipo_registro'];
+        if($request['seleccionar']=='on'){
+            $per->clave = $request['clave'];
+        }else $per->clave = '';
         $per->save();
+
+
+        $ina = InformacionAcademica::find($id);
+        $ina->primaria = strtoupper($request['primaria']);
+        $ina->secundaria = strtoupper($request['secundaria']);
+        $ina->superior = strtoupper($request['superior']);
+        $ina->titulo = strtoupper($request['titulo']);
+        $ina->cursos = strtoupper($request['cursos']);
+        $ina->historial_laboral = strtoupper($request['historial_laboral']);
+        $ina->save();
+
+        $ren = Remuneracion::find($id);
+        $ren->sueldo_mens  = $request['sueldo_mens'];
+        $ren->descuento_iess = $request['descuento_iess'];
+        $ren->bono_responsabilidad  = $request['bono_responsabilidad'];
+        if($request['horas_extras']=='on') $ren->horas_extras  = 'Y';
+        else $ren->horas_extras  = 'N';
+        $ren->cuenta_bancaria  = $request['cuenta_bancaria'];
+        if($request['devolver_fondos']=='on') $ren->devolver_fondos = 'Y';
+        else $ren->devolver_fondos = 'N';
+        $ren->save();
+
         Session::put('message', 'Usuario Editado Correctamente');
 
-        return redirect::to('/personal');
+        return redirect::to('personal.personal');
     }
 
     /**

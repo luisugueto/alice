@@ -60,7 +60,7 @@ class UsuariosController extends Controller
         $user->save();
         Session::put('message', 'Usuario Creado Correctamente');
         $user = User::all();
-        return Redirect::to('usuarios.usuario', compact('user'));
+        return view('usuarios.usuario', compact('user'));
     }
 
     /**

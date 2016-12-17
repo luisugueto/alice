@@ -5,8 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Redirect;
+use Session;
+use App\Periodos;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -54,6 +59,28 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
             'terms' => 'required',
         ]);
+    }
+
+    public function showLoginForm()
+    {
+        $periodos = Periodos::lists('nombre', 'id');
+        return view('auth.login', ['periodos' => $periodos]);
+    }
+
+    public function login(Request $request)
+    {
+        if(Auth::check())
+        {
+            Session::flash('message-error', 'Usuario ya conectado.');
+            return Redirect::to('/home');
+        }
+        if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
+        {
+            Session::put('periodo', $request['periodo']);
+            return Redirect::to('/home');
+        }
+        Session::flash('message-error', 'Datos incorrectos');
+        return Redirect::to('/');
     }
 
     /**

@@ -4,7 +4,7 @@
 
 @section('main-content')             
 <div class="col-md-14">
-    <button class="btn btn-primary" title="Registrar un nuevo estudiante" onclick="window.location.href = '{{ URL::to('/estudiantes/create') }}'";>
+    <button class="btn btn-primary" title="Registrar un nuevo estudiante" onclick="window.location.href = '{{ URL::to('/representantes/create') }}'";>
         <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
     </button>
 </div>

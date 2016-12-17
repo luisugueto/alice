@@ -52,7 +52,7 @@
 
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
 				{!! Form::label('tiporeg', 'Tipo de Registro') !!} <small class="text-red">*</small>
-				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'id' =>'tipoRegistro', 'onChange' => 'validarTipo()', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">
 				{!! Form::label('especialidad', 'Especialidad') !!} <small class="text-red">*</small>
@@ -74,6 +74,7 @@
 				{!! Form::label('cargo', 'Cargo') !!} <small class="text-red">*</small>
 				{!! Form::select('id_cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
 			</div>
+		<div id="registroUser" >
 			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
 				<input type="checkbox" id="seleccionar" name="seleccionar" onclick="verificar()">
 				{!! Form::label('clave', 'Habilitar Usuario') !!}
@@ -82,6 +83,7 @@
 				{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small>
 				{!! Form::text('clave', null, ['class' => 'form-control', 'id' => 'clave', 'disabled' => 'true','title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
 			</div>
+		</div>
 		</div>
 		<div class="col-md-12 text-center">
 			<hr>
@@ -103,11 +105,11 @@
 			</div>
 			<div class="form-group{{ $errors->has('superi') ? ' has-error' : '' }}">
 				{!! Form::label('superi', 'Donde terminó Instr. Superior?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('superi', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central']) !!}
+				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('titulos') ? ' has-error' : '' }}">
 				{!! Form::label('titulos', 'Título(s) Académico(s) Obtenido(s): ') !!} <small class="text-red">*</small>
-				{!! Form::text('titulos', null, ['class' => 'form-control', 'title' => 'Introduzca Título(s) Académico(s) Obtenido(s)', 'placeholder' => 'Ejm: Ing Informática']) !!}
+				{!! Form::text('titulo', null, ['class' => 'form-control', 'title' => 'Introduzca Título(s) Académico(s) Obtenido(s)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cursos') ? ' has-error' : '' }}">
 				{!! Form::label('cursos', 'Cursos y Seminarios: ') !!} <small class="text-red">*</small>
@@ -115,7 +117,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('historia') ? ' has-error' : '' }}">
 				{!! Form::label('historia', 'Historia Laboral: ') !!} <small class="text-red">*</small>
-				{!! Form::textarea('historia', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3']) !!}
+				{!! Form::textarea('historial_laboral', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3']) !!}
 			</div>
 		</div>
 		<div class="col-md-12 text-center">
@@ -128,48 +130,40 @@
 <div class="tab-pane" id="remuneracion">
 	<div class="box-body">
 		<div class="col-md-6">
+			<div class="form-group{{ $errors->has('sueldoMensual') ? ' has-error' : '' }}">
+				{!! Form::label('sueldoMensual', 'Sueldo Mensual: ') !!} <small class="text-red">*</small>
+				{!! Form::number('sueldo_mens', null, ['class' => 'form-control', 'id'=>'sueldoMensual','onkeyup'=>'sueldo()','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300']) !!}
+			</div>
 			<div class="form-group{{ $errors->has('prQuincena') ? ' has-error' : '' }}">
 				{!! Form::label('prQuincena', 'Sueldo 1era Quincena:: ') !!} <small class="text-red">*</small>
-				{!! Form::number('prQuincena', null, ['class' => 'form-control', 'title' => 'Introduzca el Sueldo 1era Quincena?', 'placeholder' => 'Ejm: 150']) !!}
+				{!! Form::number('prQuincena', null, ['class' => 'form-control','id'=>'prQuincena', 'disabled','title' => 'Introduzca el Sueldo 1era Quincena?', 'placeholder' => 'Ejm: 150']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('seQuincena') ? ' has-error' : '' }}">
 				{!! Form::label('seQuincena', 'Sueldo 2da Quincena: ') !!} <small class="text-red">*</small>
-				{!! Form::number('seQuincena', null, ['class' => 'form-control', 'title' => 'Introduzca el Sueldo 2da Quincena?:', 'placeholder' => 'Ejm: 150']) !!}
+				{!! Form::number('seQuincena', null, ['class' => 'form-control', 'id'=>'seQuincena','disabled','title' => 'Introduzca el Sueldo 2da Quincena?:', 'placeholder' => 'Ejm: 150']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('sueldoMensual') ? ' has-error' : '' }}">
-				{!! Form::label('sueldoMensual', 'Sueldo Mensual: ') !!} <small class="text-red">*</small>
-				{!! Form::number('sueldoMensual', null, ['class' => 'form-control', 'title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300']) !!}
-			</div>
-			<div class="form-group{{ $errors->has('ieePatronal') ? ' has-error' : '' }}">
-				{!! Form::label('ieePatronal', '% IESS Patronal: ') !!} <small class="text-red">*</small>
-				{!! Form::number('ieePatronal', null, ['class' => 'form-control', 'title' => 'Introduzca el % IESS Patronal', 'placeholder' => 'Ejm: 10']) !!}
-			</div>
-			<div class="form-group{{ $errors->has('ieePersonal') ? ' has-error' : '' }}">
-				{!! Form::label('ieePersonal', '% IESS Personal: ') !!} <small class="text-red">*</small>
-				{!! Form::number('ieePersonal', null, ['class' => 'form-control', 'title' => 'Introduzca el % IESS Personal', 'placeholder' => 'Ejm: 20']) !!}
-			</div>
-			
 		</div>
 		<div class="col-md-6">
 			<div class="form-group{{ $errors->has('descuento') ? ' has-error' : '' }}">
+				<input type="checkbox" id="verificarr" name="descuenta" onclick="verificarDescuento()">
 				{!! Form::label('descuento', 'Descuenta el IESS Sobre: ') !!} <small class="text-red">*</small>
-				{!! Form::number('descuento', null, ['class' => 'form-control', 'title' => 'Introduzca Descuenta el IESS Sobre', 'placeholder' => 'Ejm: 30']) !!}
+				{!! Form::number('descuento_iess', null, ['class' => 'form-control', 'disabled','id'=>'descuenta','title' => 'Introduzca Descuenta el IESS Sobre', 'placeholder' => 'Ejm: 30']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('horasExtras') ? ' has-error' : '' }}">
 				{!! Form::label('horasExtras', 'Se paga horas extras al Colaborador: ') !!} <small class="text-red">*</small>
-				{!! Form::number('horasExtras', null, ['class' => 'form-control', 'title' => 'Introduzca paga horas extras al Colaborador', 'placeholder' => 'Ejm: 5']) !!}
+				<input type="checkbox" name="horas_extras">
 			</div>
 			<div class="form-group{{ $errors->has('devolverFondos') ? ' has-error' : '' }}">
-				{!! Form::label('devolverFondos', 'Devolver fondos de reserva en rol de colaborador: ') !!} <small class="text-red">*</small>
-				{!! Form::number('devolverFondos', null, ['class' => 'form-control', 'title' => 'Introduzca Devolver fondos de reserva en rol de colaborador', 'placeholder' => 'Ejm: 400']) !!}
+				{!! Form::label('devolver_fondos', 'Devolver fondos de reserva en rol de colaborador: ') !!} <small class="text-red">*</small>
+				<input type="checkbox" name="devolverFondos">
 			</div>
 			<div class="form-group{{ $errors->has('bono') ? ' has-error' : '' }}">
 				{!! Form::label('bono', 'BONO RESPONSABILIDAD: ') !!} <small class="text-red">*</small>
-				{!! Form::number('bono', null, ['class' => 'form-control', 'title' => 'Introduzca Bono Responsabilidad', 'placeholder' => 'Ejm: Ing Informática']) !!}
+				{!! Form::number('bono_responsabilidad', null, ['class' => 'form-control', 'title' => 'Introduzca Bono Responsabilidad', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cuenta') ? ' has-error' : '' }}">
 				{!! Form::label('cuenta', 'Cuenta Bancaria(Para Nomina): ') !!} <small class="text-red">*</small>
-				{!! Form::number('cuenta', null, ['class' => 'form-control', 'title' => 'Introduzca Cuenta Bancaria(Para Nomina)', 'placeholder' => 'Ejm: Ing Informática']) !!}
+				{!! Form::number('cuenta_bancaria', null, ['class' => 'form-control', 'title' => 'Introduzca Cuenta Bancaria(Para Nomina)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 		</div>
 		
@@ -193,6 +187,25 @@
 					document.getElementById('clave').disabled = true;
 					document.getElementById('clave').required = false;
 				}
+	}
+
+	function verificarDescuento(){ 
+		if( $('#verificarr').prop('checked') ) {
+		    $('#descuenta').attr('disabled', false);
+		}else $('#descuenta').attr('disabled', true);
+	}
+
+	function validarTipo(){
+		if($('#tipoRegistro').val() == 3){
+			$('#registroUser').css('display', 'none');
+		}else $('#registroUser').css('display', '');
+
+	}
+
+	function sueldo(){
+		var sueldo = $('#sueldoMensual').val();
+		$('#prQuincena').val(parseFloat(sueldo/2));
+		$('#seQuincena').val(parseFloat(sueldo/2));
 	}
 </script>
 

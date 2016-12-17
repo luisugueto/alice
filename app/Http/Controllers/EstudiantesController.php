@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Estudiante;
+use App\Representante;
 
 class EstudiantesController extends Controller
 {
@@ -26,9 +27,20 @@ class EstudiantesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('estudiantes.create');
+    	$representante = Representante::where('id', $request->representante)->first();
+
+    	if(!empty($representante)) 
+    	{
+
+    		return view('estudiantes.create', compact('representante'));
+
+    	}else{
+
+        	return view('estudiantes.create');
+
+    	}
     }
 
     /**

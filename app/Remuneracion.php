@@ -14,7 +14,7 @@ class Remuneracion extends Model
      protected $table = 'remuneracion';
      
     protected $fillable = [
-        'sueldo_1era_quincena', 'sueldo_2da_quincena', 'sueldo_mens', 'iess_patronal', 'iess_personal', 'descuento_iess','bono_responsabilidad', 'horas_extras', 'cuenta_bancaria','devolver_fondos'
+        'sueldo_mens', 'descuento_iess','bono_responsabilidad', 'horas_extras', 'cuenta_bancaria','devolver_fondos'
     ];
 
     /**

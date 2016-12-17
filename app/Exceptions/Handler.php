@@ -54,9 +54,8 @@ class Handler extends ExceptionHandler
                     return redirect()->guest('/login');
                 break;
                 case 403:
-                    return redirect()->to('/login');
+                    return view('errors.500');
                 break;
-
                 // internal error
                 case '500':
                 return redirect()->guest('/login');

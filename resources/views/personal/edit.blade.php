@@ -13,7 +13,7 @@
     <div class="row">
 
       <div class="col-md-14">
-          {!!Form::model($personal, ['route'=>['personal.update', $personal->id], 'method'=>'PUT', 'files'=>false])!!}
+          {!!Form::model($personal, ['route'=>['personal.update', $personal['id']], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
             <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                     <ul class="nav nav-tabs">
@@ -31,8 +31,5 @@
                     {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
                   {!!Form::close()!!}
                   <br>
-                  {!!Form::open(['route'=>['personal.destroy', $personal->id], 'method'=>'DELETE'])!!}
-                  <br>
-                    {!!Form::submit('Eliminar', ['class'=>'btn btn-danger'])!!}
-                  {!!Form::close()!!}
+               
 @stop
