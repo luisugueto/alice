@@ -29,6 +29,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('representantes', 'RepresentantesController');
 	Route::resource('login', 'LoginController');
 	Route::resource('iess', 'IESSController');
+	Route::resource('prestamos', 'PrestamosAnticiposController');
 
 
 	Route::get('/usuario', 'UsuariosController@index');
