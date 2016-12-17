@@ -1,14 +1,14 @@
 @extends('layouts.auth')
 
 @section('htmlheader_title')
-    Log in
+    Entrar
 @endsection
 
 @section('content')
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-           <b>Proyecto Alice</b>
+           <b>Sistema María Montessori</b>
         </div><!-- /.login-logo -->
 
     @if (count($errors) > 0)
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group has-feedback">
             {!! Form::select('periodos',$periodos, null, ['class' => 'form-control','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
         </div>
         <div class="row">
             <div class="col-xs-8">
