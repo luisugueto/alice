@@ -1,7 +1,7 @@
 <div class="tab-pane active" id="generales">
 	<div class="box-body">
 		<div class="col-md-6">
-			<div class="form-group{{ $errors->has('codigo') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('codigo_pesonal') ? ' has-error' : '' }}">
 				{!! Form::label('codigo', 'Código Personal') !!} <small class="text-red">*</small>
 				{!! Form::text('codigo_pesonal', null, ['class' => 'form-control', 'title' => 'Introduzca el codigo del personal', 'placeholder' => 'Ejm: 1189124']) !!}
 			</div>
@@ -103,11 +103,11 @@
 				{!! Form::label('secundaria', 'Donde terminó la secundaria?: ') !!} <small class="text-red">*</small>
 				{!! Form::text('secundaria', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó la secundaria?:', 'placeholder' => 'Ejm: Prueba']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('superi') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('superior') ? ' has-error' : '' }}">
 				{!! Form::label('superi', 'Donde terminó Instr. Superior?: ') !!} <small class="text-red">*</small>
 				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('titulos') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('titulo') ? ' has-error' : '' }}">
 				{!! Form::label('titulos', 'Título(s) Académico(s) Obtenido(s): ') !!} <small class="text-red">*</small>
 				{!! Form::text('titulo', null, ['class' => 'form-control', 'title' => 'Introduzca Título(s) Académico(s) Obtenido(s)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
@@ -115,7 +115,7 @@
 				{!! Form::label('cursos', 'Cursos y Seminarios: ') !!} <small class="text-red">*</small>
 				{!! Form::textarea('cursos', null, ['class' => 'form-control', 'title' => 'Introduzca Cursos y Seminarios', 'placeholder' => 'Ejm: Programacion, Matemáticas ', 'rows' => '3']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('historia') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('historial_laboral') ? ' has-error' : '' }}">
 				{!! Form::label('historia', 'Historia Laboral: ') !!} <small class="text-red">*</small>
 				{!! Form::textarea('historial_laboral', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3']) !!}
 			</div>
@@ -130,7 +130,7 @@
 <div class="tab-pane" id="remuneracion">
 	<div class="box-body">
 		<div class="col-md-6">
-			<div class="form-group{{ $errors->has('sueldoMensual') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('sueldo_mens') ? ' has-error' : '' }}">
 				{!! Form::label('sueldoMensual', 'Sueldo Mensual: ') !!} <small class="text-red">*</small>
 				{!! Form::number('sueldo_mens', null, ['class' => 'form-control', 'id'=>'sueldoMensual','onkeyup'=>'sueldo()','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300']) !!}
 			</div>
@@ -144,12 +144,12 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="form-group{{ $errors->has('descuento') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('descuento_iess') ? ' has-error' : '' }}">
 				<input type="checkbox" id="verificarr" name="descuenta" onclick="verificarDescuento()">
 				{!! Form::label('descuento', 'Descuenta el IESS Sobre: ') !!} <small class="text-red">*</small>
 				{!! Form::number('descuento_iess', null, ['class' => 'form-control', 'disabled','id'=>'descuenta','title' => 'Introduzca Descuenta el IESS Sobre', 'placeholder' => 'Ejm: 30']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('horasExtras') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('horas_extras') ? ' has-error' : '' }}">
 				{!! Form::label('horasExtras', 'Se paga horas extras al Colaborador: ') !!} <small class="text-red">*</small>
 				<input type="checkbox" name="horas_extras">
 			</div>
@@ -157,11 +157,11 @@
 				{!! Form::label('devolver_fondos', 'Devolver fondos de reserva en rol de colaborador: ') !!} <small class="text-red">*</small>
 				<input type="checkbox" name="devolverFondos">
 			</div>
-			<div class="form-group{{ $errors->has('bono') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('bono_responsabilidad') ? ' has-error' : '' }}">
 				{!! Form::label('bono', 'BONO RESPONSABILIDAD: ') !!} <small class="text-red">*</small>
 				{!! Form::number('bono_responsabilidad', null, ['class' => 'form-control', 'title' => 'Introduzca Bono Responsabilidad', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('cuenta') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('cuenta_bancaria') ? ' has-error' : '' }}">
 				{!! Form::label('cuenta', 'Cuenta Bancaria(Para Nomina): ') !!} <small class="text-red">*</small>
 				{!! Form::number('cuenta_bancaria', null, ['class' => 'form-control', 'title' => 'Introduzca Cuenta Bancaria(Para Nomina)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>

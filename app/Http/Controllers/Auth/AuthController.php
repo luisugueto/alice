@@ -6,6 +6,7 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Redirect;
 use Session;
 use App\Periodos;
@@ -67,7 +68,7 @@ class AuthController extends Controller
         return view('auth.login', ['periodos' => $periodos]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         if(Auth::check())
         {
@@ -76,6 +77,7 @@ class AuthController extends Controller
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
+            Session::flash('message', 'Bienvenido');
             Session::put('periodo', $request['periodo']);
             return Redirect::to('/home');
         }

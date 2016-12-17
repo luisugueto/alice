@@ -38,7 +38,9 @@ class PersonalRequest extends Request
             'especialidad' => 'required',
             'telefono' => 'required',
             'id_cargo' => 'required',
-            'correo' => 'required|unique:datos_generales_personal'
+            'correo' => 'required|unique:datos_generales_personal',
+            'sueldo_mens' => 'required',
+            'cuenta_bancaria' => 'required|unique:remuneracion'
         ];
     }
 }
