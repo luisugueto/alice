@@ -26,4 +26,5 @@ class PagosRealizados extends Model
     protected $hidden = [
         
     ];
+    public $timestamps = false;
 }

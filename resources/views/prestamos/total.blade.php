@@ -48,8 +48,8 @@
                                         <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
-                                        @if($per->tipo == 'Prestamo')
-                                        <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                        @if($per->tipo == 'Prestamo' && $per->prestamo->monto_adeudado != 0))
+                                        <td> {!!link_to_route('pagos.show', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
                                         @else <td></td> 
                                         @endif                             
                                     </tr>

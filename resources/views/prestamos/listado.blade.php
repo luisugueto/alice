@@ -26,12 +26,11 @@
                 </div>
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title"> @foreach($total as $per)
-                            <div class="form-group">
-                              {!! Form::label('Capital', 'Capital:') !!} 
-                               <b> {{ $per->monto }}</b>
+                        <h3 class="box-title"> 
+                            <div class="form-group"> 
+                               <b>Listado</b>
                             </div>
-                            @endforeach   </h3>
+                             </h3>
                     </div>
 
                     <div class="box-body">
@@ -55,7 +54,7 @@
                                         <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
-                                        @if($per->tipo == 'Prestamo')
+                                        @if($per->tipo == 'Prestamo' && $per->prestamo->monto_adeudado != 0))
                                        <td>{!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}
                                         @else <td></td> 
                                         @endif                             

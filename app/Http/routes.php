@@ -20,7 +20,7 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 
-	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
+
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
@@ -33,8 +33,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('prestamos', 'PrestamosAnticiposController');
 	Route::resource('pagos', 'PagosController');
 
-
-
+	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
 	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
 	Route::get('/verificarPrestamos', 'PrestamosAnticiposController@ver');
 

@@ -24,4 +24,6 @@ class Modalidad extends Model
      */
     protected $hidden = [
         
-    ];}
+    ];
+    public $timestamps = false;
+}

@@ -139,13 +139,19 @@ class PrestamosAnticiposController extends Controller
 
     public function listado(Request $request)
     {   
-        $prestamo = Prestamo::select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))->groupBy('id_personal')->get();
+
+        $prestamo = DB::select('SELECT *,SUM(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].' GROUP BY id_personal');
+
+        foreach ($prestamo as $value) {
+            $total = $value->monto;
+        }
         // $prestamo = DB::table('prestamos')
         //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
         //              ->groupBy('tipo')
         //              ->get();
-        $pres = Prestamo::find($request['persona'])->get();
-        return view('prestamos.listado', ['total' => $prestamo, 'prestamo' => $pres]);
+        
+        $pres = Prestamo::where('id_personal', $request['persona'])->get();
+        return view('prestamos.listado', ['total' => $total, 'prestamo' => $pres]);
     }
 
     /**

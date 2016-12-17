@@ -19,6 +19,7 @@ class CreatePagosRealizadosTable extends Migration
             $table->date('fecha');
             $table->integer('id_prestamo')->unsigned();
             $table->integer('id_modalidad')->unsigned();
+            $table->integer('id_personal')->unsigned();
             $table->bigInteger('no_transferencia');
             $table->bigInteger('no_cheque');
         });

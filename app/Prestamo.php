@@ -29,6 +29,11 @@ class Prestamo extends Model
      public function personal(){
         return $this->belongsTo('App\Personal', 'id_personal');
     }
+
+    public function prestamo(){
+        return $this->hasOne('App\PagosRealizados', 'id');
+    }
+
     public function remuneracion(){
         return $this->belongsTo('App\Remuneracion', 'id_personal');
     }
