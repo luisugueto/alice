@@ -17,11 +17,11 @@ class CreateCalificacionParcialSubtotalTable extends Migration
             $table->integer('id_parcial')->unsigned();
             $table->integer('id_asignatura')->unsigned();
             $table->double('avg_total');
-            $table->integer('id_nomenclatura')->unsigned();
+            $table->integer('id_equivalencia')->unsigned();
             
             $table->foreign('id_parcial')->references('id')->on('parciales')->onDelete('cascade');
             $table->foreign('id_asignatura')->references('id')->on('asignaturas')->onDelete('cascade');
-            $table->foreign('id_nomenclatura')->references('id')->on('nomenclaturas')->onDelete('cascade');
+            $table->foreign('id_equivalencia')->references('id')->on('equivalencias')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -50,4 +50,14 @@ class Estudiante extends Model
     	return $this->belongsTo('App\Representante', 'id_representante');
     }
 
+    public function parciales(){
+
+        return $this->hasMany('App\Parciales','id_estudiante','id');
+    }
+
+    public function quimestrales(){
+
+        return $this->hasMany('App\Quimestrales','id_estudiante','id');
+    }
+
 }

@@ -21,12 +21,12 @@ class CreateCalificacionQuimestreTable extends Migration
             $table->double('examen_q');
             $table->double('examen_q20');
             $table->double('avg_q_cuantitativa');
-            $table->integer('id_nomenclatura')->unsigned();
+            $table->integer('id_equivalencia')->unsigned();
 
 
             $table->foreign('id_quimestrales')->references('id')->on('quimestrales')->onDelete('cascade');
             $table->foreign('id_asignatura')->references('id')->on('asignaturas')->onDelete('cascade');
-            $table->foreign('id_nomenclatura')->references('id')->on('nomenclaturas')->onDelete('cascade');
+            $table->foreign('id_equivalencia')->references('id')->on('equivalencias')->onDelete('cascade');
             
             $table->timestamps();
         });

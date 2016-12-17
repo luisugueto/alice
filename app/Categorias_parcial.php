@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Periodos extends Model
+class Categorias_parcial extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,10 +12,10 @@ class Periodos extends Model
      * @var array
      */
     
-    protected $table = 'periodos';
+    protected $table = 'categorias_parcial';
 
     protected $fillable = [
-        'nombre', 'status'
+        'categoria'
     ];
 
     /**
@@ -27,8 +27,8 @@ class Periodos extends Model
         
     ];
 
-    public function quimestres(){
+    public function calificacion_parcial(){
 
-        return $this->hasMany('App\Quimestres','id_periodo','id');
+    	return $this->hasMany('App\Calificacion_parcial','id_categoria','id');
     }
 }
