@@ -61,6 +61,7 @@ class PrestamosAnticiposController extends Controller
 //                 $prestamos[$k] = $v;
 //         }
 // }    
+        
         $prestamo = Prestamo::all();
 
         return view('prestamos.total', compact('prestamo'));
