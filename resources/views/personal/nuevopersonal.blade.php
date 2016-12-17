@@ -1,19 +1,17 @@
 @extends('layouts.app')
 
+@section('htmlheader_title')
+    Personal
+@endsection
+
 @section('contentheader_title', 'Personal')
-@section('contentheader_description', 'Registro')
 
 
-
-<<<<<<< HEAD
-@section('main-content')           
-  @include('alerts.errors')         
-            <div class="col-md-12">
-=======
 @section('main-content')                    
             <div class="col-md-14">
->>>>>>> f23e81b3771bcd7a07a68d9f995886b3a6a8cd25
+
     <section class="content">
+    @include('alerts.request') 
     <div class="row">
       <div class="col-md-14">
           <form action="{{ route('personal.store') }}" method="POST" id="f1" name="f1">

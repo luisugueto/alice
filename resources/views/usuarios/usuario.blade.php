@@ -16,7 +16,7 @@
             </ul>
         </div>
     @endif
-    @include('alerts.errors')
+    @include('alerts.request')
     <div class="col-md-14">
     <button class="btn btn-primary" title="Registrar personal" onclick="window.location.href = '{{ URL::to('/nuevo_usuario') }}'";>
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

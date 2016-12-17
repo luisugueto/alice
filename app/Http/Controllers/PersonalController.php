@@ -54,7 +54,7 @@ class PersonalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonalRequest $request)
     {
         $per = new Personal();
         $per->codigo_pesonal = $request['codigo_pesonal'];
@@ -211,7 +211,7 @@ class PersonalController extends Controller
         else $ren->devolver_fondos = 'N';
         $ren->save();
 
-        Session::put('message', 'Usuario Editado Correctamente');
+        Session::flash('message', 'Usuario Editado Correctamente');
 
         return redirect::to('personal.personal');
     }
@@ -226,7 +226,7 @@ class PersonalController extends Controller
     {
         Personal::destroy($id);
         InformacionAcademica::where('id_personal', $id)->delete();
-        Session::put('message', 'Personal Eliminado Correctamente');
+        Session::flash('message', 'Personal Eliminado Correctamente');
 
         return redirect::to('/personal');
     }
