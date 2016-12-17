@@ -13,7 +13,7 @@
 					<div class="panel-heading">Home</div>
 
 					<div class="panel-body">
-
+{{ Session::get('periodo').'hola' }}
 					
 						{{ trans('adminlte_lang::message.logged') }}
 					</div>
