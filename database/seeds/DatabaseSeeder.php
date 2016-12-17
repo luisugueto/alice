@@ -61,14 +61,29 @@ class DatabaseSeeder extends Seeder
         DB::table('tipo_empleado')->insert([
             'tipo_empleado' => 'Obrero'
         ]);
-        
-    	// $this->call(UsersTableSeeder::class);
-     //    $this->call(CursosTableSeeder::class);
-     //    $this->call(AsignaturasTableSeeder::class);
-     //    $this->call(NomenclaturasTableSeeder::class);
-     //    $this->call(EquivalenciasTableSeeder::class);
-     //    $this->call(ComportamientoTableSeeder::class);
-     //    $this->call(CategoriasParcialTableSeeder::class);
+         $valor = 2014;
+        for($i = 0; $i < 30; $i++)
+        {
+            if($i == 2){
+                DB::table('periodos')->insert([
+                    'nombre' => $valor+$i,
+                    'status' => 'activo'
+                ]); 
+            }else{
+                DB::table('periodos')->insert([
+                    'nombre' => $valor+$i,
+                    'status' => 'inactivo'
+                ]); 
+            }
+        }
+    	//$this->call(UsersTableSeeder::class);
+         
+        $this->call(CursosTableSeeder::class);
+        $this->call(AsignaturasTableSeeder::class);
+        $this->call(NomenclaturasTableSeeder::class);
+        $this->call(EquivalenciasTableSeeder::class);
+        $this->call(ComportamientoTableSeeder::class);
+        $this->call(CategoriasParcialTableSeeder::class);
         Model::reguard();
     }
 }
