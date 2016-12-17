@@ -9,6 +9,7 @@ use Redirect;
 use App\Http\Requests;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+
 class LoginController extends Controller
 {
     /**
