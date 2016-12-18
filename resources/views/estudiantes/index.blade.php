@@ -3,14 +3,14 @@
 @section('contentheader_title', 'Estudiantes')
 
 @section('main-content')             
-<div class="col-md-14">
+<div class="col-md-12">
     <button class="btn btn-primary" title="Registrar un nuevo estudiante" onclick="window.location.href = '{{ URL::to('/representantes/create') }}'";>
         <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
     </button>
 </div>
     <section class="content">
         <div class="row">
-            <div class="col-md-14">
+            <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Tabla</h3>
