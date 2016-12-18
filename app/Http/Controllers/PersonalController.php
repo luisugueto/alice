@@ -9,6 +9,7 @@ use App\InformacionAcademica;
 use App\Remuneracion;
 use App\Cargo;
 use App\Tipo;
+use App\Prestamo;
 use App\Http\Requests;
 use App\Http\Requests\PersonalRequest;
 use Session;

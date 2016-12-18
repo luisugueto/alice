@@ -28,6 +28,12 @@
             <div class="form-group">
               {!! Form::label('efectivo', 'Transferencia') !!}<input id="transferencia" onclick="transferencias()" type="checkbox" class="checkbox" name="transferencia">
             </div>
+            <?php $i = 0; $monto = 0;
+                foreach ($prestamos->pagosrealizados as $key) {
+                    $i += $key->monto_pagado;
+                    $monto = $key->monto_adeudado;
+                }
+            ?>
             <div class="form-group cheques" style="display:none">
               {!! Form::label('noCheque', 'N° Cheque') !!}
                {!! Form::number('no_cheque', null, ['class' => 'form-control', 'id'=>'noCheque','title' => 'Introduzca el Sueldo Mensual?:']) !!}
@@ -43,7 +49,7 @@
             
             <div class="form-group">
               {!! Form::label('monto', 'Monto') !!}
-              {!! Form::number('monto', null, ['class' => 'form-control','id'=>'monto','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300.00']) !!}
+              {!! Form::number('monto', null, ['max'=>$prestamos->monto-$i, 'min'=>0,'class' => 'form-control','id'=>'monto','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300.00']) !!}
             </div>
            <div align="center">
               {!!Form::submit('Guardar', ['class'=>'btn btn-primary'])!!}
