@@ -51,19 +51,19 @@
 
                                         ?>
                                     <tr>
-                                        <td>{{$per->id }}</td>
+                                        <td>{{$per->fecha }}</td>
                                         <td>{{$per->personal->nombres}}</td>
                                         <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
                                         <td>{{ $per->monto-$i }}</td>
+                                @if($per->tipo == 'Prestamo')
                                     @if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
                                         <td></td>
                                         @else
-
                                             <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
                                     @endif    
-                                                                       
+                                @endif                                     
                                     </tr>
                                     
                                     @endforeach
