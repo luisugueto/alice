@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Padres extends Model
 {
-    protected $fillable = ['id_estudiante', 'nombres', 'cedula', 'foto', 'lugar_trabajo', 'direcion', 'telefono', 'correo', 'nacionalidad', 'nivel_educacion'];
+    protected $fillable = ['id_estudiante', 'nombres_pa', 'cedula_pa', 'foto_pa', 'lugar_trabajo', 'direccion_pa', 'telefono_pa', 'correo_pa', 'nacionalidad_pa', 'nivel_educacion'];
 
     protected $table = 'datos_padres';
 

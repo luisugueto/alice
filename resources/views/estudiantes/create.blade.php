@@ -8,7 +8,7 @@
 	<section class="content">
 		@include('alerts.request') 
 		<div class="row">
-			<div class="col-md-14">
+			<div class="col-md-12">
 				@if(!empty($cedula))
 					
 					{!! Form::open(['route' => 'estudiantes.store', 'method' => 'POST', 'class' => 'form']) !!}
@@ -34,7 +34,7 @@
 						<ul class="nav nav-tabs">
 					  		<li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Generales</a></li>
 					  	</ul>
-					  	{!! Form::open(['route' => 'estudiantes.cedula', 'method' => 'GET', 'class' => 'form']) !!}
+					  	{!! Form::open(['route' => 'estudiantes.cedula', 'method' => 'GET', 'class' => 'form']) !!} {!! Form::hidden('id_representante', $representante->id) !!}
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab_1">
 								<div class="box-body">

@@ -90,7 +90,12 @@
 </script>
 <script type="text/javascript">
     
-    function bloqueo() {
+    $(document).ready(function (){
+        bloqueo();
+    });
+
+    function bloqueo() 
+    {
         if($('#bloquear').prop("checked"))
         {
             for(i=0; i < 8; i++)
@@ -101,6 +106,11 @@
             $('#contenido').css('display', 'none');
              
         }else{
+
+            for(i=0; i < 8; i++)
+            {
+                $('#zapata'+i).attr('disabled', false);
+            }
 
             $('#contenido').css('display', '');
         }

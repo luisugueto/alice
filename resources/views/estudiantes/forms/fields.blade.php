@@ -3,11 +3,11 @@
 		<div class="col-md-4">
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-				{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
+				{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!} {!! Form::hidden('cedula', $cedula) !!}
 			</div>
 			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
 				{!! Form::label('apellido_paterno', 'Apellido paterno') !!} <small class="text-red">*</small>
-				{!! Form::text('apellido_paterno', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido paterno del estudiante', 'placeholder' => 'Matute', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::text('apellido_paterno', null, ['class' => 'form-control', 'title' => 'Introduzca el apellido paterno del estudiante', 'placeholder' => 'Matute', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!} {!! Form::hidden('id_representante', $id_representante) !!}
 			</div>
 			<div class="form-group{{ $errors->has('nacionalidad') ? ' has-error' : '' }}">
 				{!! Form::label('nacionalidad', 'Nacionalidad') !!} <small class="text-red">*</small>
@@ -57,9 +57,9 @@
 				{!! Form::label('nombres', 'Nombre(s)') !!} <small class="text-red">*</small>
 				{!! Form::text('nombres', null, ['class' => 'form-control', 'title' => 'Introduzca el nombre del estudiante', 'placeholder' => 'Jesús Eduardo', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('ciudad') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('ciudad_natal') ? ' has-error' : '' }}">
 				{!! Form::label('ciudad_natal', 'Ciudad') !!} <small class="text-red">*</small>
-				{!! Form::text('ciudad', null, ['class' => 'form-control', 'title' => 'Introduzca la ciudad natal del estudiante', 'placeholder' => 'Nueva Loja', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::text('ciudad_natal', null, ['class' => 'form-control', 'title' => 'Introduzca la ciudad natal del estudiante', 'placeholder' => 'Nueva Loja', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
 				{!! Form::label('tipo_registro', 'Tipo registro') !!} <small class="text-red">*</small>
@@ -79,39 +79,36 @@
 
 <div class="tab-pane" id="tab_2">
 	<div class="box-body">
-		<div class="col-md-12">
-			<input type="checkbox" id="bloquear" onclick="bloqueo()" class="" title="Seleccione si desea registrar un solo padre o madre"/> <b>Ocultar</b>
-		</div>
 		@for($i=0; $i < 2; $i++)
 		<div id="contenido"><br><br>
 			<div class="col-md-4">
 				<div class="form-group{{ $errors->has('nombres_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('nombres_pa', 'Nombres') !!} <small class="text-red">*</small>
-					{!! Form::text('nombres_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata1']) !!}
+					{!! Form::text('nombres_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata0']) !!}
 				</div>
 				<div class="form-group{{ $errors->has('nacionalidad_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('nacionalidad_pa', 'Nacionalidad') !!} <small class="text-red">*</small>
-					{!! Form::text('nacionalidad_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata2']) !!}
+					{!! Form::text('nacionalidad_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata1']) !!}
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group{{ $errors->has('cedula_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('cedula_pa', 'Cédula') !!} <small class="text-red">*</small>
-					{!! Form::text('cedula_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata3']) !!}
+					{!! Form::text('cedula_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata2']) !!}
 				</div>
 				<div class="form-group{{ $errors->has('telefono_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('telefono_pa', 'Teléfono') !!} <small class="text-red">*</small>
-					{!! Form::text('telefono_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata4']) !!}
+					{!! Form::text('telefono_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata3']) !!}
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
 					{!! Form::label('nivel_educacion', 'Nivel de educación') !!}
-					{!! Form::select('nivel_educacion'.$i, array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'zapata5']) !!}
+					{!! Form::select('nivel_educacion'.$i, array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'zapata4']) !!}
 				</div>
 				<div class="form-group{{ $errors->has('correo_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('correo_pa', 'Correo') !!} <small class="text-red">*</small>
-					{!! Form::email('correo_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'zapata6']) !!}
+					{!! Form::email('correo_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'zapata5']) !!}
 				</div>
 			</div>
 			<div class="col-md-12">
@@ -121,11 +118,14 @@
 				</div>
 				<div class="form-group{{ $errors->has('direccion_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('direccion_pa', 'Dirección') !!} <small class="text-red">*</small>
-					{!! Form::textarea('direccion_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata8']) !!}
+					{!! Form::textarea('direccion_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'zapata6']) !!}
 				</div>
 			</div>
 		</div>
 		@endfor
+		<div class="col-md-12">
+			<input type="checkbox" id="bloquear" checked="true" onclick="bloqueo()" class="" title="Seleccione si desea registrar un solo padre o madre"/> <b>Agregar Padre</b>
+		</div>
 		<div class="col-md-12 text-center">
 			<hr>
 			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)

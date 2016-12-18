@@ -8,7 +8,7 @@
 	<section class="content">
 		@include('alerts.request') 
 		<div class="row">
-			<div class="col-md-14">
+			<div class="col-md-12">
 				<div class="nav-tabs-custom">
 					<ul class="nav nav-tabs">
 					  	<li class="active"><a href="#tab_2" data-toggle="tab" aria-expanded="true">Representante</a></li>

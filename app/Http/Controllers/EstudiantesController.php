@@ -36,7 +36,7 @@ class EstudiantesController extends Controller
     public function create(Request $request)
     {
     	$representante = Representante::where('id', $request->representante)->first();
-
+        
     	if(!empty($representante)) 
     	{
 
@@ -57,7 +57,28 @@ class EstudiantesController extends Controller
      */
     public function store(EstudianteRequest $request)
     {
-        dd($request->all());
+        $variable = count($request->cedula_pa1)+count($request->cedula_pa0);
+    
+        $estudiante = Estudiante::create($request->all());
+        $estudiante->documentos()->create($request->all());
+        $estudiante->novedades()->create($request->all());
+        $estudiante->medicos()->create($request->all());
+
+        for($j=0; $j<count($request->nombre); $j++)
+        {
+            $estudiante->facturaciones()->saveMany([new Facturacion(['nombre' => $request->nombre[$j], 'monto' => $request->monto[$j], 'enviar_banco' => 'No'])]);
+        }
+        
+        if($variable == '1') { $i=1; }else{ $i=0; }
+
+        for($i; $i < $variable; $i++)
+        {
+            $estudiante->padres()->saveMany([new Padres(['nombres_pa' => $request["nombres_pa".$i], 'cedula_pa' => $request["cedula_pa".$i], 'foto_pa' => 'no disponible', 'lugar_trabajo' => $request["lugar_trabajo".$i], 'direccion_pa' => $request["direccion_pa".$i], 'telefono_pa' => $request["telefono_pa".$i], 'correo_pa' => $request["correo_pa".$i], 'nacionalidad_pa' => $request["nacionalidad_pa".$i], 'nivel_educacion' => $request["nivel_educacion".$i]])]);
+        }
+
+        return redirect('/estudiantes');
+        
+        
     }
 
     /**
@@ -118,8 +139,9 @@ class EstudiantesController extends Controller
         }else{
 
             $cedula = $request->cedula;
+            $id_representante = $request->id_representante;
 
-            return view('estudiantes.create', compact('cedula'));
+            return view('estudiantes.create', compact('cedula', 'id_representante'));
         }
     }
 }
