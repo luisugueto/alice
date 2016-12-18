@@ -42,5 +42,8 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
 	Route::get('/nuevo_personal', 'PersonalController@nuevo');
+
+	Route::resource('parciales','ParcialesController');
+	Route::resource('quimestres','QuimestresController');
 });
 	
