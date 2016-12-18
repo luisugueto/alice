@@ -35,24 +35,35 @@
                                         <td>Nombres</td>
                                         <td>Apellidos</td>
                                         <td>Tipo</td>
-                                        <td>Monto</td>
-                                        <td>Monto Adeudado</td>
+                                        <td>Monto Prestamo</td>
+                                        <td>Monto Deudor</td>
                                         <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
+                            
                                    @foreach($prestamo as $per)
+                                   <?php $i = 0; $monto = 0;
+                                            foreach ($per->pagosrealizados as $key) {
+                                                $i += $key->monto_pagado;
+                                                $monto = $key->monto_adeudado;
+                                            }
+
+                                        ?>
                                     <tr>
-                                        <td>{{$per->fecha }}</td>
+                                        <td>{{$per->id }}</td>
                                         <td>{{$per->personal->nombres}}</td>
                                         <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
                                         <td>{{$per->tipo}}</td>
                                         <td>{{$per->monto }}</td>
-                                        <td>{{$per->prestamo->monto_adeudado }}</td>
-                                        @if($per->tipo == 'Prestamo' && $per->prestamo->monto_adeudado != 0)
-                                        <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
-                                        @else <td></td> 
-                                        @endif                               
+                                        <td>{{ $per->monto-$i }}</td>
+                                    @if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
+                                        <td></td>
+                                        @else
+
+                                            <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                    @endif    
+                                                                       
                                     </tr>
                                     
                                     @endforeach

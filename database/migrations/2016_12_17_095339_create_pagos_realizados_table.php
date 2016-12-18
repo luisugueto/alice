@@ -18,6 +18,7 @@ class CreatePagosRealizadosTable extends Migration
             $table->double('monto_adeudado', 10, 2);
             $table->date('fecha');
             $table->integer('id_prestamo')->unsigned();
+            $table->foreign('id_prestamo')->references('id')->on('prestamos')->onDelete('Cascade');
             $table->integer('id_modalidad')->unsigned();
             $table->integer('id_personal')->unsigned();
             $table->bigInteger('no_transferencia');

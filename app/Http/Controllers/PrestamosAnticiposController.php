@@ -79,7 +79,7 @@ class PrestamosAnticiposController extends Controller
                ->orderBy('id', 'desc')
                ->first();
 
-        $suma = $per->sueldo_mens + $per->bono_responsabilidad + $per->descuento_iess;
+        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
         if($request['monto']>$suma) {
             Session::flash('message-error', 'Error: Monto Superior a su Sueldo.');
             $personal = Personal::all();
@@ -98,8 +98,9 @@ class PrestamosAnticiposController extends Controller
                 $prestamo->tipo = 'Anticipo';
             }
             $prestamo->save();
-                $personal = Personal::all();
-                return view('prestamos.create', compact('personal'));
+            Session::flash('message', 'Prestamo Creado Correctamente.');
+                $prestamo = Prestamo::all();
+                return view('prestamos.index', compact('prestamo'));
         }
     }
 

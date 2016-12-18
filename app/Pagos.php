@@ -15,7 +15,7 @@ class Pagos extends Model
      protected $table = 'pagos';
      
     protected $fillable = [
-        
+        'monto_pagado'
     ];
 
     /**

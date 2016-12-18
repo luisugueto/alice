@@ -14,7 +14,7 @@ class Prestamo extends Model
      protected $table = 'prestamos';
      
     protected $fillable = [
-        'monto', 'fecha'
+        'id','monto', 'fecha'
     ];
 
     /**
@@ -26,12 +26,12 @@ class Prestamo extends Model
         
     ];
 
-     public function personal(){
+    public function personal(){
         return $this->belongsTo('App\Personal', 'id_personal');
     }
 
-    public function prestamo(){
-        return $this->hasOne('App\PagosRealizados', 'id');
+    public function pagosrealizados(){
+        return $this->hasMany('App\PagosRealizados', 'id_prestamo', 'id');
     }
 
     public function remuneracion(){

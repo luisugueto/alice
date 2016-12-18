@@ -53,7 +53,7 @@ class PagosController extends Controller
             $id_personal = $key->id_personal;
             $monto = $key->monto;
         }
-
+        
         $FormasPago = new FormasPago();
         if($request['efectivo']=='on')
             $FormasPago->forma = 'efectivo';
@@ -86,10 +86,14 @@ class PagosController extends Controller
 
         $ultimaModalidad = Modalidad::all()->last();
         $PagosRealizados = new PagosRealizados();
-        $PagosRealizados->monto_pagado = (isset($request['monto'])) ? $request['monto'] : '';
-        if($request['modalidad'] == 'C')
+        if($request['modalidad'] == 'C'){
+            $PagosRealizados->monto_pagado = $monto;
             $PagosRealizados->monto_adeudado = '0';
-        else $PagosRealizados->monto_adeudado = ($monto-$request['monto']);
+        }
+        else {
+            $PagosRealizados->monto_adeudado += $request['monto'];
+            $PagosRealizados->monto_pagado += (isset($request['monto'])) ? $request['monto'] : '';
+        }
         $PagosRealizados->fecha = new \DateTime();
         $PagosRealizados->id_prestamo = $request['id'];
         $PagosRealizados->id_modalidad = $ultimaModalidad->id;
@@ -102,6 +106,7 @@ class PagosController extends Controller
         else $PagosRealizados->no_cheque = '0';
         $PagosRealizados->save();
 
+        Session::flash('message', 'Pago Realizado Correctamente.');
         $prestamos = Prestamo::all();
         return view('prestamos.index', ['prestamo'=>$prestamos]);
     }

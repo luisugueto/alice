@@ -119,7 +119,9 @@ class PersonalController extends Controller
             $user->save();
         }
 
-        return Redirect::to('personal.personal');
+        $personal = Personal::all();
+        Session::flash('message', 'Personal Registrado Correctamente');
+        return view('personal.personal', ['personal'=>$personal]);
     }
 
     /**

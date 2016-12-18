@@ -15,7 +15,9 @@ class CreateFormaPagosRealizadosTable extends Migration
         Schema::create('forma_pagos_realizados', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_pagos')->unsigned();
+            $table->foreign('id_pagos')->references('id')->on('pagos')->onDelete('Cascade');
             $table->integer('id_forma')->unsigned();
+            $table->foreign('id_forma')->references('id')->on('formas_pagos')->onDelete('Cascade');
             $table->timestamps();
         });
     }

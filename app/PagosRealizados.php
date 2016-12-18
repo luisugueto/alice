@@ -15,7 +15,7 @@ class PagosRealizados extends Model
      protected $table = 'pagos_realizados';
      
     protected $fillable = [
-        'monto_pagado', 'monto_adeudado', 'fecha', 'no_cheque', 'no_transferencia'
+        'id_prestamo','monto_pagado', 'monto_adeudado', 'fecha', 'no_cheque', 'no_transferencia'
     ];
 
     /**
@@ -26,5 +26,8 @@ class PagosRealizados extends Model
     protected $hidden = [
         
     ];
+     public function prestamo(){
+        return $this->belongsTo('App\Prestamo', 'id_prestamo');
+    }
     public $timestamps = false;
 }
