@@ -4,7 +4,7 @@
 @section('contentheader_description', 'Registro')
 
 @section('main-content')
-
+<div class="col-md-12">
 	<section class="content">
 		@include('alerts.request') 
 		<div class="row">
@@ -54,5 +54,5 @@
 			  	</div>
 		</div>
 	</section>	
-
+</div>
 @endsection

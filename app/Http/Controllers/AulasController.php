@@ -39,7 +39,7 @@ class AulasController extends Controller
     public function store(Request $request)
     {
         $aula = new Aula();
-        $aula->nombre = $request['nombre'];
+        $aula->nombre = strtoupper($request['nombre']);
         $aula->save();
         
         Session::flash('message', 'Aula Creada Correctamente.');
@@ -80,7 +80,7 @@ class AulasController extends Controller
     public function update(Request $request, $id)
     {
         $aula = Aula::find($id);
-        $aula->nombre = $request['nombre'];
+        $aula->nombre = strtoupper($request['nombre']);
         $aula->save();
 
         Session::flash('message', 'Aula Editada Correctamente.');

@@ -39,7 +39,7 @@ class SeccionController extends Controller
     public function store(Request $request)
     {
         $seccion = new Seccion();
-        $seccion->literal = $request['literal'];
+        $seccion->literal = strtoupper($request['literal']);
         $seccion->capacidad = $request['capacidad'];
         $seccion->save();
         
@@ -81,7 +81,7 @@ class SeccionController extends Controller
     public function update(Request $request, $id)
     {
         $seccion = Seccion::find($id);
-        $seccion->literal = $request['literal'];
+        $seccion->literal = strtoupper($request['literal']);
         $seccion->capacidad = $request['capacidad'];
         $seccion->save();
 
