@@ -8,10 +8,10 @@
 </div>
 <div class="form-group">
 	{!! Form::label('Password', 'Password') !!}
-	<input type="password" value="{!! $user->password !!}" class="form-control" placeholder="Ingresa Contraseña">
+	<input type="password" class="form-control" placeholder="Ingresa Contraseña">
 </div>
 <div class="form-group">
 
 	{!! Form::label('Roles', 'Roles') !!}
-	{!! Form::select('roles_id', $roles) !!}
+	{!! Form::select('roles_id', $roles, null, ['class'=>'form-control']) !!}
 </div> 

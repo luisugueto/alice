@@ -99,7 +99,6 @@ class UsuariosController extends Controller
          $user = User::find($id);
          $user->name = strtoupper($request['name']);
          $user->email = strtolower($request['email']);
-         $user->password = $request['password'];
          $user->roles_id = $request['roles_id'];
          
         #$user->fill($request->all());
