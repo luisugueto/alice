@@ -19,6 +19,7 @@ Route::group(['middleware' => 'web'], function () {
 	#Route::resource('app', 'AppController');
 
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
+	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 
 
 	Route::resource('asistencias', 'AsistenciasController');

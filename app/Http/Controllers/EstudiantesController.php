@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Estudiante;
 use App\Representante;
+use App\Facturacion;
+use App\Documentacion;
+use App\DatosMedico;
+use App\Padres;
+use App\Http\Requests\EstudianteRequest;
 
 class EstudiantesController extends Controller
 {
@@ -49,9 +54,9 @@ class EstudiantesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EstudianteRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -97,5 +102,23 @@ class EstudiantesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(CedulaEstudianteRequest $request)
+    {
+
+        $estudiante = Estudiante::where('cedula', $request->cedula)->first();
+
+        if(!empty($estudiante)) 
+        {
+
+            return redirect()->back();
+
+        }else{
+
+            $cedula = $request->cedula;
+
+            return view('estudiantes.create', compact('cedula'));
+        }
     }
 }

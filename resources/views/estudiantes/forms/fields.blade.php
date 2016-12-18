@@ -3,16 +3,7 @@
 		<div class="col-md-4">
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-
-				<div class="input-group">
-					{!! Form::text('cedula', null, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante']) !!}
-
-					<span class="input-group-btn">
-						<button type="submit" class="btn btn-default" id="buscar" title="Buscar">
-							<span class="fa fa-search"></span>
-						</button>
-					</span>
-				</div>
+				{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
 				{!! Form::label('apellido_paterno', 'Apellido paterno') !!} <small class="text-red">*</small>
@@ -28,9 +19,9 @@
 			</div>
 			<div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
 				{!! Form::label('fecha_nacimiento', 'Fecha nacimiento') !!} <small class="text-red">*</small>
-				{!! Form::date('genero', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de nacimiento del estudiante', 'placeholder' => '']) !!}
+				{!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de nacimiento del estudiante', 'placeholder' => '']) !!}
 			</div>
-			<div class="form-group{{ $errors->has('dirccion') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
 				{!! Form::label('direccion', 'Dirección') !!} <small class="text-red">*</small>
 				{!! Form::textarea('direccion', null, ['class' => 'form-control', 'title' => 'Introduzca la dirección donde vive el estudiante', 'placeholder' => '', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
@@ -52,13 +43,13 @@
 				{!! Form::label('estado_actual', 'Estado') !!} <small class="text-red">*</small>
 				{!! Form::select('estado_actual', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo', 'Desertor' => 'Desertor'), null, ['class' => 'form-control', 'title' => 'Introduzca el estado actual del estudiante', 'placeholder' => 'Seleccione']) !!}
 			</div>
-			<div class="form-group">
-				{!! Form::label('telefono', 'Teléfono') !!}
+			<div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
+				{!! Form::label('telefono', 'Teléfono') !!} <small class="text-red">*</small>
 				{!! Form::text('telefono', null, ['class' => 'form-control', 'title' => 'Introduzca el número de teléfono del estudiante', 'placeholder' => '', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="form-group{{ $errors->has('fecha_ingreso') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('fecha_registro') ? ' has-error' : '' }}">
 				{!! Form::label('fecha_registro', 'Fecha de registro') !!} <small class="text-red">*</small>
 				{!! Form::date('fecha_registro', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de registro del estudiante con el formato (DIA-MES-AÑO)']) !!}
 			</div>
@@ -74,8 +65,8 @@
 				{!! Form::label('tipo_registro', 'Tipo registro') !!} <small class="text-red">*</small>
 				{!! Form::text('tipo_registro', null, ['class' => 'form-control', 'title' => 'Introduzca el tipo de registro del estudiante', 'placeholder' => 'Ecuador', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
-			<div class="form-group">
-				{!! Form::label('correo', 'Correo electrónico') !!}
+			<div class="form-group{{ $errors->has('correo') ? ' has-error' : '' }}">
+				{!! Form::label('correo', 'Correo electrónico') !!} <small class="text-red">*</small>
 				{!! Form::email('correo', null, ['class' => 'form-control', 'title' => 'Introduzca el correo del estudiante incluyendo @ejemplo.com', 'placeholder' => 'correo@ejemplo.com']) !!}
 			</div>
 		</div>
@@ -90,39 +81,40 @@
 	<div class="box-body">
 		@for($i=0; $i < 2; $i++)
 			<div class="col-md-4">
-				<div class="form-group">
+				<div class="form-group{{ $errors->has('nombres_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('nombres_pa', 'Nombres') !!}
-					{!! Form::text('nombres_pa', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre']) !!}
+					{!! Form::text('nombres_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 				</div>
-				<div class="form-group">
+				<div class="form-group{{ $errors->has('nacionalidad'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('nacionalidad_pa', 'Nacionalidad') !!}
-					{!! Form::text('nacionalidad_pa', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre']) !!}
+					{!! Form::text('nacionalidad_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="form-group">
+				<div class="form-group{{ $errors->has('cedula_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('cedula_pa', 'Cédula') !!}
-					{!! Form::text('cedula_pa', null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre']) !!}
+					{!! Form::text('cedula_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 				</div>
-				<div class="form-group">
+				<div class="form-group{{ $errors->has('telefono'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('telefono_pa', 'Teléfono') !!}
-					{!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre']) !!}
+					{!! Form::text('telefono_pa'.$i, null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
 					{!! Form::label('nivel_educacion', 'Nivel de educación') !!}
-					{!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre']) !!}
+					{!! Form::select('nivel_educacion'.$i, array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre']) !!}
 				</div>
-				<div class="form-group">
+				<div class="form-group{{ $errors->has('correo_pa'.$i) ? ' has-error' : '' }}">
 					{!! Form::label('correo_pa', 'Correo') !!}
-					{!! Form::email('correo_pa', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre']) !!}
+					{!! Form::email('correo_pa'.$i, null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 				</div>
-			</div>
-			<div class="col-md-12">
-				<hr>
 			</div>
 		@endfor
+		<div class="col-md-12 text-center">
+			<hr>
+			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
+		</div>
 	</div>
 </div>
 <div class="tab-pane" id="tab_3">
@@ -144,7 +136,7 @@
 		<div class="col-md-4">
 			<div class="form-group">
 				{!! Form::label('peso', 'Peso') !!} 
-				{!! Form::number('peso', null, ['class' => 'form-control', 'title' => 'Introduzca el peso del estudiante', 'placeholder' => '60 KG']) !!}
+				{!! Form::number('peso', null, ['class' => 'form-control', 'title' => 'Introduzca el peso del estudiante', 'placeholder' => '60']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('medicinas_contraindicadas', 'Medicinas contraindicadas') !!}
@@ -152,7 +144,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('porcentaje_discapacidad', 'Porcentaje de discapacidad') !!} 
-				{!! Form::number('porcentaje_discapacidad', null, ['class' => 'form-control', 'title' => 'Introduzca el peso del estudiante', 'placeholder' => '40 %']) !!}
+				{!! Form::number('porcentaje_discapacidad', null, ['class' => 'form-control', 'title' => 'Introduzca el peso del estudiante', 'placeholder' => '40']) !!}
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -186,18 +178,77 @@
 				{!! Form::textarea('detalles', null, ['class' => 'form-control', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 		</div>
+		<div class="col-md-12 text-center">
+			<hr>
+			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
+		</div>
 	</div>
 </div>
 
 <div class="tab-pane" id="tab_5">
-	<div class="">
-		
+	<div class="box-body">
+		<div class="col-md-4">
+			<div class="form-group">
+				{!! Form::label('codigo', 'Codigo') !!}
+				{!! Form::text('codigo', null, ['class' => 'form-control', 'placeholder' => 'DOC-0001', 'Introduzca el codigo del documento']) !!}
+			</div>
+			<div class="form-group">
+				{!! Form::label('digitalizado', 'Digitalizado') !!}
+				{!! Form::file('digitalizado', null, ['class' => 'form-control']) !!}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				{!! Form::label('titulo', 'Título') !!}
+				{!! Form::text('titulo', null, ['class' => 'form-control', 'placeholder' => 'Acta de nacimiento', 'title' => 'Introduzca el título del documento']) !!}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				{!! Form::label('entregado', 'Entregado') !!}
+				{!! Form::date('entregado', null, ['class' => 'form-control', 'title' => 'Fecha de entrega del documento']) !!}
+			</div>
+		</div>
+		<div class="col-md-12 text-center">
+			<hr>
+			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
+		</div>
 	</div>
 </div>
 
 <div class="tab-pane" id="tab_6">
-	<div class="box-body"	
-		<div class="col-md-12">
+	 <div id="contenedor">
+	</div>
+	<div class="box-body">
+		<div class="col-md-4">
+			<div class="form-group">
+				{!! Form::label('nombre', 'Nombre') !!}
+				{!! Form::text('nombre[0]', null, ['class' => 'form-control', 'id' => 'nombre', 'placeholder' => 'MATRICULA INICIAL', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				{!! Form::label('fecha_max', 'Fecha') !!}
+				{!! Form::date('fecha_max[0]', null, ['class' => 'form-control', 'id' => 'fecha_max', 'placeholder' => '35']) !!}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				{!! Form::label('monto', 'Monto') !!}
+				{!! Form::number('monto[0]', null, ['class' => 'form-control', 'id' => 'monto', 'placeholder' => '35']) !!}
+			</div>
+		</div>
+		<div class="col-md-1">
+			<center>
+				{!! Form::label('agregar', 'Nuevo') !!}
+				<a href="#" id="agregarCampo" class="text-muted"><i class="fa fa-plus-square btn-lg"></i></a>	
+			</center>
+		</div>
+		<div class="col-md-12 text-center">
+			<hr>
+			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
+		</div>
+		<div class="col-md-12"><br><br>
 			<div class="box-footer">
 			    <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
 			    <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>

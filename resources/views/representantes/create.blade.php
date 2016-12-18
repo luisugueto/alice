@@ -6,6 +6,7 @@
 @section('main-content')
 
 	<section class="content">
+		@include('alerts.request') 
 		<div class="row">
 			<div class="col-md-14">
 				<div class="nav-tabs-custom">
@@ -40,13 +41,6 @@
 							{!! Form::close() !!}
 
 							@else
-								@if(Session::has('message-error'))
-                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                {{Session::get('message-error')}}
-                            </div>
-                        @endif
 
 								{!! Form::open(['route' => 'representantes.store', 'method' => 'POST', 'class' => 'form']) !!}
 					 			

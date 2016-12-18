@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Representante;
 use App\Http\Requests\RepresentanteRequest;
 use App\Http\Requests\CedulaRequest;
+use Session;
 
 class RepresentantesController extends Controller
 {
@@ -41,7 +42,10 @@ class RepresentantesController extends Controller
     {
         
         $representante = Representante::create($request->all())->save();
-        dd($representante);
+        
+        Session::flash('message', 'Representante Creado Correctamente');
+
+        return redirect()->action('EstudiantesController@create', compact('representante'));
 
     }
 
