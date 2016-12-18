@@ -71,7 +71,7 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
