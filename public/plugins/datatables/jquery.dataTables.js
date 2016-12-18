@@ -5070,7 +5070,7 @@
 			_fnCallbackFire( settings, null, 'error', [ settings, tn, msg ] );
 	
 			if ( type == 'alert' ) {
-				// alert( msg );
+				alert( msg );
 			}
 			else if ( type == 'throw' ) {
 				throw new Error(msg);
@@ -5358,7 +5358,7 @@
 		};
 		
 		
-		*
+		/**
 		 * Almost identical to $ in operation, but in this case returns the data for the matched
 		 * rows - as such, the jQuery selector used should match TR row nodes or TD/TH cell nodes
 		 * rather than any descendants, so the data can be obtained for the row/cell. If matching
@@ -5403,9 +5403,9 @@
 		 *      var data = oTable._('tr', {"search": "applied"});
 		 *
 		 *      // Do something with the data
-		 // *      alert( data.length+" rows matched the search" );
+		 *      alert( data.length+" rows matched the search" );
 		 *    } );
-		 
+		 */
 		this._ = function ( sSelector, oOpts )
 		{
 			return this.api(true).rows( sSelector, oOpts ).data();
@@ -5692,7 +5692,7 @@
 		};
 		
 		
-		*
+		/**
 		 * Get the data for the whole table, an individual row or an individual cell based on the
 		 * provided parameters.
 		 *  @param {int|node} [src] A TR row node, TD/TH cell node or an integer. If given as
@@ -5728,7 +5728,7 @@
 		 *        alert( 'The cell clicked on had the value of '+sData );
 		 *      } );
 		 *    } );
-		 
+		 */
 		this.fnGetData = function( src, col )
 		{
 			var api = this.api( true );
@@ -5943,7 +5943,7 @@
 		};
 		
 		
-		*
+		/**
 		 * Get the settings for a particular table for external manipulation
 		 *  @returns {object} DataTables settings object. See
 		 *    {@link DataTable.models.oSettings}
@@ -5958,7 +5958,7 @@
 		 *      // Show an example parameter from the settings
 		 *      alert( oSettings._iDisplayStart );
 		 *    } );
-		 
+		 */
 		this.fnSettings = function()
 		{
 			return _fnSettingsFromNode( this[_ext.iApiIndex] );
@@ -6052,7 +6052,7 @@
 		};
 		
 		
-		*
+		/**
 		 * Provide a common method for plug-ins to check the version of DataTables being used, in order
 		 * to ensure compatibility.
 		 *  @param {string} sVersion Version string to check for, in the format "X.Y.Z". Note that the
@@ -6068,7 +6068,7 @@
 		 *      var oTable = $('#example').dataTable();
 		 *      alert( oTable.fnVersionCheck( '1.9.0' ) );
 		 *    } );
-		 
+		 */
 		this.fnVersionCheck = _ext.fnVersionCheck;
 		
 
@@ -8789,7 +8789,7 @@
 	
 	
 	
-	*
+	/**
 	 * Provide a common method for plug-ins to check the version of DataTables being
 	 * used, in order to ensure compatibility.
 	 *
@@ -8803,7 +8803,7 @@
 	 *
 	 *  @example
 	 *    alert( $.fn.dataTable.versionCheck( '1.9.0' ) );
-	 
+	 */
 	DataTable.versionCheck = DataTable.fnVersionCheck = function( version )
 	{
 		var aThis = DataTable.version.split('.');
@@ -10349,7 +10349,7 @@
 		"fnCreatedRow": null,
 	
 	
-		*
+		/**
 		 * This function is called on every 'draw' event, and allows you to
 		 * dynamically modify any aspect you want about the created DOM.
 		 *  @type function
@@ -10366,7 +10366,7 @@
 		 *        }
 		 *      } );
 		 *    } );
-		 
+		 */
 		"fnDrawCallback": null,
 	
 	
@@ -10492,7 +10492,7 @@
 		"fnInfoCallback": null,
 	
 	
-		*
+		/**
 		 * Called when the table has been initialised. Normally DataTables will
 		 * initialise sequentially and there will be no need for this function,
 		 * however, this does not hold true when using external language information
@@ -10513,7 +10513,7 @@
 		 *        }
 		 *      } );
 		 *    } )
-		 
+		 */
 		"fnInitComplete": null,
 	
 	
@@ -10709,7 +10709,7 @@
 		"fnStateLoadParams": null,
 	
 	
-		*
+		/**
 		 * Callback that is called when the state has been loaded from the state saving method
 		 * and the DataTables settings object has been modified as a result of the loaded state.
 		 *  @type function
@@ -10729,7 +10729,7 @@
 		 *        }
 		 *      } );
 		 *    } );
-		 
+		 */
 		"fnStateLoaded": null,
 	
 	
