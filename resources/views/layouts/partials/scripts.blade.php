@@ -87,4 +87,24 @@
         });
     });
 
-  </script>
+</script>
+<script type="text/javascript">
+    
+    function bloqueo() {
+        if($('#bloquear').prop("checked"))
+        {
+            for(i=0; i < 8; i++)
+            {
+                $('#zapata'+i).attr('disabled', true);
+            }
+
+            $('#contenido').css('display', 'none');
+             
+        }else{
+
+            $('#contenido').css('display', '');
+        }
+
+    }
+    
+</script>

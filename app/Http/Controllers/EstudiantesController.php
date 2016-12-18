@@ -12,6 +12,7 @@ use App\Documentacion;
 use App\DatosMedico;
 use App\Padres;
 use App\Http\Requests\EstudianteRequest;
+use App\Http\Requests\CedulaEstudianteRequest;
 
 class EstudiantesController extends Controller
 {
