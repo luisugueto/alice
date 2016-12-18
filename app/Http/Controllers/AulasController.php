@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seccion;
+use App\Aula;
 use App\Http\Requests;
 use Session;
 
-class SeccionController extends Controller
+class AulasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class SeccionController extends Controller
      */
     public function index()
     {
-        $seccion = Seccion::all();
-        return view('secciones.index', ['seccion'=>$seccion]);
+        $aula = Aula::all();
+        return view('aulas.index', ['aula'=>$aula]);
     }
 
     /**
@@ -27,7 +27,7 @@ class SeccionController extends Controller
      */
     public function create()
     {
-        return view('secciones.create');
+        return view('aulas.create');
     }
 
     /**
@@ -38,14 +38,13 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-        $seccion = new Seccion();
-        $seccion->literal = $request['literal'];
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
+        $aula = new Aula();
+        $aula->nombre = $request['nombre'];
+        $aula->save();
         
-        Session::flash('message', 'Seccion Creada Correctamente.');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+        Session::flash('message', 'Aula Creada Correctamente.');
+        $aula = Aula::all();
+        return view("aulas.index", ['aula'=>$aula]);
     }
 
     /**
@@ -67,8 +66,8 @@ class SeccionController extends Controller
      */
     public function edit($id)
     {
-        $seccion = Seccion::find($id);
-        return view('secciones.edit', ['seccion'=>$seccion]);
+        $aula = Aula::find($id);
+        return view('aulas.edit', ['aula'=>$aula]);
     }
 
     /**
@@ -80,14 +79,13 @@ class SeccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $seccion = Seccion::find($id);
-        $seccion->literal = $request['literal'];
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
+        $aula = Aula::find($id);
+        $aula->nombre = $request['nombre'];
+        $aula->save();
 
-        Session::flash('message', 'Seccion Editada Correctamente.');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+        Session::flash('message', 'Aula Editada Correctamente.');
+        $aula = Aula::all();
+        return view("aulas.index", ['aula'=>$aula]);
     }
 
     /**

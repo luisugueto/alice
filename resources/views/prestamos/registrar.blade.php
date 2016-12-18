@@ -52,7 +52,7 @@
               {!! Form::number('monto', null, ['max'=>$prestamos->monto-$i, 'min'=>0,'class' => 'form-control','id'=>'monto','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300.00']) !!}
             </div>
            <div align="center">
-              {!!Form::submit('Guardar', ['class'=>'btn btn-primary'])!!}
+              {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
           </div>
         </form> 
 

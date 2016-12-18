@@ -35,14 +35,11 @@
                             <div class="form-group">
                                 <input class="btn btn-primary" type="submit" value="Aceptar">
                             </div>
-                        </div>
-                        <br>
+                        </div>        
                       </div>
             </div>                        
                       
            </form> 
            </div>
-           </div>
-           </section>
-           </div>
+    </div>
 @stop
