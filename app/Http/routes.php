@@ -22,6 +22,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 
 
+
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
@@ -31,7 +32,11 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('login', 'LoginController');
 	Route::resource('iess', 'IESSController');
 	Route::resource('prestamos', 'PrestamosAnticiposController');
+	Route::resource('pagos', 'PagosController');
 
+	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
+	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
+	Route::get('/verificarPrestamos', 'PrestamosAnticiposController@ver');
 
 	Route::get('/usuario', 'UsuariosController@index');
 

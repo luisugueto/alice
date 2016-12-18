@@ -56,21 +56,23 @@
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">0</span>
+
+
+                        <span class="label label-warning">{{ Session::get('valor') }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">{{ trans('adminlte_lang::message.notifications') }}</li>
+                        <li class="header"></li>
                         <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
                                 <li><!-- start notification -->
                                     <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> {{ trans('adminlte_lang::message.newmembers') }}
+                                        <i class="fa fa-users"> Tiene {{ Session::get('valor') }} Personales Morosos.</i> 
                                     </a>
                                 </li><!-- end notification -->
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">{{ trans('adminlte_lang::message.viewall') }}</a></li>
+                        <li class="footer"><a href="{{ url('/prestamosTotal') }}">Ver Más</a></li>
                     </ul>
                 </li>
                 <!-- Tasks Menu -->

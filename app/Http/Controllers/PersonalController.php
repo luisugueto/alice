@@ -101,7 +101,7 @@ class PersonalController extends Controller
         $ren = new Remuneracion();
         $ren->id_personal = $id;
         $ren->sueldo_mens  = $request['sueldo_mens'];
-        $ren->descuento_iess = $request['descuento_iess'];
+        $ren->descuento_iess = (isset($request['descuento_iess'])) ? $request['descuento_iess'] : '';
         $ren->bono_responsabilidad  = $request['bono_responsabilidad'];
         if($request['horas_extras']=='on') $ren->horas_extras  = 'Y';
         else $ren->horas_extras  = 'N';

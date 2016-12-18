@@ -10,6 +10,8 @@ use App\Http\Requests\LoginRequest;
 use Redirect;
 use Session;
 use App\Periodos;
+use App\Prestamo;
+use DB;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +79,17 @@ class AuthController extends Controller
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
+
+            $mes = date('m');
+            $prestamo = DB::select('SELECT p.*, pr.*, SUM(pr.monto) as suma, r.*, (r.sueldo_mens+r.bono_responsabilidad) as totales FROM datos_generales_personal as p INNER JOIN prestamos as pr ON p.id = pr.id_personal INNER JOIN remuneracion as r ON r.id_personal=p.id WHERE MONTH(pr.fecha)= $mes GROUP BY p.id');
+            foreach ($prestamo as $per) {
+                $totales = $per->totales;
+                $suma = $per->suma;
+                $i = 0;
+                if($suma>0) $i++;
+            }
+
+            Session::put('valor', $i);
             Session::flash('message', 'Bienvenido');
             Session::put('periodo', $request['periodo']);
             return Redirect::to('/home');
