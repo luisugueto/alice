@@ -8,7 +8,7 @@
 
 
 @section('main-content')                    
-            <div class="col-md-14">
+            <div class="col-md-12">
 
     <section class="content">
     @include('alerts.request') 

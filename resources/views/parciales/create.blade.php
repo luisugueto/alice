@@ -18,7 +18,7 @@
           <form action="{{ route('parciales.store') }}" method="POST" id="f1" name="f1">
           
             
-                     
+                     {{ Session::get('valor') }}
                     <div class="tab-content">
                         <div class="box">
                             <div class="box-header">
@@ -35,14 +35,11 @@
                             <div class="form-group">
                                 <input class="btn btn-primary" type="submit" value="Aceptar">
                             </div>
-                        </div>
-                        <br>
+                        </div>        
                       </div>
             </div>                        
                       
            </form> 
            </div>
-           </div>
-           </section>
-           </div>
+    </div>
 @stop

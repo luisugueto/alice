@@ -38,7 +38,7 @@
               {!! Form::textarea('motivo', null, ['class' => 'form-control', 'title' => 'Introduzca el Motivo', 'placeholder' => 'Ejm: Deudas', 'rows' => '3']) !!}
             </div>
            <div align="center">
-              {!!Form::submit('Guardar', ['class'=>'btn btn-primary'])!!}
+              {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
           </div>
         </form> 
 @stop

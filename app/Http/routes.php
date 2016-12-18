@@ -33,6 +33,9 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('iess', 'IESSController');
 	Route::resource('prestamos', 'PrestamosAnticiposController');
 	Route::resource('pagos', 'PagosController');
+	Route::resource('secciones', 'SeccionController');
+	Route::resource('aulas', 'AulasController');
+
 
 	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
 	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');

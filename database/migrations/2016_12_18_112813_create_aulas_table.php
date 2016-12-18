@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeccionsTable extends Migration
+class CreateAulasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class CreateSeccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('secciones', function (Blueprint $table) {
+        Schema::create('aulas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('literal', 2)->unique();
-            $table->integer('capacidad');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateSeccionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('secciones');
+        Schema::drop('aulas');
     }
 }

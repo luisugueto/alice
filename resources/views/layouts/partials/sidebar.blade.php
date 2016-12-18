@@ -65,6 +65,8 @@
                 <a href="#"><i class='fa fa-link'></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('iess.index') }}">IESS</a></li>
+                    <li><a href="{{ route('secciones.index') }}">Secciones</a></li>
+                    <li><a href="{{ route('aulas.index') }}">Aulas</a></li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->
