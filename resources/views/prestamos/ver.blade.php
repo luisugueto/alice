@@ -13,7 +13,7 @@
     <section class="content">
     <div class="row">
 
-      <div class="col-md-14">
+      <div class="col-md-12">
           <form action="{{ route('prestamos.listado') }}" method="get">
           {{ csrf_field() }}
             <div class="form-group">

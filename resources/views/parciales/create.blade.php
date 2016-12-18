@@ -9,7 +9,7 @@
 
 @section('main-content')  
 
-            <div class="col-md-14">
+            <div class="col-md-12">
 
     <section class="content">
     @include('alerts.request') 
@@ -36,7 +36,7 @@
                                 <input class="btn btn-primary" type="submit" value="Aceptar">
                             </div>
                         </div>
-
+                        <br>
                       </div>
             </div>                        
                       
