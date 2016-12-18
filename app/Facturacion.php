@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facturacion extends Model
 {
-    protected $fillable = ['id_estudiante', 'nombre', 'monto', 'enviar_banco'];
+    protected $fillable = ['id_estudiante', 'nombre', 'fecha_max', 'monto', 'enviar_banco'];
 
     protected $table = 'facturacion';
 

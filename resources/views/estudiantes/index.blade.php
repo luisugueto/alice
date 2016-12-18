@@ -26,6 +26,7 @@
                                         <th>Apellido(s)</th>
                                         <th>Nombre(s)</th>
                                         <th>Género</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -36,6 +37,9 @@
                                             <td> {{ $estudiante->apellidos }}</td>
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->genero }}</td>
+                                            <td>  
+                                                {!! link_to_route('', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-money fa-2x']) !!}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tfoot>

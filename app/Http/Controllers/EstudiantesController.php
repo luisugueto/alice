@@ -63,15 +63,15 @@ class EstudiantesController extends Controller
         $estudiante->documentos()->create($request->all());
         $estudiante->novedades()->create($request->all());
         $estudiante->medicos()->create($request->all());
-
+        
         for($j=0; $j<count($request->nombre); $j++)
         {
             $estudiante->facturaciones()->saveMany([new Facturacion(['nombre' => $request->nombre[$j], 'monto' => $request->monto[$j], 'enviar_banco' => 'No'])]);
         }
         
-        if($variable == '1') { $i=1; }else{ $i=0; }
-
-        for($i; $i < $variable; $i++)
+        if($variable == '1') { $i=1; $fin=2; }else{ $i=0; $fin=2; }
+        
+        for($i; $i < $fin; $i++)
         {
             $estudiante->padres()->saveMany([new Padres(['nombres_pa' => $request["nombres_pa".$i], 'cedula_pa' => $request["cedula_pa".$i], 'foto_pa' => 'no disponible', 'lugar_trabajo' => $request["lugar_trabajo".$i], 'direccion_pa' => $request["direccion_pa".$i], 'telefono_pa' => $request["telefono_pa".$i], 'correo_pa' => $request["correo_pa".$i], 'nacionalidad_pa' => $request["nacionalidad_pa".$i], 'nivel_educacion' => $request["nivel_educacion".$i]])]);
         }

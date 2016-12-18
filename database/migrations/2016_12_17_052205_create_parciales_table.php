@@ -43,6 +43,6 @@ class CreateParcialesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parciles');
+        Schema::drop('parciales');
     }
 }

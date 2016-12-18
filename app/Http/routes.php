@@ -35,6 +35,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('pagos', 'PagosController');
 	Route::resource('secciones', 'SeccionController');
 	Route::resource('aulas', 'AulasController');
+	Route::resource('rubros', 'RubrosController');
 
 
 	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
