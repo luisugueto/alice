@@ -22,6 +22,7 @@ class PrestamosAnticiposController extends Controller
         define('mesActual', date('m'));
         $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
         #$prestamo = Prestamo::all();
+
         return view('prestamos.index', compact('prestamo'));
     }
 
@@ -63,6 +64,30 @@ class PrestamosAnticiposController extends Controller
 // }    
         
         $prestamo = Prestamo::all();
+            $suma = 0;
+            foreach($prestamo as $per){
+                $i = 0; $monto = 0;
+                foreach ($per->pagosrealizados as $key) {
+                    $i += $key->monto_pagado;
+                    $monto = $key->monto_adeudado;
+                }                    
+                $per->fecha;
+                $per->personal->nombres;                
+                $per->tipo;
+                $per->monto;
+                $per->monto-$i;
+                if($per->tipo == 'Prestamo')
+                {
+                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
+                    {
+
+                    }
+                    else $suma++;
+                }                
+            }
+
+            Session::forget('valor');
+            Session::put('valor', $suma);
 
         return view('prestamos.total', compact('prestamo'));
     }
@@ -99,8 +124,37 @@ class PrestamosAnticiposController extends Controller
             }
             $prestamo->save();
             Session::flash('message', 'Prestamo Creado Correctamente.');
-                $prestamo = Prestamo::all();
-                return view('prestamos.index', compact('prestamo'));
+            
+            $prestamo = Prestamo::all();
+            $suma = 0;
+            foreach($prestamo as $per){
+                $i = 0; $monto = 0;
+                foreach ($per->pagosrealizados as $key) {
+                    $i += $key->monto_pagado;
+                    $monto = $key->monto_adeudado;
+                }                    
+                $per->fecha;
+                $per->personal->nombres;                
+                $per->tipo;
+                $per->monto;
+                $per->monto-$i;
+                if($per->tipo == 'Prestamo')
+                {
+                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
+                    {
+
+                    }
+                    else $suma++;
+                }                
+            }
+
+            Session::forget('valor');
+            Session::put('valor', $suma);
+
+            
+            define('mesActual', date('m'));
+            $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
+            return view('prestamos.index', compact('prestamo'));
         }
     }
 
