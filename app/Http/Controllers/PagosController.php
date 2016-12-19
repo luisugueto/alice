@@ -46,7 +46,22 @@ class PagosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {      
+        $prestamos = Prestamo::where('id', $request['id'])->get();
+
+        foreach ($prestamos as $key) {
+            $id_personal = $key->id_personal;
+            $id_prestamo = $key->id;
+            $monto = $key->monto;
+        } 
+
+        $prestamo = PagosRealizados::where('id_prestamo', $id_prestamo)->count();
+        $pr = PagosRealizados::where('id_prestamo', $id_prestamo)->orderBy('id', 'desc')->take(1)->get();
+
+        foreach ($pr as $key) {
+            $montoo = $key->monto_adeudado;
+        }      
+
         $prestamos = Prestamo::where('id', $request['id'])->get();
 
         foreach ($prestamos as $key) {
@@ -85,26 +100,50 @@ class PagosController extends Controller
         $modalidad->save();
 
         $ultimaModalidad = Modalidad::all()->last();
-        $PagosRealizados = new PagosRealizados();
-        if($request['modalidad'] == 'C'){
-            $PagosRealizados->monto_pagado = $monto;
-            $PagosRealizados->monto_adeudado = '0';
+        if($prestamo==0)
+        {
+            $PagosRealizados = new PagosRealizados();
+            if($request['modalidad'] == 'C'){
+                $PagosRealizados->monto_pagado = $monto;
+                $PagosRealizados->monto_adeudado = '0';
+            }
+            else {
+                $PagosRealizados->monto_adeudado = $monto-$request['monto'];
+                $PagosRealizados->monto_pagado = (isset($request['monto'])) ? $request['monto'] : '';
+            }
+            $PagosRealizados->fecha = new \DateTime();
+            $PagosRealizados->id_prestamo = $request['id'];
+            $PagosRealizados->id_modalidad = $ultimaModalidad->id;
+            $PagosRealizados->id_personal = $id_personal;
+            if($request['transferencia']=='on')
+                $PagosRealizados->no_transferencia = $request['no_transferencia'];
+            else $PagosRealizados->no_transferencia = '0';
+            if($request['cheque']=='on')
+                $PagosRealizados->no_cheque = $request['no_cheque'];
+            else $PagosRealizados->no_cheque = '0';
+            $PagosRealizados->save();
+        }else{
+            $PagosRealizados = new PagosRealizados();
+            if($request['modalidad'] == 'C'){
+                $PagosRealizados->monto_pagado = $montoo;
+                $PagosRealizados->monto_adeudado = '0';
+            }
+            else {
+                $PagosRealizados->monto_adeudado = $montoo-$request['monto'];
+                $PagosRealizados->monto_pagado = (isset($request['monto'])) ? $request['monto'] : '';
+            }
+            $PagosRealizados->fecha = new \DateTime();
+            $PagosRealizados->id_prestamo = $request['id'];
+            $PagosRealizados->id_modalidad = $ultimaModalidad->id;
+            $PagosRealizados->id_personal = $id_personal;
+            if($request['transferencia']=='on')
+                $PagosRealizados->no_transferencia = $request['no_transferencia'];
+            else $PagosRealizados->no_transferencia = '0';
+            if($request['cheque']=='on')
+                $PagosRealizados->no_cheque = $request['no_cheque'];
+            else $PagosRealizados->no_cheque = '0';
+            $PagosRealizados->save();
         }
-        else {
-            $PagosRealizados->monto_adeudado += $request['monto'];
-            $PagosRealizados->monto_pagado += (isset($request['monto'])) ? $request['monto'] : '';
-        }
-        $PagosRealizados->fecha = new \DateTime();
-        $PagosRealizados->id_prestamo = $request['id'];
-        $PagosRealizados->id_modalidad = $ultimaModalidad->id;
-        $PagosRealizados->id_personal = $id_personal;
-        if($request['transferencia']=='on')
-            $PagosRealizados->no_transferencia = $request['no_transferencia'];
-        else $PagosRealizados->no_transferencia = '0';
-        if($request['cheque']=='on')
-            $PagosRealizados->no_cheque = $request['no_cheque'];
-        else $PagosRealizados->no_cheque = '0';
-        $PagosRealizados->save();
 
         Session::flash('message', 'PAGO REALIZADO CORRECTAMENTE');
         $prestamos = Prestamo::all();

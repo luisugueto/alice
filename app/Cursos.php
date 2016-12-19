@@ -29,6 +29,6 @@ class Cursos extends Model
 
     public function asignaturas(){
 
-    	return $this->hasOne('App\Asignaturas','id_curso','id');
+    	return $this->hasMany('App\Asignaturas','id_curso','id');
     }
 }

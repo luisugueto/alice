@@ -104,9 +104,27 @@ class PrestamosAnticiposController extends Controller
                ->orderBy('id', 'desc')
                ->first();
 
+        $mes = date('m');
+        $pagosrealizados = DB::select('SELECT *, sum(monto_pagado) as monto FROM pagos_realizados WHERE id_personal = '.$request['personal'].' AND MONTH(fecha) = '.$mes.'');
+
+        foreach ($pagosrealizados as $key) {
+            $monto_pagos = $key->monto;
+        }
+
+        $prestamos = DB::select('SELECT *, sum(monto) as monto FROM prestamos WHERE id_personal = '.$request['personal'].' AND MONTH(fecha) = '.$mes.'');
+
+        foreach ($prestamos as $key) {
+            $monto_prestamos = $key->monto;
+        }
+
+        $pagadoTotal = $monto_prestamos-$monto_pagos;
+
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
-        if($request['monto']>$suma) {
-            Session::flash('message-error', 'ERROR: MONTO SUPERIOR A SU CAPITAL.');
+
+        $pres = $suma-$pagadoTotal;
+
+        if($request['monto']>$pres) {
+            Session::flash('message-error', 'ERROR: MONTO SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
             $personal = Personal::all();
             return view('prestamos.create', compact('personal'));
         }else{

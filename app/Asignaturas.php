@@ -29,7 +29,7 @@ class Asignaturas extends Model
 
     public function cursos(){
 
-    	return $this->hasOne('App\Cursos','id_curso');
+    	return $this->belongsTo('App\Cursos','id_curso');
     }
 
     public function calificacion_parcial(){

@@ -34,6 +34,7 @@
             <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-user'></i> <span>Usuarios</span></a></li>
             <li><a href="{{ route('personal.index') }}"><i class='fa fa-user'></i> <span>Personal</span></a></li>
             <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-user'></i> <span>Estudiantes</span></a></li>
+            <li><a href="{{ route('asignaturas.index') }}"><i class='fa fa-user'></i> <span>Asignaturas</span></a></li>
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">

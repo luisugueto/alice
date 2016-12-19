@@ -38,6 +38,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('cargos', 'CargosController');
 	Route::resource('aulas', 'AulasController');
 	Route::resource('rubros', 'RubrosController');
+	Route::resource('asignaturas', 'AsignaturasController');
+	
 
 
 	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
