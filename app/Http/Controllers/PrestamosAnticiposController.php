@@ -62,6 +62,7 @@ class PrestamosAnticiposController extends Controller
 //                 $prestamos[$k] = $v;
 //         }
 // }    
+
         
         $prestamo = Prestamo::all();
             $suma = 0;
@@ -124,7 +125,7 @@ class PrestamosAnticiposController extends Controller
         $pres = $suma-$pagadoTotal;
 
         if($request['monto']>$pres) {
-            Session::flash('message-error', 'ERROR: MONTO SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
+            Session::flash('message-error', 'ERROR: NO SE PUDO REALIZAR SU PRESTAMO EN EL MES. EL MONTO INTRODUCIDO ES SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
             $personal = Personal::all();
             return view('prestamos.create', compact('personal'));
         }else{
@@ -212,6 +213,27 @@ class PrestamosAnticiposController extends Controller
 
     public function listado(Request $request)
     {   
+        $per = Remuneracion::where('id_personal', $request['persona'])
+               ->orderBy('id', 'desc')
+               ->first();
+        $pagosrealizados = DB::select('SELECT *, sum(monto_pagado) as monto FROM pagos_realizados WHERE id_personal = '.$request['persona'].'');
+
+        foreach ($pagosrealizados as $key) {
+            $monto_pagos = $key->monto;
+        }
+
+        $prestamos = DB::select('SELECT *, sum(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].'');
+
+        foreach ($prestamos as $key) {
+            $monto_prestamos = $key->monto;
+        }
+
+        $pagadoTotal = $monto_prestamos-$monto_pagos;
+    
+        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
+
+        #$capital = $suma-$pagadoTotal;
+
 
         $prestamo = DB::select('SELECT *,SUM(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].' GROUP BY id_personal');
 
@@ -224,7 +246,7 @@ class PrestamosAnticiposController extends Controller
         //              ->get();
         
         $pres = Prestamo::where('id_personal', $request['persona'])->get();
-        return view('prestamos.listado', ['total' => $total, 'prestamo' => $pres]);
+        return view('prestamos.listado', ['total' => $total, 'prestamo' => $pres, 'capital' =>$monto_prestamos]);
     }
 
     /**
