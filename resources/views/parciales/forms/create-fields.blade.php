@@ -3,8 +3,8 @@
 	.vertical{
 		position:relative;
 		writing-mode:tb-rl;
-		filter:flipH() flipV()
-
+		filter:flipH() flipV();
+		max-width: 40px;
 	}
 
 </style>
@@ -22,15 +22,15 @@ $j=0; ?>
 			<th>#</th>
 			<th><strong>Asignatura</strong></th>
 		@foreach($categorias as $categorias)
-			<th align="center" bgcolor="<?=$color[$j]?>" >
-				
+			<th style="width:40px;" align="center" bgcolor="<?=$color[$j]?>" >
+				<div class="vertical"> 
 			{{ $categorias->categoria}}
-			
+			</div>
 			</th>
 			<?php $j++; ?>
 		@endforeach
-			<th align="center" bgcolor="#FFD700">Promedio Total</th>
-			<th align="center" bgcolor="#F0F8FF">Cualitativa</th>
+			<th style="width:30px;" align="center" bgcolor="#FFD700"><div class="vertical" >Promedio Total</div></th>
+			<th style="width:30px;" align="center" bgcolor="#F0F8FF"><div class="vertical" >Cualitativa</div></th>
 			
 			</tr>
 			</thead>
@@ -41,34 +41,37 @@ $j=0; ?>
 			<td>{{$i}}</td>
 			<td>{{$asignaturas->asignatura}}</td>
 			<td>
-				<div class="form-group">{!! Form::number('deberes[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Deberes para esta asignatura', 'min' => '1.00', 'max' => '10', 'required' => 'required'])!!} 
+				<div class="form-group">{!! Form::number('deberes[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Deberes para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required', 'onkeyup' => 'promediar()', 'id' => 'deberes', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
 			</td>
 			<td>
-				<div class="form-group">{!! Form::number('individuales[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria Actividades Individuales para esta asignatura', 'min' => '1.00', 'max' => '10', 'required' => 'required'])!!} 
+				<div class="form-group">{!! Form::number('individuales[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria Actividades Individuales para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required', 'id' => 'individuales', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
 			</td>
 			<td>
-				<div class="form-group">{!! Form::number('grupales[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Grupaes para esta asignatura', 'min' => '1.00', 'max' => '10', 'required' => 'required'])!!} 
+				<div class="form-group">{!! Form::number('grupales[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Grupales para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required', 'id' => 'grupales', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
 			</td>
 			<td>
-				<div class="form-group">{!! Form::number('lecciones[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Lecciones para esta asignatura', 'min' => '1.00', 'max' => '10', 'required' => 'required'])!!} 
+				<div class="form-group">{!! Form::number('lecciones[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Lecciones para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required', 'id' => 'lecciones', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
 			</td>
 			<td>
-				<div class="form-group">{!! Form::number('aportes[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Aportes para esta asignatura', 'min' => '1.00', 'max' => '10', 'required' => 'required'])!!} 
+				<div class="form-group">{!! Form::number('aportes[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Aportes para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'aportes', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
 			</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td><div class="form-group">{!! Form::text('promedio[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio Total', 'required' => 'required','id' => 'promedio','disabled' => 'disabled'])!!} 
+				</div></td>
+			<td><div class="form-group">{!! Form::text('cualitativa[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '','title' => 'Calificación Cualitativa', 'required' => 'required','id' => 'cualitativa','disabled' => 'disabled'])!!} 
+				</div></td>
 
 			</tr>
-			<?php $i++?>
+			<?php $i++; ?>
 			@endforeach
 			<tr>
 			<td colspan="7"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
-				<td>&nbsp;</td>
+				<td align="center"><div class="form-group">{!! Form::text('promedio_ap',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio de Aprovechamiento', 'required' => 'required','id' => 'promedio','disabled' => 'disabled'])!!} 
+				</div></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
@@ -96,6 +99,7 @@ $j=0; ?>
 
 
 			</tr>
+			<?php $k++; ?>
 			@endforeach
 			@foreach($comportamiento as $comportamiento)
 				<tr>
