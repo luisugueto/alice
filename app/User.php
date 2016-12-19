@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -12,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role_id',
+        'name', 'email', 'password','role_id', 'foto',
     ];
 
     /**
@@ -21,11 +22,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
 
     public function roles(){
         return $this->belongsTo('App\Roles', 'roles_id');
+    }
+
+    public function setFotoAttribute($foto){
+        $this->attributes['foto'] = Carbon::now()->second.$foto->getClientOriginalName();
+        $name = Carbon::now()->second.$foto->getClientOriginalName();
+        \Storage::disk('local')->put($name, \File::get($foto));
     }
 
     public function setPasswordAttribute($valor){

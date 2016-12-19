@@ -1,6 +1,6 @@
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
-
+<?php $user = Auth::user()->foto; ?>
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
@@ -8,12 +8,23 @@
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
+                    @if(Auth::user()->foto == '')
                     <img src="{{asset('/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image" />
+
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name }}</p>
                     <!-- Status -->
                     <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('adminlte_lang::message.online') }}</a>
+                    @else
+                    <img src="{{asset('perfil/'.$user)}}" class="img-circle" alt="User Image" />
+
+                </div>
+                <div class="pull-left info">
+                    <p>{{ Auth::user()->name }}</p>
+                    <!-- Status -->
+                    <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('adminlte_lang::message.online') }}</a>
+                    @endif
                 </div>
             </div>
         @endif

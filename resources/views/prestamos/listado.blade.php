@@ -29,6 +29,7 @@
                         <h3 class="box-title"> 
                             <div class="form-group"> 
                                <b>Listado</b>
+                               <br><b>Total de Prestamos: {{ $capital }}</b>
                             </div>
                              </h3>
                     </div>

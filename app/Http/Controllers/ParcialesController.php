@@ -55,7 +55,8 @@ class ParcialesController extends Controller
         $categorias=Categorias_parcial::all();
         $equivalencias=Equivalencias::all();
         $comportamiento=Comportamiento::all();
-        return View('parciales.create',compact('asignaturas','categorias','equivalencias','comportamiento'));
+        $promedio_comp=Comportamiento::lists('literal','id');
+        return View('parciales.create',compact('asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
     }
 
     /**
