@@ -118,3 +118,62 @@
     }
     
 </script>
+<script type="text/javascript">
+
+    function modalidad()
+    {
+        
+        var modalidad=document.form.id_modalidad;
+        var monto_pagar=document.form.monto_pagar;
+
+        if(modalidad.value==1)
+        {
+            monto_pagar.disabled=true;
+
+        }else{
+
+            monto_pagar.disabled=false;
+
+        }
+    }
+    function bloqueos2()
+    {
+        
+    var checkboxes = document.form.id_forma;
+    
+    //for(var i=0;i<checkboxes.length;i++){
+   
+        if(checkboxes[0].checked==false && checkboxes[1].checked==false && checkboxes[2].checked==false){
+          
+            alert("Debe Seleccionar alguna de las otras opciones");
+              
+            if(checkboxes[0].checked==false){
+                checkboxes[0].checked=true;
+            }
+            if(checkboxes[1].checked==false){
+                checkboxes[1].checked=true;
+            }
+            if(checkboxes[2].checked==false){
+                checkboxes[2].checked=true;
+            }
+          
+        }
+
+        if(checkboxes[1].checked==true){
+            document.form.nro_cheque.disabled=false;
+        
+        }else{
+            document.form.nro_cheque.disabled=true;
+        }
+        
+        if(checkboxes[2].checked==true){
+          
+          document.form.nro_transferencia.disabled=false;
+        
+        }else{
+          
+          document.form.nro_transferencia.disabled=true;
+        }
+
+    }
+</script>

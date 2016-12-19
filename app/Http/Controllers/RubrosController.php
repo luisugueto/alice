@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Estudiante;
 use App\Profesor;
 use App\Facturacion;
+use App\Modalidad;
+use App\FormasPago;
+use App\RubrosRealizados;
 
 class RubrosController extends Controller
 {
@@ -65,7 +68,11 @@ class RubrosController extends Controller
      */
     public function edit($id)
     {
-        $
+        $rubros = Facturacion::find($id);
+        $modalidad = Modalidad::lists('modalidad', 'id');
+        $formas_pago = FormasPago::get();
+
+        return view('rubros.edit', compact('rubros', 'modalidad', 'formas_pago'));
     }
 
     /**
@@ -77,7 +84,8 @@ class RubrosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+     	$rubros = Facturacion::find($id);
+     	dd($request->all());
     }
 
     /**
