@@ -30,7 +30,7 @@
 
 		<div class="form-group">
 			{!! Form::label('Monto', 'Monto a Pagar') !!}
-			{!! Form::number('monto_pagar', null, ['class' => 'form-control','required' => 'required', 'placeholder' => '100', 'title' => 'Aqui debe colocar la cantidad a pagar o a abonar, la cual no debe ser mayor al monto de deuda', 'disabled' => 'disabled'])  !!}
+			{!! Form::number('monto_pagar', null, ['class' => 'form-control','required' => 'required', 'placeholder' => '100', 'title' => 'Aqui debe colocar la cantidad a pagar o a abonar, la cual no debe ser mayor al monto de deuda', 'disabled' => 'disabled', 'min' => '1', 'max' => $rubros->monto])  !!}
 		</div>
 		{!! Form::hidden('id_estudiante', $rubros->estudiante->id) !!}
 	</div>

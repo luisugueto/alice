@@ -25,6 +25,7 @@ class CreateRubrosRalizadosTable extends Migration
             $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
             $table->bigInteger('no_transferencia');
             $table->bigInteger('no_cheque');
+            $table->timestamps();
         });
     }
 

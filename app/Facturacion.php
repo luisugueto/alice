@@ -19,4 +19,9 @@ class Facturacion extends Model
     {
     	return $this->belongsToMany('App\Estudiante', 'rubros', 'id_factura', 'id_estudiante');
     }
+
+    public function rubros_realizados()
+    {
+        return $this->hasMany('App\RubrosRealizados', 'id_factura', 'id');
+    }
 }

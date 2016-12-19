@@ -14,7 +14,7 @@ class CreateBloquesTable extends Migration
     {
         Schema::create('bloques', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('15', 20);
+            $table->string('bloque', 20);
             $table->integer('id_dia')->unsigned();
             $table->foreign('id_dia')->references('id')->on('dias');
         });

@@ -20,8 +20,7 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
-
-
+	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

@@ -14,16 +14,17 @@ class FormasPago extends Model
      */
      protected $table = 'formas_pagos';
      
-    protected $fillable = [
-        'forma'
-    ];
+     protected $fillable = ['forma'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        
-    ];
+    protected $hidden = [];
+
+    public function rubro()
+    {
+        return $this->belongsToMany('App\RubrosRealizados', 'forma_rubros_realizados', 'id_forma', 'id_rubro');
+    }
 }

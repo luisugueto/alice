@@ -36,6 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ModalidadsPagoSeeder::class);
         $this->call(FormasPagoSeeder::class);
         $this->call(PersonalSeeder::class);
+        $this->call(DiasTableSeeder::class);
+        $this->call(BloquesTableSeeder::class);
         Model::reguard();
     }
 }
