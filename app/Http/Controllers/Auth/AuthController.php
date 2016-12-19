@@ -66,6 +66,20 @@ class AuthController extends Controller
 
     public function showLoginForm()
     {
+        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+        foreach ($user as $key) { $suma = $key->suma; }
+        if($suma>1) {Session::flash('message-error', 'ERROR');}
+        else{
+            $user = new User();
+            $user->name = strtoupper('ADMIN');
+            $user->email = strtolower('admin@system.com');
+            $user->password = bcrypt('1234');
+            $user->roles_id = '1';
+            $user->remember_token = Session::token();
+            $user->save();
+            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+        }
+
         $periodos = Periodos::lists('nombre', 'id');
         return view('auth.login', ['periodos' => $periodos]);
     }

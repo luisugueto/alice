@@ -43,7 +43,7 @@ class RepresentantesController extends Controller
         
         $representante = Representante::create($request->all())->save();
         
-        Session::flash('message', 'Representante Creado Correctamente');
+        Session::flash('message', 'REPRESENTANTE REGISTRADO CORRECTAMENTE');
 
         return redirect()->action('EstudiantesController@create', compact('representante'));
 

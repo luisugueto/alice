@@ -14,8 +14,13 @@ class DatabaseSeeder extends Seeder
     {
     	Model::unguard();
 
+        DB::table('area_trabajos')->insert([
+            'nombre'=>'DIRECCION'
+        ]);
+
         DB::table('cargos')->insert([
-            'nombre' => 'Secretaria'
+            'nombre' => 'SECRETARIA',
+            'id_area' => 1
         ]);
 
     	$this->call(UsersTableSeeder::class); 

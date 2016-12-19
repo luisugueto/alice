@@ -75,6 +75,8 @@
                     <li><a href="{{ route('iess.index') }}">IESS</a></li>
                     <li><a href="{{ route('secciones.index') }}">Secciones</a></li>
                     <li><a href="{{ route('aulas.index') }}">Aulas</a></li>
+                    <li><a href="{{ route('cargos.index') }}">Cargos</a></li>
+                    <li><a href="{{ route('areas.index') }}">Areas de Trabajo</a></li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->

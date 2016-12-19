@@ -34,6 +34,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('prestamos', 'PrestamosAnticiposController');
 	Route::resource('pagos', 'PagosController');
 	Route::resource('secciones', 'SeccionController');
+	Route::resource('areas', 'AreaTrabajoController');
+	Route::resource('cargos', 'CargosController');
 	Route::resource('aulas', 'AulasController');
 	Route::resource('rubros', 'RubrosController');
 

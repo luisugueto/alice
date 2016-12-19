@@ -25,4 +25,9 @@ class Cargo extends Model
     protected $hidden = [
         
     ];
+
+    public function area()
+    {
+        return $this->belongsTo('App\AreaTrabajo', 'id_area');
+    }
 }

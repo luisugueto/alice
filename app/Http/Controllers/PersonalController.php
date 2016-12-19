@@ -121,7 +121,7 @@ class PersonalController extends Controller
         }
 
         $personal = Personal::all();
-        Session::flash('message', 'Personal Registrado Correctamente');
+        Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
         return view('personal.personal', ['personal'=>$personal]);
     }
 
@@ -214,7 +214,7 @@ class PersonalController extends Controller
         else $ren->devolver_fondos = 'N';
         $ren->save();
 
-        Session::flash('message', 'Usuario Editado Correctamente');
+        Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
 
         return redirect::to('personal.personal');
     }
@@ -229,7 +229,7 @@ class PersonalController extends Controller
     {
         Personal::destroy($id);
         InformacionAcademica::where('id_personal', $id)->delete();
-        Session::flash('message', 'Personal Eliminado Correctamente');
+        Session::flash('message', 'USUARIO ELIMINADO CORRECTAMENTE');
 
         return redirect::to('/personal');
     }

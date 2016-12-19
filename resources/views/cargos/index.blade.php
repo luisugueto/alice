@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Secciones
+    Cargos
 @endsection
 
-@section('contentheader_title', 'Secciones')
+@section('contentheader_title', 'Cargos')
 
 
 @section('main-content')                    
@@ -19,10 +19,10 @@
     @endif
     @include('alerts.errors')
      
-    
+<div class="col-md-12">
     <section class="content">
    <div class="col-md-14">
-    <button class="btn btn-primary" title="Registrar una nueva seccion" onclick="window.location.href = '{{ route('secciones.create') }}'";>
+    <button class="btn btn-primary" title="Registrar un nuevo cargo" onclick="window.location.href = '{{ route('cargos.create') }}'";>
         <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
     </button>
     </div>
@@ -37,18 +37,18 @@
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                        <td>Literal</td>
-                                        <td>Capacidad</td>
+                                        <td>Nombre</td>
+                                        <td>Area de Trabajo</td>
                                         <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
                                 
-                                @foreach($seccion as $i)
+                                @foreach($cargo as $i)
                                     <tr>
-                                        <td>{{ $i->literal}}</td>
-                                        <td>{{$i->capacidad }}</td>    
-                                        <td>{!!link_to_route('secciones.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
+                                        <td>{{ $i->nombre}}</td>  
+                                        <td>{{ $i->area->nombre}}</td>  
+                                        <td>{!!link_to_route('cargos.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -57,4 +57,8 @@
                         </div>
                         
                     </div>
+                </div>
+            </div>
+        </section>
+    </div>
 @stop

@@ -106,7 +106,7 @@ class PagosController extends Controller
         else $PagosRealizados->no_cheque = '0';
         $PagosRealizados->save();
 
-        Session::flash('message', 'Pago Realizado Correctamente.');
+        Session::flash('message', 'PAGO REALIZADO CORRECTAMENTE');
         $prestamos = Prestamo::all();
         return view('prestamos.index', ['prestamo'=>$prestamos]);
     }

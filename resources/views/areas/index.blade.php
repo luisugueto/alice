@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Secciones
+    Areas de Trabajo
 @endsection
 
-@section('contentheader_title', 'Secciones')
+@section('contentheader_title', 'Areas de Trabajo')
 
 
 @section('main-content')                    
@@ -19,10 +19,10 @@
     @endif
     @include('alerts.errors')
      
-    
+<div class="col-md-12">
     <section class="content">
    <div class="col-md-14">
-    <button class="btn btn-primary" title="Registrar una nueva seccion" onclick="window.location.href = '{{ route('secciones.create') }}'";>
+    <button class="btn btn-primary" title="Registrar un nuevo estudiante" onclick="window.location.href = '{{ route('areas.create') }}'";>
         <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
     </button>
     </div>
@@ -37,18 +37,16 @@
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                        <td>Literal</td>
-                                        <td>Capacidad</td>
+                                        <td>Nombre</td>
                                         <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
                                 
-                                @foreach($seccion as $i)
+                                @foreach($area as $i)
                                     <tr>
-                                        <td>{{ $i->literal}}</td>
-                                        <td>{{$i->capacidad }}</td>    
-                                        <td>{!!link_to_route('secciones.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
+                                        <td>{{ $i->nombre}}</td>  
+                                        <td>{!!link_to_route('areas.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -57,4 +55,9 @@
                         </div>
                         
                     </div>
+                </div>
+            </div>
+        </section>
+</div>
+
 @stop

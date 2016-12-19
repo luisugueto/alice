@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seccion;
+use App\AreaTrabajo;
 use App\Http\Requests;
 use Session;
 
-class SeccionController extends Controller
+class AreaTrabajoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class SeccionController extends Controller
      */
     public function index()
     {
-        $seccion = Seccion::all();
-        return view('secciones.index', ['seccion'=>$seccion]);
+        $area = AreaTrabajo::all();
+        return view('areas.index', compact('area'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SeccionController extends Controller
      */
     public function create()
     {
-        return view('secciones.create');
+        return view('areas.create');
     }
 
     /**
@@ -38,14 +38,12 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-        $seccion = new Seccion();
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
-        
-        Session::flash('message', 'SECCION CREADA CORRECTAMENTE');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+        $area = new AreaTrabajo();
+        $area->nombre = strtoupper($request->nombre);
+        $area->save();
+        Session::flash('message', 'AREA DE TRABAJO REGISTRADA CORRECTAMENTE');
+        $area = AreaTrabajo::all();
+        return view('areas.index', compact('area'));
     }
 
     /**
@@ -67,8 +65,9 @@ class SeccionController extends Controller
      */
     public function edit($id)
     {
-        $seccion = Seccion::find($id);
-        return view('secciones.edit', ['seccion'=>$seccion]);
+        $area = AreaTrabajo::find($id);
+
+        return view('areas.edit', compact('area'));
     }
 
     /**
@@ -80,14 +79,14 @@ class SeccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $seccion = Seccion::find($id);
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
+        $area = AreaTrabajo::find($id);
+        $area->nombre = $request->nombre;
+        $area->save();
 
-        Session::flash('message', 'SECCION EDITADA CORRECTAMENTE');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+        Session::flash('message', 'AREA DE TRABAJO EDITADA CORRECTAMENTE');
+
+        $area = AreaTrabajo::all();
+        return view('areas.index', compact('area'));
     }
 
     /**
@@ -98,6 +97,9 @@ class SeccionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        AreaTrabajo::destroy($id);
+
+        $area = AreaTrabajo::all();
+        return view('areas.index', compact('area'));
     }
 }

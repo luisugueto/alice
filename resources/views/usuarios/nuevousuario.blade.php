@@ -8,8 +8,7 @@
 @section('main-content')                    
             <div class="col-md-12">
     @include('alerts.request')
-
-
+    @include('alerts.errors')
                         <h2 class="titulo">
                             Nuevo Usuario
                             <br><small>Ingrese los datos del usuario a registrar.</small>

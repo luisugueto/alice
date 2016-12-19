@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seccion;
+use App\Cargo;
+use App\AreaTrabajo;
 use App\Http\Requests;
 use Session;
 
-class SeccionController extends Controller
+class CargosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,9 @@ class SeccionController extends Controller
      */
     public function index()
     {
-        $seccion = Seccion::all();
-        return view('secciones.index', ['seccion'=>$seccion]);
+        $cargo = Cargo::all();
+        
+        return view('cargos.index', compact('cargo'));
     }
 
     /**
@@ -27,7 +29,8 @@ class SeccionController extends Controller
      */
     public function create()
     {
-        return view('secciones.create');
+        $area = AreaTrabajo::lists('nombre', 'id');
+        return view('cargos.create', compact('area'));
     }
 
     /**
@@ -38,14 +41,16 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-        $seccion = new Seccion();
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
-        
-        Session::flash('message', 'SECCION CREADA CORRECTAMENTE');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+
+        $cargo = new Cargo();
+        $cargo->nombre = strtoupper($request->nombre);
+        $cargo->id_area = $request->area;
+        $cargo->save();
+
+        Session::flash('message', 'CARGO REGISTRADO CORRECTAMENTE');
+
+        $cargo = Cargo::all();
+        return view('cargos.index', compact('cargo'));
     }
 
     /**
@@ -67,8 +72,9 @@ class SeccionController extends Controller
      */
     public function edit($id)
     {
-        $seccion = Seccion::find($id);
-        return view('secciones.edit', ['seccion'=>$seccion]);
+        $cargo = Cargo::find($id);
+        $area = AreaTrabajo::lists('nombre', 'id');
+        return view('cargos.edit', compact('cargo', 'area'));
     }
 
     /**
@@ -80,14 +86,15 @@ class SeccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $seccion = Seccion::find($id);
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
+        $cargo = Cargo::find($id);
+        $cargo->nombre = strtoupper($request->nombre);
+        $cargo->id_area = $request->id_area;
+        $cargo->save();
 
-        Session::flash('message', 'SECCION EDITADA CORRECTAMENTE');
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
+        Session::flash('message', 'CARGO EDITADO CORRECTAMENTE');
+
+        $cargo = Cargo::all();
+        return view('cargos.index', compact('cargo'));
     }
 
     /**

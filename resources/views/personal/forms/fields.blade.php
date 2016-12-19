@@ -51,7 +51,7 @@
 			</div>
 
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
-				{!! Form::label('tiporeg', 'Tipo de Registro') !!} <small class="text-red">*</small>
+				{!! Form::label('tiporeg', 'Tipo de Personal') !!} <small class="text-red">*</small>
 				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'id' =>'tipoRegistro', 'onChange' => 'validarTipo()', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">

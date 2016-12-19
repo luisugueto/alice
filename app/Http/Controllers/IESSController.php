@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\IESS;
 use Redirect;
+use Session;
 
 class IESSController extends Controller
 {
@@ -77,7 +78,7 @@ class IESSController extends Controller
         $iess = IESS::find($id);
         $iess->valor = $request['valor'];
         $iess->save();
-
+        Session::flash('message', 'IESS EDITADO CORRECTAMENTE');
         $iess = IESS::all();
         return view('iess.iess', compact('iess'));
     }

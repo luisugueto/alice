@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCargosTable extends Migration
+class CreateAreaTrabajosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateCargosTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargos', function (Blueprint $table) {
+        Schema::create('area_trabajos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_area')->unsigned();
-            $table->foreign('id_area')->references('id')->on('area_trabajos');
-            $table->string('nombre', 55);
+            $table->string('nombre', 100);
             $table->timestamps();
         });
     }
@@ -28,6 +26,8 @@ class CreateCargosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cargos');
+        Schema::drop('area_trabajos');
     }
+   # 2016_12_19_004045_create_area_trabajos_table
+
 }

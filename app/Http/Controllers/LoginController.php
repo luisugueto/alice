@@ -40,15 +40,15 @@ class LoginController extends Controller
     {
         if(Auth::check())
         {
-            Session::flash('message-error', 'Usuario ya conectado.');
+            Session::flash('message-error', 'USUARIO YA CONECTADO');
             return Redirect::to('/home');
         }
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
         {
-            Session::flash('message', 'Bienvenido');
+            Session::flash('message', 'BIENVENIDO');
             return Redirect::to('/home');
         }
-        Session::flash('message-error', 'Datos incorrectos');
+        Session::flash('message-error', 'DATOS INCORRECTOS');
         return Redirect::to('/');
     }
     

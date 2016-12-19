@@ -12,6 +12,7 @@ use App\Roles;
 use Session;
 use Response;
 use Redirect;
+use DB;
 
 class UsuariosController extends Controller
 {
@@ -30,7 +31,7 @@ class UsuariosController extends Controller
     }
     public function nuevo(){
         //$roles = Roles::lists('nombre', 'id');
-        $roles = Roles::all();
+        $roles = Roles::where('id', '!=', '1')->get();
         return view('usuarios.nuevousuario', compact('roles'));
     }
     /**
@@ -51,14 +52,19 @@ class UsuariosController extends Controller
      */
     public function store(UsuarioRequest $request)
     {
-        $user = new User();
-        $user->name = strtoupper($request['nombre']);
-        $user->email = strtolower($request['email']);
-        $user->password = bcrypt($request['contraseña']);
-        $user->roles_id = $request['roles'];
-        $user->remember_token = Session::token();
-        $user->save();
-        Session::put('message', 'Usuario Creado Correctamente');
+        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+        foreach ($user as $key) { $suma = $key->suma; }
+        if($suma>1) {Session::flash('message-error', 'ERROR');}
+        else{
+            $user = new User();
+            $user->name = strtoupper($request['nombre']);
+            $user->email = strtolower($request['email']);
+            $user->password = bcrypt($request['contraseña']);
+            $user->roles_id = $request['roles'];
+            $user->remember_token = Session::token();
+            $user->save();
+            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+        }
         $user = User::all();
         return view('usuarios.usuario', compact('user'));
     }
@@ -83,7 +89,7 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Roles::lists('nombre', 'id');
+        $roles = Roles::where('id', '!=', '1')->lists('nombre', 'id');
         return view('usuarios.edit', ['user'=>$user, 'roles'=>$roles]);
     }
 
@@ -96,14 +102,20 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $user = User::find($id);
-         $user->name = strtoupper($request['name']);
-         $user->email = strtolower($request['email']);
-         $user->roles_id = $request['roles_id'];
-         
-        #$user->fill($request->all());
-        $user->save();
-        Session::put('message', 'Usuario Editado Correctamente');
+        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+        foreach ($user as $key) { $suma = $key->suma; }
+        if($suma>1) Session::flash('message-error', 'ERROR');
+        else{
+             $user = User::find($id);
+             $user->name = strtoupper($request['name']);
+             $user->email = strtolower($request['email']);
+             $user->roles_id = $request['roles_id'];
+             
+            #$user->fill($request->all());
+            $user->save();
+            Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+
+        }
 
         return redirect::to('/usuarios');
     }
@@ -117,7 +129,7 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        Session::put('message', 'Usuario Eliminado Correctamente');
+        Session::flash('message', 'USUARIO ELIMINADO CORRECTAMENTE');
 
         return redirect::to('/usuarios');
     }

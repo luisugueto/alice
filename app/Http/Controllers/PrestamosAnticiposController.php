@@ -106,7 +106,7 @@ class PrestamosAnticiposController extends Controller
 
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
         if($request['monto']>$suma) {
-            Session::flash('message-error', 'Error: Monto Superior a su Sueldo.');
+            Session::flash('message-error', 'ERROR: MONTO SUPERIOR A SU CAPITAL.');
             $personal = Personal::all();
             return view('prestamos.create', compact('personal'));
         }else{
@@ -123,7 +123,7 @@ class PrestamosAnticiposController extends Controller
                 $prestamo->tipo = 'Anticipo';
             }
             $prestamo->save();
-            Session::flash('message', 'Prestamo Creado Correctamente.');
+            Session::flash('message', 'PRESTAMO REGISTRADO CORRECTAMENTE');
             
             $prestamo = Prestamo::all();
             $suma = 0;
