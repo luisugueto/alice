@@ -19,7 +19,6 @@
             <div class="form-group">
               {!! Form::label('Personal', 'Personal') !!}
               <select name="personal" required class="form-control select">
-                <option  disabled selected>Seleccione</option>
                     @foreach($personal as $per)
                         <option value="{{ $per->id }}">{{ $per->nombres }} {{ $per->apellido_paterno }}</option>
                     @endforeach
@@ -27,15 +26,15 @@
             </div>
             <div class="form-group">
               {!! Form::label('Tipo', 'Tipo') !!}
-              {!! Form::select('tipo', array('P' => 'Prestamo', 'A' => 'Anticipo'), null, ['class' => 'form-control', 'title' => 'Introduzca el Tipo', 'placeholder' => 'Seleccione']) !!}
+              {!! Form::select('tipo', array('P' => 'Prestamo', 'A' => 'Anticipo'), null, ['class' => 'form-control', 'required','title' => 'Introduzca el Tipo', 'placeholder' => 'Seleccione']) !!}
             </div>
             <div class="form-group">
               {!! Form::label('Monto', 'Monto') !!}
-              {!! Form::number('monto', null, ['class' => 'form-control', 'title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300.00']) !!}
+              {!! Form::number('monto', null, ['required','class' => 'form-control', 'title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300.00']) !!}
             </div>
             <div class="form-group">
               {!! Form::label('Motivo', 'Motivo') !!}
-              {!! Form::textarea('motivo', null, ['class' => 'form-control', 'title' => 'Introduzca el Motivo', 'placeholder' => 'Ejm: Deudas', 'rows' => '3']) !!}
+              {!! Form::textarea('motivo', null, ['minlength'=>'10','class' => 'form-control', 'title' => 'Introduzca el Motivo', 'placeholder' => 'Ejm: Deudas', 'rows' => '3']) !!}
             </div>
            <div align="center">
               {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}

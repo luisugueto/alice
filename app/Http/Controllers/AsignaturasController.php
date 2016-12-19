@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Asignaturas;
 use App\Http\Requests;
+use App\Http\Requests\AsignaturasRequest;
 use App\Cursos;
 use Session;
 
@@ -40,7 +41,7 @@ class AsignaturasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AsignaturasRequest $request)
     {
         $nombre = strtoupper($request->asignatura);
         $optativo = $request->optativo;

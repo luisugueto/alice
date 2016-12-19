@@ -7,6 +7,7 @@ use App\Personal;
 use App\Prestamo;
 use App\Remuneracion;
 use App\Http\Requests;
+use App\Http\Requests\PrestamoRequest;
 use Session;
 use DB;
 
@@ -99,7 +100,7 @@ class PrestamosAnticiposController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PrestamoRequest $request)
     {
         $per = Remuneracion::where('id_personal', $request['personal'])
                ->orderBy('id', 'desc')

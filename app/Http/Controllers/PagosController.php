@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\PagosPrestamoRequest;
 use App\Personal;
 use App\FormaPagosRealizados;
 use App\FormasPago;
@@ -45,7 +46,7 @@ class PagosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PagosPrestamoRequest $request)
     {      
         $prestamos = Prestamo::where('id', $request['id'])->get();
 

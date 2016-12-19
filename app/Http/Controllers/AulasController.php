@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Aula;
 use App\Http\Requests;
+use App\Http\Requests\AulasRequest;
 use Session;
 
 class AulasController extends Controller
@@ -36,7 +37,7 @@ class AulasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AulasRequest $request)
     {
         $aula = new Aula();
         $aula->nombre = strtoupper($request['nombre']);

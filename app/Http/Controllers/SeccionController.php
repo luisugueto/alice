@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Seccion;
 use App\Http\Requests;
+use App\Http\Requests\SeccionesRequest;
 use Session;
 
 class SeccionController extends Controller
