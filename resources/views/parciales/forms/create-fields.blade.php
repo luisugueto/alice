@@ -61,22 +61,30 @@ $j=0; ?>
 				</div>
 			</td>
 			<td><div class="form-group">{!! Form::text('promedio[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio Total', 'required' => 'required','id' => 'promedio','disabled' => 'disabled'])!!} 
-				</div></td>
+				</div>
+				{!! Form::hidden('promedio2[]',1,['id' => 'promedio2'])!!} 
+				
+				</td>
 			<td><div class="form-group">{!! Form::text('cualitativa[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '','title' => 'Calificación Cualitativa', 'required' => 'required','id' => 'cualitativa','disabled' => 'disabled'])!!} 
-				</div></td>
+				</div>
+				{!! Form::hidden('cualitativa2[]',null,['id' => 'cualitativa2'])!!} 
+				</td>
 
 			</tr>
 			<?php $i++; ?>
 			@endforeach
 			<tr>
 			<td colspan="7"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
-				<td align="center"><div class="form-group">{!! Form::text('promedio_ap',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio de Aprovechamiento', 'required' => 'required','id' => 'promedio','disabled' => 'disabled'])!!} 
-				</div></td>
+				<td align="center"><div class="form-group">{!! Form::text('promedio_ap',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio de Aprovechamiento', 'required' => 'required','id' => 'promedio_ap','disabled' => 'disabled'])!!} 
+				</div>
+				{!! Form::hidden('promedio_ap2',1,['id' => 'promedio_ap2'])!!} 
+				</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan="7"><strong>PROMEDIO DE COMPORTAMIENTO</strong></td>
-				<td colspan="2"></td>
+				<td colspan="2"><div class="form-group">{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp'])!!} 
+				</div></td>
 			</tr>
 			<tr>
 				<td colspan="2"><strong>OBSERVACIONES</strong></td>

@@ -119,11 +119,13 @@ class QuimestresController extends Controller
      */
     public function show($id)
     {
+
         $asignaturas=Asignaturas::where('id_curso',$id)->get();
         $categorias=Categorias_parcial::all();
         $equivalencias=Equivalencias::all();
-        $comportamiento=Comportamiento::all();
-        return View('quimestres.create',compact('asignaturas','categorias','equivalencias','comportamiento'));
+        $promedio_comp=Comportamiento::lists('literal','id');
+        $quimestres=Quimestres::find($id);
+        return View('quimestres.quimestre',compact('quimestres','asignaturas','categorias','equivalencias','promedio_comp'));
     
     }
 
