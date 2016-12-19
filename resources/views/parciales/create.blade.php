@@ -14,7 +14,7 @@
     <section class="content">
     @include('alerts.request') 
     <div class="row">
-      <div class="col-md-14">
+      <div class="col-md-12">
           <form action="{{ route('parciales.store') }}" method="POST" id="f1" name="f1">
           
             

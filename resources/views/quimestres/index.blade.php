@@ -10,12 +10,29 @@
 @section('main-content')  
 
  
-            <div class="col-md-14">
+            <div class="col-md-12">
 
     <section class="content">
+    @if(Session::has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <ul>
+                {{Session::get('message')}}
+            </ul>
+        </div>
+    @endif
+    @if(Session::has('message-error'))
+        <div class="alert alert-error alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <ul>
+                
+                {{Session::get('message-error')}}
+            </ul>
+        </div>
+    @endif
     @include('alerts.request') 
     <div class="row">
-      <div class="col-md-14">
+      <div class="col-md-12">
           <form action="{{ route('quimestres.store') }}" method="POST" id="f1" name="f1">
           
             
@@ -45,11 +62,11 @@
                   <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->inicio}}</a></td>
                   <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->fin}}</a></td>
                   <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->numero}}</a></td>
-                  <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->periodos->periodo}}</a></td>
+                  <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->periodos->nombre}}({{$quimestres->periodos->status}})</a></td>
                   
                  <td>
                   <div class="btn-group">
-                      <a href="{{ route('quimestres.edit', [$quimestres->id]) }}"><button class="btn btn-default btn-flat" title="Presionando este botón puede editar el registro"><i class="fa fa-pencil"></i></button></a>
+                     {!!link_to_route('quimestres.edit', $title = '', $parameters = $quimestres->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}
 
                       <a href="{{ route('quimestres.destroy', [$quimestres->id]) }}"><button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" title="Presionando este botón puede eliminar el registro" ><i class="fa fa-trash"></i></button></a><br><br>
                      

@@ -14,8 +14,8 @@ class CreateQuimestresTable extends Migration
     {
         Schema::create('quimestres', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('inicio');
-            $table->date('fin');
+            $table->date('inicio')->unique();
+            $table->date('fin')->unique();
             $table->integer('numero');
             $table->integer('id_periodo')->unsigned();
 

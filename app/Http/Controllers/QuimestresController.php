@@ -11,6 +11,11 @@ use App\Equivalencias;
 use App\Comportamiento;
 use App\Quimestres;
 use App\Periodos;
+use Session;
+use DB;
+use DateTime;
+
+use Redirect;
 class QuimestresController extends Controller
 {
     /**
@@ -32,6 +37,7 @@ class QuimestresController extends Controller
      */
     public function create()
     {
+        echo session::get('periodo');
         $periodos=Periodos::lists('nombre','id');
         return View('quimestres.create',compact('periodos'));
     }
@@ -44,7 +50,65 @@ class QuimestresController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $contar=0;
+        $comienzo= new DateTime($request->inicio);
+        $final= new DateTime($request->fin);
+
+        $diferencia=$comienzo->diff($final);
+        $meses=($diferencia->y * 12) + $diferencia->m;
+
+        if ($meses!=5) {
+                 Session::flash('message-error', 'NO SE PUEDE CREAR EL QUIMESTRE, DEBIDO A QUE ENTRE LAS FECHAS EXISTEN MÁS DE  5 MESES');
+        
+        }else{
+          
+        $inicio = explode("-", $request['inicio']);
+        $fin = explode("-", $request['fin']);
+
+        $encontrado=DB::select('SELECT * FROM quimestres WHERE 
+            MONTH(inicio) = '.$inicio[1].' AND YEAR(fin) = '.$inicio[0].'
+             UNION SELECT * FROM quimestres WHERE MONTH(inicio) = '.$fin[1].' 
+             AND YEAR(fin) = '.$fin[0].'');
+            if(!empty($encontrado)){
+                $contar++;
+            }
+
+        
+
+                if($contar>0){
+                         Session::flash('message-error', 'NO SE PUEDE CREAR EL QUIMESTRE, DEBIDO A QUE YA EXISTE UNO CREADO PARA ESAS FECHAS');
+                
+                }else{
+
+                        $quimestres1=Quimestres::where('id_periodo',$request->id_periodo)->get();
+                        $cuantos=count($quimestres1);
+                        if($cuantos==0){
+                        $quimestres=Quimestres::create(['inicio' => $request->inicio,'fin' => $request->fin,'numero' => 1,'id_periodo' => $request->id_periodo]);
+                        Session::flash('message', 'LA CREACIÓN DEL QUIMESTRE HA SIDO EXITOSA');
+                        }else{
+                            if($cuantos==1){
+                                    $quimestres=Quimestres::create(['inicio' => $request->inicio,'fin' => $request->fin,'numero' => 2,'id_periodo' => $request->id_periodo]);
+                                    Session::flash('message', 'LA CREACIÓN DEL QUIMESTRE HA SIDO EXITOSA');      
+
+                            }
+                            else{
+                                    Session::flash('message-error', 'DISCULPE, YA HAN SIDO REGISTRADOS LOS 2 QUIMESTRES PARA DICHO PERIODO');
+                            }
+
+                        }
+
+
+
+                         
+                
+                }
+
+            }
+            return redirect()->back();
+
+
+
     }
 
     /**
@@ -71,7 +135,13 @@ class QuimestresController extends Controller
      */
     public function edit($id)
     {
-        //
+        $quimestres=Quimestres::find($id);
+        $quimestres1=Quimestres::where('id_periodo',$quimestres->id_periodo)->get();
+        $periodos=Periodos::where('id', $quimestres->id_periodo)->lists('nombre', 'id');
+
+        return View('quimestres.edit',compact('periodos','quimestres','quimestres1'));
+
+
     }
 
     /**
@@ -83,7 +153,77 @@ class QuimestresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $quimestre = Quimestres::find($id);
+        $numero=$quimestre->numero;
+        $contar=0;
+        $comienzo= new DateTime($request->inicio);
+        $final= new DateTime($request->fin);
+
+        $diferencia=$comienzo->diff($final);
+        $meses=($diferencia->y * 12) + $diferencia->m;
+
+        
+        if ($meses!=5) {
+                 Session::flash('message-error', 'NO SE PUEDE ACTUALIZAR EL QUIMESTRE, DEBIDO A QUE ENTRE LAS FECHAS EXISTEN MÁS DE  5 MESES');
+        
+        }else{
+          
+        $inicio = explode("-", $request['inicio']);
+        $fin = explode("-", $request['fin']);
+
+        $encontrado=DB::select('SELECT * FROM quimestres WHERE id<>'.$id.' AND 
+            MONTH(inicio) = '.$inicio[1].' AND YEAR(fin) = '.$inicio[0].'
+             UNION SELECT * FROM quimestres WHERE MONTH(inicio) = '.$fin[1].' 
+             AND YEAR(fin) = '.$fin[0].'');
+            if(!empty($encontrado)){
+                $contar++;
+            }
+
+        
+
+                if($contar>0){
+                         Session::flash('message-error', 'NO SE PUEDE ACTUALIZAR EL QUIMESTRE, DEBIDO A QUE YA EXISTE UNO CREADO PARA ESAS FECHAS');
+                
+                }else{
+
+                        $quimestres1=Quimestres::where('id_periodo',$request->id_periodo)->get();
+                        $cuantos=count($quimestres1);
+                            if($cuantos==1){
+                                    $quimestre->update($request->all());
+                                    Session::flash('message', 'LA CREACIÓN DEL QUIMESTRE HA SIDO EXITOSA');      
+
+                            }
+                            else{
+                                //----- actualizando el quimestre que esta llegando-----
+                                $quimestre->update($request->all());
+
+                                $quimestre2=Quimestres::where('id','!=',$id)->where('id_periodo',$request->id_periodo)->first();
+                                if($numero!=$request->numero){
+                                       if($numero==1){ 
+                                    $quimestre2->numero=2;
+                                    $quimestre2->save();
+                                        }else{
+                                    $quimestre2->numero=1;
+                                    $quimestre2->save();
+                                            
+                                        }
+
+                                }
+
+
+                            }
+
+                        
+
+
+
+                         
+                
+                }
+
+            }
+          return redirect(route('quimestres.index'));
+
     }
 
     /**
