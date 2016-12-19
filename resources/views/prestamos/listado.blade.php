@@ -68,7 +68,7 @@
                                         <td></td>
                                         @else
                                             <td></td>
-                                            <td> {!!link_to_route('pagos.update', $title = 'Realizar Pago de Prestamo', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                            <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
                                     @endif    
                                 @endif                                     
                                     </tr>

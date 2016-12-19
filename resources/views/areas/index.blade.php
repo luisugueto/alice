@@ -46,7 +46,7 @@
                                 @foreach($area as $i)
                                     <tr>
                                         <td>{{ $i->nombre}}</td>  
-                                        <td>{!!link_to_route('areas.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
+                                        <td>{!!link_to_route('areas.edit', $title = '',$parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>

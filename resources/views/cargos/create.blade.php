@@ -24,7 +24,7 @@
             {!! Form::select('area', $area, null, ['class'=>'form-control']) !!}
           </div>
           <div align="center">
-              {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
+              {!!Form::submit('Aceptar', ['class'=>'fa fa-check fa-2x'])!!}
           </div>
           {!!Form::close()!!}
 @stop

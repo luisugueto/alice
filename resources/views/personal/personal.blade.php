@@ -54,7 +54,7 @@
                                         <td>{{$per->cedula}}</td>
                                         <td>{{$per->cargo->nombre}}</td>
                                         <td>{{$per->fecha_ingreso}}</td>      
-                                        <td>{!!link_to_route('personal.edit', $title = 'Editar', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>                              
+                                        <td>{!!link_to_route('personal.edit', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>

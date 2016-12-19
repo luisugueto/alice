@@ -20,7 +20,7 @@
             {!! Form::text('nombre', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Area de Trabajo']) !!}
           </div>
           <div align="center">
-              {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
+              {!!Form::submit('Aceptar',['class'=>'btn btn-primary'])!!}
           </div>
           {!!Form::close()!!}
 @stop

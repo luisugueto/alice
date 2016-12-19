@@ -49,7 +49,7 @@
                                         <td>{{$usuario->name}}</td>
                                         <td>{{$usuario->email}}</td>
                                         <td>{{$usuario->roles->nombre }}</td>
-                                        <td>{!!link_to_route('usuarios.edit', $title = 'Editar', $parameters = $usuario->id, $attributes = ['class'=>'btn btn-primary'])!!}</td>
+                                        <td>{!!link_to_route('usuarios.edit', $title = '', $parameters = $usuario->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
