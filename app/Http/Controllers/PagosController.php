@@ -54,7 +54,7 @@ class PagosController extends Controller
             $id_prestamo = $key->id;
             $monto = $key->monto;
         } 
-
+     
         $prestamo = PagosRealizados::where('id_prestamo', $id_prestamo)->count();
         $pr = PagosRealizados::where('id_prestamo', $id_prestamo)->orderBy('id', 'desc')->take(1)->get();
 
@@ -68,17 +68,6 @@ class PagosController extends Controller
             $id_personal = $key->id_personal;
             $monto = $key->monto;
         }
-        
-        $FormasPago = new FormasPago();
-        if($request['efectivo']=='on')
-            $FormasPago->forma = 'efectivo';
-        if($request['cheque']=='on')
-            $FormasPago->forma = 'cheque';
-        if($request['transferencia']=='on')
-        $FormasPago->forma = 'transferencia';
-        $FormasPago->save();
-
-        $formapago = FormasPago::all()->last();
 
         $pagos = new Pagos();
         $pagos->id_personal = $id_personal;
@@ -89,21 +78,18 @@ class PagosController extends Controller
 
         $FormaPagosRealizados = new FormaPagosRealizados();
         $FormaPagosRealizados->id_pagos = $pago->id;
-        $FormaPagosRealizados->id_forma = $formapago->id;
+        if($request['Efectivo']=='on')
+            $FormaPagosRealizados->id_forma = 1;
+        elseif($request['Cheque']=='on')
+            $FormaPagosRealizados->id_forma = 2;
+        elseif($request['Transferencia']=='on')
+            $FormaPagosRealizados->id_forma = 3;;
         $FormaPagosRealizados->save();
 
-        $modalidad = new Modalidad();
-        if($request['modalidad'] == 'C')
-            $modalidad->modalidad = 'exacto';
-        if($request['modalidad'] == 'A')
-            $modalidad->modalidad = 'exacto';
-        $modalidad->save();
-
-        $ultimaModalidad = Modalidad::all()->last();
         if($prestamo==0)
         {
             $PagosRealizados = new PagosRealizados();
-            if($request['modalidad'] == 'C'){
+            if($request['modalidad'] == 1){
                 $PagosRealizados->monto_pagado = $monto;
                 $PagosRealizados->monto_adeudado = '0';
             }
@@ -113,18 +99,18 @@ class PagosController extends Controller
             }
             $PagosRealizados->fecha = new \DateTime();
             $PagosRealizados->id_prestamo = $request['id'];
-            $PagosRealizados->id_modalidad = $ultimaModalidad->id;
+            $PagosRealizados->id_modalidad = $request['modalidad'];
             $PagosRealizados->id_personal = $id_personal;
-            if($request['transferencia']=='on')
+            if($request['Transferencia']=='on')
                 $PagosRealizados->no_transferencia = $request['no_transferencia'];
             else $PagosRealizados->no_transferencia = '0';
-            if($request['cheque']=='on')
+            if($request['Cheque']=='on')
                 $PagosRealizados->no_cheque = $request['no_cheque'];
             else $PagosRealizados->no_cheque = '0';
             $PagosRealizados->save();
         }else{
             $PagosRealizados = new PagosRealizados();
-            if($request['modalidad'] == 'C'){
+            if($request['modalidad'] == 1){
                 $PagosRealizados->monto_pagado = $montoo;
                 $PagosRealizados->monto_adeudado = '0';
             }
@@ -134,7 +120,7 @@ class PagosController extends Controller
             }
             $PagosRealizados->fecha = new \DateTime();
             $PagosRealizados->id_prestamo = $request['id'];
-            $PagosRealizados->id_modalidad = $ultimaModalidad->id;
+            $PagosRealizados->id_modalidad = $request['modalidad'];
             $PagosRealizados->id_personal = $id_personal;
             if($request['transferencia']=='on')
                 $PagosRealizados->no_transferencia = $request['no_transferencia'];
@@ -158,8 +144,11 @@ class PagosController extends Controller
      */
     public function show($id)
     {
+        $forma = FormasPago::all();
+        $modalidad = Modalidad::lists('modalidad', 'id');
+ 
         $prestamos = Prestamo::find($id);
-        return view('prestamos.registrar', ['prestamos'=>$prestamos]);
+        return view('prestamos.registrar', ['prestamos'=>$prestamos, 'forma'=>$forma, 'modalidad'=>$modalidad]);
     }
 
     /**

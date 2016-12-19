@@ -3,7 +3,8 @@
 @section('htmlheader_title')
     Nuevo Usuario
 @endsection
-
+@section('contentheader_title', 'Usuario')
+@section('contentheader_description', 'Nuevo Usuario')
 
 @section('main-content')                    
             <div class="col-md-12">

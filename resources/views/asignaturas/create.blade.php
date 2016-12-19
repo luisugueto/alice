@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('contentheader_title', 'Crear Asignatura')
-
+@section('contentheader_title', 'Asignatura')
+@section('contentheader_description', 'Crear Asignatura')
 @section('htmlheader_title')
     Crear Asignatura
 @endsection

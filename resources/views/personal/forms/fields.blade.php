@@ -47,7 +47,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('estado_actual') ? ' has-error' : '' }}">
 				{!! Form::label('eactual', 'Estado Actual') !!} <small class="text-red">*</small>
-				{!! Form::select('estado_actual', array('casado' => 'Casado', 'viudo' => 'Viudo', 'soltero' => 'Soltero'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Actual del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
+				{!! Form::select('estado_actual', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'), null, ['class' => 'form-control', 'title' => 'Introduzca el Estado Actual del personal', 'placeholder' => 'Ejm: Seleccione']) !!}
 			</div>
 
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">

@@ -33,7 +33,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoEmpleadoSeeder::class);
         $this->call(PeriodosSeeder::class);
         $this->call(IESSSeeder::class);
-
+        $this->call(ModalidadsPagoSeeder::class);
+        $this->call(FormasPagoSeeder::class);
+        $this->call(PersonalSeeder::class);
         Model::reguard();
     }
 }

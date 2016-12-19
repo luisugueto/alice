@@ -19,15 +19,11 @@
             <input type="hidden" name="id" value="{{ $prestamos->id }}">
             <div class="form-group"> 
               <h4>{!! Form::label('tipo', 'Tipo de Pago ') !!} </h4> 
-              {!! Form::label('efectivo', 'Efectivo') !!}
-              <input type="checkbox" checked class="checkbox" id="efectivo" name="efectivo">
-            </div>
-            <div class="form-group">
-              {!! Form::label('efectivo', 'Cheque') !!}<input id="cheque" onclick="cheques()" type="checkbox" class="checkbox" name="cheque">
-            </div>
-            <div class="form-group">
-              {!! Form::label('efectivo', 'Transferencia') !!}<input id="transferencia" onclick="transferencias()" type="checkbox" class="checkbox" name="transferencia">
-            </div>
+              @foreach($forma as $for)
+                {{ Form::label('Tipo', $for->forma) }}
+                <input type="checkbox" class="checkbox" onclick="{{ $for->forma }}s()" id="{{ $for->forma }}" name="{{ $for->forma }}">
+              @endforeach
+    
             <?php $i = 0; $monto = 0;
                 foreach ($prestamos->pagosrealizados as $key) {
                     $i += $key->monto_pagado;
@@ -36,15 +32,15 @@
             ?>
             <div class="form-group cheques" style="display:none">
               {!! Form::label('noCheque', 'N° Cheque') !!}
-               {!! Form::number('no_cheque', null, ['class' => 'form-control', 'id'=>'noCheque','title' => 'Introduzca el Sueldo Mensual?:']) !!}
+               {!! Form::number('no_cheque', null, ['class' => 'form-control', 'id'=>'noCheque','title' => 'Introduzca el Numero del Cheque:']) !!}
             </div>
             <div class="form-group transferencias" style="display:none">
               {!! Form::label('noTransferencia', 'N° Transferencia') !!}
-              {!! Form::number('no_transferencia', null, ['class' => 'form-control', 'title' => 'Introduzca el Sueldo Mensual?:', 'id'=>'noTransferencia']) !!}
+              {!! Form::number('no_transferencia', null, ['class' => 'form-control', 'title' => 'Introduzca el Número de Transferencia:', 'id'=>'noTransferencia']) !!}
             </div>
             <div class="form-group"> 
              {!! Form::label('modalidad', 'Modalidad de Pago') !!}
-              {!! Form::select('modalidad', array('C' => 'Completo', 'A' => 'Abono'), null, ['class' => 'form-control', 'id'=>'modalidad','required', 'onchange'=>'modalidades()','title' => 'Introduzca el Tipo', 'placeholder' => 'Seleccione']) !!}
+              {!! Form::select('modalidad', $modalidad, null, ['class' => 'form-control', 'id'=>'modalidad','required', 'onchange'=>'modalidades()','title' => 'Introduzca el Tipo', 'placeholder' => 'Seleccione']) !!}
             </div>
             
             <div class="form-group">
@@ -59,7 +55,7 @@
 <script type="text/javascript">
 
    function validateForm() {
-      if(($("#cheque").prop("checked") == false) && ($("#transferencia").prop("checked") == false) && ($("#efectivo").prop("checked") == false))
+      if(($("#Cheque").prop("checked") == false) && ($("#Transferencia").prop("checked") == false) && ($("#Efectivo").prop("checked") == false))
       {
           alert('Al menos seleccione un tipo de pago.');
           return false;
@@ -67,7 +63,8 @@
     }
 
   function modalidades(){ 
-    if( $('#modalidad').val() == 'C' ) {
+    
+    if( $('#modalidad').val() == 1 ) {
         $('#monto').attr('disabled', true);
         $('#monto').attr('required', false);
     }else {
@@ -76,8 +73,12 @@
     }
   }
 
-  function cheques(){
-    if($('#cheque').prop('checked')){
+  function Efectivos(){
+
+  }
+
+  function Cheques(){
+    if($('#Cheque').prop('checked')){
       $('#noCheque').attr('required', true);
       $('.cheques').css('display', '');
     }else{ 
@@ -86,8 +87,8 @@
     }
   }
 
-  function transferencias(){
-    if($('#transferencia').prop('checked')){
+  function Transferencias(){
+    if($('#Transferencia').prop('checked')){
       $("#noTransferencia").attr('required', true);
       $('.transferencias').css('display', '');
     }else {

@@ -14,7 +14,7 @@ class CreateFormasPagosTable extends Migration
     {
         Schema::create('formas_pagos', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('forma', ['efectivo', 'cheque', 'transferencia']);
+            $table->enum('forma', ['Efectivo', 'Cheque', 'Transferencia']);
             $table->timestamps();
         });
     }

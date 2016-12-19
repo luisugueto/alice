@@ -14,7 +14,7 @@ class CreateModalidadsTable extends Migration
     {
         Schema::create('modalidads', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('modalidad', ['exacto', 'abono']);
+            $table->enum('modalidad', ['Exacto', 'Abono']);
             $table->timestamps();
         });
     }

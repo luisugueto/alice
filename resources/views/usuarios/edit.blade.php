@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    Editando Usuario
+    Editar Usuario
 @endsection
 
+@section('contentheader_title', 'Usuario')
+@section('contentheader_description', 'Editar')
 
 @section('main-content')   
 	<div class="col-md-12">

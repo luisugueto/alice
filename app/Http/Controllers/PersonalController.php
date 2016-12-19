@@ -67,8 +67,8 @@ class PersonalController extends Controller
         $per->fecha_ingreso = $request['fecha_ingreso'];
         $per->edad = $request['edad'];
         $per->genero = strtoupper($request['genero']);
-        $per->edo_civil = $request['edo_civil'];
-        $per->estado_actual = $request['estado_actual'];
+        $per->edo_civil = strtoupper($request['edo_civil']);
+        $per->estado_actual = strtoupper($request['estado_actual']);
         $per->tipo_registro = $request['tipo_registro'];
         $per->especialidad = strtoupper($request['especialidad']);
         $per->direccion = strtoupper($request['direccion']);

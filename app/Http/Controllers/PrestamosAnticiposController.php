@@ -118,7 +118,7 @@ class PrestamosAnticiposController extends Controller
         }
 
         $pagadoTotal = $monto_prestamos-$monto_pagos;
-
+    
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
 
         $pres = $suma-$pagadoTotal;
