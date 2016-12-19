@@ -38,7 +38,7 @@
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->genero }}</td>
                                             <td>  
-                                                {!! link_to_route('', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-money fa-2x']) !!}
+                                                {!! link_to_route('rubros.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-money fa-2x']) !!}
                                             </td>
                                         </tr>
                                     @endforeach
