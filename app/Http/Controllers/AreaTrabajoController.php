@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AreaTrabajo;
 use App\Http\Requests;
+use App\Http\Requests\AreaTrabajoRequest;
 use Session;
 
 class AreaTrabajoController extends Controller
@@ -36,7 +37,7 @@ class AreaTrabajoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AreaTrabajoRequest $request)
     {
         $area = new AreaTrabajo();
         $area->nombre = strtoupper($request->nombre);
