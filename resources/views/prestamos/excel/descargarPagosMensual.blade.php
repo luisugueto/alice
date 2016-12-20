@@ -1,12 +1,14 @@
- <table id="example1" class="table table-bordered table-hover">
+<table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                        <td style="background-color: #ff4500;">Fecha</td>
+                                        <td>Fechas</td>
                                         <td>Nombres</td>
                                         <td>Apellidos</td>
                                         <td>Tipo</td>
                                         <td>Monto Prestamo</td>
                                         <td>Monto Deudor</td>
+                                        <td></td>
+                                        <td>MONTO TOTAL DE PRESTAMOS</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
@@ -28,12 +30,17 @@
                                 @if($per->tipo == 'Prestamo')
                                     @if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
                                         <td>0</td>
+                                        <td></td>
                                         @else
                                             <td></td>
+                                            <td></td>
                                     @endif    
+
+                                        <td>{{ $total }}</td>
                                 @endif                                     
                                     </tr>
                                     
                                     @endforeach
                             </tbody>
                          </table>
+

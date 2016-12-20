@@ -1,34 +1,4 @@
-@extends('layouts.app')
-
-@section('htmlheader_title')
-    Prestamos y Anticipos
-@endsection
-
-@section('contentheader_title', 'Prestamos y Anticipos')
-
-
-@section('main-content')                    
-<div class="col-md-12">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @include('alerts.errors')
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Listado</h3>
-                    </div>
-
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-hover">
+<table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                         <td>Fecha</td>
@@ -37,7 +7,6 @@
                                         <td>Tipo</td>
                                         <td>Monto Prestamo</td>
                                         <td>Monto Deudor</td>
-                                        <td>Opciones</td>
                                     </tr>
                             </thead>
                             <tbody align="center">
@@ -59,9 +28,8 @@
                                 @if($per->tipo == 'Prestamo')
                                     @if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
                                         <td>0</td>
-                                        <td></td>
                                         @else
-                                            <td>{{ $per->monto-$i }}</td>
+                                            <td></td>
                                             <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
                                     @endif    
                                 @endif                                     
@@ -70,9 +38,3 @@
                                     @endforeach
                             </tbody>
                          </table>
-                           
-                        </div>
-                        
-                    </div>
-       <button class="btn btn-primary fa fa-file-excel-o" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarListado') }}" style="color:white"> Exportar Excel</a></button>
-@stop
