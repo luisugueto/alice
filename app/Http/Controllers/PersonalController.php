@@ -117,12 +117,14 @@ class PersonalController extends Controller
         $ren->save();
 
         if($request['seleccionar']=='on'){
-            $user = new User();
-            $user->name = strtoupper($request['nombres']);
-            $user->email = strtolower($request['correo']);
-            $user->password = bcrypt($request['clave']);
-            $user->roles_id = '3';
-            $user->save();
+            if($request['tipo_registro']==2){
+                $user = new User();
+                $user->name = strtoupper($request['nombres']);
+                $user->email = strtolower($request['correo']);
+                $user->password = bcrypt($request['clave']);
+                $user->roles_id = '3';
+                $user->save();
+            }
         }
 
         $personal = Personal::all();
@@ -157,7 +159,7 @@ class PersonalController extends Controller
             ->join('remuneracion', 'remuneracion.id_personal', '=', 'informacion_academica.id')
             ->where('remuneracion.id_personal', '=', id)
             ->first();
-
+        
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
 

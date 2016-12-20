@@ -15,10 +15,7 @@
       <div class="col-md-12">
           {!! Form::open(['route' => 'areas.store', 'method' => 'POST', 'class' => 'form']) !!}
           <br>
-          <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('nombre', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Area de Trabajo']) !!}
-          </div>
+          @include('areas.forms.fields')
           <div align="center">
               {!!Form::submit('Aceptar',['class'=>'btn btn-primary'])!!}
           </div>

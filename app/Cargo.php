@@ -30,4 +30,8 @@ class Cargo extends Model
     {
         return $this->belongsTo('App\AreaTrabajo', 'id_area');
     }
+    public function empleado()
+    {
+        return $this->belongsTo('App\Tipo', 'id_tipo_empleado');
+    }
 }

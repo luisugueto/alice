@@ -174,65 +174,67 @@
 	</div>
 
 <script type="text/javascript">
-	function verificar(){ 
-		for (i=0;i<document.f1.elements.length;i++) 
-			if(document.f1.elements[i].type == "checkbox") 
-				if(document.f1.seleccionar.checked == 1){
-					document.f1.elements[i].checked=1;
-					document.getElementById('clave').disabled = false;
-					document.getElementById('clave').required = true;
-				}
-				else if(document.f1.seleccionar.checked == 0){
-					document.f1.elements[i].checked=0;
-					document.getElementById('clave').disabled = true;
-					document.getElementById('clave').required = false;
-				}
-	}
+		
 
-	function verificarDescuento(){ 
-		if( $('#verificarr').prop('checked') ) {
-		    $('#descuenta').attr('disabled', false);
-		}else $('#descuenta').attr('disabled', true);
-	}
+		function verificar(){ 
+			for (i=0;i<document.f1.elements.length;i++) 
+				if(document.f1.elements[i].type == "checkbox") 
+					if(document.f1.seleccionar.checked == 1){
+						document.f1.elements[i].checked=1;
+						document.getElementById('clave').disabled = false;
+						document.getElementById('clave').required = true;
+					}
+					else if(document.f1.seleccionar.checked == 0){
+						document.f1.elements[i].checked=0;
+						document.getElementById('clave').disabled = true;
+						document.getElementById('clave').required = false;
+					}
+		}
 
-	function validarTipo(){
-		if($('#tipoRegistro').val() == 3){
-			$('#registroUser').css('display', 'none');
-		}else $('#registroUser').css('display', '');
+		function verificarDescuento(){ 
+			if( $('#verificarr').prop('checked') ) {
+			    $('#descuenta').attr('disabled', false);
+			}else $('#descuenta').attr('disabled', true);
+		}
 
-
-                var id = $("#tipoRegistro").val();
-                $.get("/cargosPersonal/"+id+"", function(data) 
-                {
-
-                    console.log(data);
-                    $("#cargo").empty();
-                    $("#cargo").append('<option value="0"> Seleccione </option>');
-
-                    if(data.length > 0){
-
-                        for (var i = 0; i < data.length ; i++) 
-                        {  
-                            $("#cargo").removeAttr('disabled');
-                            $("#cargo").append('<option value="'+ data[i].id + '">' + data[i].nombre +'</option>');
-                        }
-
-                    }else{
-                        
-                        $("#seccion").attr('disabled', true);
-
-                    }
-                });
+		function validarTipo(){
+			if($('#tipoRegistro').val() == 3){
+				$('#registroUser').css('display', 'none');
+			}else $('#registroUser').css('display', '');
 
 
+	                var id = $("#tipoRegistro").val();
+	                $.get("/cargosPersonal/"+id+"", function(data) 
+	                {
 
-	}
+	                    console.log(data);
+	                    $("#cargo").empty();
+	                    $("#cargo").append('<option value="0"> Seleccione </option>');
 
-	function sueldo(){
-		var sueldo = $('#sueldoMensual').val();
-		$('#prQuincena').val(parseFloat(sueldo/2));
-		$('#seQuincena').val(parseFloat(sueldo/2));
-	}
+	                    if(data.length > 0){
+
+	                        for (var i = 0; i < data.length ; i++) 
+	                        {  
+	                            $("#cargo").removeAttr('disabled');
+	                            $("#cargo").append('<option value="'+ data[i].id + '">' + data[i].nombre +'</option>');
+	                        }
+
+	                    }else{
+	                        
+	                        $("#seccion").attr('disabled', true);
+
+	                    }
+	                });
+
+
+
+		}
+
+		function sueldo(){
+			var sueldo = $('#sueldoMensual').val();
+			$('#prQuincena').val(parseFloat(sueldo/2));
+			$('#seQuincena').val(parseFloat(sueldo/2));
+		}
 </script>
 
 </div>

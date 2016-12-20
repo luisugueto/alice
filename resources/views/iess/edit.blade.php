@@ -14,15 +14,7 @@
 
       <div class="col-md-14">
           {!!Form::model($iess, ['route'=>['iess.update', $iess->id], 'method'=>'PUT', 'files'=>false])!!}
-          
-          <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('nombre', null, ['class'=>'form-control', 'disabled','placeholder'=>'Ingresa Nombre']) !!}
-          </div>
-          <div class="form-group">
-            {!! Form::label('Email', 'Valor') !!}
-            {!! Form::text('valor', null, ['class'=>'form-control', 'placeholder'=>'Ingresa Correo']) !!} 
-          </div>
+          @include('iess.forms.fields')
           <div align="center">
               {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
           </div>

@@ -27,9 +27,9 @@ class Personal extends Model
     ];
 
 
-    public function tipo()
+    public function cargo()
     {
-        return $this->belongsToMany('App\Tipo', 'id_tipo');
+        return $this->belongsTo('App\Cargo', 'id_cargo');
     }
 
     public function informacionAcademica()

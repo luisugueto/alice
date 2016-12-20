@@ -42,5 +42,15 @@ class PersonalSeeder extends Seeder
             'cuenta_bancaria'=>'71264876124',
             'devolver_fondos'=>'N'
         ]);
+
+        DB::table('informacion_academica')->insert([
+            'id_personal'=>'1',
+            'primaria'=>'asfaf',
+            'secundaria'=>'asfasfas',
+            'superior'=>'asfasfasfas',
+            'titulo'=>'asfasfas',
+            'cursos'=>'asfasfas',
+            'historial_laboral'=>'asfasfas'
+        ]);
     }
 }

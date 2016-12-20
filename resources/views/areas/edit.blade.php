@@ -16,10 +16,7 @@
           {!!Form::model($area, ['route'=>['areas.update', $area->id], 'method'=>'PUT', 'files'=>false])!!}
           {{ csrf_field() }}
           <br>
-          <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('nombre', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Literal']) !!}
-          </div>
+          @include('areas.forms.fields')
            <div class="form-group" align="center">
                     {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
                   {!!Form::close()!!}

@@ -63,10 +63,10 @@ class UsuariosController extends Controller
             }
             else{
             $user = new User();
-            $user->name = strtoupper($request['nombre']);
+            $user->name = strtoupper($request['name']);
             $user->email = strtolower($request['email']);
-            $user->password = bcrypt($request['contraseña']);
-            $user->roles_id = $request['roles'];
+            $user->password = bcrypt($request['password']);
+            $user->roles_id = $request['roles_id'];
             $user->remember_token = Session::token();
             $user->save();
             Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
@@ -126,7 +126,7 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Roles::where('id', '!=', '1')->lists('nombre', 'id');
+        $roles = Roles::where('id', '!=', '1')->get();
         return view('usuarios.edit', ['user'=>$user, 'roles'=>$roles]);
     }
 
