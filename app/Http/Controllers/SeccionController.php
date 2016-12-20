@@ -8,10 +8,9 @@ use App\Http\Requests;
 use App\Http\Requests\SeccionesRequest;
 use Session;
 use App\Cursos;
-<<<<<<< HEAD
-=======
 use DB;
->>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
+
+
 
 class SeccionController extends Controller
 {
@@ -35,13 +34,13 @@ class SeccionController extends Controller
 
     public function create()
     {
-<<<<<<< HEAD
+
         $curso = Cursos::lists('curso', 'id');
         return view('secciones.create', compact('curso'));
-=======
+
         $cursos=Cursos::lists('curso','id');
         return view('secciones.create',compact('cursos'));
->>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
+
     }
 
     /**
@@ -52,7 +51,6 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $seccion = new Seccion();
         $seccion->literal = strtoupper($request['literal']);
         $seccion->capacidad = $request['capacidad'];
@@ -60,7 +58,7 @@ class SeccionController extends Controller
         $seccion->save();
         
         Session::flash('message', 'SECCION CREADA CORRECTAMENTE');
-=======
+
 
         $buscar=Seccion::where('literal',$request->literal)->where('id_curso',$request->id_curso)->first();
         if(count($buscar)>0){
@@ -75,7 +73,7 @@ class SeccionController extends Controller
             
             Session::flash('message', 'SECCIÓN CREADA CORRECTAMENTE');
         }
->>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
+
         $seccion = Seccion::all();
         return view("secciones.index", ['seccion'=>$seccion]);
     }

@@ -49,17 +49,17 @@
                                 @foreach($seccion as $i)
                                     <tr>
                                         <td>{{ $i->literal}}</td>
-<<<<<<< HEAD
+
                                         <td>{{$i->capacidad }}</td>    
                                         <td>{!!link_to_route('secciones.edit', $title = '', $parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
-=======
+
                                         <td>{{ $i->capacidad }}</td>  
                                         <td>{{ $i->curso->curso}}</td>  
                                         <td>{!!link_to_route('secciones.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}
                                                 {!!link_to_route('secciones.destroy', $title = 'Eliminar', $parameters = $i->id, $attributes = ['class'=>'fa fa-trash fa-2x'])!!}
                                              
                                             </td>                              
->>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
+
                                     </tr>
                                 @endforeach
                             </tbody>

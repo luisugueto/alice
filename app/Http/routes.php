@@ -18,11 +18,8 @@ Route::group(['middleware' => 'web'], function () {
 	//URLS REST
 	#Route::resource('app', 'AppController');
 	
-<<<<<<< HEAD
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
-=======
->>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
 
 
 	Route::resource('asistencias', 'AsistenciasController');
