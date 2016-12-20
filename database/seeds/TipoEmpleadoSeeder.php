@@ -13,16 +13,13 @@ class TipoEmpleadoSeeder extends Seeder
     public function run()
     {
         DB::table('tipo_empleado')->insert([
-            'tipo_empleado' => 'Administrativo'
+            'tipo_empleado' => 'ADMINISTRATIVO'
         ]);
         DB::table('tipo_empleado')->insert([
-            'tipo_empleado' => 'Docente de Planta'
+            'tipo_empleado' => 'DOCENTE'
         ]);
         DB::table('tipo_empleado')->insert([
-            'tipo_empleado' => 'Docente Rotativo'
-        ]);
-        DB::table('tipo_empleado')->insert([
-            'tipo_empleado' => 'Obrero'
+            'tipo_empleado' => 'OBRERO'
         ]);
         
     }

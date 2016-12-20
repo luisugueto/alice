@@ -30,7 +30,7 @@ class PersonalSeeder extends Seeder
             'correo'=>'lui_su_gueto@hotmail.com',
             'clave'=>'1234',
             'ingreso_notas'=>'1',
-            'id_tipo'=>'1' 
+            'id_cargo'=>'1' 
         ]);
 
         DB::table('remuneracion')->insert([
