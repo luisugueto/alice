@@ -68,7 +68,7 @@ class AuthController extends Controller
     {
         $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
         foreach ($user as $key) { $suma = $key->suma; }
-        if($suma>1) {Session::flash('message-error', 'ERROR');}
+        if($suma>0) {Session::flash('message-error', 'ERROR');}
         else{
             $user = new User();
             $user->name = strtoupper('ADMIN');
@@ -77,11 +77,32 @@ class AuthController extends Controller
             $user->roles_id = '1';
             $user->remember_token = Session::token();
             $user->save();
-            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
         }
 
+        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
+        foreach ($user as $key) { $suma = $key->suma; }
+        if($suma>0) {Session::flash('message-error', 'ERROR');}
+        else{
+            $user = new User();
+            $user->name = strtoupper('ADMIN DACE');
+            $user->email = strtolower('dace@system.com');
+            $user->password = bcrypt('1234');
+            $user->roles_id = '5';
+            $user->remember_token = Session::token();
+            $user->save();
+        }
+       /* $year = date("Y");
+
+        $periodoActivo = Periodos::where('nombre', $periodoActivo)->first();
+        if($periodoActivo->status == 'inactivo'){
+            $periodoActivo->status = 'activo';
+            $periodoActivo->save();
+        }*/
+
+
         $periodos = Periodos::lists('nombre', 'id');
-        return view('auth.login', ['periodos' => $periodos]);
+        $periodos2= Periodos::where('status','activo')->first();
+        return view('auth.login', ['periodos' => $periodos,'periodos2' => $periodos2]);
     }
 
     public function login(LoginRequest $request)

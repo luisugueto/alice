@@ -28,7 +28,6 @@ class PersonalSeeder extends Seeder
             'direccion'=>'asfasfas',
             'telefono'=>'04160408205',
             'correo'=>'lui_su_gueto@hotmail.com',
-            'id_cargo'=>'1',
             'clave'=>'1234',
             'ingreso_notas'=>'1',
             'id_tipo'=>'1' 

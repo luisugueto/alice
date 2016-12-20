@@ -30,8 +30,6 @@ class CreateDatosGeneralesPersonalTable extends Migration
             $table->text('direccion');
             $table->string('telefono', 25);
             $table->string('correo')->unique();
-            $table->integer('id_cargo')->unsigned();
-            $table->foreign('id_cargo')->references('id')->on('cargos');
             $table->string('clave', 15);
             $table->string('ingreso_notas', 2);
             $table->integer('id_tipo')->unsigned();

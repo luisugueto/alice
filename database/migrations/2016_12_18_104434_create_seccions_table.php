@@ -16,7 +16,7 @@ class CreateSeccionsTable extends Migration
             $table->increments('id');
             $table->integer('id_curso')->unsigned();
             $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('Cascade');
-            $table->string('literal', 2)->unique();
+            $table->string('literal', 2);
             $table->integer('capacidad');
             $table->timestamps();
         });

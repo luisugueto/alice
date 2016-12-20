@@ -14,7 +14,7 @@ class Personal extends Model
      protected $table = 'datos_generales_personal';
      
     protected $fillable = [
-        'codigo_pesonal', 'apellido_paterno', 'apellido_materno','nombres', 'cedula', 'fecha_nacimiento', 'fecha_ingreso', 'edad', 'edo_civil', 'genero', 'estado_actual', 'tipo_registro', 'especialidad', 'direccion', 'telefono', 'correo', 'id_cargo', 'clave', 'ingreso_notas', 'id_tipo'
+        'codigo_pesonal', 'apellido_paterno', 'apellido_materno','nombres', 'cedula', 'fecha_nacimiento', 'fecha_ingreso', 'edad', 'edo_civil', 'genero', 'estado_actual', 'tipo_registro', 'especialidad', 'direccion', 'telefono', 'correo', 'clave', 'ingreso_notas', 'id_tipo'
     ];
 
     /**
@@ -26,9 +26,6 @@ class Personal extends Model
         
     ];
 
-    public function cargo(){
-        return $this->belongsTo('App\Cargo', 'id_cargo');
-    }
 
     public function tipo()
     {

@@ -36,7 +36,7 @@ class HorariosController extends Controller
         $bloques = \DB::table('bloques')->get();
         $horas = \DB::table('bloques')->where('id_dia', 1)->get();
         $dias = \DB::table('dias')->get();
-        
+        $periodo = Session::get('periodos');
         $k=0;
         
         for ($i=0; $i < 7 ; $i++) { 
@@ -52,7 +52,7 @@ class HorariosController extends Controller
         $asignatura = Asignaturas::find($request->id_asignatura);
         $aula = Aula::find($request->id_aula);
 
-        
+        dd($periodo);
         return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
     }
 
