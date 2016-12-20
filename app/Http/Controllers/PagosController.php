@@ -11,6 +11,7 @@ use App\FormaPagosRealizados;
 use App\FormasPago;
 use App\Modalidad;
 use App\Prestamo;
+use App\Remuneracion;
 use App\Pagos;
 use App\User;
 use App\PagosRealizados;
@@ -55,12 +56,64 @@ class PagosController extends Controller
                 }                
             }
 
-            Excel::create("FileName", function ($excel) use ($prestamo) {
-                $excel->setTitle("Title");
-                $excel->sheet("Sheet 1", function ($sheet) use ($prestamo) {
-                    $sheet->loadView('prestamos.descargar')->with('prestamo', $prestamo);
+            Excel::create("Listado Total de Prestamos y Anticipos", function ($excel) use ($prestamo) {
+                $excel->setTitle("Listado Total de Prestamos y Anticipos");
+                $excel->sheet("Pestaña 1", function ($sheet) use ($prestamo) {
+                    $sheet->loadView('prestamos.excel.descargartotal')->with('prestamo', $prestamo);
                 });
             })->download('xls');
+    }
+
+    public function descargarPagosMensual(Request $request){
+         $per = Remuneracion::where('id_personal', $request['persona'])
+               ->orderBy('id', 'desc')
+               ->first();
+        $pagosrealizados = DB::select('SELECT *, sum(monto_pagado) as monto FROM pagos_realizados WHERE id_personal = '.$request['persona'].'');
+
+        foreach ($pagosrealizados as $key) {
+            $monto_pagos = $key->monto;
+        }
+
+        $prestamos = DB::select('SELECT *, sum(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].'');
+
+        foreach ($prestamos as $key) {
+            $monto_prestamos = $key->monto;
+        }
+
+        $pagadoTotal = $monto_prestamos-$monto_pagos;
+    
+        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
+
+        #$capital = $suma-$pagadoTotal;
+
+
+        $prestamos = DB::select('SELECT *,SUM(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].' GROUP BY id_personal');
+
+        foreach ($prestamos as $value) {
+            $total = $value->monto;
+        }
+    
+        $prestamo = Prestamo::where('id_personal', $request['persona'])->get();
+
+        Excel::create("Listado de Pagos Mensual", function ($excel) use ($prestamo, $total) {
+                $excel->setTitle("Listado de Pagos Mensual");
+                $excel->sheet("Pestaña 1", function ($sheet) use ($prestamo, $total) {
+                    $sheet->loadView('prestamos.excel.descargarPagosMensual', array('prestamo'=>$prestamo, 'total'=>$total));
+                });
+            })->download('xls');
+
+    }
+
+    public function descargarListado(){
+        define('mesActual', date('m'));
+        $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
+        Excel::create("Listado Total de Prestamos y Anticipos", function ($excel) use ($prestamo) {
+                $excel->setTitle("Listado Total de Prestamos y Anticipos");
+                $excel->sheet("Pestaña 1", function ($sheet) use ($prestamo) {
+                    $sheet->loadView('prestamos.excel.descargarListado')->with('prestamo', $prestamo);
+                });
+            })->download('xls');
+
     }
 
     /**

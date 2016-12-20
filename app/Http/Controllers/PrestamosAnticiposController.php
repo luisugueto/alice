@@ -28,18 +28,6 @@ class PrestamosAnticiposController extends Controller
         return view('prestamos.index', compact('prestamo'));
     }
 
-    public function descargar()
-    {
-         Excel::create('New file', function($excel) {
-
-            $excel->sheet('First sheet', function($sheet) {
-
-                $sheet->loadView('prestamos.total')->with();
-            });
-
-        })->download('xlsx');
-    }
-
     /**
      * Show the form for creating a new resource.
      *

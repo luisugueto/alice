@@ -53,7 +53,9 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('parciales','ParcialesController');
 	Route::resource('quimestres','QuimestresController');
 
+	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
 	Route::get('descargarPagos', 'PagosController@descargar');
+	Route::get('descargarListado', 'PagosController@descargarListado');
 	
 });
 	
