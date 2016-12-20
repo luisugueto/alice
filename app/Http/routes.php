@@ -39,8 +39,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('rubros', 'RubrosController');
 	Route::resource('asignaturas', 'AsignaturasController');
 	Route::resource('user_perfil', 'PerfilController');
-	
-
+	Route::resource('horarios', 'HorariosController');
 
 	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
 	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');

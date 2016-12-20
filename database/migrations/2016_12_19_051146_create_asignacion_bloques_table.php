@@ -18,8 +18,12 @@ class CreateAsignacionBloquesTable extends Migration
             $table->foreign('id_asig')->references('id')->on('asignaturas')->onDelete('Cascade');
             $table->integer('id_seccion')->unsigned();
             $table->foreign('id_seccion')->references('id')->on('secciones')->onDelete('Cascade');
+            $table->integer('id_bloque')->unsigned();
+            $table->foreign('id_bloque')->references('id')->on('bloques')->onDelete('Cascade');
             $table->integer('id_aula')->unsigned();
             $table->foreign('id_aula')->references('id')->on('aulas')->onDelete('Cascade');
+            $table->integer('id_periodo')->unsigned();
+            $table->foreign('id_periodo')->references('id')->on('periodos')->onDelete('Cascade');
         });
     }
 

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Cursos;
+use App\Seccion;
+use App\Asignaturas;
+use App\Aula;
+use App\Personal;
 
 class HorariosController extends Controller
 {
@@ -15,7 +20,8 @@ class HorariosController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('horarios.index');
     }
 
     /**

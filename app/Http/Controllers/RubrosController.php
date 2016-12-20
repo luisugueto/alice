@@ -32,9 +32,23 @@ class RubrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $existe = Estudiante::where('cedula', $request->cedula)->exists();
+
+        if($existe)
+        {
+            $estudiante = Estudiante::where('cedula', $request->cedula)->first();
+            $representante = $estudiante->representante;
+           
+            return view('rubros.create', compact('estudiante', 'representante'));
+
+        }else{
+
+            Session::flash('message-error', 'ESTUDIANTE CON CÉDULA '.$request->cedula.' NO SE ENCUENTRA REGISTRADO');
+           
+            return redirect()->back();
+        }
     }
 
     /**
@@ -190,6 +204,6 @@ class RubrosController extends Controller
 
     public function search()
     {
-        //
+        return view('rubros.forms.fields-search');
     }
 }

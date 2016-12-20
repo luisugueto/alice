@@ -14,6 +14,8 @@ class CreateSeccionsTable extends Migration
     {
         Schema::create('secciones', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_curso')->unsigned();
+            $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('Cascade');
             $table->string('literal', 2)->unique();
             $table->integer('capacidad');
             $table->timestamps();
