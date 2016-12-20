@@ -73,5 +73,5 @@
                         </div>
                         
                     </div>
-                      <a href="{{ url('descargarPagos') }}">Descargar</a>
+                    <button class="btn btn-primary fa fa-file-excel-o" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarPagos') }}" style="color:white"> Exportar Excel</a></button>
 @stop
