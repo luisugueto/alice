@@ -20,6 +20,7 @@ use Session;
 use DB;
 use Excel;
 use PDF;
+use PHPExcel_Worksheet_Drawing;
 
 class PagosController extends Controller
 {
@@ -58,6 +59,7 @@ class PagosController extends Controller
             }
 
             Excel::create("Listado Total de Prestamos y Anticipos", function ($excel) use ($prestamo) {
+               
                 $excel->setTitle("Listado Total de Prestamos y Anticipos");
                 $excel->sheet("Pestaña 1", function ($sheet) use ($prestamo) {
                     $sheet->loadView('prestamos.excel.descargartotal')->with('prestamo', $prestamo);

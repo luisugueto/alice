@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('edad') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Edad') !!} <small class="text-red">*</small>
-				{!! Form::text('edad', null, ['class' => 'form-control', 'title' => 'Introduzca la edad del personal', 'placeholder' => 'Ejm: ']) !!}
+				{!! Form::number('edad', null, ['class' => 'form-control', 'title' => 'Introduzca la edad del personal', 'placeholder' => 'Ejm: ']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Fecha nacimiento') !!} <small class="text-red">*</small>
@@ -52,7 +52,7 @@
 
 			<div class="form-group{{ $errors->has('tipo_registro') ? ' has-error' : '' }}">
 				{!! Form::label('tiporeg', 'Tipo de Personal') !!} <small class="text-red">*</small>
-				{!! Form::select('tipo_registro',$tipo, null, ['class' => 'form-control', 'id' =>'tipoRegistro', 'onChange' => 'validarTipo()', 'title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+				{!! Form::select('tipo_registro',$tipo, null, ['required','class' => 'form-control', 'id' =>'tipoRegistro', 'onChange' => 'validarTipo()', 'title' => 'Introduzca el Tipo de Registro  del personal', 'placeholder'=>'Seleccione']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">
 				{!! Form::label('especialidad', 'Especialidad') !!} <small class="text-red">*</small>
@@ -72,7 +72,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('cargo') ? ' has-error' : '' }}">
 				{!! Form::label('cargo', 'Cargo') !!} <small class="text-red">*</small>
-				{!! Form::select('id_cargo',$cargo, null, ['class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
+				{!! Form::select('id_cargo', array('Seleccione'),null, ['required','id'=>'cargo','class' => 'form-control', 'title' => 'Introduzca el Cargo del personal']) !!}
 			</div>
 		<div id="registroUser" >
 			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
@@ -199,6 +199,32 @@
 		if($('#tipoRegistro').val() == 3){
 			$('#registroUser').css('display', 'none');
 		}else $('#registroUser').css('display', '');
+
+
+                var id = $("#tipoRegistro").val();
+                $.get("/cargosPersonal/"+id+"", function(data) 
+                {
+
+                    console.log(data);
+                    $("#cargo").empty();
+                    $("#cargo").append('<option value="0"> Seleccione </option>');
+
+                    if(data.length > 0){
+
+                        for (var i = 0; i < data.length ; i++) 
+                        {  
+                            $("#cargo").removeAttr('disabled');
+                            $("#cargo").append('<option value="'+ data[i].id + '">' + data[i].nombre +'</option>');
+                        }
+
+                    }else{
+                        
+                        $("#seccion").attr('disabled', true);
+
+                    }
+                });
+
+
 
 	}
 

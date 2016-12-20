@@ -1,3 +1,12 @@
+<!-- <table>
+    <thead>
+        <tr>
+            <td colspan="6"><img src="perfil/47Lighthouse.jpg"/></td>
+            <td></td>
+        </tr>
+    </thead>
+</table> -->
+
 <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

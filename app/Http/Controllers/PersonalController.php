@@ -35,8 +35,7 @@ class PersonalController extends Controller
     {
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
-
-        return view('personal.nuevopersonal', compact('cargo', 'tipo'));
+        return view('personal.nuevopersonal', compact('tipo'));
     }
 
     /**
@@ -47,6 +46,13 @@ class PersonalController extends Controller
     public function create()
     {
         //
+    }
+
+    public function getCargos(Request $request, $id)
+    {
+        if ($request->ajax()) {
+           return $cargos = Cargo::where('id_tipo_empleado', $id)->get();
+        }
     }
 
     /**
@@ -76,7 +82,6 @@ class PersonalController extends Controller
         $per->correo = strtolower($request['correo']);
         $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
-        $per->id_tipo = $request['tipo_registro'];
         if($request['seleccionar']=='on'){
             $per->clave = $request['clave'];
         }else $per->clave = '';
@@ -122,7 +127,7 @@ class PersonalController extends Controller
 
         $personal = Personal::all();
         Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
-        return view('personal.personal', ['personal'=>$personal]);
+        return redirect()->route('personal.index');
     }
 
     /**
