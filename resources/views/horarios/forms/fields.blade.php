@@ -38,7 +38,7 @@
                     <th class="text-center" colspan="3">LEYENDA</th>
                 </tr>
                 <tr>
-                    <th style="width: 150px">ASIGNATURA {{ HorariosController::magic() }}</th>
+                    <th style="width: 150px">ASIGNATURA</th>
                     <th></th>
                     <th style="width: 60px"> Periodo </th>
                 </tr>
