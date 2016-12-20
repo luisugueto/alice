@@ -18,13 +18,12 @@ Route::group(['middleware' => 'web'], function () {
 	//URLS REST
 	#Route::resource('app', 'AppController');
 	
+<<<<<<< HEAD
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
+=======
+>>>>>>> a7323024dbbbde95b587bef487b9357a4f919fb0
 
-	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
-	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
-	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
-	Route::get('horarios/buscar', ['uses' => 'HorariosController@search', 'as' => 'horarios.buscar']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
@@ -37,6 +36,14 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('prestamos', 'PrestamosAnticiposController');
 	Route::resource('pagos', 'PagosController');
 	Route::resource('secciones', 'SeccionController');
+
+
+	Route::get('secciones/{id}/destroy',[
+
+			'uses' => 'SeccionController@destroy',
+			'as'  => 'secciones.destroy'
+				]);
+	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::resource('areas', 'AreaTrabajoController');
 	Route::resource('cargos', 'CargosController');
 	Route::resource('aulas', 'AulasController');
@@ -61,5 +68,14 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('descargarPagos', 'PagosController@descargar');
 	Route::get('descargarListado', 'PagosController@descargarListado');
 	
+	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
+
+	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
+	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
+	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
+	Route::get('horarios/buscar', [
+		'uses' => 'HorariosController@index',
+		'as' => 'horarios.buscar'
+		]);
 });
 	

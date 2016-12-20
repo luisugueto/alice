@@ -52,7 +52,7 @@ class HorariosController extends Controller
         $asignatura = Asignaturas::find($request->id_asignatura);
         $aula = Aula::find($request->id_aula);
 
-
+        
         return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
     }
 
@@ -133,6 +133,7 @@ class HorariosController extends Controller
 
     public function search()
     {
+
         $cursos = Cursos::lists('curso', 'id');
         $aulas = Aula::lists('nombre', 'id');
 
