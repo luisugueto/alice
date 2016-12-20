@@ -7,6 +7,8 @@ use App\Seccion;
 use App\Http\Requests;
 use App\Http\Requests\SeccionesRequest;
 use Session;
+use App\Cursos;
+use DB;
 
 class SeccionController extends Controller
 {
@@ -26,9 +28,12 @@ class SeccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+
     public function create()
     {
-        return view('secciones.create');
+        $cursos=Cursos::lists('curso','id');
+        return view('secciones.create',compact('cursos'));
     }
 
     /**
@@ -39,12 +44,20 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-        $seccion = new Seccion();
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
-        
-        Session::flash('message', 'SECCION CREADA CORRECTAMENTE');
+
+        $buscar=Seccion::where('literal',$request->literal)->where('id_curso',$request->id_curso)->first();
+        if(count($buscar)>0){
+            Session::flash('message-error', 'NO SE PUEDE REGISTRAR LA SECCION DEBIDO A QUE YA EXISTE PARA DICHO CURSO');
+            
+        }else{
+            $seccion = new Seccion();
+            $seccion->literal = strtoupper($request['literal']);
+            $seccion->capacidad = $request['capacidad'];
+            $seccion->id_curso= $request['id_curso'];
+            $seccion->save();
+            
+            Session::flash('message', 'SECCIÓN CREADA CORRECTAMENTE');
+        }
         $seccion = Seccion::all();
         return view("secciones.index", ['seccion'=>$seccion]);
     }
@@ -69,7 +82,8 @@ class SeccionController extends Controller
     public function edit($id)
     {
         $seccion = Seccion::find($id);
-        return view('secciones.edit', ['seccion'=>$seccion]);
+        $cursos=Cursos::lists('curso','id');
+        return view('secciones.edit', ['seccion'=>$seccion])->with('cursos',$cursos);
     }
 
     /**
@@ -81,12 +95,19 @@ class SeccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $seccion = Seccion::find($id);
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->save();
+        $buscar=Seccion::where('literal',$request->literal)->where('id_curso',$request->id_curso)->where('id','<>',$id)->first();
+        if(count($buscar)>0){
+            Session::flash('message-error', 'NO SE PUEDE REGISTRAR LA SECCION DEBIDO A QUE YA EXISTE PARA DICHO CURSO');
+            
+        }else{
+            $seccion = Seccion::find($id);
+            $seccion->literal = strtoupper($request['literal']);
+            $seccion->capacidad = $request['capacidad'];
+            $seccion->id_curso=$request['id_curso'];
+            $seccion->save();
 
-        Session::flash('message', 'SECCION EDITADA CORRECTAMENTE');
+            Session::flash('message', 'SECCION EDITADA CORRECTAMENTE');
+        }
         $seccion = Seccion::all();
         return view("secciones.index", ['seccion'=>$seccion]);
     }
@@ -99,6 +120,18 @@ class SeccionController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $buscar=DB::table('asignacion_bloques')->where('id_seccion',$id)->first();
+        if(count($buscar)>0){
+            Session::flash('message-error', 'NO SE PUEDE ELIMINAR LA SECCION DEBIDO A QUE YA EXISTE ASIGNADA EN UN HORARIO');
+            
+        }else{
+            $secciones=Seccion::find($id);
+            $secciones->delete();
+             Session::flash('message', 'SECCION ELIMINADA CORRECTAMENTE');
+        }
+
+        $seccion = Seccion::all();
+        return view("secciones.index", ['seccion'=>$seccion]);
     }
 }

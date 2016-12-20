@@ -184,7 +184,7 @@
 
             var id = $("#curso").val();
 
-            $.get("/secciones/"+id+"", function(data) 
+            $.get("/seccionesHorarios/"+id+"", function(data) 
             {
 
                 $("#seccion").empty();

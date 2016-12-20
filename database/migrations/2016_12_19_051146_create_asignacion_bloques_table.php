@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 class CreateAsignacionBloquesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations. 
      *
      * @return void
      */
