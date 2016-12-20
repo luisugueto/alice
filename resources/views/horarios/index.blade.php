@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
-@section('contentheader_title', 'Rubros')
-@section('contentheader_description', 'Clientes')
+@section('contentheader_title', 'Horarios')
+@section('contentheader_description', 'Periodo')
 
 
 @section('main-content')                    
 <div class="col-md-12"><br><br> 
     @include('alerts.request')
     @include('alerts.errors')
+    <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('horarios/buscar') }}'";>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
+    </button><br><br>
     <section class="content">
         <div class="row">
             <div class="col-md-12">

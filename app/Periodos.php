@@ -31,4 +31,24 @@ class Periodos extends Model
 
         return $this->hasMany('App\Quimestres','id_periodo','id');
     }
+
+    public function asignacion_a()
+    {
+        return $this->belongsToMany('App\Asignaturas', 'asignacion_bloques', 'id_periodo', 'id_asig')->withPivot('id_seccion', 'id_bloque', 'id_periodo');
+    }
+
+    public function asignacion_s()
+    {
+        return $this->belongsToMany('App\Seccion', 'asignacion_bloques', 'id_periodo', 'id_seccion')->withPivot('id_asig', 'id_periodo', 'id_seccion');
+    }
+
+    public function asignacion_au()
+    {
+        return $this->belongsToMany('App\Aula', 'asignacion_bloques', 'id_periodo', 'id_aula')->withPivot('id_seccion', 'id_asig', 'id_bloque');
+    }
+
+    public function asignacion_b()
+    {
+        return $this->belongsToMany('App\Bloque', 'asignacion_bloques', 'id_periodo', 'id_bloque')->withPivot('id_seccion', 'id_aula', 'id_asig');
+    }
 }

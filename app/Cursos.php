@@ -14,9 +14,7 @@ class Cursos extends Model
     
     protected $table = 'cursos';
 
-    protected $fillable = [
-        'curso'
-    ];
+    protected $fillable = ['curso'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -30,5 +28,10 @@ class Cursos extends Model
     public function asignaturas(){
 
     	return $this->hasMany('App\Asignaturas','id_curso','id');
+    }
+
+    public function seccion()
+    {
+        return $this->hasMany('App\Seccion', 'id_curso', 'id');
     }
 }

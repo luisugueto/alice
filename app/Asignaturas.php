@@ -46,4 +46,24 @@ class Asignaturas extends Model
 
         return $this->hasMany('App\Calificacion_quimestre','id_asignatura','id');
     }
+
+    public function asignacion_b()
+    {
+        return $this->belongsToMany('App\Bloque', 'asignacion_bloques', 'id_asig', 'id_bloque')->withPivot('id_seccion', 'id_aula', 'id_periodo');
+    }
+
+    public function asignacion_s()
+    {
+        return $this->belongsToMany('App\Seccion', 'asignacion_bloques', 'id_asig', 'id_seccion')->withPivot('id_bloque', 'id_aula', 'id_periodo');
+    }
+
+    public function asignacion_a()
+    {
+        return $this->belongsToMany('App\Aula', 'asignacion_bloques', 'id_asig', 'id_aula')->withPivot('id_seccion', 'id_bloque', 'id_periodo');
+    }
+
+    public function asignacion_p()
+    {
+        return $this->belongsToMany('App\Periodos', 'asignacion_bloques', 'id_asig', 'id_periodo')->withPivot('id_seccion', 'id_aula', 'id_bloque');
+    }
 }

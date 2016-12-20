@@ -17,10 +17,14 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
 	#Route::resource('app', 'AppController');
+	
+	Route::get('secciones/{id}/', 'HorariosController@getSecciones');	
+	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
 
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
+	Route::get('horarios/buscar', ['uses' => 'HorariosController@search', 'as' => 'horarios.buscar']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

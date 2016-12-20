@@ -177,3 +177,54 @@
 
     }
 </script>
+<script>
+    $(document).ready( function () 
+    {
+        $("#curso").change(function() {
+
+            var id = $("#curso").val();
+
+            $.get("/secciones/"+id+"", function(data) 
+            {
+
+                $("#seccion").empty();
+                $("#seccion").append('<option value="0"> Seleccione </option>');
+
+                if(data.length > 0){
+
+                    for (var i = 0; i < data.length ; i++) 
+                    {  
+                        $("#seccion").removeAttr('disabled');
+                        $("#aula").removeAttr('disabled');
+                        $("#asignatura").removeAttr('disabled');
+                        $("#seccion").append('<option value="'+ data[i].id + '">' + data[i].literal +'</option>')
+                    }
+
+                }else{
+                    
+                    $("#seccion").attr('disabled', true);
+                    $("#aula").attr('disabled', true);
+                    $("#asignatura").attr('disabled', true);
+
+                }
+            });
+        });
+
+        $("#curso").change(function() {
+
+            var id = $("#curso").val();
+
+            $.get("/asignaturas/"+id+"", function(data) 
+            {
+
+                $("#asignatura").empty();
+                $("#asignatura").append('<option value="0"> Seleccione </option>');
+
+                for (var i = 0; i < data.length ; i++) 
+                {  
+                    $("#asignatura").append('<option value="'+ data[i].id + '">' + data[i].asignatura +'</option>')
+                }
+            });
+        });
+    });
+</script>
