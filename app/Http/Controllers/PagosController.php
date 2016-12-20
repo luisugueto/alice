@@ -17,6 +17,7 @@ use App\PagosRealizados;
 use Redirect;
 use Session;
 use DB;
+use Excel;
 
 class PagosController extends Controller
 {
@@ -28,6 +29,40 @@ class PagosController extends Controller
     public function index()
     {
         
+    }
+
+    public function descargar(){
+         $prestamo = Prestamo::all();
+            $suma = 0;
+            foreach($prestamo as $per){
+                $i = 0; $monto = 0;
+                foreach ($per->pagosrealizados as $key) {
+                    $i += $key->monto_pagado;
+                    $monto = $key->monto_adeudado;
+                }                    
+                $per->fecha;
+                $per->personal->nombres;                
+                $per->tipo;
+                $per->monto;
+                $per->monto-$i;
+                if($per->tipo == 'Prestamo')
+                {
+                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
+                    {
+
+                    }
+                    else $suma++;
+                }                
+            }
+
+            
+            Excel::create("FileName", function ($excel) use ($prestamo) {
+                $excel->setTitle("Title");
+                $excel->sheet("Sheet 1", function ($sheet) use ($prestamo) {
+
+                    $sheet->loadView('prestamos.descargar')->with('prestamo', $prestamo);
+                });
+            })->download('xls');
     }
 
     /**

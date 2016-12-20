@@ -24,9 +24,7 @@ class PagosPrestamoRequest extends Request
     public function rules()
     {
         return [
-            'monto' => 'required|numeric',
-            'modalidad' => 'required',
-            
+            'modalidad' => 'required'
         ];
     }
 }

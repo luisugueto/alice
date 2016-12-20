@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Requests\PrestamoRequest;
 use Session;
 use DB;
+use Excel;
 
 class PrestamosAnticiposController extends Controller
 {
@@ -25,6 +26,18 @@ class PrestamosAnticiposController extends Controller
         #$prestamo = Prestamo::all();
 
         return view('prestamos.index', compact('prestamo'));
+    }
+
+    public function descargar()
+    {
+         Excel::create('New file', function($excel) {
+
+            $excel->sheet('First sheet', function($sheet) {
+
+                $sheet->loadView('prestamos.total')->with();
+            });
+
+        })->download('xlsx');
     }
 
     /**

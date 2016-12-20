@@ -73,4 +73,5 @@
                         </div>
                         
                     </div>
+                      <a href="{{ url('descargarPagos') }}">Descargar</a>
 @stop
