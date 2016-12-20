@@ -35,11 +35,9 @@ class SeccionController extends Controller
     public function create()
     {
 
-        $curso = Cursos::lists('curso', 'id');
-        return view('secciones.create', compact('curso'));
-
-        $cursos=Cursos::lists('curso','id');
-        return view('secciones.create',compact('cursos'));
+        $cursos = Cursos::lists('curso', 'id');
+        //dd($cursos);
+        return view('secciones.create', compact('cursos'));
 
     }
 
@@ -51,20 +49,16 @@ class SeccionController extends Controller
      */
     public function store(Request $request)
     {
-        $seccion = new Seccion();
-        $seccion->literal = strtoupper($request['literal']);
-        $seccion->capacidad = $request['capacidad'];
-        $seccion->id_curso = $request['id_curso'];
-        $seccion->save();
-        
-        Session::flash('message', 'SECCION CREADA CORRECTAMENTE');
 
 
         $buscar=Seccion::where('literal',$request->literal)->where('id_curso',$request->id_curso)->first();
+        
         if(count($buscar)>0){
+            
             Session::flash('message-error', 'NO SE PUEDE REGISTRAR LA SECCION DEBIDO A QUE YA EXISTE PARA DICHO CURSO');
             
         }else{
+            
             $seccion = new Seccion();
             $seccion->literal = strtoupper($request['literal']);
             $seccion->capacidad = $request['capacidad'];

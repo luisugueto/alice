@@ -20,6 +20,22 @@ Route::group(['middleware' => 'web'], function () {
 	
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
+	Route::get('horarios/buscar', ['uses' => 'HorariosController@search','as' => 'horarios.buscar']);
+	Route::get('secciones/{id}/destroy',['uses' => 'SeccionController@destroy','as'  => 'secciones.destroy']);
+	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');
+	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
+	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
+	Route::get('/verificarPrestamos', 'PrestamosAnticiposController@ver');
+	Route::get('/usuario', 'UsuariosController@index');
+	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
+	Route::get('/nuevo_personal', 'PersonalController@nuevo');
+	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
+	Route::get('descargarPagos', 'PagosController@descargar');
+	Route::get('descargarListado', 'PagosController@descargarListado');
+	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
+	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
+	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
+	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
 
 
 	Route::resource('asistencias', 'AsistenciasController');
@@ -33,14 +49,6 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('prestamos', 'PrestamosAnticiposController');
 	Route::resource('pagos', 'PagosController');
 	Route::resource('secciones', 'SeccionController');
-
-
-	Route::get('secciones/{id}/destroy',[
-
-			'uses' => 'SeccionController@destroy',
-			'as'  => 'secciones.destroy'
-				]);
-	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::resource('areas', 'AreaTrabajoController');
 	Route::resource('cargos', 'CargosController');
 	Route::resource('aulas', 'AulasController');
@@ -48,31 +56,9 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('asignaturas', 'AsignaturasController');
 	Route::resource('user_perfil', 'PerfilController');
 	Route::resource('horarios', 'HorariosController');
-
-	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
-	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
-	Route::get('/verificarPrestamos', 'PrestamosAnticiposController@ver');
-
-	Route::get('/usuario', 'UsuariosController@index');
-
-	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
-	Route::get('/nuevo_personal', 'PersonalController@nuevo');
-
 	Route::resource('parciales','ParcialesController');
 	Route::resource('quimestres','QuimestresController');
 
-	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
-	Route::get('descargarPagos', 'PagosController@descargar');
-	Route::get('descargarListado', 'PagosController@descargarListado');
 	
-	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
-
-	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
-	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
-	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
-	Route::get('horarios/buscar', [
-		'uses' => 'HorariosController@index',
-		'as' => 'horarios.buscar'
-		]);
 });
 	
