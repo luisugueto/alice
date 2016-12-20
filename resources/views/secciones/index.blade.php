@@ -48,7 +48,7 @@
                                     <tr>
                                         <td>{{ $i->literal}}</td>
                                         <td>{{$i->capacidad }}</td>    
-                                        <td>{!!link_to_route('secciones.edit', $title = 'Editar', $parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
+                                        <td>{!!link_to_route('secciones.edit', $title = '', $parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -7,6 +7,7 @@ use App\Seccion;
 use App\Http\Requests;
 use App\Http\Requests\SeccionesRequest;
 use Session;
+use App\Cursos;
 
 class SeccionController extends Controller
 {
@@ -28,7 +29,8 @@ class SeccionController extends Controller
      */
     public function create()
     {
-        return view('secciones.create');
+        $curso = Cursos::lists('curso', 'id');
+        return view('secciones.create', compact('curso'));
     }
 
     /**
@@ -42,6 +44,7 @@ class SeccionController extends Controller
         $seccion = new Seccion();
         $seccion->literal = strtoupper($request['literal']);
         $seccion->capacidad = $request['capacidad'];
+        $seccion->id_curso = $request['id_curso'];
         $seccion->save();
         
         Session::flash('message', 'SECCION CREADA CORRECTAMENTE');

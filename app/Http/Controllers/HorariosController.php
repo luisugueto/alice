@@ -142,7 +142,6 @@ class HorariosController extends Controller
     public function getSecciones(Request $request, $id)
     {
         if ($request->ajax()) {
-
            return $secciones = Seccion::where('id_curso', $id)->get();
            
         }
@@ -157,8 +156,4 @@ class HorariosController extends Controller
         }
     }
 
-    static function magic()
-    {
-        return "HOLA :D";
-    }
 }

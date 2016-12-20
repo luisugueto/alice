@@ -19,6 +19,7 @@ use Redirect;
 use Session;
 use DB;
 use Excel;
+use PDF;
 
 class PagosController extends Controller
 {
@@ -62,6 +63,8 @@ class PagosController extends Controller
                     $sheet->loadView('prestamos.excel.descargartotal')->with('prestamo', $prestamo);
                 });
             })->download('xls');
+        // $pdf = PDF::loadView('prestamos.excel.descargartotal', compact('prestamo'));
+        // return $pdf->download('invoice.pdf');
     }
 
     public function descargarPagosMensual(Request $request){

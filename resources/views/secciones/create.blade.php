@@ -23,6 +23,10 @@
             {!! Form::label('Capacidad', 'Capacidad de Alumnos') !!}
             {!! Form::text('capacidad', null, ['required','class'=>'form-control', 'placeholder'=>'Ingresa Capacidad']) !!} 
           </div>
+          <div class="form-group">
+            {!! Form::label('Curso', 'Curso') !!}
+            {!! Form::select('id_curso', $curso,null, ['required','class'=>'form-control', 'placeholder'=>'Ingresa Curso']) !!} 
+          </div>
           <div align="center">
               {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
           </div>

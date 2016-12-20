@@ -184,9 +184,10 @@
 
             var id = $("#curso").val();
 
-            $.get("/secciones/"+id+"", function(data) 
+            $.get("/seccionesHorarios/"+id+"", function(data) 
             {
 
+                console.log(data);
                 $("#seccion").empty();
                 $("#seccion").append('<option value="0"> Seleccione </option>');
 
@@ -214,7 +215,7 @@
 
             var id = $("#curso").val();
 
-            $.get("/asignaturas/"+id+"", function(data) 
+            $.get("/asignaturasHorarios/"+id+"", function(data) 
             {
 
                 $("#asignatura").empty();

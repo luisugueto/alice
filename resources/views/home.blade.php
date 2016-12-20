@@ -16,7 +16,7 @@
 					 {{Session::get('message')}}
 						{{ trans('adminlte_lang::message.logged') }}
 					</div>
-
+					
 				</div>
 			</div>
 		</div>

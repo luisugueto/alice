@@ -18,8 +18,8 @@ Route::group(['middleware' => 'web'], function () {
 	//URLS REST
 	#Route::resource('app', 'AppController');
 	
-	Route::get('secciones/{id}/', 'HorariosController@getSecciones');	
-	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
+	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
+	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
 
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);

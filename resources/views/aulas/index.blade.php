@@ -37,7 +37,7 @@
                                 @foreach($aula as $i)
                                     <tr>
                                         <td>{{ $i->nombre}}</td>  
-                                        <td>{!!link_to_route('aulas.edit', $parameters = $i->id, $attributes = ['class'=>'fa fa-check fa-2x'])!!}</td>    
+                                        <td>{!!link_to_route('aulas.edit', $title = '', $parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td> 
                                     </tr>
                                 @endforeach
                             </tbody>
