@@ -1,29 +1,44 @@
 @extends('layouts.app')
-@section('contentheader_title', 'Editar Asignatura')
 
-@section('htmlheader_title')
-    Editar Asignatura
+@section('contentheader_title', 'Asignatura')
+@section('contentheader_description', 'Editar')
+
+@section('main-content')
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 20px;">
+            @include('alerts.request')
+            @include('alerts.errors')
+        </div>
+    </div>
+
+    <section class="content"> 
+        <div class="row">
+            <div class="col-md-12"> 
+
+                {!!Form::model($asignaturas, ['route'=>['asignaturas.update', $asignaturas->id], 'method'=>'PUT', 'files' => true])!!}
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">{{ $asignaturas->asignatura }}</h3> 
+                        </div>
+                        <div class="box-body">
+                            
+                            @include('asignaturas.forms.fields') 
+
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-flat">Actualizar</button>
+                            </div>
+                        </div>   
+                    </div>
+
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </section>
+</div>
+
 @endsection
-
-
-@section('main-content')                    
-            <div class="col-md-12">
-    @include('alerts.request')
-    <section class="content">
-    <div class="row">
-
-      <div class="col-md-12">
-          {!!Form::model($asignaturas, ['route'=>['asignaturas.update', $asignaturas->id], 'method'=>'PUT', 'files'=>false])!!}
-          
-          <br>
-          @include('asignaturas.forms.fields')
-          <div align="center">
-              {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
-          {!! Form::close() !!}
-                  <br>
-                  {!!Form::open(['route'=>['asignaturas.destroy', $asignaturas['id']], 'method'=>'DELETE'])!!}
-                    <br>
-                      {!!Form::submit('Eliminar', ['class'=>'btn btn-danger'])!!}
-                    {!!Form::close()!!}
-          </div>
-@stop

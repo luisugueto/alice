@@ -1,66 +1,56 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-    Asignaturas
-@endsection
-
 @section('contentheader_title', 'Asignaturas')
+@section('contentheader_description', 'Inicio')
 
 
 @section('main-content')                    
 <div class="col-md-12">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 10px;">
+            @include('alerts.request')
+            @include('alerts.errors') 
+        </div>  
+    </div> 
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 5px">
+        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('asignaturas/create') }}'";>
+            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+        </button>
         </div>
-    @endif
-    @include('alerts.errors')
-     
-<div class="col-md-12">
-    <section class="content">
-   <div class="col-md-14">
-    <button class="btn btn-primary" title="Registrar una nueva asignatura" onclick="window.location.href = '{{ route('asignaturas.create') }}'";>
-        <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-    </button>
     </div>
+    <section class="content">
         <div class="row">
-            <div class="col-md-14">
+            <div class="col-md-12" style="padding-top: 20px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Tabla</h3>
+                        <h3 class="box-title">Asignaturas</h3>
                     </div>
-
                     <div class="box-body">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                        <td>Asignatura</td>
-                                        <td>Código</td>
-                                        <td>Curso</td>
-                                        <td>Opciones</td>
-                                    </tr>
+                                    <th>Asignatura</th>
+                                    <th>Código</th>
+                                    <th>Curso</th>
+                                    <th>Opciones</th>
+                                </tr>
                             </thead>
-                            <tbody align="center">
-                                
-                                @foreach($asignaturas as $i)
+                            <tbody>
+                                @foreach($asignaturas as $asignatura)
                                     <tr>
-                                        <td>{{ $i->asignatura }}</td>  
-                                        <td>{{ $i->codigo }}</td>  
-                                        <td>{{ $i->cursos->curso }}</td>
-                                        <td>{!!link_to_route('asignaturas.edit', $title = '',$parameters = $i->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
+                                        <td>{{ $asignatura->asignatura }}</td>  
+                                        <td>{{ $asignatura->codigo }}</td>  
+                                        <td>{{ $asignatura->cursos->curso }}</td>
+                                        <td class="text-center">{!!link_to_route('asignaturas.edit', $title = '',$parameters = $asignatura->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>
                                 @endforeach
                             </tbody>
                          </table>
                            
-                        </div>
-                        
-                    </div>
+                    </div>            
                 </div>
             </div>
-        </section>
-    </div>
-@stop
+        </div>
+    </section>
+@endsection

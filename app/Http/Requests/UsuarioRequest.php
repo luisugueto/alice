@@ -23,10 +23,10 @@ class UsuarioRequest extends Request
     public function rules()
     {
         return [
-            'email' => 'required|unique:users',
-            'contraseña' => 'required',
-            'nombre' => 'required',
-            'roles' => 'required',
+            'email'    => 'required|unique:users',
+            'password' => 'required',
+            'name'     => 'required',
+            'roles_id'    => 'required',
             #'personal' =>'required|unique:users,id_personal',
         ];
     }

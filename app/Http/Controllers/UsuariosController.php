@@ -62,23 +62,28 @@ class UsuariosController extends Controller
     public function store(UsuarioRequest $request)
     {
         
+
         if($request->roles == 1){
             $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
             foreach ($user as $key) { $suma = $key->suma; }
+            
             if($suma>0) {
                 Session::flash('message-error', 'ERROR: NO PUEDE EXISTIR MÁS DE UN USUARIO ADMINISTRADOR');
                 $user = User::all();
+                
                 return view('usuarios.usuario', compact('user'));
-            }
-            else{
+            }else{
+            
             $user = new User();
-            $user->name = strtoupper($request['name']);
-            $user->email = strtolower($request['email']);
+            $user->name = $request['name'];
+            $user->email = $request['email'];
             $user->password = bcrypt($request['password']);
             $user->roles_id = $request['roles_id'];
             $user->remember_token = Session::token();
             $user->save();
+
             Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+
            }
         }
         elseif($request->roles == 5){
@@ -92,27 +97,28 @@ class UsuariosController extends Controller
             }
             else{
             $user = new User();
-            $user->name = strtoupper($request['nombre']);
+            $user->name = strtoupper($request['name']);
             $user->email = strtolower($request['email']);
-            $user->password = bcrypt($request['contraseña']);
-            $user->roles_id = $request['roles'];
+            $user->password = bcrypt($request['password']);
+            $user->roles_id = $request['roles_id'];
             $user->remember_token = Session::token();
             $user->save();
             Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
            }
-        }
-        else{
+       
+        }else{
+
             $user = new User();
-            $user->name = strtoupper($request['nombre']);
+            $user->name = strtoupper($request['name']);
             $user->email = strtolower($request['email']);
-            $user->password = bcrypt($request['contraseña']);
-            $user->roles_id = $request['roles'];
+            $user->password = bcrypt($request['password']);
+            $user->roles_id = $request['roles_id'];
             $user->remember_token = Session::token();
             $user->save();
             Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
         }
-        $user = User::all();
-        return view('usuarios.usuario', compact('user'));
+
+        return redirect('usuarios');
     }
 
     /**

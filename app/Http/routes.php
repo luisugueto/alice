@@ -32,7 +32,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
 	Route::get('descargarPagos', 'PagosController@descargar');
 	Route::get('descargarListado', 'PagosController@descargarListado');
-	Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
+	//Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
