@@ -32,10 +32,6 @@ class PersonalController extends Controller
         else{
             $this->middleware('administrador');
         }*/
-<<<<<<< HEAD
-=======
-
->>>>>>> ff5a4eed6e58f2deb07896b4276281ff7bec836c
     }
     /**
      * Display a listing of the resource.
