@@ -43,7 +43,13 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('personal.index') }}"><i class='fa fa-male'></i> <span>Personal</span></a></li>
+            <li class="treeview">
+                <a href="#"><i class='fa fa-user'></i> <span>Personal</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('docentes.index') }}">Listado de Docentes</a></li>
+                    <li><a href="{{ route('personal.index') }}">Listado del Personal</a></li>
+                </ul>
+            </li>
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-mortar-board'></i> <span>Estudiantes</span></a></li>
@@ -125,7 +131,9 @@
                     @endif
                      @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('usuarios.index') }}"> Usuarios</a></li>
+                    <li><a href="{{ route('tipo_empleado.index') }}">Tipo de Empleado</a></li>
                     @endif
+
                 </ul>
             </li>
             @endif
