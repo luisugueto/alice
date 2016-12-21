@@ -11,6 +11,17 @@ use App\Equivalencias;
 use App\Comportamiento;
 class ParcialesController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 5){
+            $this->middleware('dace');
+        }
+        elseif(Auth::user()->roles_id == 3){
+            $this->middleware('profesor');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *

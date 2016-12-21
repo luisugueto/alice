@@ -11,6 +11,14 @@ use Session;
 
 class AsignaturasController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 5){
+            $this->middleware('dace');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *

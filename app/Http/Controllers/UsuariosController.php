@@ -18,11 +18,12 @@ use Auth;
 class UsuariosController extends Controller
 {
     public function __construct(){
-        $this->middleware('usuarios');
-        // if(Auth::user()->roles_id == 2){
-            
-        // }
-
+        if(Auth::user()->roles_id == 4){
+            $this->middleware('recursohumano');
+        }
+        else{
+            $this->middleware('administrador');
+        }
     }
     /**
      * Display a listing of the resource.

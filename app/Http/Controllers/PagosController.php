@@ -24,6 +24,17 @@ use PHPExcel_Worksheet_Drawing;
 
 class PagosController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 4){
+            $this->middleware('recursohumano');
+        }
+        elseif(Auth::user()->roles_id == 2){
+            $this->middleware('director');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
