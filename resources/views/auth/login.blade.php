@@ -5,11 +5,13 @@
 @endsection
 
 @section('content')
+<br><br>
+<div class="login-logo">
+           <b>Sistema Administrativo y Académico<br>María Montessori</b>
+        </div>
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-           <b>Sistema María Montessori</b>
-        </div><!-- /.login-logo -->
+    <div class="login-box" >
+        <!-- /.login-logo -->
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">

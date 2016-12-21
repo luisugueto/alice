@@ -43,17 +43,17 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-user'></i> <span>Usuarios</span></a></li>
+            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-group'></i> <span>Usuarios</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li><a href="{{ route('personal.index') }}"><i class='fa fa-user'></i> <span>Personal</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-user'></i> <span>Estudiantes</span></a></li>
+            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-book'></i> <span>Estudiantes</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-list'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('rubros/buscar/estudiante') }}">Nuevo</a></li>
                     <li><a href="{{ url('rubros') }}">Listado Total</a></li>
@@ -63,7 +63,7 @@
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Préstamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-money'></i> <span>Préstamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('prestamos.create') }}">Nuevo</a></li>
                     <li><a href="{{ url('verificarPrestamos') }}">Verificar Préstamo</a></li>
@@ -74,7 +74,7 @@
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Horarios</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-calendar'></i> <span>Horarios</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('horarios.index') }}">Nuevo</a></li>
                 </ul>
@@ -82,7 +82,7 @@
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 3 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Parciales</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-list-alt'></i> <span>Parciales</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.show',1) }}">Nuevo</a></li>
                 </ul>
@@ -90,7 +90,7 @@
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Quimestres</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-calendar-o'></i> <span>Quimestres</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('quimestres.index') }}">Listado</a></li>
                     <li><a href="{{ route('quimestres.create') }}">Nuevo</a></li>

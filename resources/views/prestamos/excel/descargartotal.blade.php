@@ -1,12 +1,3 @@
-<!-- <table>
-    <thead>
-        <tr>
-            <td colspan="6"><img src="perfil/47Lighthouse.jpg"/></td>
-            <td></td>
-        </tr>
-    </thead>
-</table> -->
-
 <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -19,7 +10,6 @@
                                     </tr>
                             </thead>
                             <tbody align="center">
-                            
                                    @foreach($prestamo as $per)
                                    <?php $i = 0; $monto = 0;
                                             foreach ($per->pagosrealizados as $key) {
