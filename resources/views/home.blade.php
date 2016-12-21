@@ -13,7 +13,7 @@
 					<div class="panel-heading">Bienvenido</div>
 
 					<div class="panel-body">
-					 {{Session::get('message')}}
+					 	{{Session::get('message')}}
 						{{ trans('adminlte_lang::message.logged') }}
 					</div>
 					

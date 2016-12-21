@@ -129,7 +129,7 @@ class AuthController extends Controller
 
             Session::put('valor', $suma);
             Session::flash('message', 'Bienvenido');
-            Session::put('periodo', $request['periodo']);
+            Session::put('periodo', $request['periodos']);
             return Redirect::to('/home');
         }
         Session::flash('message-error', 'Datos incorrectos');

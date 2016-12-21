@@ -11,6 +11,7 @@ use App\Asignaturas;
 use App\Aula;
 use App\Personal;
 use Session;
+use DB;
 
 
 class HorariosController extends Controller
@@ -33,27 +34,75 @@ class HorariosController extends Controller
     public function create(Request $request)
     {
         //dd($request->all());
-        $bloques = \DB::table('bloques')->get();
-        $horas = \DB::table('bloques')->where('id_dia', 1)->get();
-        $dias = \DB::table('dias')->get();
+        $bloques = DB::table('bloques')->get();
+        $horas = DB::table('bloques')->where('id_dia', 1)->get();
+        $dias = DB::table('dias')->get();
         
         $k=0;
         
-        for ($i=0; $i < 7 ; $i++) { 
+        for ($i=0; $i < 9 ; $i++) { 
     
-            for ($j=0; $j < 5 ; $j++) { 
+            for ($j=0; $j < 5 ; $j++) 
+            { 
                 $bloques2[$i][$j] = $bloques[$k];
                 $k++;
             }
         }
 
+        //BUSCANDO BLOQUES ASIGNADOS
+        $i= 0;
+        $j= 0;
+
+        $asignados = DB::table('asignacion_bloques')->where([['id_seccion', $request->id_seccion], ['id_periodo', Session::get('periodo')]])->get();
+
+        if(count($asignados) > 0)
+        {
+            foreach ($asignados as $asignado) 
+            {
+                $bloques_asignados[$i] = $asignado->id_bloque;
+                $asignaturas_asignadas[$i] = $asignado->id_asig;
+
+                $i++;
+                
+            }
+            
+            foreach ($bloques as $bloque) 
+            {
+                $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque->id]])->get();
+
+                if(count($asignadas) > 0)
+                {
+
+                    foreach ($asignadas as $asignadas) 
+                    {
+                        $aulas_asignadas[$j] = $asignadas->id_bloque;
+                        $j++;
+                    }
+
+                }else{
+
+                    $aulas_asignadas = array();
+                }
+            }
+
+        }else{
+
+            $bloques_asignados = array(); 
+            $asignaturas_asignadas = array();
+        }
+
+
+        //dd($asignaturas_asignadas);
+ 
+        //dd($asignados);
+        //dd($bloques_asignados);
         $curso = Cursos::find($request->id_curso);
         $seccion = Seccion::find($request->id_seccion);
         $asignatura = Asignaturas::find($request->id_asignatura);
         $aula = Aula::find($request->id_aula);
 
         
-        return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
+        return view('horarios.create', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
     }
 
     /**
@@ -72,17 +121,33 @@ class HorariosController extends Controller
             return redirect()->back();
 
         }else{
-            //dd(Session::all());
-            $seccion = Seccion::find($request->id_seccion);
 
             foreach ($request->id_bloque as $key => $bloque) 
             {
-                $seccion->asignacion_b()->attach($bloque, ['id_aula' => $request->id_aula, 'id_asig' => $request->id_asig, 'id_periodo' => '3']);    
+                $choca = \DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque]])->exists();
+                //dd($choca);
             }
-            
-            Session::flash('message', 'SE HAN CREADO NUEVOS REGISTROS');
 
-            return redirect('horarios');
+            if($choca)
+            {
+
+                Session::flash('message-error', 'ESTE BLOQUE YA ESTA ASIGNADO');
+
+                return redirect()->back();
+
+            }else{
+
+                $seccion = Seccion::find($request->id_seccion);
+
+                foreach ($request->id_bloque as $key => $bloque) 
+                {
+                    $seccion->asignacion_b()->attach($bloque, ['id_aula' => $request->id_aula, 'id_asig' => $request->id_asig, 'id_periodo' => Session::get('periodo')]);    
+                }
+                
+                Session::flash('message', 'SE HAN CREADO NUEVOS REGISTROS');
+
+                return redirect()->back();
+            }
         }
     }
 
@@ -154,6 +219,14 @@ class HorariosController extends Controller
 
            return $asignaturas = Asignaturas::where('id_curso', $id)->get();
 
+        }
+    }
+
+    public function getAsignados($bloque, $aula)
+    {
+        if ($request->ajax()) {
+
+            return Response::json('hola');
         }
     }
 

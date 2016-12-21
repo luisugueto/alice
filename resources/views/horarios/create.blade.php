@@ -10,11 +10,11 @@
     <div class="col-md-12">  
         <section class="content">
             <div class="row">
-                {!! Form::open(['route' => 'horarios.store', 'method' => 'POST', 'name' => 'form']) !!}
+                {!! Form::open(['route' => 'horarios.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
                     <div class="col-md-12">
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title">Curso: {{ $curso->curso }} </h3>
+                                <h3 class="box-title">Curso: {{ $curso->curso }}</h3>
                             </div>
                             <div class="box-body">
                                 @include('horarios.forms.fields')  

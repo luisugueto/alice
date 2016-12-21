@@ -187,7 +187,7 @@
             $.get("/seccionesHorarios/"+id+"", function(data) 
             {
 
-                console.log(data);
+                
                 $("#seccion").empty();
                 $("#seccion").append('<option value="0"> Seleccione </option>');
 
@@ -229,3 +229,30 @@
         });
     });
 </script>
+<!-- <script>
+    
+    $(document).ready( function () 
+    {
+
+        $(document).on('click', '[type=checkbox]', function(event) {
+            
+            var aula = document.form.id_aula.value;  
+            var bloque = $(this).val(); 
+            
+            //console.log(aula);
+            $.get("/bloques/"+bloque+'/'+aula+"", function(data) 
+            {
+                    
+                //console.log(data);
+                if(data)
+                {
+                    $("input:checkbox").attr('checked', false);
+                    alert('AULA OCUPADA');
+                }
+
+            });
+        }); 
+
+    });
+
+</script> -->
