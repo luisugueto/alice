@@ -22,6 +22,7 @@ class CreateRemuneracionTable extends Migration
             $table->string('horas_extras', 2);
             $table->bigInteger('cuenta_bancaria')->unique();
             $table->string('devolver_fondos', 2);
+            $table->timestamps();
         });
     }
 

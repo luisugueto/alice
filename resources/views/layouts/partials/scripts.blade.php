@@ -29,32 +29,6 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        var id = $("#tipoRegistro").val();
-        
-                $.get("/cargosPersonal/"+id+"", function(data) 
-                {
-                    $("#cargo").empty();
-                    $("#cargo").append('<option value="0"> Seleccione </option>');
-
-                    if(data.length > 0){
-
-                        for (var i = 0; i < data.length ; i++) 
-                        {  
-                            $("#cargo").removeAttr('disabled');
-                            $("#cargo").append('<option value="'+ data[i].id + '">' + data[i].nombre +'</option>');
-                        }
-
-                    }else{
-                        
-                        $("#seccion").attr('disabled', true);
-
-                    }
-                });
-    });
-</script>
-
-<script type="text/javascript">
 
     $(document).ready(function() {
 

@@ -33,7 +33,6 @@ class PersonalController extends Controller
 
     public function nuevo()
     {
-        $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
         return view('personal.nuevopersonal', compact('tipo'));
     }
@@ -173,7 +172,7 @@ class PersonalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PersonalRequest $request, $id)
     {
         $per = Personal::find($id);
         $per->codigo_pesonal = $request['codigo_pesonal'];
@@ -194,7 +193,7 @@ class PersonalController extends Controller
         $per->correo = strtolower($request['correo']);
         $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
-        $per->id_tipo = $request['tipo_registro'];
+      
         if($request['seleccionar']=='on'){
             $per->clave = $request['clave'];
         }else $per->clave = '';
