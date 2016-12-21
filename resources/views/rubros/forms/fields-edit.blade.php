@@ -9,7 +9,7 @@
 	<div class="col-md-12">
 		@foreach($formas_pago as $formas)
 			<div class="form-group">     
-		        <?php if($formas->forma=='efectivo'){ ?>
+		        <?php if($formas->forma=='Efectivo'){ ?>
 		        {!! Form::checkbox('id_forma[]', $formas->id,true,['onchange' => 'bloqueos2()','id' => 'id_forma']) !!}
 		        <?php }else{ ?>
 		        {!! Form::checkbox('id_forma[]',$formas->id,false,['onchange' => 'bloqueos2()','id' => 'id_forma']) !!}

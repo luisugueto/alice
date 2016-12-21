@@ -123,6 +123,9 @@
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('asignaturas.index') }}">Asignaturas</a></li>
                     @endif
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
+                    <li><a href="{{ route('asignaturas.index') }}">Rubros</a></li>
+                    @endif
                 </ul>
             </li>
             @endif

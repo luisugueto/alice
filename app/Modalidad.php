@@ -13,9 +13,7 @@ class Modalidad extends Model
      */
      protected $table = 'modalidads';
      
-    protected $fillable = [
-        'modalidad'
-    ];
+    protected $fillable = ['modalidad'];
 
     /**
      * The attributes that should be hidden for arrays.

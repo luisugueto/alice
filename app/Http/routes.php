@@ -16,7 +16,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
-	#Route::resource('app', 'AppController');
+	//Route::resource('app', 'AppController');
 	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');	
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
@@ -64,6 +64,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('parciales','ParcialesController');
 	Route::resource('quimestres','QuimestresController');
 	Route::resource('docentes','DocentesController');
+	Route::resource('facturacion', 'FacturacionController');
 
 	
 });

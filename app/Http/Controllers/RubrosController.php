@@ -17,6 +17,7 @@ use Auth;
 class RubrosController extends Controller
 {
     public function __construct(){
+        
         if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
         }
@@ -115,6 +116,7 @@ class RubrosController extends Controller
     {
 
      	$rubros = Facturacion::find($id);
+        $forma_pago = Modalidad::find($request->id_modalidad);
         $existe = $rubros->rubros_realizados()->exists();
 
         if($request->nro_transferencia == "")
@@ -150,24 +152,49 @@ class RubrosController extends Controller
 
             }else{
 
-                $monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
-
-                $rubros_realizado = new RubrosRealizados;
-                $rubros_realizado->monto_pagado = $request->monto_pagar;
-                $rubros_realizado->monto_adeudado = $monto_deuda;
-                $rubros_realizado->fecha = new \DateTime();
-                $rubros_realizado->id_factura = $rubros->id;
-                $rubros_realizado->id_modalidad = $request->id_modalidad;
-                $rubros_realizado->id_estudiante = $rubros->estudiante->id;
-                $rubros_realizado->no_transferencia = $nro_transferencia;
-                $rubros_realizado->no_cheque = $nro_cheque;
-                $rubros_realizado->save();
-
-                for($i=0; $i < count($request->id_forma); $i++)
+                if($forma_pago->modalidad == 'Exacto')
                 {
-                    $rubros_realizado->formas()->attach($request->id_forma[$i]);
+
+                    $monto_deuda = $rubros_realizados->monto_adeudado-$rubros_realizados->monto_adeudado;
+
+                    $rubros_realizado = new RubrosRealizados;
+                    $rubros_realizado->monto_pagado = $rubros_realizados->monto_adeudado;
+                    $rubros_realizado->monto_adeudado = $monto_deuda;
+                    $rubros_realizado->fecha = new \DateTime();
+                    $rubros_realizado->id_factura = $rubros->id;
+                    $rubros_realizado->id_modalidad = $request->id_modalidad;
+                    $rubros_realizado->id_estudiante = $rubros->estudiante->id;
+                    $rubros_realizado->no_transferencia = $nro_transferencia;
+                    $rubros_realizado->no_cheque = $nro_cheque;
+                    $rubros_realizado->save();
+
+                    for($i=0; $i < count($request->id_forma); $i++)
+                    {
+                        $rubros_realizado->formas()->attach($request->id_forma[$i]);
+                    }   
+
+                }else{
+
+                    $monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
+
+                    $rubros_realizado = new RubrosRealizados;
+                    $rubros_realizado->monto_pagado = $request->monto_pagar;
+                    $rubros_realizado->monto_adeudado = $monto_deuda;
+                    $rubros_realizado->fecha = new \DateTime();
+                    $rubros_realizado->id_factura = $rubros->id;
+                    $rubros_realizado->id_modalidad = $request->id_modalidad;
+                    $rubros_realizado->id_estudiante = $rubros->estudiante->id;
+                    $rubros_realizado->no_transferencia = $nro_transferencia;
+                    $rubros_realizado->no_cheque = $nro_cheque;
+                    $rubros_realizado->save();
+
+                    for($i=0; $i < count($request->id_forma); $i++)
+                    {
+                        $rubros_realizado->formas()->attach($request->id_forma[$i]);
+                    }   
                 }
 
+                return redirect('rubros');
             }
 
         }else{
@@ -179,23 +206,47 @@ class RubrosController extends Controller
                 return redirect()->back();
 
             }else{
-
-                $monto_deuda = $rubros->monto-$request->monto_pagar;
-
-                $rubros_realizados = new RubrosRealizados;
-                $rubros_realizados->monto_pagado = $request->monto_pagar;
-                $rubros_realizados->monto_adeudado = $monto_deuda;
-                $rubros_realizados->fecha = new \DateTime();
-                $rubros_realizados->id_factura = $rubros->id;
-                $rubros_realizados->id_modalidad = $request->id_modalidad;
-                $rubros_realizados->id_estudiante = $rubros->estudiante->id;
-                $rubros_realizados->no_transferencia = $nro_transferencia;
-                $rubros_realizados->no_cheque = $nro_cheque;
-                $rubros_realizados->save();
-
-                for($i=0; $i < count($request->id_forma); $i++)
+                
+                if($forma_pago->modalidad == 'Exacto')
                 {
-                    $rubros_realizados->formas()->attach($request->id_forma[$i]);
+                    
+                    $monto_deuda = $rubros->monto-$rubros->monto;
+
+                    $rubros_realizados = new RubrosRealizados;
+                    $rubros_realizados->monto_pagado = $rubros->monto;
+                    $rubros_realizados->monto_adeudado = $monto_deuda;
+                    $rubros_realizados->fecha = new \DateTime();
+                    $rubros_realizados->id_factura = $rubros->id;
+                    $rubros_realizados->id_modalidad = $request->id_modalidad;
+                    $rubros_realizados->id_estudiante = $rubros->estudiante->id;
+                    $rubros_realizados->no_transferencia = $nro_transferencia;
+                    $rubros_realizados->no_cheque = $nro_cheque;
+                    $rubros_realizados->save();
+
+                    for($i=0; $i < count($request->id_forma); $i++)
+                    {
+                        $rubros_realizados->formas()->attach($request->id_forma[$i]);
+                    }
+
+                }else{
+
+                    $monto_deuda = $rubros->monto-$request->monto_pagar;
+
+                    $rubros_realizados = new RubrosRealizados;
+                    $rubros_realizados->monto_pagado = $request->monto_pagar;
+                    $rubros_realizados->monto_adeudado = $monto_deuda;
+                    $rubros_realizados->fecha = new \DateTime();
+                    $rubros_realizados->id_factura = $rubros->id;
+                    $rubros_realizados->id_modalidad = $request->id_modalidad;
+                    $rubros_realizados->id_estudiante = $rubros->estudiante->id;
+                    $rubros_realizados->no_transferencia = $nro_transferencia;
+                    $rubros_realizados->no_cheque = $nro_cheque;
+                    $rubros_realizados->save();
+
+                    for($i=0; $i < count($request->id_forma); $i++)
+                    {
+                        $rubros_realizados->formas()->attach($request->id_forma[$i]);
+                    }
                 }
 
                 return redirect('rubros');
