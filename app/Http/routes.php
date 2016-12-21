@@ -41,6 +41,10 @@ Route::group(['middleware' => 'web'], function () {
 		$existe = \DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque]])->exists();
 		return Response::json($existe);
 	});*/
+	Route::get('docentes/asignar/{id}/show2',['uses' => 'DocentesController@show2', 'as' => 'docentes.asignar.show2']);
+	Route::get('docentes/secciones/{id}/buscar',['uses' => 'DocentesController@buscar', 'as' => 'docentes.secciones.buscar']);
+	Route::get('docentes/asignaturas/{id}/buscar2',['uses' => 'DocentesController@buscar2', 'as' => 'docentes.asignaturas.buscar2']);
+
 
 
 	Route::resource('asistencias', 'AsistenciasController');
@@ -65,6 +69,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('quimestres','QuimestresController');
 	Route::resource('docentes','DocentesController');
 	Route::resource('facturacion', 'FacturacionController');
+	Route::resource('tipo_empleado','TipoEmpleadoController');
 
 	
 });

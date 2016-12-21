@@ -15,6 +15,7 @@ class CreateTipoEmpleadoTable extends Migration
         Schema::create('tipo_empleado', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipo_empleado');
+            $table->timestamps();
         });
     }
 

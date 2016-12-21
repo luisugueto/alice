@@ -251,9 +251,18 @@ class PrestamosAnticiposController extends Controller
 
         $prestamo = DB::select('SELECT *,SUM(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].' GROUP BY id_personal');
 
+
         foreach ($prestamo as $value) {
             $total = $value->monto;
         }
+
+        $total = isset($total) ? $total : '';
+        if(!isset($pres))
+        {
+            Session::flash('message-error', 'ESTE USUARIO NO POSEE PRESTAMO');
+            return redirect()->action('PrestamosAnticiposController@index');
+        }
+
         // $prestamo = DB::table('prestamos')
         //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
         //              ->groupBy('tipo')

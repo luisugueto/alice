@@ -40,5 +40,11 @@ class Personal extends Model
     {
         return $this->hasOne('App\Remuneracion', 'id');
     }
+
+    public function asignaturas(){
+
+        return $this->belongsToMany('App\Asignaturas','asignacion','id_prof','id_asignatura')->withPivot('id_seccion')->withTimestamps();
+    }
+    
     
 }

@@ -18,6 +18,9 @@ class CreateAsignacionTable extends Migration
             $table->foreign('id_prof')->references('id')->on('datos_generales_personal')->onDelete('Cascade');
             $table->integer('id_asignatura')->unsigned();
             $table->foreign('id_asignatura')->references('id')->on('asignaturas')->onDelete('Cascade');
+            $table->integer('id_seccion')->unsigned();
+            $table->foreign('id_seccion')->references('id')->on('secciones')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
