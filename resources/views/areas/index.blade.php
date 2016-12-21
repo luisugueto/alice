@@ -14,7 +14,7 @@
     </div> 
     <div class="col-md-12">
         <div class="row" style="padding-top: 5px">
-        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('usuarios/create') }}'";>
+        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('areas/create') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
         </button>
         </div>
@@ -40,7 +40,7 @@
                                 @foreach($area as $area)
                                     <tr>
                                         <td>{{ $area->nombre}}</td>  
-                                        <td>{{ $area->creatd_at }}</td>
+                                        <td>{{ $area->created_at }}</td>
                                         <td>{{ $area->updated_at }}</td>
                                         <td class="text-center">{!!link_to_route('areas.edit', $title = '',$parameters = $area->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>
