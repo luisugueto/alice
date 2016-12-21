@@ -198,7 +198,7 @@
 		}
 
 		function validarTipo(){
-			if($('#tipoRegistro').val() == 3){
+			if($('#tipoRegistro').val() == 3 || $("#tipoRegistro").val() == 1){
 				$('#registroUser').css('display', 'none');
 			}else $('#registroUser').css('display', '');
 
@@ -206,8 +206,6 @@
 	                var id = $("#tipoRegistro").val();
 	                $.get("/cargosPersonal/"+id+"", function(data) 
 	                {
-
-	                    console.log(data);
 	                    $("#cargo").empty();
 	                    $("#cargo").append('<option value="" selected disabled> Seleccione </option>');
 

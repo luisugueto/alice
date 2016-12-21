@@ -13,11 +13,16 @@ use Session;
 use Response;
 use Redirect;
 use DB;
+use Auth;
 
 class UsuariosController extends Controller
 {
     public function __construct(){
-        $this->middleware('administrador');
+        $this->middleware('usuarios');
+        // if(Auth::user()->roles_id == 2){
+            
+        // }
+
     }
     /**
      * Display a listing of the resource.
@@ -26,6 +31,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
+
         $user = User::all();
         return view('usuarios.usuario', compact('user'));
     }

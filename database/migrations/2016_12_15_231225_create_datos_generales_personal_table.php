@@ -14,7 +14,7 @@ class CreateDatosGeneralesPersonalTable extends Migration
     {
         Schema::create('datos_generales_personal', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codigo_pesonal', 25);
+            $table->string('codigo_pesonal', 25)->unique();
             $table->string('apellido_paterno', 25);
             $table->string('apellido_materno', 25);
             $table->string('nombres', 50);
