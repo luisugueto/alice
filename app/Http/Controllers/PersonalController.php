@@ -22,7 +22,6 @@ use Auth;
 class PersonalController extends Controller
 {
     public function __construct(){
-<<<<<<< HEAD
         /*
         if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
@@ -33,7 +32,7 @@ class PersonalController extends Controller
         else{
             $this->middleware('administrador');
         }*/
-=======
+
         // if(Auth::user()->roles_id == 4){
         //     $this->middleware('recursohumano');
         // }
@@ -43,7 +42,6 @@ class PersonalController extends Controller
         // else{
         //     $this->middleware('administrador');
         // }
->>>>>>> e6e084bab31fc0fafcf120d49efe2eae2704ee14
     }
     /**
      * Display a listing of the resource.

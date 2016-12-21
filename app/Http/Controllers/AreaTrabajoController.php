@@ -48,12 +48,11 @@ class AreaTrabajoController extends Controller
      */
     public function store(AreaTrabajoRequest $request)
     {
-        $area = new AreaTrabajo();
-        $area->nombre = strtoupper($request->nombre);
-        $area->save();
-        Session::flash('message', 'AREA DE TRABAJO REGISTRADA CORRECTAMENTE');
-        $area = AreaTrabajo::all();
-        return view('areas.index', compact('area'));
+        $area = AreaTrabajo::create($request->all())->save();
+
+        Session::flash('message', 'ÁREA DE TRABAJO REGISTRADA CORRECTAMENTE');
+        
+        return redirect('areas');
     }
 
     /**
