@@ -186,21 +186,11 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     { 
-        $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
-        $contarCarga = count($cargaAcademica);
-
-        if($contarCarga > 0){
-            Session::flash('message-error', 'DISCULPE: ESTE PERSONAL POSEE CARGA ACADÉMICA');
-            $personal = Personal::all();
-            return view('personal.personal', compact('personal'));
-        }
-
         $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
         $cuantos = count($cedula);
         
         if($cuantos==0)
         {
-
             $per = Personal::find($id);
             $per->codigo_pesonal = $request['codigo_pesonal'];
             $per->nombres = strtoupper($request['nombres']);
@@ -218,7 +208,6 @@ class PersonalController extends Controller
             $per->direccion = strtoupper($request['direccion']);
             $per->telefono = $request['telefono'];
             $per->correo = strtolower($request['correo']);
-            $per->id_cargo = $request['id_cargo'];
             $per->ingreso_notas = 1;
                       
             if($request['seleccionar']=='on'){
@@ -247,10 +236,26 @@ class PersonalController extends Controller
             else $ren->devolver_fondos = 'N';
             $ren->save();
             
-            Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');        
+            Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+
+            $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
+            $contarCarga = count($cargaAcademica);
+
+            if($contarCarga > 0){
+                Session::flash('message-error', 'DISCULPE: NO SE PUDO MODIFICAR EL CARGO. ESTE PERSONAL POSEE CARGA ACADÉMICA');
+                $personal = Personal::all();
+                return view('personal.personal', compact('personal'));
+            }else{
+                $per = Personal::find($id);
+                $per->id_cargo = $request['id_cargo'];
+                $per->save();
+                $personal = Personal::all();
+                return view('personal.personal', compact('personal'));
+            }
+        
         }else
         {
-            Session::flash('message-error', 'ERROR: CODIGO PERSONAL, CEDULA Y CORREO YA EXISTENTES ');
+            Session::flash('message-error', 'DISCULPE: CODIGO PERSONAL, CEDULA Y CORREO YA EXISTENTES ');
         }
         $personal = Personal::all();
         return view('personal.personal', compact('personal'));

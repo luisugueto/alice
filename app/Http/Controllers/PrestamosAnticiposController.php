@@ -139,7 +139,7 @@ class PrestamosAnticiposController extends Controller
         $pres = $suma-$pagadoTotal;
 
         if($request['monto']>$pres) {
-            Session::flash('message-error', 'ERROR: NO SE PUDO REALIZAR SU PRESTAMO EN EL MES. EL MONTO INTRODUCIDO ES SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
+            Session::flash('message-error', 'DISCULPE: NO SE PUDO REALIZAR SU PRESTAMO EN EL MES. EL MONTO INTRODUCIDO ES SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
             $personal = Personal::all();
             return view('prestamos.create', compact('personal'));
         }else{
