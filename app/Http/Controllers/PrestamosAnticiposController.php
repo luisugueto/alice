@@ -4,27 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Personal;
-use App\Prestamo;
+use App\User;
+use App\InformacionAcademica;
 use App\Remuneracion;
+use App\Cargo;
+use App\Tipo;
+use App\Prestamo;
 use App\Http\Requests;
-use App\Http\Requests\PrestamoRequest;
+use App\Http\Requests\PersonalRequest;
 use Session;
+use Response;
+use Redirect;
 use DB;
-use Excel;
+use PDO;
 use Auth;
 
-class PrestamosAnticiposController extends Controller
+class PersonalController extends Controller
 {
     public function __construct(){
-       /* if(Auth::user()->roles_id == 4){
-            $this->middleware('recursohumano');
-        }
-        elseif(Auth::user()->roles_id == 2){
-            $this->middleware('director');
-        }
-        else{
-            $this->middleware('administrador');
-        }*/
+        // if(Auth::user()->roles_id == 4){
+        //     $this->middleware('recursohumano');
+        // }
+        // elseif(Auth::user()->roles_id == 2){
+        //     $this->middleware('director');
+        // }
+        // else{
+        //     $this->middleware('administrador');
+        // }
     }
     /**
      * Display a listing of the resource.
@@ -33,11 +39,14 @@ class PrestamosAnticiposController extends Controller
      */
     public function index()
     {
-        define('mesActual', date('m'));
-        $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
-        #$prestamo = Prestamo::all();
+        $personal = Personal::all();
+        return view('personal.personal', compact('personal'));
+    }
 
-        return view('prestamos.index', compact('prestamo'));
+    public function nuevo()
+    {
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+        return view('personal.nuevopersonal', compact('tipo'));
     }
 
     /**
@@ -47,64 +56,14 @@ class PrestamosAnticiposController extends Controller
      */
     public function create()
     {
-        $personal = Personal::all();
-        return view('prestamos.create', compact('personal'));
+        //
     }
 
-    public function ver()
+    public function getCargos(Request $request, $id)
     {
-        $personal = Personal::all();
-        return view('prestamos.ver', compact('personal'));
-    }
-
-    public function total(){
-
-        #$prestamo = Prestamo::select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))->groupBy('id_personal')->get();
-        // $prestamo = DB::table('prestamos')
-        //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
-        //              ->groupBy('tipo')
-        //              ->get();
-//         $prestamo = DB::select( DB::raw("SELECT prestamos.*, datos_generales_personal.*
-// FROM prestamos
-// INNER JOIN datos_generales_personal
-// ON prestamos.id_personal=datos_generales_personal.id
-// ORDER BY prestamos.id_personal; "));
-//         $pr = json_decode($prestamo);
-//         $prestamos = array();
-// foreach ($pr as $f) {
-//         foreach ($f as $k => $v) {
-//                 $prestamos[$k] = $v;
-//         }
-// }    
-
-        
-        $prestamo = Prestamo::all();
-            $suma = 0;
-            foreach($prestamo as $per){
-                $i = 0; $monto = 0;
-                foreach ($per->pagosrealizados as $key) {
-                    $i += $key->monto_pagado;
-                    $monto = $key->monto_adeudado;
-                }                    
-                $per->fecha;
-                $per->personal->nombres;                
-                $per->tipo;
-                $per->monto;
-                $per->monto-$i;
-                if($per->tipo == 'Prestamo')
-                {
-                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
-                    {
-
-                    }
-                    else $suma++;
-                }                
-            }
-
-            Session::forget('valor');
-            Session::put('valor', $suma);
-
-        return view('prestamos.total', compact('prestamo'));
+        if ($request->ajax()) {
+           return $cargos = Cargo::where('id_tipo_empleado', $id)->get();
+        }
     }
 
     /**
@@ -113,82 +72,75 @@ class PrestamosAnticiposController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PrestamoRequest $request)
+    public function store(PersonalRequest $request)
     {
-        $per = Remuneracion::where('id_personal', $request['personal'])
+        $per = new Personal();
+        $per->codigo_pesonal = $request['codigo_pesonal'];
+        $per->nombres = strtoupper($request['nombres']);
+        $per->apellido_paterno = strtoupper($request['apellido_paterno']);
+        $per->apellido_materno = strtoupper($request['apellido_materno']);
+        $per->cedula = $request['cedula'];
+        $per->fecha_nacimiento = $request['fecha_nacimiento'];
+        $per->fecha_ingreso = $request['fecha_ingreso'];
+        $per->edad = $request['edad'];
+        $per->genero = strtoupper($request['genero']);
+        $per->edo_civil = strtoupper($request['edo_civil']);
+        $per->estado_actual = strtoupper($request['estado_actual']);
+        $per->tipo_registro = $request['tipo_registro'];
+        $per->especialidad = strtoupper($request['especialidad']);
+        $per->direccion = strtoupper($request['direccion']);
+        $per->telefono = $request['telefono'];
+        $per->correo = strtolower($request['correo']);
+        $per->id_cargo = $request['id_cargo'];
+        $per->ingreso_notas = 1;
+        if($request['seleccionar']=='on'){
+            $per->clave = $request['clave'];
+        }else $per->clave = '';
+        $per->save();
+
+        $per = Personal::where('correo', $request['correo'])
                ->orderBy('id', 'desc')
-               ->first();
-
-        $mes = date('m');
-        $pagosrealizados = DB::select('SELECT *, sum(monto_pagado) as monto FROM pagos_realizados WHERE id_personal = '.$request['personal'].' AND MONTH(fecha) = '.$mes.'');
-
-        foreach ($pagosrealizados as $key) {
-            $monto_pagos = $key->monto;
+               ->get();
+        foreach ($per as $p) {
+            $id = $p->id;
         }
+        
+        $ina = new InformacionAcademica();
+        $ina->id_personal = $id;
+        $ina->primaria = strtoupper($request['primaria']);
+        $ina->secundaria = strtoupper($request['secundaria']);
+        $ina->superior = strtoupper($request['superior']);
+        $ina->titulo = strtoupper($request['titulo']);
+        $ina->cursos = strtoupper($request['cursos']);
+        $ina->historial_laboral = strtoupper($request['historial_laboral']);
+        $ina->save();
 
-        $prestamos = DB::select('SELECT *, sum(monto) as monto FROM prestamos WHERE id_personal = '.$request['personal'].' AND MONTH(fecha) = '.$mes.'');
+        $ren = new Remuneracion();
+        $ren->id_personal = $id;
+        $ren->sueldo_mens  = $request['sueldo_mens'];
+        $ren->descuento_iess = (isset($request['descuento_iess'])) ? $request['descuento_iess'] : '';
+        $ren->bono_responsabilidad  = $request['bono_responsabilidad'];
+        if($request['horas_extras']=='on') $ren->horas_extras  = 'Y';
+        else $ren->horas_extras  = 'N';
+        $ren->cuenta_bancaria  = $request['cuenta_bancaria'];
+        if($request['devolver_fondos']=='on') $ren->devolver_fondos = 'Y';
+        else $ren->devolver_fondos = 'N';
+        $ren->save();
 
-        foreach ($prestamos as $key) {
-            $monto_prestamos = $key->monto;
-        }
-
-        $pagadoTotal = $monto_prestamos-$monto_pagos;
-    
-        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
-
-        $pres = $suma-$pagadoTotal;
-
-        if($request['monto']>$pres) {
-            Session::flash('message-error', 'DISCULPE: NO SE PUDO REALIZAR SU PRESTAMO EN EL MES. EL MONTO INTRODUCIDO ES SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
-            $personal = Personal::all();
-            return view('prestamos.create', compact('personal'));
-        }else{
-                $prestamo = new Prestamo();
-                $prestamo->id_personal = $request['personal'];
-                $prestamo->monto = $request['monto'];
-                $prestamo->motivo = $request['motivo'];
-                $prestamo->fecha = new \DateTime();
-            if($request['tipo']=='P')
-            {   
-                $prestamo->tipo = 'Prestamo';
-                
-            }elseif ($request['tipo']=='A') {
-                $prestamo->tipo = 'Anticipo';
+        if($request['seleccionar']=='on'){
+            if($request['tipo_registro']==2){
+                $user = new User();
+                $user->name = strtoupper($request['nombres']);
+                $user->email = strtolower($request['correo']);
+                $user->password = bcrypt($request['clave']);
+                $user->roles_id = '3';
+                $user->save();
             }
-            $prestamo->save();
-            Session::flash('message', 'PRESTAMO REGISTRADO CORRECTAMENTE');
-            
-            $prestamo = Prestamo::all();
-            $suma = 0;
-            foreach($prestamo as $per){
-                $i = 0; $monto = 0;
-                foreach ($per->pagosrealizados as $key) {
-                    $i += $key->monto_pagado;
-                    $monto = $key->monto_adeudado;
-                }                    
-                $per->fecha;
-                $per->personal->nombres;                
-                $per->tipo;
-                $per->monto;
-                $per->monto-$i;
-                if($per->tipo == 'Prestamo')
-                {
-                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
-                    {
-
-                    }
-                    else $suma++;
-                }                
-            }
-
-            Session::forget('valor');
-            Session::put('valor', $suma);
-
-            
-            define('mesActual', date('m'));
-            $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
-            return view('prestamos.index', compact('prestamo'));
         }
+
+        $personal = Personal::all();
+        Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
+        return redirect()->route('personal.index');
     }
 
     /**
@@ -210,7 +162,19 @@ class PrestamosAnticiposController extends Controller
      */
     public function edit($id)
     {
-        //
+        define('id', $id);
+        DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
+    
+        $personal = DB::table('datos_generales_personal')
+            ->join('informacion_academica', 'informacion_academica.id_personal', '=', 'datos_generales_personal.id')
+            ->join('remuneracion', 'remuneracion.id_personal', '=', 'informacion_academica.id')
+            ->where('remuneracion.id_personal', '=', id)
+            ->first();
+        
+        $cargo = Cargo::lists('nombre', 'id');
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+
+        return view('personal.edit', compact('cargo', 'tipo', 'personal'));
     }
 
     /**
@@ -221,46 +185,82 @@ class PrestamosAnticiposController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
+    { 
+        $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
+        $cuantos = count($cedula);
 
-    public function listado(Request $request)
-    {   
-        $per = Remuneracion::where('id_personal', $request['persona'])
-               ->orderBy('id', 'desc')
-               ->first();
-        $pagosrealizados = DB::select('SELECT *, sum(monto_pagado) as monto FROM pagos_realizados WHERE id_personal = '.$request['persona'].'');
+        if($cuantos==0)
+        {
+            $per = Personal::find($id);
+            $per->codigo_pesonal = $request['codigo_pesonal'];
+            $per->nombres = strtoupper($request['nombres']);
+            $per->apellido_paterno = strtoupper($request['apellido_paterno']);
+            $per->apellido_materno = strtoupper($request['apellido_materno']);
+            $per->cedula = $request['cedula'];
+            $per->fecha_nacimiento = $request['fecha_nacimiento'];
+            $per->fecha_ingreso = $request['fecha_ingreso'];
+            $per->edad = $request['edad'];
+            $per->genero = strtoupper($request['genero']);
+            $per->edo_civil = $request['edo_civil'];
+            $per->estado_actual = $request['estado_actual'];
+            $per->tipo_registro = $request['tipo_registro'];
+            $per->especialidad = strtoupper($request['especialidad']);
+            $per->direccion = strtoupper($request['direccion']);
+            $per->telefono = $request['telefono'];
+            $per->correo = strtolower($request['correo']);
+            $per->ingreso_notas = 1;
+                      
+            if($request['seleccionar']=='on'){
+                $per->clave = $request['clave'];
+            }else $per->clave = '';
+                $per->save();
+            
+            
+            $ina = InformacionAcademica::find($id);
+            $ina->primaria = strtoupper($request['primaria']);
+            $ina->secundaria = strtoupper($request['secundaria']);
+            $ina->superior = strtoupper($request['superior']);
+            $ina->titulo = strtoupper($request['titulo']);
+            $ina->cursos = strtoupper($request['cursos']);
+            $ina->historial_laboral = strtoupper($request['historial_laboral']);
+            $ina->save();
+            
+            $ren = Remuneracion::find($id);
+            $ren->sueldo_mens  = $request['sueldo_mens'];
+            $ren->descuento_iess = $request['descuento_iess'];
+            $ren->bono_responsabilidad  = $request['bono_responsabilidad'];
+            if($request['horas_extras']=='on') $ren->horas_extras  = 'Y';
+            else $ren->horas_extras  = 'N';
+            $ren->cuenta_bancaria  = $request['cuenta_bancaria'];
+            if($request['devolver_fondos']=='on') $ren->devolver_fondos = 'Y';
+            else $ren->devolver_fondos = 'N';
+            $ren->save();
+            
+            Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
 
-        foreach ($pagosrealizados as $key) {
-            $monto_pagos = $key->monto;
-        }
-
-        $prestamos = DB::select('SELECT *, sum(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].'');
-
-        foreach ($prestamos as $key) {
-            $monto_prestamos = $key->monto;
-        }
-
-        $pagadoTotal = $monto_prestamos-$monto_pagos;
-    
-        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
-
-        #$capital = $suma-$pagadoTotal;
-
-
-        $prestamo = DB::select('SELECT *,SUM(monto) as monto FROM prestamos WHERE id_personal = '.$request['persona'].' GROUP BY id_personal');
-
-        foreach ($prestamo as $value) {
-            $total = $value->monto;
-        }
-        // $prestamo = DB::table('prestamos')
-        //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
-        //              ->groupBy('tipo')
-        //              ->get();
+            $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
+            $contarCarga = count($cargaAcademica);
+            $verificarCargo = Personal::where('id', $id)->first();
+            if($request['id_cargo'] != $verificarCargo->id_cargo){
+                if($contarCarga > 0){
+                    Session::flash('message-error', 'DISCULPE: NO SE PUDO MODIFICAR EL CARGO. ESTE PERSONAL POSEE CARGA ACADÉMICA');
+                    $personal = Personal::all();
+                    return view('personal.personal', compact('personal'));
+                }else{
+                    $per = Personal::find($id);
+                    $per->id_cargo = $request['id_cargo'];
+                    $per->save();
+                    $personal = Personal::all();
+                    return view('personal.personal', compact('personal'));
+                }
+            }
         
-        $pres = Prestamo::where('id_personal', $request['persona'])->get();
-        return view('prestamos.listado', ['total' => $total, 'prestamo' => $pres, 'capital' =>$monto_prestamos]);
+        }else
+        {
+            Session::flash('message-error', 'DISCULPE: CODIGO PERSONAL, CEDULA Y CORREO YA EXISTENTES ');
+        }
+        $personal = Personal::all();
+        return view('personal.personal', compact('personal'));
     }
 
     /**
@@ -271,6 +271,10 @@ class PrestamosAnticiposController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Personal::destroy($id);
+        InformacionAcademica::where('id_personal', $id)->delete();
+        Session::flash('message', 'USUARIO ELIMINADO CORRECTAMENTE');
+
+        return redirect::to('/personal');
     }
 }

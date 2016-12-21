@@ -22,18 +22,6 @@ use Auth;
 class PersonalController extends Controller
 {
     public function __construct(){
-<<<<<<< HEAD
-        /*
-        if(Auth::user()->roles_id == 4){
-            $this->middleware('recursohumano');
-        }
-        elseif(Auth::user()->roles_id == 2){
-            $this->middleware('director');
-        }
-        else{
-            $this->middleware('administrador');
-        }*/
-=======
         // if(Auth::user()->roles_id == 4){
         //     $this->middleware('recursohumano');
         // }
@@ -43,7 +31,7 @@ class PersonalController extends Controller
         // else{
         //     $this->middleware('administrador');
         // }
->>>>>>> e6e084bab31fc0fafcf120d49efe2eae2704ee14
+
     }
     /**
      * Display a listing of the resource.
@@ -75,7 +63,7 @@ class PersonalController extends Controller
     public function getCargos(Request $request, $id)
     {
         if ($request->ajax()) {
-           return $cargos = Cargo::where('id_tipo_empleado', $id)->get();
+           return $cargos = Cargo::where('id_area', $id)->get();
         }
     }
 
