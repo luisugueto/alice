@@ -37,4 +37,8 @@
                             </div>
                         </div>
                         </form> 
-@stop
+              </ul>
+              </div>
+           </form>
+      </div>
+      @stop

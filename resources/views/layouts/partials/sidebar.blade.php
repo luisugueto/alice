@@ -42,19 +42,28 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-user'></i> <span>Usuarios</span></a></li>
+            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
+            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-group'></i> <span>Usuarios</span></a></li>
+            @endif
+            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li><a href="{{ route('personal.index') }}"><i class='fa fa-user'></i> <span>Personal</span></a></li>
-            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-user'></i> <span>Estudiantes</span></a></li>
+            @endif
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
+            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-book'></i> <span>Estudiantes</span></a></li>
+            @endif
+            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-list'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('rubros/buscar/estudiante') }}">Nuevo</a></li>
                     <li><a href="{{ url('rubros') }}">Listado Total</a></li>
                     <li><a href="#">Listado del Mes Actual</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Préstamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-money'></i> <span>Préstamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('prestamos.create') }}">Nuevo</a></li>
                     <li><a href="{{ url('verificarPrestamos') }}">Verificar Préstamo</a></li>
@@ -62,40 +71,61 @@
                     <li><a href="{{ route('prestamos.index') }}">Listado del Mes Actual</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Horarios</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-calendar'></i> <span>Horarios</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('horarios.index') }}">Nuevo</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 3 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Parciales</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-list-alt'></i> <span>Parciales</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.show',1) }}">Nuevo</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Quimestres</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-calendar-o'></i> <span>Quimestres</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('quimestres.index') }}">Listado</a></li>
                     <li><a href="{{ route('quimestres.create') }}">Nuevo</a></li>
                 </ul>
             </li>
+            @endif
             <!-- <li class="header">{{ trans('adminlte_lang::message.header') }}</li> -->
             <!-- Optionally, you can add icons to the links -->
             <!-- <li class="active"><a href="{{ url('home') }}"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.home') }}</span></a></li> -->
             <!-- <li><a href="#"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.anotherlink') }}</span></a></li> -->
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                    @if(Auth::user()->roles_id == 4)
                     <li><a href="{{ route('iess.index') }}">IESS</a></li>
+                    @endif
+                    @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('secciones.index') }}">Secciones</a></li>
+                    @endif
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('aulas.index') }}">Aulas</a></li>
+                    @endif
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1 )
                     <li><a href="{{ route('cargos.index') }}">Cargos</a></li>
+                    @endif
+                    @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('areas.index') }}">Areas de Trabajo</a></li>
+                    @endif
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('asignaturas.index') }}">Asignaturas</a></li>
+                    @endif
                 </ul>
             </li>
+            @endif
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

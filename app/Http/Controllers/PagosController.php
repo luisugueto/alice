@@ -20,9 +20,22 @@ use Session;
 use DB;
 use Excel;
 use PDF;
+use PHPExcel_Worksheet_Drawing;
+use Auth;
 
 class PagosController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 4){
+            $this->middleware('recursohumano');
+        }
+        elseif(Auth::user()->roles_id == 2){
+            $this->middleware('director');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -58,6 +71,7 @@ class PagosController extends Controller
             }
 
             Excel::create("Listado Total de Prestamos y Anticipos", function ($excel) use ($prestamo) {
+               
                 $excel->setTitle("Listado Total de Prestamos y Anticipos");
                 $excel->sheet("Pestaña 1", function ($sheet) use ($prestamo) {
                     $sheet->loadView('prestamos.excel.descargartotal')->with('prestamo', $prestamo);

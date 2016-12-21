@@ -17,7 +17,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
 	#Route::resource('app', 'AppController');
-	
+	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');	
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('horarios/buscar', ['uses' => 'HorariosController@search','as' => 'horarios.buscar']);
@@ -63,7 +63,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('parciales','ParcialesController');
 	Route::resource('quimestres','QuimestresController');
+	Route::resource('docentes','DocentesController');
 
 	
 });
-	

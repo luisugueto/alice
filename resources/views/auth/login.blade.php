@@ -5,11 +5,13 @@
 @endsection
 
 @section('content')
+<br><br>
+<div class="login-logo">
+           <b>Sistema Administrativo y Académico<br>María Montessori</b>
+        </div>
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-           <b>Sistema María Montessori</b>
-        </div><!-- /.login-logo -->
+    <div class="login-box" >
+        <!-- /.login-logo -->
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -23,7 +25,7 @@
     @endif
 
     <div class="login-box-body">
-    <p class="login-box-msg"> {{ trans('adminlte_lang::message.siginsession') }} </p>
+    <p class="login-box-msg"> Iniciar Sesión <br> Periodo Lectivo Activo: {{$periodos2->nombre}} </p>
     <form action="{{ url('/login') }}" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group has-feedback">
@@ -35,7 +37,8 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {!! Form::select('periodos',$periodos, null, ['class' => 'form-control','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+
+            {!! Form::select('periodos',$periodos, $periodos2->id, ['class' => 'form-control','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
             <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
         </div>
         <div class="row">

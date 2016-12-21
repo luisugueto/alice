@@ -22,6 +22,7 @@ class CreateInformacionAcademicaTable extends Migration
             $table->string('titulo', 255);
             $table->text('cursos');
             $table->text('historial_laboral');
+            $table->timestamps();
         });
     }
 

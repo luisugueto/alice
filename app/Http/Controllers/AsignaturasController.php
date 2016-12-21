@@ -8,9 +8,18 @@ use App\Http\Requests;
 use App\Http\Requests\AsignaturasRequest;
 use App\Cursos;
 use Session;
+use Auth;
 
 class AsignaturasController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 5){
+            $this->middleware('dace');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *

@@ -16,10 +16,7 @@
           {!!Form::model($aula, ['route'=>['aulas.update', $aula->id], 'method'=>'PUT', 'files'=>false])!!}
           {{ csrf_field() }}
           <br>
-          <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('nombre', null, ['required', 'maxlength'=>2, 'class'=>'form-control','placeholder'=>'Ingresa Literal']) !!}
-          </div>
+          @include('aulas.forms.fields')
           <div align="center">
               {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
           </div>

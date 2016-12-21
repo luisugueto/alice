@@ -28,10 +28,9 @@ class PersonalSeeder extends Seeder
             'direccion'=>'asfasfas',
             'telefono'=>'04160408205',
             'correo'=>'lui_su_gueto@hotmail.com',
-            'id_cargo'=>'1',
             'clave'=>'1234',
             'ingreso_notas'=>'1',
-            'id_tipo'=>'1' 
+            'id_cargo'=>'1' 
         ]);
 
         DB::table('remuneracion')->insert([
@@ -42,6 +41,16 @@ class PersonalSeeder extends Seeder
             'horas_extras'=>'Y',
             'cuenta_bancaria'=>'71264876124',
             'devolver_fondos'=>'N'
+        ]);
+
+        DB::table('informacion_academica')->insert([
+            'id_personal'=>'1',
+            'primaria'=>'asfaf',
+            'secundaria'=>'asfasfas',
+            'superior'=>'asfasfasfas',
+            'titulo'=>'asfasfas',
+            'cursos'=>'asfasfas',
+            'historial_laboral'=>'asfasfas'
         ]);
     }
 }

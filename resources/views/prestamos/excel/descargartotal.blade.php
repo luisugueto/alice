@@ -10,7 +10,6 @@
                                     </tr>
                             </thead>
                             <tbody align="center">
-                            
                                    @foreach($prestamo as $per)
                                    <?php $i = 0; $monto = 0;
                                             foreach ($per->pagosrealizados as $key) {

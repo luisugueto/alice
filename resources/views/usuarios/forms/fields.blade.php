@@ -13,5 +13,10 @@
 <div class="form-group">
 
 	{!! Form::label('Roles', 'Roles') !!}
-	{!! Form::select('roles_id', $roles, null, ['class'=>'form-control']) !!}
+	<select name="roles_id" class="form-control select">
+		<option disabled selected>Seleccione</option>
+		@foreach($roles as $r)
+			<option value="{{ $r->id }}">{{ $r->nombre }}</option>
+		@endforeach
+	</select>
 </div> 

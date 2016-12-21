@@ -54,11 +54,11 @@ class Handler extends ExceptionHandler
                     return redirect()->guest('/login');
                 break;
                 case 403:
-                    return view('errors.500');
+                    return view('errors.403');
                 break;
                 // internal error
                 case '500':
-                return redirect()->guest('/login');
+                    return redirect()->guest('/login');
                 break;
 
                 default:
@@ -68,7 +68,8 @@ class Handler extends ExceptionHandler
         }
         else
         {
-                return parent::render($request, $e);
+            #return redirect()->guest('/login');
+            return parent::render($request, $e);
         }
     }
 }

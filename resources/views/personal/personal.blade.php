@@ -41,6 +41,7 @@
                                         <td>Apellidos</td>
                                         <td>Cedula</td>
                                         <td>Cargo</td>
+                                        <td>Area de Trabajo</td>
                                         <td>Fecha Ingreso</td>
                                         <td>Opciones</td>
                                     </tr>
@@ -53,6 +54,7 @@
                                         <td>{{$per->apellido_paterno}} {{ $per->apellido_materno }}</td>
                                         <td>{{$per->cedula}}</td>
                                         <td>{{$per->cargo->nombre}}</td>
+                                        <td>{{$per->cargo->area->nombre}}</td>
                                         <td>{{$per->fecha_ingreso}}</td>      
                                         <td>{!!link_to_route('personal.edit', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
                                     </tr>

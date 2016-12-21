@@ -8,9 +8,18 @@ use App\Http\Requests;
 use App\IESS;
 use Redirect;
 use Session;
+use Auth;
 
 class IESSController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 4){
+            $this->middleware('recursohumano');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
     /**
      * Display a listing of the resource.
      *

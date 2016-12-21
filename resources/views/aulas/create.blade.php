@@ -15,10 +15,7 @@
       <div class="col-md-12">
           {!! Form::open(['route' => 'aulas.store', 'method' => 'POST', 'class' => 'form']) !!}
           <br>
-          <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('nombre', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Literal']) !!}
-          </div>
+         @include('aulas.forms.fields')
           <div align="center">
               {!!Form::submit('Aceptar', ['class'=>'btn btn-primary'])!!}
           </div>

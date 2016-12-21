@@ -13,9 +13,21 @@ use App\DatosMedico;
 use App\Padres;
 use App\Http\Requests\EstudianteRequest;
 use App\Http\Requests\CedulaEstudianteRequest;
+use Auth;
 
 class EstudiantesController extends Controller
 {
+    public function __construct(){
+        if(Auth::user()->roles_id == 5){
+            $this->middleware('dace');
+        }
+        elseif(Auth::user()->roles_id == 2){
+            $this->middleware('director');
+        }
+        else{
+            $this->middleware('administrador');
+        }
+    }
 	/**
      * Display a listing of the resource.
      *

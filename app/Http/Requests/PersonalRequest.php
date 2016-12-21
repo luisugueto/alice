@@ -36,6 +36,7 @@ class PersonalRequest extends Request
             'estado_actual' => 'required',
             'tipo_registro' => 'required',
             'especialidad' => 'required',
+            'primaria' => 'required',
             'telefono' => 'required|numeric|digits_between:10,11',
             'id_cargo' => 'required',
             'correo' => 'required|email|unique:datos_generales_personal',
