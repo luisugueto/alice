@@ -85,30 +85,26 @@ class HorariosController extends Controller
                 $i++;
                 
             }
-            
-            foreach ($bloques as $bloque) 
-            {
-                $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque->id]])->get();
-
-                if(count($asignadas) > 0)
-                {
-
-                    foreach ($asignadas as $asignadas) 
-                    {
-                        $aulas_asignadas[$j] = $asignadas->id_bloque;
-                        $j++;
-                    }
-
-                }else{
-
-                    $aulas_asignadas = array();
-                }
-            }
 
         }else{
 
+            $aulas_asignadas = array();
             $bloques_asignados = array(); 
             $asignaturas_asignadas = array();
+        }
+
+        foreach ($bloques as $bloque) 
+        {
+            $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque->id]])->get();
+
+            if(count($asignadas) > 0)
+            {
+                foreach ($asignadas as $asignadas) 
+                {
+                    $aulas_asignadas[$j] = $asignadas->id_bloque;
+                    $j++;
+                }
+            }
         }
 
 
