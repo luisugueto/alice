@@ -186,6 +186,15 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     { 
+        $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
+        $contarCarga = count($cargaAcademica);
+
+        if($contarCarga > 0){
+            Session::flash('message-error', 'DISCULPE: ESTE PERSONAL POSEE CARGA ACADÉMICA');
+            $personal = Personal::all();
+            return view('personal.personal', compact('personal'));
+        }
+
         $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
         $cuantos = count($cedula);
         
