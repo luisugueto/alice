@@ -32,6 +32,10 @@ class PersonalController extends Controller
         else{
             $this->middleware('administrador');
         }*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff5a4eed6e58f2deb07896b4276281ff7bec836c
     }
     /**
      * Display a listing of the resource.
@@ -63,7 +67,7 @@ class PersonalController extends Controller
     public function getCargos(Request $request, $id)
     {
         if ($request->ajax()) {
-           return $cargos = Cargo::where('id_area', $id)->get();
+           return $cargos = Cargo::where('id_tipo_empleado', $id)->get();
         }
     }
 
@@ -189,7 +193,7 @@ class PersonalController extends Controller
     { 
         $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
         $cuantos = count($cedula);
-        
+
         if($cuantos==0)
         {
             $per = Personal::find($id);
@@ -241,17 +245,19 @@ class PersonalController extends Controller
 
             $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
             $contarCarga = count($cargaAcademica);
-
-            if($contarCarga > 0){
-                Session::flash('message-error', 'DISCULPE: NO SE PUDO MODIFICAR EL CARGO. ESTE PERSONAL POSEE CARGA ACADÉMICA');
-                $personal = Personal::all();
-                return view('personal.personal', compact('personal'));
-            }else{
-                $per = Personal::find($id);
-                $per->id_cargo = $request['id_cargo'];
-                $per->save();
-                $personal = Personal::all();
-                return view('personal.personal', compact('personal'));
+            $verificarCargo = Personal::where('id', $id)->first();
+            if($request['id_cargo'] != $verificarCargo->id_cargo){
+                if($contarCarga > 0){
+                    Session::flash('message-error', 'DISCULPE: NO SE PUDO MODIFICAR EL CARGO. ESTE PERSONAL POSEE CARGA ACADÉMICA');
+                    $personal = Personal::all();
+                    return view('personal.personal', compact('personal'));
+                }else{
+                    $per = Personal::find($id);
+                    $per->id_cargo = $request['id_cargo'];
+                    $per->save();
+                    $personal = Personal::all();
+                    return view('personal.personal', compact('personal'));
+                }
             }
         
         }else
