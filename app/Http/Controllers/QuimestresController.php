@@ -14,8 +14,9 @@ use App\Periodos;
 use Session;
 use DB;
 use DateTime;
-
+use Auth;
 use Redirect;
+
 class QuimestresController extends Controller
 {
     public function __construct(){

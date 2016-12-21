@@ -7,6 +7,7 @@ use App\AreaTrabajo;
 use App\Http\Requests;
 use App\Http\Requests\AreaTrabajoRequest;
 use Session;
+use Auth;
 
 class AreaTrabajoController extends Controller
 {

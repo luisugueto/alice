@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Personal;
+use Auth;
 
 class DocentesController extends Controller
 {

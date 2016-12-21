@@ -12,6 +12,7 @@ use App\Modalidad;
 use App\FormasPago;
 use App\RubrosRealizados;
 use Session;
+use Auth;
 
 class RubrosController extends Controller
 {

@@ -7,6 +7,7 @@ use App\Aula;
 use App\Http\Requests;
 use App\Http\Requests\AulasRequest;
 use Session;
+use Auth;
 
 class AulasController extends Controller
 {

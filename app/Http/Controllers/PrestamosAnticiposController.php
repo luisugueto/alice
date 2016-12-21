@@ -11,6 +11,7 @@ use App\Http\Requests\PrestamoRequest;
 use Session;
 use DB;
 use Excel;
+use Auth;
 
 class PrestamosAnticiposController extends Controller
 {

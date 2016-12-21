@@ -9,6 +9,7 @@ use App\Representante;
 use App\Http\Requests\RepresentanteRequest;
 use App\Http\Requests\CedulaRequest;
 use Session;
+use Auth;
 
 class RepresentantesController extends Controller
 {

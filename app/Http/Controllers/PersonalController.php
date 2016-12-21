@@ -17,6 +17,7 @@ use Response;
 use Redirect;
 use DB;
 use PDO;
+use Auth;
 
 class PersonalController extends Controller
 {

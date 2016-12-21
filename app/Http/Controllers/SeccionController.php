@@ -9,8 +9,7 @@ use App\Http\Requests\SeccionesRequest;
 use Session;
 use App\Cursos;
 use DB;
-
-
+use Auth;
 
 class SeccionController extends Controller
 {

@@ -21,6 +21,7 @@ use DB;
 use Excel;
 use PDF;
 use PHPExcel_Worksheet_Drawing;
+use Auth;
 
 class PagosController extends Controller
 {

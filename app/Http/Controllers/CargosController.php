@@ -7,6 +7,7 @@ use App\Cargo;
 use App\AreaTrabajo;
 use App\Http\Requests;
 use Session;
+use Auth;
 
 class CargosController extends Controller
 {

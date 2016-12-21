@@ -9,6 +9,8 @@ use App\Asignaturas;
 use App\Categorias_parcial;
 use App\Equivalencias;
 use App\Comportamiento;
+use Auth;
+
 class ParcialesController extends Controller
 {
     public function __construct(){

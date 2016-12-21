@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\IESS;
 use Redirect;
 use Session;
+use Auth;
 
 class IESSController extends Controller
 {

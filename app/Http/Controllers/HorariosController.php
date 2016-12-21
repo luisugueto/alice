@@ -11,6 +11,7 @@ use App\Asignaturas;
 use App\Aula;
 use App\Personal;
 use Session;
+use Auth;
 
 
 class HorariosController extends Controller

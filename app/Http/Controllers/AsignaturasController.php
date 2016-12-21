@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\AsignaturasRequest;
 use App\Cursos;
 use Session;
+use Auth;
 
 class AsignaturasController extends Controller
 {
