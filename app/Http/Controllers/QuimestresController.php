@@ -46,7 +46,6 @@ class QuimestresController extends Controller
      */
     public function create()
     {
-        echo session::get('periodo');
         $periodos=Periodos::lists('nombre','id');
         return View('quimestres.create',compact('periodos'));
     }
