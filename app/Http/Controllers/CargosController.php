@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cargo;
 use App\AreaTrabajo;
+use App\Tipo;
 use App\Http\Requests;
 use Session;
 use Auth;
@@ -42,7 +43,8 @@ class CargosController extends Controller
     public function create()
     {
         $area = AreaTrabajo::lists('nombre', 'id');
-        return view('cargos.create', compact('area'));
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+        return view('cargos.create', compact('area', 'tipo'));
     }
 
     /**
@@ -56,7 +58,9 @@ class CargosController extends Controller
 
         $cargo = new Cargo();
         $cargo->nombre = strtoupper($request->nombre);
-        $cargo->id_area = $request->area;
+        $cargo->id_area = $request->id_area;
+        $cargo->id_tipo_empleado = $request->id_tipo_empleado;
+
         $cargo->save();
 
         Session::flash('message', 'CARGO REGISTRADO CORRECTAMENTE');
@@ -86,7 +90,8 @@ class CargosController extends Controller
     {
         $cargo = Cargo::find($id);
         $area = AreaTrabajo::lists('nombre', 'id');
-        return view('cargos.edit', compact('cargo', 'area'));
+        $tipo = Tipo::lists('tipo_empleado', 'id');
+        return view('cargos.edit', compact('cargo', 'area', 'tipo'));
     }
 
     /**
