@@ -8,20 +8,20 @@
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
 				<div class="form-group">
-					{!! Form::text('cedula', null, ['required','class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
+					{!! Form::number('cedula', null, ['required','class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
 				</div>
 			</div>
 			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
 				{!! Form::label('apellidop', 'Apellido paterno') !!} <small class="text-red">*</small>
-				{!! Form::text('apellido_paterno', null, ['required','class' => 'form-control', 'title' => 'Introduzca el apellido paterno del personal', 'placeholder' => 'Ejm: Matute']) !!}
+				{!! Form::text('apellido_paterno', null, ['required','class' => 'form-control', 'title' => 'Introduzca el apellido paterno del personal', 'placeholder' => 'Ejm: UGUETO', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('apellido_materno') ? ' has-error' : '' }}">
 				{!! Form::label('apellidom', 'Apellido Materno') !!} <small class="text-red">*</small>
-				{!! Form::text('apellido_materno', null, ['required','class' => 'form-control', 'title' => 'Introduzca el apellido materno del personal', 'placeholder' => 'Ejm: Matute']) !!}
+				{!! Form::text('apellido_materno', null, ['required','class' => 'form-control', 'title' => 'Introduzca el apellido materno del personal', 'placeholder' => 'Ejm: ESCOBAR', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('nombres') ? ' has-error' : '' }}">
 				{!! Form::label('nombres', 'Nombres') !!} <small class="text-red">*</small>
-				{!! Form::text('nombres', null, ['required','class' => 'form-control', 'title' => 'Introduzca los nombres del personal', 'placeholder' => 'Ejm: Matute']) !!}
+				{!! Form::text('nombres', null, ['required','class' => 'form-control', 'title' => 'Introduzca los nombres del personal', 'placeholder' => 'Ejm: LUIS', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('edad') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Edad') !!} <small class="text-red">*</small>
@@ -56,11 +56,11 @@
 			</div>
 			<div class="form-group{{ $errors->has('especialidad') ? ' has-error' : '' }}">
 				{!! Form::label('especialidad', 'Especialidad') !!} <small class="text-red">*</small>
-				{!! Form::text('especialidad', null, ['required','class' => 'form-control', 'title' => 'Introduzca la especialidad del personal', 'placeholder' => 'Ejm: Telecomunicaciones']) !!}
+				{!! Form::text('especialidad', null, ['required','class' => 'form-control', 'title' => 'Introduzca la especialidad del personal', 'placeholder' => 'Ejm: Telecomunicaciones', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
 				{!! Form::label('direccion', 'Dirección') !!} <small class="text-red">*</small>
-				{!! Form::text('direccion', null, ['required','class' => 'form-control', 'title' => 'Introduzca la direccion del personal', 'placeholder' => 'Ejm: Sucumbíos']) !!}
+				{!! Form::text('direccion', null, ['required','class' => 'form-control', 'title' => 'Introduzca la direccion del personal', 'placeholder' => 'Ejm: Sucumbíos', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
 				{!! Form::label('telefono', 'Teléfono') !!} <small class="text-red">*</small>
@@ -97,27 +97,27 @@
 		<div class="col-md-12">
 			<div class="form-group{{ $errors->has('primaria') ? ' has-error' : '' }}">
 				{!! Form::label('primaria', 'Donde terminó la primaria?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('primaria', null, ['required','class' => 'form-control', 'title' => 'Introduzca Donde terminó la primaria?', 'placeholder' => 'Ejm: Prueba']) !!}
+				{!! Form::text('primaria', null, ['required','class' => 'form-control', 'title' => 'Introduzca Donde terminó la primaria?', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('secundaria') ? ' has-error' : '' }}">
 				{!! Form::label('secundaria', 'Donde terminó la secundaria?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('secundaria', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó la secundaria?:', 'placeholder' => 'Ejm: Prueba']) !!}
+				{!! Form::text('secundaria', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó la secundaria?:', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('superior') ? ' has-error' : '' }}">
 				{!! Form::label('superi', 'Donde terminó Instr. Superior?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central']) !!}
+				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('titulo') ? ' has-error' : '' }}">
 				{!! Form::label('titulos', 'Título(s) Académico(s) Obtenido(s): ') !!} <small class="text-red">*</small>
-				{!! Form::text('titulo', null, ['class' => 'form-control', 'title' => 'Introduzca Título(s) Académico(s) Obtenido(s)', 'placeholder' => 'Ejm: Ing Informática']) !!}
+				{!! Form::text('titulo', null, ['class' => 'form-control', 'title' => 'Introduzca Título(s) Académico(s) Obtenido(s)', 'placeholder' => 'Ejm: Ing Informática', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cursos') ? ' has-error' : '' }}">
 				{!! Form::label('cursos', 'Cursos y Seminarios: ') !!} <small class="text-red">*</small>
-				{!! Form::textarea('cursos', null, ['class' => 'form-control', 'title' => 'Introduzca Cursos y Seminarios', 'placeholder' => 'Ejm: Programacion, Matemáticas ', 'rows' => '3']) !!}
+				{!! Form::textarea('cursos', null, ['class' => 'form-control', 'title' => 'Introduzca Cursos y Seminarios', 'placeholder' => 'Ejm: Programacion, Matemáticas ', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('historial_laboral') ? ' has-error' : '' }}">
 				{!! Form::label('historia', 'Historia Laboral: ') !!} <small class="text-red">*</small>
-				{!! Form::textarea('historial_laboral', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3']) !!}
+				{!! Form::textarea('historial_laboral', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 		</div>
 		<div class="col-md-12 text-center">

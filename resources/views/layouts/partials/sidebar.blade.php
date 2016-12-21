@@ -46,14 +46,14 @@
             <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-group'></i> <span>Usuarios</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('personal.index') }}"><i class='fa fa-user'></i> <span>Personal</span></a></li>
+            <li><a href="{{ route('personal.index') }}"><i class='fa fa-male'></i> <span>Personal</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-book'></i> <span>Estudiantes</span></a></li>
+            <li><a href="{{ route('estudiantes.index') }}"><i class='fa fa-mortar-board'></i> <span>Estudiantes</span></a></li>
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-list'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-dollar'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('rubros/buscar/estudiante') }}">Nuevo</a></li>
                     <li><a href="{{ url('rubros') }}">Listado Total</a></li>

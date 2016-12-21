@@ -16,5 +16,5 @@
             </div>
             <div class="form-group">
               {!! Form::label('Motivo', 'Motivo') !!}
-              {!! Form::textarea('motivo', null, ['minlength'=>'10','class' => 'form-control', 'title' => 'Introduzca el Motivo', 'placeholder' => 'Ejm: Deudas', 'rows' => '3']) !!}
+              {!! Form::textarea('motivo', null, ['minlength'=>'10','class' => 'form-control', 'title' => 'Introduzca el Motivo', 'placeholder' => 'Ejm: Deudas', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
             </div>

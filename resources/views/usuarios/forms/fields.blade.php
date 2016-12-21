@@ -1,6 +1,6 @@
 <div class="form-group">
 	{!! Form::label('Nombre', 'Nombre') !!}
-	{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Ingresa Nombre']) !!}
+	{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Ingresa Nombre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Email', 'Email') !!}
