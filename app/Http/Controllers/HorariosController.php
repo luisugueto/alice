@@ -11,11 +11,9 @@ use App\Asignaturas;
 use App\Aula;
 use App\Personal;
 use Session;
-<<<<<<< HEAD
 use DB;
-=======
 use Auth;
->>>>>>> eac6e0f2a892e7244d3faa25be7ad15ba3cf657f
+
 
 
 class HorariosController extends Controller
@@ -49,17 +47,17 @@ class HorariosController extends Controller
     public function create(Request $request)
     {
         //dd($request->all());
-<<<<<<< HEAD
+
         $bloques = DB::table('bloques')->get();
         $horas = DB::table('bloques')->where('id_dia', 1)->get();
         $dias = DB::table('dias')->get();
         
-=======
+
         $bloques = \DB::table('bloques')->get();
         $horas = \DB::table('bloques')->where('id_dia', 1)->get();
         $dias = \DB::table('dias')->get();
         $periodo = Session::get('periodos');
->>>>>>> eac6e0f2a892e7244d3faa25be7ad15ba3cf657f
+
         $k=0;
         
         for ($i=0; $i < 9 ; $i++) { 
@@ -122,14 +120,12 @@ class HorariosController extends Controller
         $seccion = Seccion::find($request->id_seccion);
         $asignatura = Asignaturas::find($request->id_asignatura);
         $aula = Aula::find($request->id_aula);
-
-<<<<<<< HEAD
         
         return view('horarios.create', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
-=======
+
         dd($periodo);
         return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
->>>>>>> eac6e0f2a892e7244d3faa25be7ad15ba3cf657f
+
     }
 
     /**
