@@ -26,7 +26,7 @@ use Auth;
 class PagosController extends Controller
 {
     public function __construct(){
-        if(Auth::user()->roles_id == 4){
+       /* if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
         }
         elseif(Auth::user()->roles_id == 2){
@@ -34,7 +34,7 @@ class PagosController extends Controller
         }
         else{
             $this->middleware('administrador');
-        }
+        }*/
     }
     /**
      * Display a listing of the resource.

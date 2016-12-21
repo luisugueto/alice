@@ -1,28 +1,44 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-    Nuevo Usuario
-@endsection
 @section('contentheader_title', 'Usuario')
-@section('contentheader_description', 'Nuevo Usuario')
+@section('contentheader_description', 'Nuevo')
 
-@section('main-content')                    
-            <div class="col-md-12">
-    @include('alerts.request')
-    @include('alerts.errors')
-                        <h2 class="titulo">
-                            Nuevo Usuario
-                            <br><small>Ingrese los datos del usuario a registrar.</small>
-                        </h2>
-                        <hr>
-                    <form action="{{ route('usuarios.store') }}" method="POST">
-                        <input type="hidden" name="_token" value="{{ CSRF_TOKEN()}}">
-                        @include('usuarios.forms.fields')                     
-                        <div align="center">
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" value="Aceptar">
-                            </div>
+@section('main-content')
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 20px;">
+            @include('alerts.request')
+            @include('alerts.errors')
+        </div>
+    </div>
+
+    <section class="content"> 
+        <div class="row">
+            <div class="col-md-12"> 
+
+                 {!! Form::open(['route' => 'usuarios.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Usuario</h3>
                         </div>
-                        </form>
+                        <div class="box-body">
+                            
+                            @include('usuarios.forms.fields')   
+
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                            </div>
+                        </div>   
                     </div>
-@stop
+
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </section>
+</div>
+
+@endsection

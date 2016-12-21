@@ -9,7 +9,7 @@ use Auth;
 
 class AsistenciasController extends Controller
 {
-    public function __construct(){
+    /*public function __construct(){
         if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
         }
@@ -19,7 +19,7 @@ class AsistenciasController extends Controller
         else{
             $this->middleware('administrador');
         }
-    }
+    }*/
     /**
      * Display a listing of the resource.
      *

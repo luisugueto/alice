@@ -18,12 +18,12 @@ use Auth;
 class UsuariosController extends Controller
 {
     public function __construct(){
-        if(Auth::user()->roles_id == 4){
+       /* if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
         }
         else{
             $this->middleware('administrador');
-        }
+        }*/
     }
     /**
      * Display a listing of the resource.
@@ -36,10 +36,10 @@ class UsuariosController extends Controller
         $user = User::all();
         return view('usuarios.usuario', compact('user'));
     }
+
     public function nuevo(){
         //$roles = Roles::lists('nombre', 'id');
-        $roles = Roles::where('id', '!=', '1')->get();
-        return view('usuarios.nuevousuario', compact('roles'));
+        
     }
     /**
      * Show the form for creating a new resource.
@@ -48,7 +48,9 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Roles::where('id', '!=', '1')->get();
+        
+        return view('usuarios.nuevousuario', compact('roles'));
     }
 
     /**

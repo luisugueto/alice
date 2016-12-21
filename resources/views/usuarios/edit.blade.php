@@ -1,35 +1,44 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-    Editar Usuario
-@endsection
-
 @section('contentheader_title', 'Usuario')
 @section('contentheader_description', 'Editar')
 
-@section('main-content')   
-	<div class="col-md-12">
-	    @include('alerts.request')
+@section('main-content')
 
+<div class="col-md-12">
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 20px;">
+            @include('alerts.request')
+            @include('alerts.errors')
+        </div>
+    </div>
 
-	                        <h2 class="titulo">
-	                            Editar Usuario
-	                        </h2>
-	                        <hr>
-		{!!Form::model($user, ['route'=>['usuarios.update', $user->id], 'method'=>'PUT', 'files'=>true])!!}
+    <section class="content"> 
+        <div class="row">
+            <div class="col-md-12"> 
 
-			@include('usuarios.forms.fields')
-			<div class="form-group" align="center">
-			{!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
-		{!!Form::close()!!}
-		<br>
-		{!!Form::open(['route'=>['usuarios.destroy', $user->id], 'method'=>'DELETE'])!!}
-		<br>
-			{!!Form::submit('Eliminar', ['class'=>'btn btn-danger'])!!}
-		{!!Form::close()!!}
+                {!!Form::model($user, ['route'=>['usuarios.update', $user->id], 'method'=>'PUT', 'files' => true])!!}
 
-		
-		</div>
-	</div>
-          
-@stop
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Usuario {{ $user->name }}</h3> 
+                        </div>
+                        <div class="box-body">
+                            
+                            @include('usuarios.forms.fields')   
+
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-flat">Actualizar</button>
+                            </div>
+                        </div>   
+                    </div>
+
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </section>
+</div>
+
+@endsection

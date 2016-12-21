@@ -1,17 +1,16 @@
 <div class="form-group">
-	{!! Form::label('Nombre', 'Nombre') !!}
-	{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Ingresa Nombre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+	{!! Form::label('Nombre', 'Nombre(s)') !!}
+	{!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=> 'JESÚS EDUARDO', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Email', 'Email') !!}
-	{!! Form::text('email', null, ['class'=>'form-control', 'placeholder'=>'Ingresa Correo']) !!} 
+	{!! Form::label('Email', 'Correo Electrónico') !!}
+	{!! Form::text('email', null, ['class' => 'form-control', 'placeholder'=>'ejemplo@ejemplo.com']) !!} 
 </div>
 <div class="form-group">
-	{!! Form::label('Password', 'Password') !!}
-	<input type="password" class="form-control" placeholder="Ingresa Contraseña">
+	{!! Form::label('Password', 'Contraseña') !!}
+	{!! Form::password('password', ['class' => 'form-control', 'placeholder' => '']) !!}
 </div>
 <div class="form-group">
-
 	{!! Form::label('Roles', 'Roles') !!}
 	<select name="roles_id" class="form-control select">
 		<option disabled selected>Seleccione</option>
@@ -19,4 +18,4 @@
 			<option value="{{ $r->id }}">{{ $r->nombre }}</option>
 		@endforeach
 	</select>
-</div> 
+</div>

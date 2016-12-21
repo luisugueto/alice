@@ -14,7 +14,7 @@ use Auth;
 class RepresentantesController extends Controller
 {
     public function __construct(){
-        if(Auth::user()->roles_id == 5){
+        /*if(Auth::user()->roles_id == 5){
             $this->middleware('dace');
         }
         elseif(Auth::user()->roles_id == 2){
@@ -22,7 +22,7 @@ class RepresentantesController extends Controller
         }
         else{
             $this->middleware('administrador');
-        }
+        }*/
     }
     /**
      * Display a listing of the resource.

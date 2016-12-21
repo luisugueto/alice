@@ -42,9 +42,6 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
-            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-group'></i> <span>Usuarios</span></a></li>
-            @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li><a href="{{ route('personal.index') }}"><i class='fa fa-male'></i> <span>Personal</span></a></li>
             @endif
@@ -118,13 +115,16 @@
                     <li><a href="{{ route('cargos.index') }}">Cargos</a></li>
                     @endif
                     @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
-                    <li><a href="{{ route('areas.index') }}">Areas de Trabajo</a></li>
+                    <li><a href="{{ route('areas.index') }}">Áreas</a></li>
                     @endif
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('asignaturas.index') }}">Asignaturas</a></li>
                     @endif
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
-                    <li><a href="{{ route('asignaturas.index') }}">Rubros</a></li>
+                    <li><a href="{{ route('facturacion.index') }}">Rubros</a></li>
+                    @endif
+                     @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
+                    <li><a href="{{ route('usuarios.index') }}"> Usuarios</a></li>
                     @endif
                 </ul>
             </li>

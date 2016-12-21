@@ -15,9 +15,7 @@ class CreateCargosTable extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_area')->unsigned();
-            $table->foreign('id_area')->references('id')->on('area_trabajos');
-            $table->integer('id_tipo_empleado')->unsigned();
-            $table->foreign('id_tipo_empleado')->references('id')->on('tipo_empleado');
+            $table->foreign('id_area')->references('id')->on('area_trabajos')->onDelete('Cascade');
             $table->string('nombre', 55);
             $table->timestamps();
         });

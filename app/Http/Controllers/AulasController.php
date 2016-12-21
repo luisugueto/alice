@@ -12,7 +12,7 @@ use Auth;
 class AulasController extends Controller
 {
     public function __construct(){
-        if(Auth::user()->roles_id == 5){
+       /* if(Auth::user()->roles_id == 5){
             $this->middleware('dace');
         }
         elseif(Auth::user()->roles_id == 2){
@@ -20,7 +20,7 @@ class AulasController extends Controller
         }
         else{
             $this->middleware('administrador');
-        }
+        }*/
     }
     /**
      * Display a listing of the resource.
@@ -56,8 +56,8 @@ class AulasController extends Controller
         $aula->save();
         
         Session::flash('message', 'Aula Creada Correctamente.');
-        $aula = Aula::all();
-        return view("aulas.index", ['aula'=>$aula]);
+
+        return redirect('aulas');
     }
 
     /**
