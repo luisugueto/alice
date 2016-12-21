@@ -1,49 +1,46 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-    Prestamos y Anticipos
-@endsection
-
-@section('contentheader_title', 'Prestamos y Anticipos')
+@section('contentheader_title', 'Prestamos')
+@section('contentheader_description', 'Inicio')
 
 
 @section('main-content')                    
 <div class="col-md-12">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 10px;">
+            @include('alerts.request')
+            @include('alerts.errors') 
+        </div>  
+    </div> 
+    <div class="col-md-1">
+        <div class="row" style="padding-top: 5px">
+        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarPagos') }}"> <span class="text-muted">Excel</span></a>
+        </button>
         </div>
-    @endif
-    @include('alerts.errors')
-    
+    </div>
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding-top: 20px">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Total</h3>
                     </div>
-
                     <div class="box-body">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                        <td>Fecha</td>
-                                        <td>Nombres</td>
-                                        <td>Apellidos</td>
-                                        <td>Capital</td>
-                                        <td>Tipo</td>
-                                        <td>Monto Prestamo</td>
-                                        <td>Monto Deudor</td>
-                                        <td>Opciones</td>
-                                    </tr>
+                                    <th>Fecha</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Capital</th>
+                                    <th>Tipo</th>
+                                    <th>Monto Prestamo</th>
+                                    <th>Monto Deudor</th>
+                                    <th>Opciones</th>
+                                </tr>
                             </thead>
-                            <tbody align="center">
-                            
-                                   @foreach($prestamo as $per)
+                            <tbody>
+                                @foreach($prestamo as $per)
                                    <?php $i = 0; $monto = 0;
                                             foreach ($per->pagosrealizados as $key) {
                                                 $i += $key->monto_pagado;
@@ -72,8 +69,9 @@
                             </tbody>
                          </table>
                            
-                        </div>
-                        
-                    </div>
-                    <button class="btn btn-primary fa fa-file-excel-o" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarPagos') }}" style="color:white"> Exportar Excel</a></button>
-@stop
+                    </div>            
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection
