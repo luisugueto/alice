@@ -23,6 +23,7 @@ class CedulaRequest extends Request
      */
     public function rules()
     {
+
         return [
             'cedula_re' => 'required|digits:10'
         ];

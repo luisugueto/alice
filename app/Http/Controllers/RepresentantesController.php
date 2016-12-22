@@ -45,7 +45,6 @@ class RepresentantesController extends Controller
         $cedula_re = $request->nacionalidad.$request->cedula_re;
 
         $representante = Representante::where('cedula_re', $cedula_re)->first();
-        //dd($request->all());
         
         if(!empty($request->cedula_pa))
         {
@@ -78,7 +77,9 @@ class RepresentantesController extends Controller
 
         if(!empty($representante)) 
         {
-            return redirect()->action('EstudiantesController@create', compact('representante'));
+            Session::flash('message', 'REPRESENTANTE CON NÚMERO DE CÉDULA '.$cedula_re.' ENCONTRADO PROCESA A RELLENAR LOS CAMPOS');
+
+            return redirect()->action('EstudiantesController@search', compact('representante', 'padre', 'madre'));
 
         }else{
 
@@ -100,7 +101,7 @@ class RepresentantesController extends Controller
         
         Session::flash('message', 'REPRESENTANTE REGISTRADO CORRECTAMENTE');
 
-        return redirect()->action('EstudiantesController@create', compact('representante'));
+        return redirect()->action('EstudiantesController@search', compact('representante'));
 
     }
 

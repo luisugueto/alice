@@ -15,7 +15,7 @@
 
     <section class="content"> 
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">         
 
                 {!! Form::open(['route' => 'representantes.create', 'method' => 'GET', 'name' => 'form', 'id' => 'form']) !!}
 
@@ -55,7 +55,7 @@
                                 <div class="form-group form-inline">
                                     <div class="input-group">
                                         <div class="form-group">
-                                            <select class="form-control" name="nationality" title="Seleccioné la nacionalidad" id="nationality">
+                                            <select class="form-control" name="nacionalidad_pa" title="Seleccioné la nacionalidad" id="nationality">
                                                 <option value="N-">N</option>
                                                 <option value="E">E</option>
                                             </select>           
@@ -79,7 +79,7 @@
                                 <div class="form-group form-inline">
                                     <div class="input-group">
                                         <div class="form-group">
-                                            <select class="form-control" name="nationality" title="Seleccioné la nacionalidad" id="nationality">
+                                            <select class="form-control" name="nacionalidad_ma" title="Seleccioné la nacionalidad" id="nationality">
                                                 <option value="N-">N</option>
                                                 <option value="E">E</option>
                                             </select>           

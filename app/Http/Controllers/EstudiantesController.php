@@ -11,9 +11,11 @@ use App\Facturacion;
 use App\Documentacion;
 use App\DatosMedico;
 use App\Padres;
+use App\Cursos;
 use App\Http\Requests\EstudianteRequest;
 use App\Http\Requests\CedulaEstudianteRequest;
 use Auth;
+use Session;
 
 class EstudiantesController extends Controller
 {
@@ -45,18 +47,54 @@ class EstudiantesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(CedulaEstudianteRequest $request)
     {
+
     	$representante = Representante::where('id', $request->representante)->first();
-        
+
     	if(!empty($representante)) 
     	{
+            if($request->padre == 0)
+            {
+                $padre = false;
+            
+            }else{
 
-    		return view('estudiantes.create', compact('representante'));
+                $padre = Padres::find($request->padre);
+            }
+
+            if($request->madre == 0)
+            {
+                $madre = false;
+            
+            }else{
+
+                $madre = Padres::find($request->madre);
+            }
+
+            $cedula = $request->nacionalidad.$request->cedula;
+
+            $existe = Estudiante::where('cedula', $cedula)->exists();
+
+            if($existe)
+            {
+
+                Session::flash('message-error', 'ESTUDIANTE CON NÚMERO DE CÉDULA '.$cedula.' YA SE ENCUENTRA REGISTRADO');
+
+                return redirect('estudiantes');
+
+            }else{
+    		  
+                $cursos = Cursos::lists('curso', 'id');
+
+                return view('estudiantes.create', compact('representante', 'padre', 'madre', 'cedula', 'cursos'));
+            }
 
     	}else{
 
-        	return view('estudiantes.create');
+            Session::flash('message-error', 'ERROR AL BUSCAR ESTUDIANTE');
+
+        	return redirect('estudiantes');
 
     	}
     }
@@ -142,22 +180,12 @@ class EstudiantesController extends Controller
         //
     }
 
-    public function search(CedulaEstudianteRequest $request)
+    public function search(Request $request)
     {
-
-        $estudiante = Estudiante::where('cedula', $request->cedula)->first();
-
-        if(!empty($estudiante)) 
-        {
-
-            return redirect()->back();
-
-        }else{
-
-            $cedula = $request->cedula;
-            $id_representante = $request->id_representante;
-
-            return view('estudiantes.create', compact('cedula', 'id_representante'));
-        }
+        $representante = $request->representante;
+        $padre = $request->padre;
+        $madre = $request->madre;
+    
+        return view('estudiantes.forms.fields-search', compact('cedula', 'representante', 'padre', 'madre'));
     }
 }
