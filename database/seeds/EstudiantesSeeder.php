@@ -14,7 +14,8 @@ class EstudiantesSeeder extends Seeder
         DB::table('datos_representantes')->insert([
             'nombres_re'=>'Maria Perez',
             'cedula_re'=>'1234567890',
-            'parentesco'=>'nacionalidad_re',
+            'parentesco'=>'Madre',
+            'nacionalidad_re' => 'N',
             'telefono_re'=>'12345456677',
             'direccion_re'=>'Aqui',
             'vive_con'=>'Padre y hermanos'
@@ -66,7 +67,8 @@ class EstudiantesSeeder extends Seeder
         	DB::table('datos_representantes')->insert([
             'nombres_re'=>'Petra Jimenez',
             'cedula_re'=>'1284347890',
-            'parentesco'=>'nacionalidad_re',
+            'parentesco'=>'Madre',
+            'nacionalidad_re' => 'N',
             'telefono_re'=>'12345456677',
             'direccion_re'=>'Aqui',
             'vive_con'=>'Padre y hermanos'
