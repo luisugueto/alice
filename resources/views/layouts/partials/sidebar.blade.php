@@ -63,7 +63,7 @@
                 </ul>
             </li>
             @endif
-            @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
+            <!-- @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
                 <a href="#"><i class='fa fa-money'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
@@ -72,7 +72,7 @@
                     <li><a href="#">Listado del Mes Actual</a></li>
                 </ul>
             </li>
-            @endif
+            @endif -->
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
                 <a href="#"><i class='fa fa-money'></i> <span>Préstamos y Anticipos</span> <i class="fa fa-angle-left pull-right"></i></a>
