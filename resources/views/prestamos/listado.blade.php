@@ -62,7 +62,7 @@
                                         <td>0</td>
                                         <td></td>
                                         @else
-                                            <td></td>
+                                            <td>0</td>
                                             <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
                                     @endif    
                                 @endif                                     

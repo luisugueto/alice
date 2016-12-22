@@ -256,8 +256,12 @@ class PrestamosAnticiposController extends Controller
             $total = $value->monto;
         }
 
+        $busqueda = DB::select('SELECT * FROM prestamos as pr INNER JOIN pagos as pa ON pr.id = pa.id_prestamo INNER JOIN datos_generales_personal as pe ON pe.id = pr.id WHERE pe.id = '.$request['persona'].'');
+
+        $countBusqueda = count($busqueda);
+
         $total = isset($total) ? $total : '';
-        if(!isset($pres))
+        if($countBusqueda==0)
         {
             Session::flash('message-error', 'ESTE USUARIO NO POSEE PRESTAMO');
             return redirect()->action('PrestamosAnticiposController@index');
