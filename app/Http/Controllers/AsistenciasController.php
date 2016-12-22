@@ -37,13 +37,14 @@ class AsistenciasController extends Controller
         return $hora_en_minutos;  
     }
 
-    private function diferencia_Horas($tiempo1,$tiempo2){
-       $dif = date("H:i", strtotime("00:00") + strtotime($tiempo2) - strtotime($tiempo1));
-       if($dif == '00:00'){
-          $dif = null;
-       }
-       
-       return $dif;
+    private function diferencia_Horas($hora1,$hora2){ 
+        $separar[1]=explode(':',$hora1); 
+        $separar[2]=explode(':',$hora2); 
+
+        $total_minutos_trasncurridos[1] = ($separar[1][0]*60)+$separar[1][1]; 
+        $total_minutos_trasncurridos[2] = ($separar[2][0]*60)+$separar[2][1]; 
+        $total_minutos_trasncurridos = $total_minutos_trasncurridos[1]-$total_minutos_trasncurridos[2]; 
+        return $total_minutos_trasncurridos;
     }
 
     public function index()
@@ -63,18 +64,19 @@ class AsistenciasController extends Controller
         $dias = array("0","1","2","3","4","5","6");
         $asistencias = (isset($asistencias)) ? $asistencias : [];
        # echo "Buenos d&iacute;as, hoy es ".$dias[date("w")];
+        //echo date("Y-m-d H:i:s");
+        // $bloque=DB::select('SELECT * FROM `asignacion` as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = 1 AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
 
-        $bloque=DB::select('SELECT * FROM `asignacion` as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = 1 AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
-
-        foreach ($bloque as $key) {
-            $bloqueInicial = $key->bloque;
-        }
-        $explode = explode(" - ", $bloqueInicial);
+        // foreach ($bloque as $key) {
+        //     $bloqueInicial = $key->bloque;
+        // }
+        // // $explode = explode(" - ", $bloqueInicial);
 
 
 
-        //echo $this->diferencia_Horas($explode[0], date('H:i:s'));
-        //echo $this->horaMinutos($this->diferencia_Horas($explode[0], date('H:i:s')));
+       // echo $this->diferencia_Horas(date('H:i:s'), $explode[0]);
+
+   //     echo $this->horaMinutos(date('H:i:s'), $this->diferencia_Horas($explode[0]));
 
         return view('asistencias.index', compact('asistencias', 'fecha'));
     }

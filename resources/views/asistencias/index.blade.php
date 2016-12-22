@@ -15,10 +15,10 @@
     <div class="col-md-12">
         <div class="row" style="padding-top: 5px">
         <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('asistencias/create') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Procesar Entrada
+            <span class="fa fa-check" aria-hidden="true"></span> Procesar Entrada
         </button>
         <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('asistencias/salida') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Procesar Salida
+            <span class="fa fa-close" aria-hidden="true"></span> Procesar Salida
         </button>
         </div>
     </div>
