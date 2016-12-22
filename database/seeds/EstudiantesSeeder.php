@@ -13,7 +13,7 @@ class EstudiantesSeeder extends Seeder
     {
         DB::table('datos_representantes')->insert([
             'nombres_re'=>'Maria Perez',
-            'cedula_re'=>'1234567890',
+            'cedula_re'=>'N-1234567890',
             'parentesco'=>'Madre',
             'nacionalidad_re' => 'N',
             'telefono_re'=>'12345456677',
@@ -52,9 +52,8 @@ class EstudiantesSeeder extends Seeder
             'patologia'=>'Ninguna'
         ]);
         DB::table('datos_padres')->insert([
-            'id_estudiante'=>'1',
             'nombres_pa'=>'Maria Perez',
-            'cedula_pa'=>'1234567890',
+            'cedula_pa'=>'N-1234567890',
             'foto_pa'=>'',
             'lugar_trabajo'=>'en CADA, esquina',
             'direccion_pa'=>'por allí',
@@ -66,7 +65,7 @@ class EstudiantesSeeder extends Seeder
         	//------------------------------------------------------
         	DB::table('datos_representantes')->insert([
             'nombres_re'=>'Petra Jimenez',
-            'cedula_re'=>'1284347890',
+            'cedula_re'=>'E-1284347890',
             'parentesco'=>'Madre',
             'nacionalidad_re' => 'N',
             'telefono_re'=>'12345456677',
@@ -105,9 +104,8 @@ class EstudiantesSeeder extends Seeder
             'patologia'=>'Ninguna'
         ]);
         DB::table('datos_padres')->insert([
-            'id_estudiante'=>'2',
             'nombres_pa'=>'Petra Jimenez',
-            'cedula_pa'=>'1284347890',
+            'cedula_pa'=> 'N-1284347890',
             'foto_pa'=>'',
             'lugar_trabajo'=>'en CADA, esquina',
             'direccion_pa'=>'por allí',

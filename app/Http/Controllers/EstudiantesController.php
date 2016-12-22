@@ -108,34 +108,192 @@ class EstudiantesController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-        //$variable = count($request->cedula_pa1)+count($request->cedula_pa0);
-        
-        //$estudiante = Estudiante::create($request->all());
 
-        if($request->padre == 'on')
+        if ($request->padre == 'on' AND $request->padre2 == 'on') 
         {
+
             $this->validate($request, 
             [
-                'cedula_pa'       => 'required|digits_between:8,10', 
-                'nombres_pa'      => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'lugar_trabajo'   => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'direccion_pa'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'telefono_pa'     => 'required|digits_between:10,11',
-                'correo_pa'       => 'required|email',
-                'nacionalidad_pa' => 'required',
+                'cedula_pa'        => 'required|digits_between:8,10', 
+                'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'telefono_pa'      => 'required|digits_between:10,11',
+                'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
+                'nacionalidad_pa'  => 'required',
+                'cedula_ma'        => 'required|digits_between:8,10', 
+                'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'telefono_ma'      => 'required|digits_between:10,11',
+                'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
+                'nacionalidad_ma'  => 'required'
             ]);
             
-            $padre = Padres::where('cedula_pa', $request->cedula_pa)->first();
+            $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
+            $cedula_padre = $request->nacionalidad_madre.$request->cedula_ma;
 
-            if(!empty($padre))
+            $padre = Padres::where('cedula_pa', $cedula_padre)->first();
+            $madre = Padres::where('cedula_pa', $cedula_madre)->first();
+
+                if(!empty($padre) AND !empty($madre))
+                {
+                    $estudiante = Estudiante::create($request->all());
+
+                    $padre->estudiante()->attach($estudiante);
+                    $madre->estudiante()->attach($estudiante);
+                
+                    }elseif(!empty($padre) OR !empty($madre)){
+
+                        if(!empty($padre))
+                        {
+                            $this->validate($request, 
+                            [
+                                'cedula_pa'        => 'required|digits_between:8,10', 
+                                'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'telefono_pa'      => 'required|digits_between:10,11',
+                                'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
+                                'nacionalidad_pa'  => 'required'
+                            ]);
+
+                            $estudiante = Estudiante::create($request->all());
+
+                            $padre = new Padres;
+
+                            $padre->cedula_pa = $request->cedula_pa;
+                            $padre->nombres_pa = $request->nombres_pa;
+                            $padre->lugar_trabajo = $request->lugar_trabajo;
+                            $padre->direccion_pa = $request->direccion_pa;
+                            $padre->telefono_pa = $request->telefono_pa;
+                            $padre->correo_pa = $request->nacionalidad_pa;
+                            $padre->nivel_educacion = $request->nivel_educacion;
+                            $padre->save();
+
+                            $padre->estudiante()->attach($estudiante);
+                            $madre->estudiante()->attach($estudiante);
+
+                        }else{
+
+                            $this->validate($request, 
+                            [
+                                'cedula_ma'        => 'required|digits_between:8,10', 
+                                'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                                'telefono_ma'      => 'required|digits_between:10,11',
+                                'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
+                                'nacionalidad_ma'  => 'required',
+                            ]);
+
+                            $estudiante = Estudiante::create($request->all());
+
+                            $madre = new Padres;
+
+                            $madre->cedula_pa = $request->cedula_ma;
+                            $madre->nombres_pa = $request->nombres_ma;
+                            $madre->lugar_trabajo = $request->lugar_trabajo_ma;
+                            $madre->direccion_pa = $request->direccion_ma;
+                            $madre->telefono_pa = $request->telefono_ma;
+                            $madre->correo_pa = $request->nacionalidad_ma;
+                            $madre->nivel_educacion = $request->nivel_educacion_ma;
+                            $madre->save();
+
+                            $madre->estudiante()->attach($estudiante);
+                            $padre->estudiante()->attach($estudiante);
+                        }
+                    }
+
+        }elseif($request->padre == 'on' OR $request->padre2 == 'on'){
+
+            $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
+            $cedula_madre = $request->nacionalidad_madre.$request->cedula_ma;
+
+            $padre = Padres::where('cedula_pa', $cedula_padre)->first();
+            $madre = Padres::where('cedula_pa', $cedula_madre)->first();
+
+
+            if($request->padre == 'on')
             {
-                $padre->estudiante()->attach($padre);
+                $this->validate($request, 
+                [
+                    'cedula_pa'        => 'required|digits_between:8,10', 
+                    'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'telefono_pa'      => 'required|digits_between:10,11',
+                    'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
+                    'nacionalidad_pa'  => 'required'
+                ]);
+
+                if(!empty($padre))
+                {
+                    $estudiante = Estudiante::create($request->all());
+                    $padre->estudiante()->attach($estudiante);
+                
+                }else{
+
+                    $estudiante = Estudiante::create($request->all());
+
+                    $padre = new Padres;
+
+                    $padre->cedula_pa = $request->cedula_pa;
+                    $padre->nombres_pa = $request->nombres_pa;
+                    $padre->lugar_trabajo = $request->lugar_trabajo;
+                    $padre->direccion_pa = $request->direccion_pa;
+                    $padre->telefono_pa = $request->telefono_pa;
+                    $padre->correo_pa = $request->nacionalidad_pa;
+                    $padre->nivel_educacion = $request->nivel_educacion;
+                    $padre->save();
+
+                    $padre->estudiante()->attach($estudiante);
+
+                }
 
             }else{
-            
-            dd('here');
+
+                $this->validate($request, 
+                [
+                    'cedula_ma'        => 'required|digits_between:8,10', 
+                    'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                    'telefono_ma'      => 'required|digits_between:10,11',
+                    'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
+                    'nacionalidad_ma'  => 'required',
+                ]);
+
+                if(!empty($madre))
+                {
+                    $estudiante = Estudiante::create($request->all());
+                    $madre->estudiante()->attach($estudiante);  
+                
+                }else{
+
+                    $estudiante = Estudiante::create($request->all());
+
+                    $madre = new Padres;
+
+                    $madre->cedula_pa = $request->cedula_ma;
+                    $madre->nombres_pa = $request->nombres_ma;
+                    $madre->lugar_trabajo = $request->lugar_trabajo_ma;
+                    $madre->direccion_pa = $request->direccion_ma;
+                    $madre->telefono_pa = $request->telefono_ma;
+                    $madre->correo_pa = $request->nacionalidad_ma;
+                    $madre->nivel_educacion = $request->nivel_educacion_ma;
+                    $madre->save();
+
+                    $madre->estudiante()->attach($estudiante);
+                            
+                }
+                
             }
+
         }
+
+    }
+    
         //$estudiante->documentos()->create($request->all());
         //$estudiante->novedades()->create($request->all());
         //$estudiante->medicos()->create($request->all());
@@ -156,11 +314,10 @@ class EstudiantesController extends Controller
            $estudiante->padres()->saveMany([new Padres(['nombres_pa' => $request["nombres_pa".$i], 'cedula_pa' => $request["cedula_pa".$i], 'foto_pa' => 'no disponible', 'lugar_trabajo' => $request["lugar_trabajo".$i], 'direccion_pa' => $request["direccion_pa".$i], 'telefono_pa' => $request["telefono_pa".$i], 'correo_pa' => $request["correo_pa".$i], 'nacionalidad_pa' => $request["nacionalidad_pa".$i], 'nivel_educacion' => $request["nivel_educacion".$i]])]);
         }
 */
-        return redirect('/estudiantes');
+      
         
         
-    }
-
+    
     /**
      * Display the specified resource.
      *

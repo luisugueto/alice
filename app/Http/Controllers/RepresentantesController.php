@@ -48,35 +48,39 @@ class RepresentantesController extends Controller
         
         if(!empty($request->cedula_pa))
         {
-            $cedula_pa = false;
-
-        }else{
-
-            $padre = Padres::where('cedula_pa', $request->cedula_pa)->first();
+            
+            $cedula_pa = $request->nacionalidad.$request->cedula_pa;
+            $padre = Padres::where('cedula_pa', $cedula_pa)->first();
 
             if(count($padre) == 0)
             {
                 $padre = false;
             }
 
+        }else{
+
+            $padre = false;
         }
 
         if(!empty($request->cedula_ma))
         {
-            $cedula_ma = false;
-        
-        }else{
+            $cedula_ma = $request->nacionalidad.$request->cedula_ma;
 
-            $madre = Padres::where('cedula_pa', $request->cedula_ma)->first();
+            $madre = Padres::where('cedula_pa', $cedula_ma)->first();
 
             if(count($madre) == 0)
             {
                 $madre = false;
             }
+        
+        }else{
+
+            $madre = false;
         }
 
         if(!empty($representante)) 
         {
+            
             Session::flash('message', 'REPRESENTANTE CON NÚMERO DE CÉDULA '.$cedula_re.' ENCONTRADO PROCESA A RELLENAR LOS CAMPOS');
 
             return redirect()->action('EstudiantesController@search', compact('representante', 'padre', 'madre'));
