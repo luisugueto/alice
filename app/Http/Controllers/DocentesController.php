@@ -155,7 +155,7 @@ class DocentesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
          dd($id);
     }
@@ -169,7 +169,22 @@ class DocentesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $docentes = Personal::find($id);
+
+
+
+        if($docentes->cargo->nombre=="DOCENTE DE PLANTA"){
+            $result=DB::table('asignacion')->where('id_seccion',$request->id_seccion)->where('id_prof',$request->id_prof)->delete();
+            Session::flash('message', 'DOCENTE DESINCORPORADO DE LA CARGA ACADÉMICA');
+        }else{
+
+            $result=DB::table('asignacion')->where('id_seccion',$request->id_seccion)->where('id_prof',$request->id_prof)->where('id_asignatura',$request->codigo)->delete();
+            Session::flash('message', 'DOCENTE DESINCORPORADO DE LA CARGA ACADÉMICA');
+        }
+
+            $docentes=Personal::all();
+        return View('docentes.index',compact('docentes'));
+
     }
 
     /**

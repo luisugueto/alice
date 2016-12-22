@@ -32,18 +32,20 @@
                                 <tr>
                                     <th>Nombre(s)</th>
                                     <th>Área</th>
-                                    <th>Creada</th>
-                                    <th>Actualizada</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($cargo as $cargo)
                                     <tr>
                                         <td>{{ $cargo->nombre}}</td>  
-                                        <td>{{ $cargo->area->nombre}}</td>  
-                                        <td>{{ $cargo->created_at }}</td>
-                                        <td>{{ $cargo->updated_at }}</td>
-                                        <td>{!!link_to_route('cargos.edit', $title = '', $parameters = $cargo->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>                              
+                                        <td>{{ $cargo->area->nombre}}</td> 
+
+                                        
+                                        <td>
+                                        @if($cargo->nombre!="DOCENTE DE PLANTA" AND $cargo->nombre!="DOCENTE ROTATIVO")
+                                        {!!link_to_route('cargos.edit', $title = '', $parameters = $cargo->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}
+                                        @endif
+                                        </td>                              
                                     </tr>
                                 @endforeach
                             </tbody>
