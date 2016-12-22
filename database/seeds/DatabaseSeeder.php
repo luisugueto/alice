@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     	Model::unguard();
 
         
-/*
+
     	$this->call(UsersTableSeeder::class); 
         $this->call(CursosTableSeeder::class);
         $this->call(AsignaturasTableSeeder::class);
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DiasTableSeeder::class);
         $this->call(BloquesTableSeeder::class);
         $this->call(EstudiantesSeeder::class);
-*/
+
         $this->call(RubrosSeeder::class);
         Model::reguard();
     }
