@@ -80,7 +80,7 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 	<td colspan="6"></td>
 </tr>
 
-@for($i=0;$i<count($asistencia);$i++)
+@for($i=0;$i< ccount($asistencia);$i++)
 <tr>
 	<td></td>
 	<td><strong>{{$asistencia[$i]}}</strong></td>

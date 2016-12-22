@@ -10,9 +10,9 @@
 <div class="form-group{{ $errors->has('fin') ? ' has-error' : '' }}">
 	{!! Form::label('numero','Número') !!} <br>
 
-	{!! Form::radio('numero',1,true, ['title' => 'Seleccione si el número para el periodo será el 1']) !!} &nbsp;&nbsp;&nbsp;&nbsp;1er
+	{!! Form::radio('numero',1,true, ['title' => 'Seleccione si el número para el periodo será el 1']) !!} &nbsp;&nbsp;1er&nbsp;&nbsp;
 
-	{!! Form::radio('numero',2, false,['title' => 'Seleccione si el número para el periodo será el 2']) !!} &nbsp;&nbsp;&nbsp;&nbsp;2do
+	{!! Form::radio('numero',2, false,['title' => 'Seleccione si el número para el periodo será el 2']) !!} &nbsp;&nbsp;2do
 	
 </div>
 
