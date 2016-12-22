@@ -12,6 +12,6 @@ class Padres extends Model
 
     public function estudiante()
     {
-    	return $this->belongsTo('App\Estudiante', 'id_estudiante');
+    	return $this->belongsToMany('App\Estudiante', 'padres_has_estudiantes', 'id_padre', 'id_estudiante');
     }
 }

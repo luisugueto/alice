@@ -37,7 +37,7 @@ class Estudiante extends Model
 
     public function padres()
     {
-    	return $this->hasMany('App\Padres', 'id_estudiante', 'id');
+    	return $this->belongsToMany('App\Padres', 'padres_has_estudiantes', 'id_estudiante', 'id_padre');
     }
 
     public function precedencia()

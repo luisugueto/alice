@@ -31,7 +31,7 @@
 									<li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Medicos</a></li>
 									<li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Novedades</a></li>
 									<li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Documentación</a></li>
-									<li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Facturación</a></li>
+									<li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Rubros</a></li>
 									<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
 								</ul>
 								<div class="tab-content">

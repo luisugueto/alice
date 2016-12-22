@@ -105,31 +105,57 @@ class EstudiantesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EstudianteRequest $request)
+    public function store(Request $request)
     {
-        $variable = count($request->cedula_pa1)+count($request->cedula_pa0);
-    
-        $estudiante = Estudiante::create($request->all());
+        //dd($request->all());
+        //$variable = count($request->cedula_pa1)+count($request->cedula_pa0);
+        
+        //$estudiante = Estudiante::create($request->all());
+
+        if($request->padre == 'on')
+        {
+            $this->validate($request, 
+            [
+                'cedula_pa'       => 'required|digits_between:8,10', 
+                'nombres_pa'      => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'lugar_trabajo'   => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_pa'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'telefono_pa'     => 'required|digits_between:10,11',
+                'correo_pa'       => 'required|email',
+                'nacionalidad_pa' => 'required',
+            ]);
+            
+            $padre = Padres::where('cedula_pa', $request->cedula_pa)->first();
+
+            if(!empty($padre))
+            {
+                $padre->estudiante()->attach($padre);
+
+            }else{
+            
+            dd('here');
+            }
+        }
         //$estudiante->documentos()->create($request->all());
         //$estudiante->novedades()->create($request->all());
         //$estudiante->medicos()->create($request->all());
         
-        for($j=0; $j<count($request->nombre); $j++)
+        /*for($j=0; $j<count($request->nombre); $j++)
         {
             $factura =  $estudiante->facturaciones()->saveMany([new Facturacion(['nombre' => $request->nombre[$j], 'monto' => $request->monto[$j], 'fecha_max' => $request->fecha_max[$j], 'enviar_banco' => 'No'])]);
 
             
             $factura[$j]->rubros()->attach($estudiante);
             
-        }
+        }*/
         
-        if($variable == '1') { $i=1; $fin=2; }else{ $i=0; $fin=2; }
+        /*if($variable == '1') { $i=1; $fin=2; }else{ $i=0; $fin=2; }
         
         for($i; $i < $fin; $i++)
         {
            $estudiante->padres()->saveMany([new Padres(['nombres_pa' => $request["nombres_pa".$i], 'cedula_pa' => $request["cedula_pa".$i], 'foto_pa' => 'no disponible', 'lugar_trabajo' => $request["lugar_trabajo".$i], 'direccion_pa' => $request["direccion_pa".$i], 'telefono_pa' => $request["telefono_pa".$i], 'correo_pa' => $request["correo_pa".$i], 'nacionalidad_pa' => $request["nacionalidad_pa".$i], 'nivel_educacion' => $request["nivel_educacion".$i]])]);
         }
-
+*/
         return redirect('/estudiantes');
         
         

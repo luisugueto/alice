@@ -14,8 +14,6 @@ class CreateDatosPadresTable extends Migration
     {
         Schema::create('datos_padres', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_estudiante')->unsigned();
-            $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
             $table->string('nombres_pa', 25);
             $table->string('cedula_pa', 25)->unique();
             $table->string('foto_pa', 255);

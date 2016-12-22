@@ -229,6 +229,45 @@
         });
     });
 </script>
+<script type="text/javascript">
+        
+    function padre_ch()
+    {
+        if($('#habilitar').prop('checked'))
+        {
+            $("[id=padre]").each(function(index, element)
+            {
+                $(element).attr('disabled', false);
+            });
+        
+        }else{
+
+             $("[id*=padre]").each(function(index, element)
+             {
+                $(element).attr('disabled', true);
+             });
+        }
+    }
+
+    function padre_ch2()
+    {
+        if($('#habilitar2').prop('checked'))
+        {
+            $("[id=padre2]").each(function(index, element)
+            {
+                $(element).attr('disabled', false);
+            });
+        
+        }else{
+
+             $("[id*=padre2]").each(function(index, element)
+             {
+                $(element).attr('disabled', true);
+             });
+        }
+    }
+     
+</script>
 <!-- <script>
     
     $(document).ready( function () 

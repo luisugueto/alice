@@ -100,6 +100,8 @@
 	 <div id="contenedor">
 	</div>
 	<div class="box-body">
+
+		@include('estudiantes.forms.fields-items')
 		<!-- <div class="col-md-4">
 			<div class="form-group">
 				{!! Form::label('nombre', 'Nombre') !!}
