@@ -57,7 +57,8 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('representantes.cedula') }}">Nuevo</a></li>
                     <li><a href="{{ route('estudiantes.index') }}">Listado</a></li>
-                    <li><a href="{{ route('inscripciones.index') }}">Inscritos</a></li>
+                    <li><a href="{{ route('inscripciones.show',[0]) }}">Inscritos</a></li>
+                    <li><a href="{{ route('inscripciones.index') }}">Realizar Inscripción</a></li>
                 </ul>
             </li>
             @endif

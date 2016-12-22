@@ -20,6 +20,8 @@ class CreateAsignacionTable extends Migration
             $table->foreign('id_asignatura')->references('id')->on('asignaturas')->onDelete('Cascade');
             $table->integer('id_seccion')->unsigned();
             $table->foreign('id_seccion')->references('id')->on('secciones')->onDelete('cascade');
+            $table->integer('id_periodo')->unsigned();
+            $table->foreign('id_periodo')->references('id')->on('periodos')->onDelete('cascade');
             $table->timestamps();
         });
     }

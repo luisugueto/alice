@@ -64,4 +64,8 @@ class Estudiante extends Model
     // {
     //     return $this->belongsToMany('App\Facturacion', 'rubros', 'id_estudiante', 'id_factura');
     // }
+    public function cursos(){
+
+        return $this->belongsToMany('App\Cursos','inscripciones','id_estudiante','id_curso')->withPivot('id_seccion','id_periodo')->withTimestamps();
+    }
 }

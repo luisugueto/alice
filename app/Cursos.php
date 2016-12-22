@@ -39,4 +39,9 @@ class Cursos extends Model
     {
         return $this->hasMany('App\Rubros', 'id_curos', 'id');
     }
+
+    public function estudiantes(){
+
+        return $this->belongsToMany('App\Estudiantes','inscripciones','id_curso','id_estudiantes')->withPivot('id_seccion','id_periodo')->withTimestamps();
+    }
 }

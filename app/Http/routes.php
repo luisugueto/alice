@@ -44,7 +44,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('docentes/asignar/{id}/show2',['uses' => 'DocentesController@show2', 'as' => 'docentes.asignar.show2']);
 	Route::get('docentes/secciones/{id}/buscar',['uses' => 'DocentesController@buscar', 'as' => 'docentes.secciones.buscar']);
 	Route::get('docentes/asignaturas/{id}/buscar2',['uses' => 'DocentesController@buscar2', 'as' => 'docentes.asignaturas.buscar2']);
-
+	Route::get('inscripciones/secciones/{id}/buscar',['uses' => 'DocentesController@buscar', 'as' => 'docentes.secciones.buscar']);
+	
 
 
 	Route::resource('asistencias', 'AsistenciasController');

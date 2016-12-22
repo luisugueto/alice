@@ -64,8 +64,8 @@ class EstudiantesSeeder extends Seeder
         ]);
         	//------------------------------------------------------
         	DB::table('datos_representantes')->insert([
-            'nombres_re'=>'Maria Jimenez',
-            'cedula_re'=>'1284597890',
+            'nombres_re'=>'Petra Jimenez',
+            'cedula_re'=>'1284347890',
             'parentesco'=>'nacionalidad_re',
             'telefono_re'=>'12345456677',
             'direccion_re'=>'Aqui',
@@ -104,13 +104,13 @@ class EstudiantesSeeder extends Seeder
         ]);
         DB::table('datos_padres')->insert([
             'id_estudiante'=>'2',
-            'nombres_pa'=>'Maria Jimenez',
-            'cedula_pa'=>'1234567890',
+            'nombres_pa'=>'Petra Jimenez',
+            'cedula_pa'=>'1284347890',
             'foto_pa'=>'',
             'lugar_trabajo'=>'en CADA, esquina',
             'direccion_pa'=>'por allí',
             'telefono_pa'=>'12345456677',
-            'correo_pa'=>'mariap@gmail.com',
+            'correo_pa'=>'petraap@gmail.com',
             'nacionalidad_pa'=>'N',
             'nivel_educacion'=>'Profesional'
         ]);
