@@ -184,10 +184,7 @@ class PrestamosAnticiposController extends Controller
             Session::forget('valor');
             Session::put('valor', $suma);
 
-            
-            define('mesActual', date('m'));
-            $prestamo = Prestamo::whereMonth('fecha', '=', mesActual)->get();
-            return view('prestamos.index', compact('prestamo'));
+            return redirect()->action('PrestamosAnticiposController@index');
         }
     }
 
@@ -263,7 +260,7 @@ class PrestamosAnticiposController extends Controller
         $total = isset($total) ? $total : '';
         if($countBusqueda==0)
         {
-            Session::flash('message-error', 'ESTE USUARIO NO POSEE PRESTAMO');
+            Session::flash('message-error', 'ESTE USUARIO NO POSEE PAGO DE PRESTAMO');
             return redirect()->action('PrestamosAnticiposController@index');
         }
 

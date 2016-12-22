@@ -237,7 +237,7 @@ class PagosController extends Controller
 
         Session::flash('message', 'PAGO REALIZADO CORRECTAMENTE');
         
-        return redirect('prestamos');
+        return redirect()->action('PrestamosAnticiposController@index');
     }
 
     /**
