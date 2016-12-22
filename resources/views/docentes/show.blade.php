@@ -104,8 +104,8 @@
                 <thead>
                 <tr>
                   <th>Curso</th>
-                  <th>Sección</th>
                   <th>Asignatura</th>
+                  <th>Sección</th>
                   <th>Opciones</th>
                 </tr>
                 </thead>
@@ -115,7 +115,6 @@
                       
                 @foreach($docentes2->asignaturas as $docentes)
                <?php $id_seccion=$docentes->pivot->id_seccion;
-                     $id_prof=$docentes->pivot->id_prof;
                 ?>
 
                 <tr>
@@ -139,7 +138,7 @@
                    {{--   {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->pivot->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
  --}} 
                    
-                 <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
+                 <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }},{{$docentes->cursos->id}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
                   {{--
                      {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-calculator fa-2x'])!!} --}}
 
@@ -194,10 +193,11 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                {!!Form::model($docentes, ['route'=>['docentes.update',$id_prof ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
+                {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
                  <input type="text" id="codigo" name="codigo">
               <input type="text" id="id_prof" name="id_prof">
               <input type="text" id="id_seccion" name="id_seccion">
+              <input type="text" id="id_curso" name="id_curso">
                 <button type="submit" class="btn btn-primary">Aceptar</button>
                 {!! Form::close() !!}
               </div>
@@ -212,10 +212,11 @@
 
 <script type="text/javascript">
   
-  function codigo(codigo,id_prof,id_seccion){
+  function codigo(codigo,id_prof,id_seccion,id_curso){
     $('#codigo').val(codigo);
     $('#id_prof').val(id_prof);
     $('#id_seccion').val(id_seccion);
+    $('#id_curso').val(id_curso);
   }
 
   

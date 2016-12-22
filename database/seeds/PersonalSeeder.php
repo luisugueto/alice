@@ -30,7 +30,7 @@ class PersonalSeeder extends Seeder
             'correo'=>'lui_su_gueto@hotmail.com',
             'clave'=>'1234',
             'ingreso_notas'=>'1',
-            'id_cargo'=>'1' 
+            'id_cargo'=>'4' 
         ]);
 
         DB::table('remuneracion')->insert([
@@ -45,6 +45,48 @@ class PersonalSeeder extends Seeder
 
         DB::table('informacion_academica')->insert([
             'id_personal'=>'1',
+            'primaria'=>'asfaf',
+            'secundaria'=>'asfasfas',
+            'superior'=>'asfasfasfas',
+            'titulo'=>'asfasfas',
+            'cursos'=>'asfasfas',
+            'historial_laboral'=>'asfasfas'
+        ]);
+
+        //------------------------------------------
+        DB::table('datos_generales_personal')->insert([
+            'codigo_pesonal'=>'123456',
+            'apellido_paterno'=>'GOMEZ',
+            'nombres'=>'CESAR',
+            'cedula'=>'17082188',
+            'fecha_nacimiento'=>'1984-05-09',
+            'fecha_ingreso'=>'2010-01-01',
+            'edad'=>'32',
+            'edo_civil'=>'soltero',
+            'genero'=>'M',
+            'estado_actual'=>'Activo',
+            'tipo_registro'=>'1',
+            'especialidad'=>'INFORMÁTICA',
+            'direccion'=>'aqui',
+            'telefono'=>'04262343358',
+            'correo'=>'en4pami@gmail.com',
+            'clave'=>'1234',
+            'ingreso_notas'=>'1',
+            'id_cargo'=>'5' 
+        ]);
+
+        DB::table('remuneracion')->insert([
+            'id_personal'=>'2',
+            'sueldo_mens'=>'1000',
+            'descuento_iess'=>'100.00',
+            'bono_responsabilidad'=>'500',
+            'horas_extras'=>'Y',
+            'cuenta_bancaria'=>'7129964876124',
+            'devolver_fondos'=>'N'
+        ]);
+
+        DB::table('informacion_academica')->insert([
+            'id_personal'=>'2',
             'primaria'=>'asfaf',
             'secundaria'=>'asfasfas',
             'superior'=>'asfasfasfas',
