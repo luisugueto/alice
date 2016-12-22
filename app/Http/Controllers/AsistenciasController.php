@@ -34,13 +34,17 @@ class AsistenciasController extends Controller
     {
         $asistencia = Asistencia::all();
         $i = 0;
-        foreach ($asistencia as $key => $asistencia) 
-        {
-           $asistencias[$i] = $asistencia->personal;
-           $fecha[$i] = $asistencia; 
+        if(count($asistencia)>0){
+            foreach ($asistencia as $key => $asistencia) 
+            {
+               $asistencias[$i] = $asistencia->personal;
+               $fecha[$i] = $asistencia; 
 
-           $i++;
+               $i++;
+            }
         }
+        $asistencias = (isset($asistencias)) ? $asistencias : [];
+
         return view('asistencias.index', compact('asistencias', 'fecha'));
     }
 
@@ -63,16 +67,14 @@ class AsistenciasController extends Controller
 
     public function salidas(Request $request)
     {
-        $asistencia = DB::select('SELECT * FROM asistencia_personal as a INNER JOIN fechas_asistencias as f ON a.id_fecha = f.id WHERE a.id_personal = '.$request->id_personal.' AND f.fecha = "'.date('Y-m-d').'"');
+        $asistencia = DB::select('SELECT *, a.id as id_asistencia FROM asistencia_personal as a INNER JOIN fechas_asistencias as f ON a.id_fecha = f.id WHERE a.id_personal = '.$request->id_personal.' AND f.fecha = "'.date('Y-m-d').'"');
         $verificarEntrada = count($asistencia);
 
         foreach ($asistencia as $key) {
-            $id = $key->id;
+            $id = $key->id_asistencia;
         }
 
-        $count = count($asistencia);
-
-        if($count == 0)
+        if($verificarEntrada == 0)
         {
             Session::flash('message-error', 'DISCULPE: USTED NO REGISTRO SU HORA DE ENTRADA, POR FAVOR REGISTRE');
             return redirect()->action('AsistenciasController@index');
@@ -106,7 +108,9 @@ class AsistenciasController extends Controller
         }
         else{
             $FechasAsistencias = FechasAsistencias::all()->last();
-            $verificarEntrada = Asistencia::where('id_personal', $FechasAsistencias->id)->where('id_fecha', $FechasAsistencias->id)->count();
+            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();
+            
+
             if($verificarEntrada>0)
             {
                 Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
@@ -118,7 +122,7 @@ class AsistenciasController extends Controller
                 $asistencias->id_fecha = $FechasAsistencias->id;
                 $asistencias->entrada = date("H:i:s");
                 $asistencias->save();
-               Session::flash('message', 'ASISTENCIA REGISTRADA CORRECTAMENTE');
+                Session::flash('message', 'ASISTENCIA REGISTRADA CORRECTAMENTE');
             }
         }
         return redirect()->action('AsistenciasController@index');   

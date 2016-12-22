@@ -40,6 +40,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(count($asistencias)>0)
                                 @foreach($asistencias as $key => $asistencia)
                                     <tr>
                                         <td>{{ $asistencia->nombres }}</td>
@@ -48,6 +49,7 @@
                                         <!-- <td class="text-center">{!!link_to_route('asistencias.edit', $title = '', $parameters = $asistencia->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td> -->
                                     </tr>
                                 @endforeach
+                            @endif
                             </tbody>
                          </table>
                            
