@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Representante;
 use App\Http\Requests\RepresentanteRequest;
 use App\Http\Requests\CedulaRequest;
+use App\Padres;
 use Session;
 use Auth;
 
@@ -39,9 +40,51 @@ class RepresentantesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CedulaRequest $request)
     {
-        return view('representantes.create');
+        $cedula_re = $request->nacionalidad.$request->cedula_re;
+
+        $representante = Representante::where('cedula_re', $cedula_re)->first();
+        //dd($request->all());
+        
+        if(!empty($request->cedula_pa))
+        {
+            $cedula_pa = false;
+
+        }else{
+
+            $padre = Padres::where('cedula_pa', $request->cedula_pa)->first();
+
+            if(count($padre) == 0)
+            {
+                $padre = false;
+            }
+
+        }
+
+        if(!empty($request->cedula_ma))
+        {
+            $cedula_ma = false;
+        
+        }else{
+
+            $madre = Padres::where('cedula_pa', $request->cedula_ma)->first();
+
+            if(count($madre) == 0)
+            {
+                $madre = false;
+            }
+        }
+
+        if(!empty($representante)) 
+        {
+            return redirect()->action('EstudiantesController@create', compact('representante'));
+
+        }else{
+
+            return view('representantes.create', compact('cedula_re', 'padre', 'madre'));
+        }
+
     }
 
     /**
@@ -106,20 +149,8 @@ class RepresentantesController extends Controller
         //
     }
 
-    public function search(CedulaRequest $request)
+    public function search()
     {
-
-    	$representante = Representante::where('cedula_re', $request->cedula_re)->first();
-
-    	if(!empty($representante)) 
-    	{
-    		return redirect()->action('EstudiantesController@create', compact('representante'));
-
-    	}else{
-
-    		$cedula_re = $request->cedula_re;
-
-    		return view('representantes.create', compact('cedula_re'));
-    	}
+        return view('representantes.forms.fields-search');
     }
 }

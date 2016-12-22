@@ -53,9 +53,9 @@
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-money'></i> <span>Estudiantes</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-child'></i> <span>Estudiantes</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('estudiantes.create') }}">Nuevo</a></li>
+                    <li><a href="{{ route('representantes.cedula') }}">Nuevo</a></li>
                     <li><a href="{{ route('estudiantes.index') }}">Listado</a></li>
                     <li><a href="{{ route('inscripciones.index') }}">Inscritos</a></li>
                 </ul>
@@ -63,7 +63,7 @@
             @endif
             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
-                <a href="#"><i class='fa fa-dollar'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-money'></i> <span>Facturaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('rubros/buscar/estudiante') }}">Nuevo</a></li>
                     <li><a href="{{ url('rubros') }}">Listado Total</a></li>

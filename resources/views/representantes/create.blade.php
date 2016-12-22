@@ -1,58 +1,44 @@
 @extends('layouts.app')
 
-@section('contentheader_title', 'Representantes')
-@section('contentheader_description', 'Registro')
+@section('contentheader_title', 'Representante')
+@section('contentheader_description', 'Nuevo')
 
 @section('main-content')
+
 <div class="col-md-12">
-	<section class="content">
-		@include('alerts.request') 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="nav-tabs-custom">
-					<ul class="nav nav-tabs">
-					  	<li class="active"><a href="#tab_2" data-toggle="tab" aria-expanded="true">Representante</a></li>
-					</ul>
-					<div class="tab-content">
-						@if(!isset($cedula_re))
+    <div class="col-md-12">
+        <div class="row" style="padding-top: 20px;">
+            @include('alerts.request')
+            @include('alerts.errors')
+        </div>
+    </div>
 
-							{!! Form::open(['route' => 'representantes.cedula', 'method' => 'GET', 'class' => 'form']) !!}
+    <section class="content"> 
+        <div class="row">
+            <div class="col-md-12"> 
 
-								<div class="tab-pane active" id="tab_1">
-									<div class="box-body">
-										<div class="col-md-4">
-											<div class="form-group{{ $errors->has('cedula_re') ? ' has-error' : '' }}">
-												{!! Form::label('cedula_re', 'Cédula') !!} <small class="text-red">*</small>
+                {!! Form::open(['route' => 'representantes.store', 'method' => 'POST', 'class' => 'form']) !!}
 
-												<div class="input-group">
-													{!! Form::text('cedula_re', null, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559969', 'title' => 'Introduzca la cédula del representante']) !!}
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Representante </h3>
+                        </div>
+                        <div class="box-body">
+                            
+                            @include('representantes.forms.fields')  
 
-													<span class="input-group-btn">
-														<button type="submit" class="btn btn-default" id="buscar" title="Buscar">
-															<span class="fa fa-search"></span>
-														</button>
-													</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                                <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                            </div>
+                        </div>   
+                    </div>
 
-							{!! Form::close() !!}
+                {!! Form::close() !!}
 
-							@else
-
-								{!! Form::open(['route' => 'representantes.store', 'method' => 'POST', 'class' => 'form']) !!}
-					 			
-					 				@include('representantes.forms.fields')
-								
-								{!! Form::close() !!}
-
-					 		@endif
-						</div>
-				  	</div>
-			  	</div>
-		</div>
-	</section>	
+            </div>
+        </div>
+    </section>
 </div>
+
 @endsection

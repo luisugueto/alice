@@ -8,7 +8,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('parentesco', 'Parentesco') !!}
-				{!! Form::text('parentesco', null, ['class' => 'form-control', 'title' => 'Introduzca el parentesco del representante', 'placeholder' => '', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::select('parentesco', array('Padres' => 'Padres', 'Hijos' => 'Hijos', 'Hermanos' => 'Hermanos', 'Abuelos' => 'Abuelos') ,null, ['class' => 'form-control', 'title' => 'Introduzca el parentesco del representante', 'placeholder' => 'Seleccione']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('direccion_re') ? ' has-error' : '' }}">
 				{!! Form::label('direccion_re', 'Dirección') !!} <small class="text-red">*</small>
@@ -35,16 +35,11 @@
 				{!! Form::text('vive_con', null, ['class' => 'form-control', 'title' => 'Introduzca con quien vive el representante', 'placeholder' => '', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 		</div>
+		{!! Form::hidden('padre', $padre) !!}
+		{!! Form::hidden('madre', $madre) !!}
 		<div class="col-md-12 text-center">
 			<hr>
 			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
-			<br><br>
-		</div>
-		<div class="col-md-12">
-			<div class="box-footer">
-		        <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-		        <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
-		    </div>
 		</div>
 	</div>
 </div>
