@@ -45,6 +45,9 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('docentes/secciones/{id}/buscar',['uses' => 'DocentesController@buscar', 'as' => 'docentes.secciones.buscar']);
 	Route::get('docentes/asignaturas/{id}/buscar2',['uses' => 'DocentesController@buscar2', 'as' => 'docentes.asignaturas.buscar2']);
 	Route::get('inscripciones/secciones/{id}/buscar',['uses' => 'DocentesController@buscar', 'as' => 'docentes.secciones.buscar']);
+	Route::get('asistencias/salida', 'AsistenciasController@salida');
+	Route::get('asistencias/salidas', ['uses' => 'AsistenciasController@salidas', 'as' => 'asistencias.salidas']);
+
 	
 
 
@@ -71,6 +74,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('docentes','DocentesController');
 	Route::resource('tipo_empleado','TipoEmpleadoController');
 	Route::resource('inscripciones','InscripcionesController');
+	Route::resource('asistencias', 'AsistenciasController');
 
 	
 });

@@ -81,7 +81,6 @@ class HorariosController extends Controller
             {
                 $bloques_asignados[$i] = $asignado->id_bloque;
                 $asignaturas_asignadas[$i] = $asignado->id_asig;
-
                 $i++;
                 
             }
@@ -119,8 +118,8 @@ class HorariosController extends Controller
         
         return view('horarios.create', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
 
-        dd($periodo);
-        return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
+        // dd($periodo);
+        // return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
 
     }
 

@@ -13,20 +13,16 @@
 	}
 
 
-	function asignaturas_a($bloque, $asignatura, $seccion)
+	function asignaturas_a($id_bloque, $id_asignatura, $id_seccion)
 	{
+        DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
 
-		foreach ($asignatura as $asignatura) 
-		{
-			$sql = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_asig', $asignatura], ['id_seccion', $seccion]])->get();
-
-			if($sql > 0)
-			{
-				$sql = \DB::table('asignaturas')->where('id', $asignatura)->get();
-			
-				return $sql;
-			}
-		}
+			$sql = DB::select('SELECT * FROM asignacion_bloques as b INNER JOIN asignaturas as a ON a.id=b.id_asig WHERE b.id_bloque = '.$id_bloque.' AND b.id_asig = '.$id_asignatura.' AND b.id_seccion = '.$id_seccion.' ');
+			$contar = count($sql);
+		
+			foreach ($sql as $key) {
+				return	$codigo = $key['codigo'];
+			}		
 	}
 
 	function asignadas($bloque, $aulas)

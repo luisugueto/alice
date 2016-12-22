@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonalSeeder::class);
         $this->call(DiasTableSeeder::class);
         $this->call(BloquesTableSeeder::class);
-        $this->call(EstudiantesSeeder::class);
+  #      $this->call(EstudiantesSeeder::class);
         Model::reguard();
     }
 }

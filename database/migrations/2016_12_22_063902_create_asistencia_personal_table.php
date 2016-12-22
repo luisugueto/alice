@@ -16,8 +16,10 @@ class CreateAsistenciaPersonalTable extends Migration
             $table->increments('id');
             $table->integer('id_personal')->unsigned();
             $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('cascade');
-            $table->datetime('entrada');
-            $table->datetime('salida');
+            $table->integer('id_fecha')->unsigned();
+            $table->foreign('id_fecha')->references('id')->on('fechas_asistencias')->onDelete('cascade');
+            $table->time('entrada');
+            $table->time('salida');
 
             $table->timestamps();
         });

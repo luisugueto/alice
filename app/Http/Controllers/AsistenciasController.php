@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Auth;
+use App\Personal;
+use App\FechasAsistencias;
+use App\Asistencia;
+use DB;
+use Session;
 
 class AsistenciasController extends Controller
 {
@@ -27,7 +32,16 @@ class AsistenciasController extends Controller
      */
     public function index()
     {
-        //
+        $asistencia = Asistencia::all();
+        $i = 0;
+        foreach ($asistencia as $key => $asistencia) 
+        {
+           $asistencias[$i] = $asistencia->personal;
+           $fecha[$i] = $asistencia; 
+
+           $i++;
+        }
+        return view('asistencias.index', compact('asistencias', 'fecha'));
     }
 
     /**
@@ -37,8 +51,42 @@ class AsistenciasController extends Controller
      */
     public function create()
     {
-        //
+        $personal = Personal::all();
+        return view('asistencias.create', compact('personal'));
     }
+
+    public function salida()
+    {
+        $personal = Personal::all();
+        return view('asistencias.salida', compact('personal'));
+    }
+
+    public function salidas(Request $request)
+    {
+        $asistencia = DB::select('SELECT * FROM asistencia_personal as a INNER JOIN fechas_asistencias as f ON a.id_fecha = f.id WHERE a.id_personal = '.$request->id_personal.' AND f.fecha = "'.date('Y-m-d').'"');
+        $verificarEntrada = count($asistencia);
+
+        foreach ($asistencia as $key) {
+            $id = $key->id;
+        }
+
+        $count = count($asistencia);
+
+        if($count == 0)
+        {
+            Session::flash('message-error', 'DISCULPE: USTED NO REGISTRO SU HORA DE ENTRADA, POR FAVOR REGISTRE');
+            return redirect()->action('AsistenciasController@index');
+        }
+        else{
+            $asistencias = Asistencia::find($id);
+            $asistencias->salida = date('H:i:s');
+            $asistencias->save();
+
+            Session::flash('message', 'SALIDA REGISTRADA CORRECTAMENTE');
+            return redirect()->action('AsistenciasController@index');
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -48,7 +96,32 @@ class AsistenciasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fecha = FechasAsistencias::where('fecha', date('Y-m-d'))->count();
+        
+        if($fecha == 0)
+        {
+            $fechaa = new FechasAsistencias();
+            $fechaa->fecha = date('Y-m-d');
+            $fechaa->save();
+        }
+        else{
+            $FechasAsistencias = FechasAsistencias::all()->last();
+            $verificarEntrada = Asistencia::where('id_personal', $FechasAsistencias->id)->where('id_fecha', $FechasAsistencias->id)->count();
+            if($verificarEntrada>0)
+            {
+                Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
+                return redirect()->action('AsistenciasController@index');
+            }
+            else{
+                $asistencias = new Asistencia();
+                $asistencias->id_personal = $request->id_personal;
+                $asistencias->id_fecha = $FechasAsistencias->id;
+                $asistencias->entrada = date("H:i:s");
+                $asistencias->save();
+               Session::flash('message', 'ASISTENCIA REGISTRADA CORRECTAMENTE');
+            }
+        }
+        return redirect()->action('AsistenciasController@index');   
     }
 
     /**

@@ -48,6 +48,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('docentes.index') }}">Listado de Docentes</a></li>
                     <li><a href="{{ route('personal.index') }}">Listado del Personal</a></li>
+                    <li><a href="{{ route('asistencias.index') }}">Asistencia del Personal</a></li>
                 </ul>
             </li>
             @endif
