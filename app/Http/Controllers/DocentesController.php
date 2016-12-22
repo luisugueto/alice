@@ -155,7 +155,7 @@ class DocentesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
          dd($id);
     }
@@ -169,7 +169,11 @@ class DocentesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $docentes = Personal::find($id);
+
+        if($docentes->cargo->nombre=="DOCENTE DE PLANTA"){
+            
+        }
     }
 
     /**

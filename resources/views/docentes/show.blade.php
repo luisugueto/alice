@@ -114,7 +114,9 @@
                       <?php $docentes2=$docentes; ?>
                       
                 @foreach($docentes2->asignaturas as $docentes)
-               <?php $id_seccion=$docentes->pivot->id_seccion; ?>
+               <?php $id_seccion=$docentes->pivot->id_seccion;
+                     $id_prof=$docentes->pivot->id_prof;
+                ?>
 
                 <tr>
                   
@@ -124,6 +126,7 @@
                     
                   @foreach($docentes->cursos->seccion as $secciones) 
                      @if($secciones->id==$id_seccion)
+
                       {{$secciones->literal}}
                       @endif
                      
@@ -136,7 +139,7 @@
                    {{--   {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->pivot->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
  --}} 
                    
-                 <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id }})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
+                 <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
                   {{--
                      {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-calculator fa-2x'])!!} --}}
 
@@ -183,16 +186,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Eliminar Docente</h4>
+        <h4 class="modal-title">Eliminar Carga Académica del Docente</h4>
       </div>
       <div class="modal-body">
-        {!! Form::open() !!}
-              <input type="text" id="codigo">
-        {!! Form::close() !!}
+       
+        
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambiod</button>
+                {!!Form::model($docentes, ['route'=>['docentes.update',$id_prof ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
+                 <input type="text" id="codigo" name="codigo">
+              <input type="text" id="id_prof" name="id_prof">
+              <input type="text" id="id_seccion" name="id_seccion">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+                {!! Form::close() !!}
               </div>
             </div>
     </div>
@@ -205,8 +212,10 @@
 
 <script type="text/javascript">
   
-  function codigo(codigo){
+  function codigo(codigo,id_prof,id_seccion){
     $('#codigo').val(codigo);
+    $('#id_prof').val(id_prof);
+    $('#id_seccion').val(id_seccion);
   }
 
   

@@ -47,9 +47,11 @@
                                     <tr>
                                         <td>{{ $tipo_empleado->tipo_empleado}}</td> 
                                         <td> 
+                                        
                                          <a href="{{ route('tipo_empleado.edit', [$tipo_empleado->id]) }}"><button class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" title="Presionando este botón puede editar el registro" ><i class="fa fa-edit"></i></button></a>
 
                                         {!!link_to_route('tipo_empleado.destroy', $title = '', $parameters = $tipo_empleado->id.'/destroy', $attributes = ['class'=>'btn btn-danger fa fa-close fa-2x'])!!}
+                                        
                                         </td>
 
                                     </tr>
