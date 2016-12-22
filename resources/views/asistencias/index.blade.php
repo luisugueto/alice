@@ -34,6 +34,7 @@
                             <thead>
                                 <tr>
                                     <th>Personal</th>
+                                    <th>Cargo</th>
                                     <th>Entrada</th>
                                     <th>Salida</th>
                                     <!-- <th>Opciones</th> -->
@@ -43,7 +44,8 @@
                             @if(count($asistencias)>0)
                                 @foreach($asistencias as $key => $asistencia)
                                     <tr>
-                                        <td>{{ $asistencia->nombres }}</td>
+                                        <td>{{ $asistencia->nombres }} {{ $asistencia->apellido_paterno }}</td>
+                                        <td>{{ $asistencia->cargo->nombre }}</td>
                                         <td>{{ $fecha[$key]->entrada }}</td>
                                         <td>{{ $fecha[$key]->salida }}</td>
                                         <!-- <td class="text-center">{!!link_to_route('asistencias.edit', $title = '', $parameters = $asistencia->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td> -->

@@ -8,7 +8,7 @@
               {!! Form::label('Personal', 'Personal') !!}
               <select name="id_personal" required class="form-control select">
                     @foreach($personal as $per)
-                        <option value="{{ $per->id }}">{{ $per->nombres }} {{ $per->apellido_paterno }}</option>
+                        <option value="{{ $per->id }}">{{ $per->nombres }} {{ $per->apellido_paterno }} - {{ $per->cargo->nombre }}</option>
                     @endforeach
               </select>
             </div>

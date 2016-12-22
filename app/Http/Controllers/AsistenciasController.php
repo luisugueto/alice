@@ -99,20 +99,35 @@ class AsistenciasController extends Controller
     public function store(Request $request)
     {
         $fecha = FechasAsistencias::where('fecha', date('Y-m-d'))->count();
-        
         if($fecha == 0)
         {
             $fechaa = new FechasAsistencias();
             $fechaa->fecha = date('Y-m-d');
             $fechaa->save();
+
+            $FechasAsistencias = FechasAsistencias::all()->last();
+            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();            
+
+            if($verificarEntrada>0)
+            {                
+                Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
+                return redirect()->action('AsistenciasController@index');
+            }
+            else{
+                $asistencias = new Asistencia();
+                $asistencias->id_personal = $request->id_personal;
+                $asistencias->id_fecha = $FechasAsistencias->id;
+                $asistencias->entrada = date("H:i:s");
+                $asistencias->save();
+                Session::flash('message', 'ASISTENCIA REGISTRADA CORRECTAMENTE');
+            }
         }
         else{
             $FechasAsistencias = FechasAsistencias::all()->last();
-            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();
-            
+            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();            
 
             if($verificarEntrada>0)
-            {
+            {                
                 Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
                 return redirect()->action('AsistenciasController@index');
             }
