@@ -14,7 +14,7 @@
     </div> 
     <div class="col-md-1">
         <div class="row" style="padding-top: 5px">
-        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarPagos') }}"> <span class="text-muted">Excel</span></a>
+        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarPagos') }}"> <span class="text-light-blue">Excel</span></a>
         </button>
         </div>
     </div>

@@ -236,8 +236,8 @@ class PagosController extends Controller
         }
 
         Session::flash('message', 'PAGO REALIZADO CORRECTAMENTE');
-        $prestamos = Prestamo::all();
-        return view('prestamos.index', ['prestamo'=>$prestamos]);
+        
+        return redirect('prestamos');
     }
 
     /**
