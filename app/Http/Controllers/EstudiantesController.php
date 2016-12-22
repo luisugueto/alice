@@ -105,9 +105,39 @@ class EstudiantesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EstudianteRequest $request)
+    public function store(Request $request)
     {
-        //dd($request->all());
+        $this->validate($request, 
+        [
+            'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'nacionalidad'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'genero'           => 'required',
+            'direccion'        => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'codigo_matricula' => 'required',
+            'apellido_materno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'provincia'        => 'required',
+            'estado_actual'    => 'required',
+            'telefono'         => 'required|digits_between:10,11',
+            'fecha_registro'   => 'required',
+            'nombres'          => 'required',
+            'ciudad_natal'     => 'required',
+            'tipo_registro'    => 'required',
+            'correo'           => 'required|unique:datos_generales_estudiante',
+            'fecha_nacimiento' => 'required',
+            //
+            'grupo_sanguineo'           => 'required',
+            'capacidad_especial'        => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'medicinas_contraindicadas' => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'alergico_a'                => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'patologia'                 => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            //
+            'detalles'                  => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            //
+            'codigo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'titulo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'digitalizado'              => 'dimensions:min_width=809,min_height=1138',
+
+        ]);
 
         if ($request->padre == 'on' AND $request->padre2 == 'on') 
         {
@@ -290,8 +320,14 @@ class EstudiantesController extends Controller
                 
             }
 
-        }
+        }else{
 
+            $estudiante = Estudiante::create($request->all());
+            
+            Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+            return redirect('estudiantes');
+        }
     }
     
         //$estudiante->documentos()->create($request->all());

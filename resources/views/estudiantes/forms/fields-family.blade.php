@@ -8,11 +8,24 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
-			{!! Form::label('cedula_pa', 'Cédula') !!} <small class="text-red">*</small>
-			{!! Form::text('cedula_pa', null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
+	<div class="col-md-4">                        
+        {!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
+
+        <div class="form-group form-inline{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
+             <div class="input-group">
+                <div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
+                    <select class="form-control" name="nacionalidad_padre" id="padre" disabled="disabled" title="Seleccioné la nacionalidad" id="nationality">
+                       	<option value="N-">N</option>
+                        <option value="E">E</option>
+                    </select>           
+
+        			{!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del padre.', 'id' => 'padre', 'placeholder' => '25607932', 'size' => '36', 'disabled' => 'disabled']) !!}
+                  
+         		</div>
+            </div>
+        </div>  
+
+      
 		<div class="form-group{{ $errors->has('nacionalidad_pa') ? ' has-error' : '' }}">
 			{!! Form::label('nacionalidad_pa', 'Nacionalidad') !!} <small class="text-red">*</small>
 			{!! Form::text('nacionalidad_pa', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
@@ -103,10 +116,21 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('cedula_ma') ? ' has-error' : '' }}">
-			{!! Form::label('cedula_ma', 'Cédula') !!} <small class="text-red">*</small>
-			{!! Form::text('cedula_ma', null, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
+		{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
+
+        <div class="form-group form-inline{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
+             <div class="input-group">
+                <div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
+                    <select class="form-control" name="nacionalidad_madre" id="padre2" disabled="disabled"title="Seleccioné la nacionalidad" id="nationality">
+                       	<option value="N-">N</option>
+                        <option value="E">E</option>
+                    </select>           
+
+        			{!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula de la madre.', 'placeholder' => '25607932', 'size' => '36', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                  
+         		</div>
+            </div>
+        </div> 
 		<div class="form-group{{ $errors->has('nacionalidad_ma') ? ' has-error' : '' }}">
 			{!! Form::label('nacionalidad_ma', 'Nacionalidad') !!} <small class="text-red">*</small>
 			{!! Form::text('nacionalidad_ma', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
