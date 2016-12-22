@@ -33,6 +33,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DiasTableSeeder::class);
         $this->call(BloquesTableSeeder::class);
         $this->call(EstudiantesSeeder::class);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 451c83d44dccdac7624d2506a2ed1703aa7dd975
         $this->call(RubrosSeeder::class);
         Model::reguard();
     }

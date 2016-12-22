@@ -62,7 +62,10 @@ class EstudiantesSeeder extends Seeder
             'nacionalidad_pa'=>'N',
             'nivel_educacion'=>'Profesional'
         ]);
+
+        for($i = 2; $i <= 14; $i++){
         	//------------------------------------------------------
+<<<<<<< HEAD
         	DB::table('datos_representantes')->insert([
             'nombres_re'=>'Petra Jimenez',
             'cedula_re'=>'E-1284347890',
@@ -114,6 +117,61 @@ class EstudiantesSeeder extends Seeder
             'nacionalidad_pa'=>'N',
             'nivel_educacion'=>'Profesional'
         ]);
+=======
+            	DB::table('datos_representantes')->insert([
+                'nombres_re'=>'Petra Jimenez',
+                'cedula_re'=>'1284347890'.$i,
+                'parentesco'=>'Madre',
+                'nacionalidad_re' => 'N',
+                'telefono_re'=>'12345456677'.$i,
+                'direccion_re'=>'Aqui',
+                'vive_con'=>'Padre y hermanos'
+                ]);
+                DB::table('datos_generales_estudiante')->insert([
+                    'id_representante'=>$i,
+                    'codigo_matricula' => 'abc124'.$i,
+                    'apellido_paterno'=>'Quimotes'.$i,
+                    'apellido_materno'=>'Jimenez'.$i,
+                    'nombres'=>'Maria Juliana'.$i,
+                    'cedula'=>'12345678990'.$i,
+                    'fecha_nacimiento'=>'2001-01-01',
+                    'fecha_registro'=>'2016-01-09',
+                    'genero'=>'F',
+                    'estado_actual'=>'Activo',
+                    'tipo_registro'=>'pre-inscripcion',
+                    'direccion'=>'allá',
+                    'nacionalidad'=>'N',
+                    'provincia'=>'Azogues',
+                    'ciudad_natal'=>'Azogues',
+                    'telefono'=>'68263826832683'.$i,
+                    'correo'=>'mariajuliana@gmail.com'.$i
+                ]);
+
+                DB::table('datos_medicos')->insert([
+                    'id_estudiante'=> $i,
+                    'grupo_sanguineo' => 'ORH+',
+                    'peso'=>'30kg',
+                    'altura'=>'1.20cm',
+                    'capacidad_especial'=>'Ninguna',
+                    'porcentaje_discapacidad' => '0',
+                    'medicinas_contraindicadas'=>'Ninguna',
+                    'alergico_a'=>'Nada',
+                    'patologia'=>'Ninguna'
+                ]);
+                DB::table('datos_padres')->insert([
+                    'id_estudiante'=> $i,
+                    'nombres_pa'=>'Petra Jimenez',
+                    'cedula_pa'=>'1284347890'.$i,
+                    'foto_pa'=>'',
+                    'lugar_trabajo'=>'en CADA, esquina',
+                    'direccion_pa'=>'por allí',
+                    'telefono_pa'=>'12345456677',
+                    'correo_pa'=>'petraap@gmail.com'.$i,
+                    'nacionalidad_pa'=>'N',
+                    'nivel_educacion'=>'Profesional'
+                ]);
+        }
+>>>>>>> 451c83d44dccdac7624d2506a2ed1703aa7dd975
 
         //----------------------------------
 
