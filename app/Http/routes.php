@@ -70,6 +70,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('docentes','DocentesController');
 	Route::resource('facturacion', 'FacturacionController');
 	Route::resource('tipo_empleado','TipoEmpleadoController');
+	Route::resource('inscripciones','InscripcionesController');
 
 	
 });
