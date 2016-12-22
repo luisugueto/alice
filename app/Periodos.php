@@ -51,4 +51,9 @@ class Periodos extends Model
     {
         return $this->belongsToMany('App\Bloque', 'asignacion_bloques', 'id_periodo', 'id_bloque')->withPivot('id_seccion', 'id_aula', 'id_asig');
     }
+
+    public function rubros()
+    {
+        return $this->hasMany('App\Rubros', 'id_periodo', 'id');
+    }
 }

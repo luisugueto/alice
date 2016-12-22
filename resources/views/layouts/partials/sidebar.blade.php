@@ -134,13 +134,12 @@
                     <li><a href="{{ route('asignaturas.index') }}">Asignaturas</a></li>
                     @endif
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
-                    <li><a href="{{ route('facturacion.index') }}">Rubros</a></li>
+                    <li><a href="{{ route('rubros.index') }}">Rubros</a></li>
                     @endif
                      @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('usuarios.index') }}"> Usuarios</a></li>
                     <li><a href="{{ route('tipo_empleado.index') }}">Tipo de Empleado</a></li>
                     @endif
-
                 </ul>
             </li>
             @endif

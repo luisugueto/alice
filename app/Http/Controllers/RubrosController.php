@@ -5,20 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Estudiante;
-use App\Profesor;
-use App\Facturacion;
-use App\Modalidad;
-use App\FormasPago;
-use App\RubrosRealizados;
-use Session;
 use Auth;
+use App\Rubros;
+use App\Cursos;
+use App\Http\Requests\RubrosRequest;
+use Session;
 
 class RubrosController extends Controller
 {
-    public function __construct(){
-        
-        /*if(Auth::user()->roles_id == 4){
+    /*public function __construct(){
+        if(Auth::user()->roles_id == 4){
             $this->middleware('recursohumano');
         }
         elseif(Auth::user()->roles_id == 2){
@@ -26,8 +22,8 @@ class RubrosController extends Controller
         }
         else{
             $this->middleware('administrador');
-        }*/
-    }
+        }
+    }*/
     /**
      * Display a listing of the resource.
      *
@@ -35,8 +31,7 @@ class RubrosController extends Controller
      */
     public function index()
     {
-        $rubros = Facturacion::all();
-
+        $rubros = Rubros::all();
         return view('rubros.index', compact('rubros'));
     }
 
@@ -45,23 +40,11 @@ class RubrosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $existe = Estudiante::where('cedula', $request->cedula)->exists();
+        $cursos = Cursos::lists('curso', 'id');
 
-        if($existe)
-        {
-            $estudiante = Estudiante::where('cedula', $request->cedula)->first();
-            $representante = $estudiante->representante;
-           
-            return view('rubros.create', compact('estudiante', 'representante'));
-
-        }else{
-
-            Session::flash('message-error', 'ESTUDIANTE CON CÉDULA '.$request->cedula.' NO SE ENCUENTRA REGISTRADO');
-           
-            return redirect()->back();
-        }
+        return view('rubros.create', compact('cursos'));
     }
 
     /**
@@ -70,9 +53,24 @@ class RubrosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RubrosRequest $request)
     {
-        //
+        $existe = Rubros::where([['nombre', $request->nombre], ['id_periodo', $request->id_periodo]])->exists();
+
+        if($existe){
+
+            Session::flash('message-error', 'RUBRO "'.$request->nombre.'" YA EXISTE EN LA BASE DE DATOS');
+
+            return redirect()->back();
+
+        }else{
+
+            $rubros = Rubros::create($request->all())->save();
+
+            Session::flash('message', 'RUBRO REGISTRADO CORRECTAMENTE');
+            
+            return redirect('rubros');    
+        }
     }
 
     /**
@@ -83,11 +81,7 @@ class RubrosController extends Controller
      */
     public function show($id)
     {
-        $estudiante = Estudiante::find($id);
-        $rubros = $estudiante->facturaciones;
-        $representante = $estudiante->representante;
-        
-        return view('rubros.show', compact('estudiante', 'rubros', 'representante'));
+        //
     }
 
     /**
@@ -98,11 +92,10 @@ class RubrosController extends Controller
      */
     public function edit($id)
     {
-        $rubros = Facturacion::find($id);
-        $modalidad = Modalidad::lists('modalidad', 'id');
-        $formas_pago = FormasPago::get();
+        $rubros = Rubros::find($id);
+        $cursos = Cursos::lists('curso', 'id');
 
-        return view('rubros.edit', compact('rubros', 'modalidad', 'formas_pago'));
+        return view('rubros.edit', compact('rubros', 'cursos'));
     }
 
     /**
@@ -114,144 +107,13 @@ class RubrosController extends Controller
      */
     public function update(Request $request, $id)
     {
+         $rubros = Rubros::find($id);
 
-     	$rubros = Facturacion::find($id);
-        $forma_pago = Modalidad::find($request->id_modalidad);
-        $existe = $rubros->rubros_realizados()->exists();
+         $rubros->fill($request->all())->save();
 
-        if($request->nro_transferencia == "")
-        {
+         Session::flash('message', 'RUBRO '.$request->name.' EDITADO CORRECTAMENTE');
 
-            $nro_transferencia="0";
-
-        }else{
-
-            $nro_transferencia = $request->nro_transferencia;
-        }
-
-        if($request->nro_cheque=="")
-        {
-
-            $nro_cheque="0";
-
-        }else{
-
-            $nro_cheque = $request->nro_cheque;
-        }
-
-
-        if($existe)
-        {
-            $rubros_realizados = $rubros->rubros_realizados->last();
-            
-            if($request->monto_pagar > $rubros_realizados->monto_adeudado)
-            {
-                Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
-
-                return redirect()->back();
-
-            }else{
-
-                if($forma_pago->modalidad == 'Exacto')
-                {
-
-                    $monto_deuda = $rubros_realizados->monto_adeudado-$rubros_realizados->monto_adeudado;
-
-                    $rubros_realizado = new RubrosRealizados;
-                    $rubros_realizado->monto_pagado = $rubros_realizados->monto_adeudado;
-                    $rubros_realizado->monto_adeudado = $monto_deuda;
-                    $rubros_realizado->fecha = new \DateTime();
-                    $rubros_realizado->id_factura = $rubros->id;
-                    $rubros_realizado->id_modalidad = $request->id_modalidad;
-                    $rubros_realizado->id_estudiante = $rubros->estudiante->id;
-                    $rubros_realizado->no_transferencia = $nro_transferencia;
-                    $rubros_realizado->no_cheque = $nro_cheque;
-                    $rubros_realizado->save();
-
-                    for($i=0; $i < count($request->id_forma); $i++)
-                    {
-                        $rubros_realizado->formas()->attach($request->id_forma[$i]);
-                    }   
-
-                }else{
-
-                    $monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
-
-                    $rubros_realizado = new RubrosRealizados;
-                    $rubros_realizado->monto_pagado = $request->monto_pagar;
-                    $rubros_realizado->monto_adeudado = $monto_deuda;
-                    $rubros_realizado->fecha = new \DateTime();
-                    $rubros_realizado->id_factura = $rubros->id;
-                    $rubros_realizado->id_modalidad = $request->id_modalidad;
-                    $rubros_realizado->id_estudiante = $rubros->estudiante->id;
-                    $rubros_realizado->no_transferencia = $nro_transferencia;
-                    $rubros_realizado->no_cheque = $nro_cheque;
-                    $rubros_realizado->save();
-
-                    for($i=0; $i < count($request->id_forma); $i++)
-                    {
-                        $rubros_realizado->formas()->attach($request->id_forma[$i]);
-                    }   
-                }
-
-                return redirect('rubros');
-            }
-
-        }else{
-
-            if($request->monto_pagar > $rubros->monto)
-            {
-                Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
-
-                return redirect()->back();
-
-            }else{
-                
-                if($forma_pago->modalidad == 'Exacto')
-                {
-                    
-                    $monto_deuda = $rubros->monto-$rubros->monto;
-
-                    $rubros_realizados = new RubrosRealizados;
-                    $rubros_realizados->monto_pagado = $rubros->monto;
-                    $rubros_realizados->monto_adeudado = $monto_deuda;
-                    $rubros_realizados->fecha = new \DateTime();
-                    $rubros_realizados->id_factura = $rubros->id;
-                    $rubros_realizados->id_modalidad = $request->id_modalidad;
-                    $rubros_realizados->id_estudiante = $rubros->estudiante->id;
-                    $rubros_realizados->no_transferencia = $nro_transferencia;
-                    $rubros_realizados->no_cheque = $nro_cheque;
-                    $rubros_realizados->save();
-
-                    for($i=0; $i < count($request->id_forma); $i++)
-                    {
-                        $rubros_realizados->formas()->attach($request->id_forma[$i]);
-                    }
-
-                }else{
-
-                    $monto_deuda = $rubros->monto-$request->monto_pagar;
-
-                    $rubros_realizados = new RubrosRealizados;
-                    $rubros_realizados->monto_pagado = $request->monto_pagar;
-                    $rubros_realizados->monto_adeudado = $monto_deuda;
-                    $rubros_realizados->fecha = new \DateTime();
-                    $rubros_realizados->id_factura = $rubros->id;
-                    $rubros_realizados->id_modalidad = $request->id_modalidad;
-                    $rubros_realizados->id_estudiante = $rubros->estudiante->id;
-                    $rubros_realizados->no_transferencia = $nro_transferencia;
-                    $rubros_realizados->no_cheque = $nro_cheque;
-                    $rubros_realizados->save();
-
-                    for($i=0; $i < count($request->id_forma); $i++)
-                    {
-                        $rubros_realizados->formas()->attach($request->id_forma[$i]);
-                    }
-                }
-
-                return redirect('rubros');
-            }
-        }        
+         return redirect('rubros');
     }
 
     /**
@@ -263,10 +125,5 @@ class RubrosController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function search()
-    {
-        return view('rubros.forms.fields-search');
     }
 }

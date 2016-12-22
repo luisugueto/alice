@@ -34,4 +34,9 @@ class Cursos extends Model
     {
         return $this->hasMany('App\Seccion', 'id_curso', 'id');
     }
+
+    public function rubros()
+    {
+        return $this->hasMany('App\Rubros', 'id_curos', 'id');
+    }
 }

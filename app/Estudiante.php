@@ -60,8 +60,8 @@ class Estudiante extends Model
         return $this->hasMany('App\Quimestrales','id_estudiante','id');
     }
 
-    public function rubros()
-    {
-        return $this->belongsToMany('App\Facturacion', 'rubros', 'id_estudiante', 'id_factura');
-    }
+    // public function rubros()
+    // {
+    //     return $this->belongsToMany('App\Facturacion', 'rubros', 'id_estudiante', 'id_factura');
+    // }
 }

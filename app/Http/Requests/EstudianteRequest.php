@@ -36,7 +36,7 @@ class EstudianteRequest extends Request
             'telefono'         => 'required|digits_between:10,11',
             'fecha_registro'   => 'required',
             'nombres'          => 'required',
-            'ciudad_natal'           => 'required',
+            'ciudad_natal'     => 'required',
             'tipo_registro'    => 'required',
             'correo'           => 'required|unique:datos_generales_estudiante',
             'fecha_nacimiento' => 'required',
