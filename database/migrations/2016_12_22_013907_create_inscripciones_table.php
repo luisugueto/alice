@@ -18,6 +18,8 @@ class CreateInscripcionesTable extends Migration
             $table->integer('id_curso')->unsigned();
             $table->integer('id_seccion')->unsigned();
             $table->integer('id_periodo')->unsigned();
+            $table->string('repite');
+            $table->string('becado');
 
             $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('cascade');
             $table->foreign('id_curso')->references('id')->on('cursos')->onDelete('cascade');

@@ -10,6 +10,7 @@ use App\Quimestrales;
 use App\Cursos;
 use AppSeccion;
 use Session;
+use DB;
 class InscripcionesController extends Controller
 {
     /**
@@ -67,19 +68,24 @@ class InscripcionesController extends Controller
         $buscar=Quimestrales::where('id_estudiante',$id)->first();
         $estudiantes=Estudiante::find($id);
         $encontrado=count($buscar);
+        $fecha_actual=date('Y-m-d');
+        $sql="select fecha_nacimiento, YEAR('".$fecha_actual."') - YEAR(fecha_nacimiento) as edad FROM datos_generales_personal WHERE id = ".$id."";
+        //dd($sql);
+        $edad=DB::select($sql);
 
             if ($encontrado==0) {
                 # es nuevo
                 $estado="Nuevo Ingreso";
                 $cursos=Cursos::lists('curso','id');
             
-                return View('inscripciones.create',compact('estudiantes','cursos','estado'));
+                return View('inscripciones.create',compact('estudiantes','cursos','estado','edad'));
             
             } else {
+                $id_periodo_anterior = Session::get('periodo') - 1;
                 # es regular
-                # 
+                $quimestres=DB::select('SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante='.$id.' AND quimestrales.id_quimestre=quimestres.id AND quimestres.id_periodo='.$id_periodo.'')->get();
                 $estado="Regular";
-                    $id_periodo= Session::get('periodo');
+                    
                 $buscar2=DB::select('SELECT * FROM inscripciones WHERE id='.$request->id_estudiante.' AND id_periodo='.$id_periodo.'');
             }
 

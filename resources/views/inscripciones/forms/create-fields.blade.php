@@ -2,6 +2,9 @@
 	<div class="box-body">
 	{{ Form::hidden('id_estudiante',$estudiantes->id) }}
 	@if($estado=="Nuevo Ingreso")
+	<div class="form-group">
+		{!! Form::label('repite','Estudiante Nuevo Ingreso') !!}
+	</div>
 
 
 	<div class="form-group">
@@ -17,7 +20,9 @@
 	</div>
 
 	@else
-
+	<div class="form-group">
+		{!! Form::label('repite','Estudiante Repitiente') !!}
+	</div>
 
 
 

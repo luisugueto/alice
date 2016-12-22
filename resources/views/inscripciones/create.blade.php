@@ -28,8 +28,14 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Inscripción del Estudiante:{{$estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres}}
-                        {{-- , Edad:{{$estudiantes->edad}} --}}</h3>
+                        <h3 class="box-title">Inscripción del Estudiante:<br>
+                        {{$estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres}}<br>
+                        <strong>Matrícula Nro: </strong>{{$estudiantes->codigo_matricula}}<br>
+
+                        @foreach($edad as $edad)
+                        <strong>Edad: </strong>{{$edad->edad}} años
+                        @endforeach
+                        </h3>
                     </div>
                     <div class="box-body">
                      {!! Form::open(['route' => 'inscripciones.store', 'method' => 'POST', 'class' => 'form']) !!}
