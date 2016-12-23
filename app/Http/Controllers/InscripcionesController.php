@@ -12,6 +12,7 @@ use App\Seccion;
 use Session;
 use DB;
 use App\Rubros;
+use App\Periodos;
 class InscripcionesController extends Controller
 {
     /**
@@ -71,10 +72,11 @@ class InscripcionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $estudiantes=Estudiante::all();
+    {   $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+        $estudiantes=DB::select("SELECT * FROM datos_generales_estudiante,inscripciones,cursos,secciones WHERE datos_generales_estudiante.id=inscripciones.id_estudiante AND inscripciones.id_periodo=".$id_periodo." AND cursos.id=inscripciones.id_curso AND secciones.id=inscripciones.id_seccion");
 
-        return View('inscripciones.show',compact('estudiantes'));
+        return View('inscripciones.show',compact('estudiantes','periodo'));
     }
 
     /**

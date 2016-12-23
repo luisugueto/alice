@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Lista de Estudiantes</h3>
+                            <h3 class="box-title">Lista de Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{$periodo->status}} )</h3>
                         </div>
 
                         <div class="box-body">
@@ -42,41 +42,30 @@
                                         <th>Apellido(s)</th>
                                         <th>Nombre(s)</th>
                                         <th>Género</th>
+                                        <th>Curso</th>
+                                        <th>Sección</th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($estudiantes as $estudiante)
 
-											<?php 	$encontrar=0;
-                                                	$id_estudiante=$estudiante->id;
-
-                                             ?>
-                                            @foreach($estudiante->cursos as $key)
-                                                    @if($key->pivot->id_periodo == Session::get('periodo') and $key->id_estudiante== $id_estudiante)
-
-                                                        <?php $encontrar++; ?>
-                                                    @endif
-                                            @endforeach
-                                            <tr><td colspan="6">{{$encontrar}}</td></tr>
-								
-                                            @if(count($estudiante->cursos)==0 and $encontrar>0)
-					
-
-                                        <tr>
+										<tr>
                                             <td> {{ $estudiante->codigo_matricula }} </td>
                                             <td> {{ $estudiante->cedula }} </td>
-                                            <td> {{ $estudiante->apellidos }}</td>
+                                            <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->genero }}</td>
+                                            <td> {{ $estudiante->curso }} </td>
+                                            <td> {{ $estudiante->literal }} </td>
                                             <td>  
                                             
                                             
                                                     
-                                                {!! link_to_route('inscripciones.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para realizar inscripción del estudiante en este periodo']) !!}
+                                                {!! link_to_route('inscripciones.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
                                           </td>
                                         </tr>
-                                            @endif
+                                            
                                           
                                     @endforeach
                                 </tfoot>
