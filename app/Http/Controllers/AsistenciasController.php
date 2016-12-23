@@ -60,24 +60,9 @@ class AsistenciasController extends Controller
                $i++;
             }
         }
-        // DOMINGO = 0; SABADO = 6;
-        $dias = array("0","1","2","3","4","5","6");
+    
         $asistencias = (isset($asistencias)) ? $asistencias : [];
-       # echo "Buenos d&iacute;as, hoy es ".$dias[date("w")];
-        //echo date("Y-m-d H:i:s");
-        // $bloque=DB::select('SELECT * FROM `asignacion` as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = 1 AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
-
-        // foreach ($bloque as $key) {
-        //     $bloqueInicial = $key->bloque;
-        // }
-        // // $explode = explode(" - ", $bloqueInicial);
-
-
-
-       // echo $this->diferencia_Horas(date('H:i:s'), $explode[0]);
-
-   //     echo $this->horaMinutos(date('H:i:s'), $this->diferencia_Horas($explode[0]));
-
+        
         return view('asistencias.index', compact('asistencias', 'fecha'));
     }
 
@@ -147,6 +132,35 @@ class AsistenciasController extends Controller
                 return redirect()->action('AsistenciasController@index');
             }
             else{
+
+                $docentes = Personal::find($request->id_personal);
+
+                if($docentes->cargo->nombre == 'DOCENTE DE PLANTA' || $docentes->cargo->nombre == 'DOCENTE ROTATIVO')
+                {
+                    //  DOMINGO = 0; SABADO = 6;
+
+                    $dias = array("0","1","2","3","4","5","6");
+                    $bloque=DB::select('SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = '.$request->id_personal.' AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
+                    
+                    $contadorBloque = count($bloque);
+
+                    foreach ($bloque as $key) {
+                        $bloqueInicial = $key->bloque;
+                    }
+
+                    if(!isset($bloqueInicial)){
+                        Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE CARGA ACADÉMICA');
+                        return redirect()->action('AsistenciasController@index');
+                    }
+                        
+                    $explode = explode(" - ", $bloqueInicial);
+
+                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]); 
+                    if($diferencia > 0){
+                        DB::insert('INSERT INTO retardo_asistencia(id_personal,fecha,retardo) VALUES('.$request->id_personal.','.date('Y-m-d').','.$diferencia.')');
+                    }
+                }
+
                 $asistencias = new Asistencia();
                 $asistencias->id_personal = $request->id_personal;
                 $asistencias->id_fecha = $FechasAsistencias->id;
@@ -157,6 +171,36 @@ class AsistenciasController extends Controller
         }
         else{
             $FechasAsistencias = FechasAsistencias::all()->last();
+
+            $docentes = Personal::find($request->id_personal);
+
+                if($docentes->cargo->nombre == 'DOCENTE DE PLANTA' || $docentes->cargo->nombre == 'DOCENTE ROTATIVO')
+                {
+                    //  DOMINGO = 0; SABADO = 6;
+
+                    $dias = array("0","1","2","3","4","5","6");
+                    $bloque=DB::select('SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = '.$request->id_personal.' AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
+                    
+                    $contadorBloque = count($bloque);
+
+                    foreach ($bloque as $key) {
+                        $bloqueInicial = $key->bloque;
+                    }
+
+                    if(!isset($bloqueInicial)){
+                        Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE CARGA ACADÉMICA');
+                        return redirect()->action('AsistenciasController@index');
+                    }
+                        
+                    $explode = explode(" - ", $bloqueInicial);
+
+                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]); 
+                    if($diferencia > 0){
+                        DB::insert('INSERT INTO retardo_asistencia(id_personal,fecha,retardo) VALUES('.$request->id_personal.',now(),'.$diferencia.')');
+                    }
+                }
+
+
             $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();            
 
             if($verificarEntrada>0)

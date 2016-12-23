@@ -32,6 +32,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
 	Route::get('descargarPagos', 'PagosController@descargar');
 	Route::get('descargarListado', 'PagosController@descargarListado');
+	Route::get('descargarControl', 'PagosController@descargarControl');
 	//Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
@@ -48,6 +49,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('asistencias/salida', 'AsistenciasController@salida');
 	Route::get('asistencias/salidas', ['uses' => 'AsistenciasController@salidas', 'as' => 'asistencias.salidas']);
 	Route::get('inscripciones/rubros/{id}/buscar',['uses' => 'InscripcionesController@buscarrubros', 'as' => 'inscripciones.rubros.buscar']);
+	Route::get('personal/control_de_pagos', 'PersonalController@control');
 
 	
 

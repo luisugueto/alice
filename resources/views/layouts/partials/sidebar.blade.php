@@ -49,6 +49,7 @@
                     <li><a href="{{ route('docentes.index') }}">Listado de Docentes</a></li>
                     <li><a href="{{ route('personal.index') }}">Listado del Personal</a></li>
                     <li><a href="{{ route('asistencias.index') }}">Asistencia del Personal</a></li>
+                    <li><a href="{{ url('personal/control_de_pagos') }}">Control del Pagos Mensual</a></li>
                 </ul>
             </li>
             @endif

@@ -46,6 +46,19 @@ class PagosController extends Controller
         
     }
 
+    public function descargarControl()
+    {
+        $personal = Personal::orderBy('id', 'asc')->groupBy('id')->get();
+        
+        Excel::create("Listado Total de Prestamos y Anticipos", function ($excel) use ($personal) {
+               
+                $excel->setTitle("Control de Pagos");
+                $excel->sheet("Pestaña 1", function ($sheet) use ($personal) {
+                    $sheet->loadView('personal.excel.descargarControl')->with('personal', $personal);
+                });
+            })->download('xls');
+    }
+
     public function descargar(){
         $prestamo = Prestamo::all();
         $suma = 0;

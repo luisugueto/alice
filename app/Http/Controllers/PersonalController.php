@@ -50,6 +50,12 @@ class PersonalController extends Controller
         return view('personal.nuevopersonal', compact('tipo'));
     }
 
+    public function control()
+    {
+        $personal = Personal::orderBy('id', 'asc')->groupBy('id')->get();
+        return view('personal.control', compact('personal'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
