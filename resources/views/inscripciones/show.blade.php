@@ -62,7 +62,7 @@
                                             
                                             
                                                     
-                                                {!! link_to_route('inscripciones.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
+                                                {!! link_to_route('certificados.matricula', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
                                           </td>
                                         </tr>
                                             
