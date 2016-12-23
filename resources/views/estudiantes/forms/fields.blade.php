@@ -1,5 +1,18 @@
 <div class="tab-pane active" id="tab_1">
 	<div class="box-body">
+		<div class="col-md-3">
+    				<a href="#" class="thumbnail">
+     		 			<img src="../../img/ingresar.jpg" alt="..." id="img_prev">
+    				</a>
+  				</div>
+
+				<div class="form-group">
+
+					{!! Form::label('image', 'Imagen') !!}
+
+					<input type="file" name="foto" onchange="readURL(this)">
+		</div>
+		<div class="col-md-12">
 		<div class="col-md-4">
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
@@ -68,6 +81,7 @@
 			<div class="form-group{{ $errors->has('correo') ? ' has-error' : '' }}">
 				{!! Form::label('correo', 'Correo electrónico') !!} <small class="text-red">*</small>
 				{!! Form::email('correo', null, ['class' => 'form-control', 'title' => 'Introduzca el correo del estudiante incluyendo @ejemplo.com', 'placeholder' => 'correo@ejemplo.com']) !!}
+			</div>
 			</div>
 		</div>
 	</div>

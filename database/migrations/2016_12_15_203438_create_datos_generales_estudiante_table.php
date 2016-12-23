@@ -16,6 +16,7 @@ class CreateDatosGeneralesEstudianteTable extends Migration
             $table->increments('id');
             $table->integer('id_representante')->unsigned();
             $table->foreign('id_representante')->references('id')->on('datos_representantes')->onDelete('Cascade');
+            $table->string('foto', 55)->unique();
             $table->string('codigo_matricula', 255)->unique();
             $table->string('apellido_paterno', 50);
             $table->string('apellido_materno', 50);

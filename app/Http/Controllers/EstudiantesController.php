@@ -153,6 +153,8 @@ class EstudiantesController extends Controller
             $alergico_a = 'Nada';
         }
 
+        $foto = $request->file('foto');
+
         $this->validate($request, 
         [
             'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',

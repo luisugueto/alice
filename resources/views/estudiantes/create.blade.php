@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12"> 
 
-                {!! Form::open(['route' => 'estudiantes.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
+                {!! Form::open(['route' => 'estudiantes.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form', 'files' => true]) !!}
 
                     <div class="box">
                         <div class="box-header">

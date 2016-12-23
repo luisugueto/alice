@@ -32,7 +32,9 @@
                                     <td class="text-center text-red"> 
                                     
                                     @if(asignados($bloques2[$i][$j]->id,$bloques_asignados))  
-                                        {{-- asignaturas_a($bloques2[$i][$j]->id, $asignaturas_asignadas[$i], $seccion->id) --}}             
+
+                                        {{ asignaturas_a($bloques2[$i][$j]->id,$asignaturas_asignadas,$seccion->id) }}
+                                                   
                                     @elseif(asignadas($bloques2[$i][$j]->id,$aulas_asignadas))
 
                                         <span class="fa fa-close"></span>
