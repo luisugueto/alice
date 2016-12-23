@@ -7,6 +7,7 @@ use Session;
 use App\Periodos;
 use DB;
 use App\Http\Requests;
+use PDF;
 
 class CertificadosController extends Controller
 {
@@ -88,11 +89,17 @@ class CertificadosController extends Controller
 
     public function matricula($id){
         $id_periodo=Session::get('periodo');
-        $periodo=Periodos::find($id_periodo);
+        $periodo=Periodos::where('id', $id_periodo)->first();
         
-        $estudiantes=DB::select("SELECT * FROM datos_generales_estudiante,inscripciones,cursos,secciones WHERE datos_generales_estudiante.id=inscripciones.id_estudiante AND inscripciones.id_periodo=".$id_periodo." AND cursos.id=inscripciones.id_curso AND secciones.id=inscripciones.id_seccion");
-
-        $pdf = PDF::loadView('pdf.matricula', $data);
+        $data=DB::select("SELECT * FROM datos_generales_estudiante,inscripciones,cursos,secciones WHERE datos_generales_estudiante.id=inscripciones.id_estudiante AND inscripciones.id_periodo=".$id_periodo." AND cursos.id=inscripciones.id_curso AND secciones.id=inscripciones.id_seccion AND datos_generales_estudiante.id=$id");
+        foreach ($data as $key) {
+            $datos['nombres'] = $key->nombres;
+            $datos['apellido'] = $key->apellido_paterno;
+            $datos['curso'] = $key->curso;
+            $datos['periodo'] = $periodo->nombre;
+        }
+        
+        $pdf = PDF::loadView('pdf.matricula.index', $datos);
         return $pdf->download('matricula.pdf');
     }
 

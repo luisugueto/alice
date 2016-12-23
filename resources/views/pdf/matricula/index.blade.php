@@ -7,21 +7,19 @@
 </head>
 <body>
 <div align="right">
-	<b>Guayaquil, </b>
+	<b>Guayaquil, {{ date('d-m-Y') }}</b>
 </div>
 <div align="center">
 	<h1>CERTIFICADO DE MATRICULA</h1>
 </div>
 
 <div align="center">
-
 	<p>Por medio de la Presente la Secretaría de la Escuela de Educación Básica<br>Particular 
 	MARÍA MONTESSORI, certifica que el(a) estudiante:<br> <br>
-	<b>X</b><br><br>
-	Se matriculó en esta institución en <b>X grado de Educación General Básica</b> en el <br>
-	Periodo lectivo <b>X</b> según N° matricula <b>0245</b><br><br>
+	<b>{{ strtoupper($nombres) }} {{ strtoupper($apellido) }}</b><br><br>
+	Se matriculó en esta institución en <b>{{ $curso }} grado de Educación General Básica</b> en el <br>
+	Periodo lectivo <b>{{ $periodo }}</b> según N° matricula <b>0245</b><br><br>
 	Así consta en los archivos de la Secretaría del Plantel, a los que remito en caso<br>necesario.</p>
-	
 	<br><br><br>
 
 	<p align="left">Es todo cuanto puedo certificar en honor a la verdad.	<br>

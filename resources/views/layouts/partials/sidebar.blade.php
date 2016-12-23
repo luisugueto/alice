@@ -116,6 +116,17 @@
             <!-- <li><a href="#"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.anotherlink') }}</span></a></li> -->
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
             <li class="treeview">
+                <a href="#"><i class='fa fa-file-archive-o'></i> <span>Certificados</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
+                    <li><a href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a></li>
+                    @endif
+                  
+                </ul>
+            </li>
+            @endif
+            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
+            <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     @if(Auth::user()->roles_id == 4)
@@ -143,17 +154,6 @@
                     <li><a href="{{ route('usuarios.index') }}"> Usuarios</a></li>
                     <li><a href="{{ route('tipo_empleado.index') }}">Tipo de Empleado</a></li>
                     @endif
-                </ul>
-            </li>
-            @endif
-            @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-            <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>Certificados</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-                    <li><a href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a></li>
-                    @endif
-                  
                 </ul>
             </li>
             @endif

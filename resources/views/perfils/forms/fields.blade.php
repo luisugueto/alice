@@ -7,8 +7,11 @@
             {!! Form::email('email', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Correo']) !!}
           </div>
           <div class="form-group">
-            {!! Form::label('Nombre', 'Foto') !!}
-            {!! Form::file('foto')!!}
+           {!! Form::label('Nombre', 'Foto') !!}
+            <input type="file" name="foto" onchange="readURL(this)"> 
+            <a href="#" class="thumbnail">
+              <img src="../../img/ingresar.jpg" alt="..." id="img_prev">
+            </a>
           </div>
           <div class="form-group">
             {{ Form::label('Editar', 'Editar Contraseña') }}
