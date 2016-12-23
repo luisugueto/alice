@@ -268,6 +268,85 @@
     }
      
 </script>
+<script type="text/javascript">
+    
+    function capacidad_es() 
+    {
+
+        var radio = document.form.capacidad;
+        var area = document.form.capacidad_especial;
+
+        if(radio.value == 'Si')
+        {
+            area.disabled = false;
+
+        }else{
+
+            area.disabled = true;
+        }
+
+    }
+
+    function medicinas()
+    {
+        var radio = document.form.medicinas_e;
+        var area = document.form.medicinas_contraindicadas;
+
+        if(radio.value == 'Si')
+        {
+            area.disabled = false;
+
+        }else{
+
+            area.disabled = true;
+        }
+    }
+
+    function alergia()
+    {
+        var radio = document.form.alergico;
+        var area = document.form.alergico_a;
+
+        if(radio.value == 'Si')
+        {
+            area.disabled = false;
+
+        }else{
+
+            area.disabled = true;
+        }
+    }
+
+    function patologia_es()
+    {
+        var radio = document.form.patologia_estudiante;
+        var area = document.form.patologia;
+
+        if(radio.value == 'Si')
+        {
+            area.disabled = false;
+
+        }else{
+
+            area.disabled = true;
+        }
+    }
+
+    function discapacidad()
+    {
+        var radio = document.form.discapacidad_e;
+        var area = document.form.porcentaje_discapacidad;
+        
+        if(radio.value == 'Si')
+        {
+            area.disabled = false;
+
+        }else{
+
+            area.disabled = true;
+        }
+    }
+</script>
 <!-- <script>
     
     $(document).ready( function () 

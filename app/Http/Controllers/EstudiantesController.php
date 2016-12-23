@@ -107,6 +107,52 @@ class EstudiantesController extends Controller
      */
     public function store(Request $request)
     {
+
+        if($request->capacidad == 'Si')
+        {
+            $capacidad_especial = $request->capacidad_especial;
+        
+        }else{
+
+            $capacidad_especial = 'Ninguna';
+        }
+
+        if($request->patologia_e == 'Si')
+        {
+            $patologia = $request->patologia;
+        
+        }else{
+
+            $patologia = 'Ninguna';
+        }
+
+        if($request->medicinas_e == 'Si')
+        {
+            $medicinas_contraindicadas = $request->medicinas_e;
+        
+        }else{
+
+            $medicinas_contraindicadas = 'Ninguna';
+        }
+
+        if($request->discapacidad == 'Si')
+        {
+            $porcentaje_discapacidad = $request->discapacidad;
+        
+        }else{
+
+            $porcentaje_discapacidad = 0;
+        }
+
+        if($request->alergico == 'Si')
+        {
+            $alergico_a = $request->alergico;
+        
+        }else{
+
+            $alergico_a = 'Nada';
+        }
+
         $this->validate($request, 
         [
             'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
@@ -161,7 +207,7 @@ class EstudiantesController extends Controller
             ]);
             
             $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
-            $cedula_padre = $request->nacionalidad_madre.$request->cedula_ma;
+            $cedula_madre = $request->nacionalidad_madre.$request->cedula_ma;
 
             $padre = Padres::where('cedula_pa', $cedula_padre)->first();
             $madre = Padres::where('cedula_pa', $cedula_madre)->first();
@@ -172,6 +218,22 @@ class EstudiantesController extends Controller
 
                     $padre->estudiante()->attach($estudiante);
                     $madre->estudiante()->attach($estudiante);
+
+                    $medicos = new DatosMedico;
+                    $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
                 
                     }elseif(!empty($padre) OR !empty($madre)){
 
@@ -204,6 +266,22 @@ class EstudiantesController extends Controller
                             $padre->estudiante()->attach($estudiante);
                             $madre->estudiante()->attach($estudiante);
 
+                            $medicos = new DatosMedico;
+                            $medicos->id_estudiante = $estudiante->id;
+                            $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                            $medicos->peso = $request->peso;
+                            $medicos->altura = $request->altura;
+                            $medicos->capacidad_especial = $capacidad_especial;
+                            $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                            $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                            $medicos->alergico_a = $alergico_a;
+                            $medicos->patologia = $patologia;
+                            $medicos->save();
+            
+                            Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                            return redirect('estudiantes');
+
                         }else{
 
                             $this->validate($request, 
@@ -232,7 +310,46 @@ class EstudiantesController extends Controller
 
                             $madre->estudiante()->attach($estudiante);
                             $padre->estudiante()->attach($estudiante);
+
+                            $medicos = new DatosMedico;
+                            $medicos->id_estudiante = $estudiante->id;
+                            $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                            $medicos->peso = $request->peso;
+                            $medicos->altura = $request->altura;
+                            $medicos->capacidad_especial = $capacidad_especial;
+                            $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                            $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                            $medicos->alergico_a = $alergico_a;
+                            $medicos->patologia = $patologia;
+                            $medicos->save();
+
+                            Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                            return redirect('estudiantes');
                         }
+
+                    }else{
+
+                        $estudiante = Estudiante::create($request->all());
+                        
+                        $madre->estudiante()->attach($estudiante);
+                        $padre->estudiante()->attach($estudiante);
+
+                        $medicos = new DatosMedico;
+                        $medicos->id_estudiante = $estudiante->id;
+                        $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                        $medicos->peso = $request->peso;
+                        $medicos->altura = $request->altura;
+                        $medicos->capacidad_especial = $capacidad_especial;
+                        $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                        $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                        $medicos->alergico_a = $alergico_a;
+                        $medicos->patologia = $patologia;
+                        $medicos->save();
+
+                        Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                        return redirect('estudiantes');
                     }
 
         }elseif($request->padre == 'on' OR $request->padre2 == 'on'){
@@ -261,6 +378,22 @@ class EstudiantesController extends Controller
                 {
                     $estudiante = Estudiante::create($request->all());
                     $padre->estudiante()->attach($estudiante);
+
+                    $medicos = new DatosMedico;
+                    $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
                 
                 }else{
 
@@ -278,6 +411,22 @@ class EstudiantesController extends Controller
                     $padre->save();
 
                     $padre->estudiante()->attach($estudiante);
+
+                    $medicos = new DatosMedico;
+                    $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
 
                 }
 
@@ -298,6 +447,21 @@ class EstudiantesController extends Controller
                 {
                     $estudiante = Estudiante::create($request->all());
                     $madre->estudiante()->attach($estudiante);  
+
+                    $medicos = new DatosMedico;                        $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
                 
                 }else{
 
@@ -315,6 +479,22 @@ class EstudiantesController extends Controller
                     $madre->save();
 
                     $madre->estudiante()->attach($estudiante);
+                    
+                    $medicos = new DatosMedico;
+                    $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
                             
                 }
                 
@@ -323,36 +503,25 @@ class EstudiantesController extends Controller
         }else{
 
             $estudiante = Estudiante::create($request->all());
-            
+
+                            
+            $medicos = new DatosMedico;
+            $medicos->id_estudiante = $estudiante->id;
+            $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+            $medicos->peso = $request->peso;
+            $medicos->altura = $request->altura;
+            $medicos->capacidad_especial = $capacidad_especial;
+            $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+            $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+            $medicos->alergico_a = $alergico_a;
+            $medicos->patologia = $patologia;
+            $medicos->save();
+
             Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
 
             return redirect('estudiantes');
         }
-    }
-    
-        //$estudiante->documentos()->create($request->all());
-        //$estudiante->novedades()->create($request->all());
-        //$estudiante->medicos()->create($request->all());
-        
-        /*for($j=0; $j<count($request->nombre); $j++)
-        {
-            $factura =  $estudiante->facturaciones()->saveMany([new Facturacion(['nombre' => $request->nombre[$j], 'monto' => $request->monto[$j], 'fecha_max' => $request->fecha_max[$j], 'enviar_banco' => 'No'])]);
-
-            
-            $factura[$j]->rubros()->attach($estudiante);
-            
-        }*/
-        
-        /*if($variable == '1') { $i=1; $fin=2; }else{ $i=0; $fin=2; }
-        
-        for($i; $i < $fin; $i++)
-        {
-           $estudiante->padres()->saveMany([new Padres(['nombres_pa' => $request["nombres_pa".$i], 'cedula_pa' => $request["cedula_pa".$i], 'foto_pa' => 'no disponible', 'lugar_trabajo' => $request["lugar_trabajo".$i], 'direccion_pa' => $request["direccion_pa".$i], 'telefono_pa' => $request["telefono_pa".$i], 'correo_pa' => $request["correo_pa".$i], 'nacionalidad_pa' => $request["nacionalidad_pa".$i], 'nivel_educacion' => $request["nivel_educacion".$i]])]);
-        }
-*/
-      
-        
-        
+    }       
     
     /**
      * Display the specified resource.
