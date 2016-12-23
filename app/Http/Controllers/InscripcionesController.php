@@ -72,7 +72,9 @@ class InscripcionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   $id_periodo=Session::get('periodo');
+    {   
+
+        $id_periodo=Session::get('periodo');
         $periodo=Periodos::find($id_periodo);
         $estudiantes=DB::select("SELECT * FROM datos_generales_estudiante,inscripciones,cursos,secciones WHERE datos_generales_estudiante.id=inscripciones.id_estudiante AND inscripciones.id_periodo=".$id_periodo." AND cursos.id=inscripciones.id_curso AND secciones.id=inscripciones.id_seccion");
 
@@ -148,10 +150,35 @@ class InscripcionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        
+    {   $id_periodo=Session::get('periodo');
+        $cambio=DB::update('UPDATE inscripciones SET id_seccion='.$request->id_seccion.' WHERE id_estudiante='.$id.' AND id_periodo='.$id_periodo);
+        /*dd($cambio);*/
+        if($cambio==1){
+            Session::flash('message', 'CAMBIO DE SECCIÓN EXITOSO');   
+
+        }else{
+            Session::flash('message-error', 'DISCULPE NO SE PUDO REALIZAR EL CAMBIO DE SECCIÓN');   
+
+        }
+
+        return redirect(route('inscripciones.show',[0]));
     }
 
+    public function cambiarseccion($id){
+
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+        $estudiantes=Estudiante::find($id);
+
+        $inscripciones=DB::select("SELECT * FROM datos_generales_estudiante,inscripciones,cursos,secciones WHERE datos_generales_estudiante.id=inscripciones.id_estudiante AND inscripciones.id_periodo=".$id_periodo." AND cursos.id=inscripciones.id_curso AND secciones.id=inscripciones.id_seccion GROUP BY inscripciones.id_estudiante");
+
+        foreach ($inscripciones as $inscripciones) {
+            $id_curso=$inscripciones->id_curso;
+        }
+        $secciones=Seccion::where('id_curso',$id_curso)->lists('literal','id');
+        return View('inscripciones.edit',compact('estudiantes','periodo','inscripciones','secciones'));
+
+    }
     /**
      * Remove the specified resource from storage.
      *

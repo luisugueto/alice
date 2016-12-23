@@ -4,11 +4,7 @@
 
 @section('main-content')     
 <div class="col-md-12">        
-    <div class="col-md-14">
-        <button class="btn btn-primary" title="Registrar un nuevo estudiante" onclick="window.location.href = '{{ URL::to('/representantes/create') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-        </button>
-    </div>
+    
         <section class="content">
         @if(Session::has('message-error'))
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -62,7 +58,7 @@
                                             
                                             
                                                     
-                                                {!! link_to_route('certificados.matricula', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
+                                                {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-exchange fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
                                           </td>
                                         </tr>
                                             
