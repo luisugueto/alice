@@ -83,7 +83,7 @@ class DocentesController extends Controller
             } else { 
 
                     
-                        $asignacion=DB::insert('INSERT INTO asignacion(id_prof,id_asignatura,id_seccion) VALUES('.$request->id_prof.','.$request->id_asignatura.','.$request->id_seccion2.')');
+                        $asignacion=DB::insert('INSERT INTO asignacion(id_prof,id_asignatura,id_seccion,id_periodo) VALUES('.$request->id_prof.','.$request->id_asignatura.','.$request->id_seccion2.','.$id_periodo.')');
 
                     
                     Session::flash('message', 'CURSO, SECCIÓN Y ASIGNATURA ASIGNADA EXITOSAMENTE');
@@ -106,8 +106,11 @@ class DocentesController extends Controller
         $docentes=Personal::find($id);
         //dd($docentes);
         if ($docentes->cargo->nombre=="DOCENTE DE PLANTA") {
+
+            $docentes2 = DB::select(DB::raw('select * from asignacion,cursos,secciones where id_periodo='.$id_periodo.' AND asignacion.id_prof='.$id.' AND cursos.id = secciones.id_curso AND secciones.id = asignacion.id_seccion group by secciones.id_curso'));
+            
         
-        return View('docentes.show',compact('docentes'));
+        return View('docentes.show',compact('docentes','docentes2'));
             
         } else {
 

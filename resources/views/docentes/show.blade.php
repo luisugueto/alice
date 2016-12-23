@@ -65,27 +65,20 @@
                                 </tr>
                                 </thead>
                               <tbody>
-                            |
-                              @foreach($docentes->asignaturas as $docentes)
-                             <?php $id_seccion=$docentes->pivot->id_seccion; ?>
+                            
+                              @foreach($docentes2 as $docentes)
                               <tr>
                                 
-                                <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->cursos->curso}}</a></td>
-                                <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}">
-                                  
-                                @foreach($docentes->cursos->seccion as $secciones) 
-                                   @if($secciones->id==$id_seccion)
-                                    {{$secciones->literal}}
-                                    @endif
-                                   
-                                @endforeach
+                                <td><a href="{{ route('docentes.edit', [$docentes->id_prof]) }}"> {{$docentes->curso}}</a></td>
+                                <td><a href="{{ route('docentes.edit', [$docentes->id_prof]) }}">{{ $docentes->literal }}
+                              
 
                                 </a></td>
                                 
                                <td>
                                 <div class="btn-group">
                                                                           
-                                      {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->pivot->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
+                                      {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
 
                                     <br><br>
                                    

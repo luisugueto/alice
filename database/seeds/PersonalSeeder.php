@@ -28,9 +28,16 @@ class PersonalSeeder extends Seeder
             'direccion'=>'asfasfas',
             'telefono'=>'04160408205',
             'correo'=>'lui_su_gueto@hotmail.com',
-            'clave'=>'1234',
+            'clave'=> bcrypt('1234'),
             'ingreso_notas'=>'1',
             'id_cargo'=>'4' 
+        ]);
+        DB::table('users')->insert([
+
+            'name' => 'LUIS ESCOBAR',
+            'email' => 'lui_su_gueto@hotmail.com',
+            'password' => bcrypt('1234'),
+            'roles_id' => '5'
         ]);
 
         DB::table('remuneracion')->insert([
@@ -56,10 +63,10 @@ class PersonalSeeder extends Seeder
         //------------------------------------------
         DB::table('datos_generales_personal')->insert([
             'codigo_pesonal'=>'123456',
-            'apellido_paterno'=>'GOMEZ',
-            'nombres'=>'CESAR',
+            'apellido_paterno'=>'CAMPOS',
+            'nombres'=>'ORIONED',
             'cedula'=>'17082188',
-            'fecha_nacimiento'=>'1984-05-09',
+            'fecha_nacimiento'=>'1990-05-09',
             'fecha_ingreso'=>'2010-01-01',
             'edad'=>'32',
             'edo_civil'=>'soltero',
@@ -70,9 +77,16 @@ class PersonalSeeder extends Seeder
             'direccion'=>'aqui',
             'telefono'=>'04262343358',
             'correo'=>'en4pami@gmail.com',
-            'clave'=>'1234',
+            'clave'=> bcrypt('1234'),
             'ingreso_notas'=>'1',
             'id_cargo'=>'5' 
+        ]);
+         DB::table('users')->insert([
+
+            'name' => 'ORIONED CAMPOS',
+            'email' => 'en4pami@gmail.com',
+            'password' => bcrypt('1234'),
+            'roles_id' => '5'
         ]);
 
         DB::table('remuneracion')->insert([
