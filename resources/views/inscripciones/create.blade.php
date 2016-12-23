@@ -56,7 +56,7 @@ function seccion(){
     $.get("/inscripciones/secciones/"+id+"/buscar", function(data) 
     {
         $("#id_seccion").empty();
-        $("#id_seccion").append('<option value="" selected disabled> Seleccione </option>');
+        /*$("#id_seccion").append('<option value="" selected disabled> Seleccione </option>');*/
         if(data.length > 0){
             for (var i = 0; i < data.length ; i++) 
             {  
@@ -68,6 +68,7 @@ function seccion(){
         }
     });
     $.get("/inscripciones/rubros/"+id+"/buscar",function(data){
+        $("#id_rubros").empty();
         $("#id_rubros").append("<table class='table'>"+
                                 "<thead>"+
                                     "<th>Agregar</th>"+
@@ -80,7 +81,7 @@ function seccion(){
             if (data.length>0) {
                 for (var j = 0; j < data.length ; j++) 
                 {
-                            $("#id_rubros").append("<div class='col-md-12'> <table class='table table-bordered table-hover'><tbody><tr aling='center'><td aling='center'  width='60'><input type='checkbox' id='id_rubro' name='id_rubro' value='"+ data[j].id +"'></td>"+
+                            $("#id_rubros").append("<div class='col-md-12'> <table class='table table-bordered table-hover'><tbody><tr aling='center'><td aling='center'  width='60'><input type='checkbox' id='id_rubro' name='id_rubro[]' value='"+ data[j].id +"'></td>"+
                                 "<td width='400' aling='center'>" + data[j].nombre +"</td><td aling='center'>" + data[j].fecha +"</td><td aling='center'>" + data[j].monto + "</td></tr></tbody></table></div>");
                  
                 }

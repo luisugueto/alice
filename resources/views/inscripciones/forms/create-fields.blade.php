@@ -2,8 +2,14 @@
 	<div class="box-body">
 	{{ Form::hidden('id_estudiante',$estudiantes->id) }}
 	@if($estado=="Nuevo Ingreso")
+
 	<div class="form-group">
 		{!! Form::label('repite','Estudiante Nuevo Ingreso') !!}
+	</div>
+
+	<div class="form-group">
+		{!! Form::label('repite','Está Becado') !!}
+		{!! Form::checkbox('becado','Si',false,['id' => 'becado','title' => 'Seleccione si el estudiante esta becado']) !!}
 	</div>
 
 

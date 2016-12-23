@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Estudiante;
 use App\Quimestrales;
 use App\Cursos;
-use AppSeccion;
+use App\Seccion;
 use Session;
 use DB;
 use App\Rubros;
@@ -44,7 +44,24 @@ class InscripcionesController extends Controller
      */
     public function store(Request $request)
     {
+        $id_periodo=Session::get('periodo');
+        $curso=Cursos::find($request->id_curso);
+        $seccion=Seccion::find($request->id_seccion);
+       
+        $inscripciones=DB::insert("INSERT INTO inscripciones(id_estudiante,id_curso,id_seccion,id_periodo,becado) VALUES(".$request->id_estudiante.",".$request->id_curso.",".$request->id_seccion.",".$id_periodo.",'".$request->becado."')");
         
+        $cuantos=count($request->id_rubro);
+
+                if($cuantos>0){
+
+                    for ($i=0; $i < $cuantos; $i++) { 
+                        $facturar=DB::insert("INSERT INTO facturacion(id_estudiante,id_rubro) VALUES(".$request->id_estudiante.",".$request->id_rubro[$i].")");
+                    }
+
+                }
+        Session::flash('message', 'ESTUDIANTE INSCRITO EXITOSAMENTE EN EL CURSO '.$curso->curso.' EN LA SECCIÓN '.$seccion->literal);   
+        return redirect('inscripciones');
+
     }
 
     /**
@@ -66,6 +83,7 @@ class InscripcionesController extends Controller
      */
     public function edit($id)
     {
+        $id_periodo = Session::get('periodo');
         $buscar=Quimestrales::where('id_estudiante',$id)->first();
         $estudiantes=Estudiante::find($id);
         $encontrado=count($buscar);
@@ -76,11 +94,19 @@ class InscripcionesController extends Controller
 
             if ($encontrado==0) {
                 # es nuevo
+                $inscripto=DB::select('SELECT * FROM inscripciones WHERE id_estudiante='.$id.' AND id_periodo='.$id_periodo);
+                $listo=count($inscripto);
+                if ($listo>0) {
+                    Session::flash('message-error', 'DISCULPE, ESTE ESTUDIANTE YA SE ENCUENTRA INSCRITO EN EL PPERIODO LECTIVO ACTUAL');   
+
+                    return redirect('inscripciones');
+                }else{
+                
                 $estado="Nuevo Ingreso";
                 $cursos=Cursos::lists('curso','id');
             
                 return View('inscripciones.create',compact('estudiantes','cursos','estado','edad'));
-            
+                }
             } else {
                 $id_periodo_anterior = Session::get('periodo') - 1;
                 # es regular
@@ -106,7 +132,8 @@ class InscripcionesController extends Controller
         $id_periodo= Session::get('periodo');
 
         $rubros=Rubros::where('id_curso',$id)->where('id_periodo',$id_periodo)->get();
-        
+
+
         return $rubros;
     }
     /**
@@ -118,7 +145,7 @@ class InscripcionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
