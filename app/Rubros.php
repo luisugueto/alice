@@ -38,6 +38,11 @@ class Rubros extends Model
          return $this->belongsToMany('App\Estudiante', 'facturacion', 'id_rubro', 'id_estudiante')->withTimestamps();
     }
 
+    public function facturacion_rubros()
+    {
+         return $this->hasMany('App\FacturasRubros', 'id_rubro', 'id');
+    }
+    
     public function rubros_realizados()
     {
         return $this->hasMany('App\RubrosRealizados', 'id_rubro', 'id');

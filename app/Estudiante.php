@@ -61,11 +61,6 @@ class Estudiante extends Model
         return $this->hasMany('App\Quimestrales','id_estudiante','id');
     }
 
-    public function rubros()
-    {
-         return $this->belongsToMany('App\Rubros', 'rubros', 'id_estudiante', 'id_rubro')->withTimestamps();
-    }
-
     public function cursos(){
 
         return $this->belongsToMany('App\Cursos','inscripciones','id_estudiante','id_curso')->withPivot('id_seccion','id_periodo')->withTimestamps();

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RubrosRealizados extends Model
 {
-    protected $fillable = ['monto_pagado', 'monto_adeudado', 'fecha', 'id_rubro', 'id_modalidad', 'id_estudiante', 'no_transferencia', 'no_cheque'];
+    protected $fillable = ['id_factura_rubro', 'monto_pagado', 'monto_adeudado', 'fecha', 'id_modalidad', 'id_estudiante', 'no_transferencia', 'no_cheque'];
 
     protected $table = 'rubros_realizados';
     public $timestamps = false;	
@@ -31,8 +31,8 @@ class RubrosRealizados extends Model
         return $this->belongsToMany('App\FormasPago', 'forma_rubros_realizados', 'id_rubro', 'id_forma');
     }
 
-    public function rubros_realizados()
+    public function rubros_factura()
     {
-        return $this->belongsTo('App\Rubros', 'id_rubro');
+        return $this->hasMany('App\FacturasRubros', 'id', 'id_factura_rubro');
     }
 }
