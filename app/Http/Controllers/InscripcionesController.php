@@ -11,6 +11,7 @@ use App\Cursos;
 use AppSeccion;
 use Session;
 use DB;
+use App\Rubros;
 class InscripcionesController extends Controller
 {
     /**
@@ -100,6 +101,14 @@ class InscripcionesController extends Controller
         return $seccion = Seccion::where('id_curso',$id)->get();  
     }
 
+    public function buscarrubros($id){
+
+        $id_periodo= Session::get('periodo');
+
+        $rubros=Rubros::where('id_curso',$id)->where('id_periodo',$id_periodo)->get();
+        
+        return $rubros;
+    }
     /**
      * Update the specified resource in storage.
      *

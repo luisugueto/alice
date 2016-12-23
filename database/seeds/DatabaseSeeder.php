@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BloquesTableSeeder::class);
         $this->call(EstudiantesSeeder::class);
         $this->call(RubrosSeeder::class);
+        $this->call(CursosSeccionesSeeder::class);
         Model::reguard();
     }
 }
