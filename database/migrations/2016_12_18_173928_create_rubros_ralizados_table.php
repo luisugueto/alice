@@ -17,8 +17,8 @@ class CreateRubrosRalizadosTable extends Migration
             $table->double('monto_pagado', 10, 2);
             $table->double('monto_adeudado', 10, 2);
             $table->date('fecha');
-            $table->integer('id_factura')->unsigned();
-            $table->foreign('id_factura')->references('id')->on('facturacion')->onDelete('Cascade');
+            $table->integer('id_rubro')->unsigned();
+            $table->foreign('id_rubro')->references('id')->on('rubros')->onDelete('Cascade');
             $table->integer('id_modalidad')->unsigned();
             $table->foreign('id_modalidad')->references('id')->on('modalidads')->onDelete('Cascade');
             $table->integer('id_estudiante')->unsigned();

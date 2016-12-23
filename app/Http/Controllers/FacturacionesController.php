@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Facturacion;
+use App\RubrosRealizados;
+use App\Estudiante;
+use App\Rubros;
+use App\Modalidad;
+use App\FormasPago;
 
-class FacturacionController extends Controller
+
+class FacturacionesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +21,21 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        $facturacion = Facturacion::all();
+        $rubros = \DB::table('facturacion')->get();
 
-        return view('facturacion.index', compact('facturacion'));
+        $i = 0;
+
+        foreach ($rubros as $key => $rubro) 
+        {
+            $facturacion[$i] = $rubro->id;
+            $estudiantes[$i] = Estudiante::find($rubro->id_estudiante);
+            $representante[$i] = $estudiantes[$i]->representante;
+            $rubros_e[$i] = Rubros::find($rubro->id_rubro);
+            $i++; 
+        }
+
+        //dd($facturacion);
+        return view('facturaciones.index', compact('facturacion', 'estudiantes', 'rubros_e', 'representante', 'rubros'));
     }
 
     /**
@@ -61,7 +78,12 @@ class FacturacionController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $rubros = Rubros::find($id);
+        $modalidad = Modalidad::lists('modalidad', 'id');
+        $formas_pago = FormasPago::all();
+  
+        return view('facturaciones.edit', compact('rubros', 'modalidad', 'formas_pago'));
     }
 
     /**

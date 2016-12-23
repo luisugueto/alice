@@ -78,6 +78,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('tipo_empleado','TipoEmpleadoController');
 	Route::resource('inscripciones','InscripcionesController');
 	Route::resource('asistencias', 'AsistenciasController');
+	Route::resource('facturaciones', 'FacturacionesController');
 
 	
 });

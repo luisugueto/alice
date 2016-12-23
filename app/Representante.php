@@ -14,4 +14,5 @@ class Representante extends Model
     {
     	return $this->hasMany('App\Estudiante', 'id_representante', 'id');
     }
+
 }

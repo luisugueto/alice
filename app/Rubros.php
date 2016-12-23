@@ -32,4 +32,14 @@ class Rubros extends Model
     {
     	return $this->belongsTo('App\Periodos', 'id_periodo');
     }
+
+    public function estudiante()
+    {
+         return $this->belongsToMany('App\Estudiante', 'facturacion', 'id_rubro', 'id_estudiante')->withTimestamps();
+    }
+
+    public function rubros_realizados()
+    {
+        return $this->hasMany('App\RubrosRealizados', 'id_rubro', 'id');
+    }
 }
