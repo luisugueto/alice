@@ -99,6 +99,9 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.show',1) }}">Nuevo</a></li>
                 </ul>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('parciales.index') }}">Lista de Estudiantes</a></li>
+                </ul>
             </li>
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
