@@ -10,7 +10,11 @@ use App\Categorias_parcial;
 use App\Equivalencias;
 use App\Comportamiento;
 use Auth;
-
+use App\Estudiantes;
+use App\Personal;
+use Session;
+use App\Periodos;
+use DB;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -31,6 +35,29 @@ class ParcialesController extends Controller
      */
     public function index()
     {
+        
+            
+            $personal=Personal::all();
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            foreach ($personal as $personal) {
+
+                
+                if($correo==$personal->correo){
+
+                    $docente=Personal::find($personal->id);
+                    $sql="SELECT asignacion.*,cursos.*,secciones.*,datos_generales_estudiante.* FROM asignacion,datos_generales_personal,cursos,secciones,inscripciones,datos_generales_estudiante WHERE datos_generales_personal.id=asignacion.id_prof AND asignacion.id_prof=".$personal->id." AND cursos.id=secciones.id_curso AND (inscripciones.id_seccion=asignacion.id_seccion AND inscripciones.id_periodo=".$id_periodo." AND asignacion.id_periodo=".$id_periodo.") GROUP BY inscripciones.id_estudiante";
+                   //dd($sql);
+                   $estudiantes=DB::select($sql);
+
+                        //dd($docente->asignaturas);
+                    return View('parciales.index',compact('docente','periodo','estudiantes'));
+                }
+            }
+       
+      
+
         
     }
 
