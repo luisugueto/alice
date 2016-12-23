@@ -60,7 +60,7 @@ class InscripcionesController extends Controller
                        $rubros=Rubros::find($request->id_rubro);
                        foreach ($rubros as $rubros) {
                            
-                       $pagar=DB::insert("INSERT INTO rubros_realizados(monto_pagado,monto_adeudado,fecha,id_rubro,id_modalidad,id_estudiante) VALUES(0,".$rubros->monto.",".$rubros->fecha.",".$rubros->id.",1,".$request->id_estudiante.")");
+                       $pagar=DB::insert("INSERT INTO rubros_realizados(monto_pagado,monto_adeudado,fecha,id_rubro,id_modalidad,id_estudiante) VALUES(0,".$rubros->monto.",'".$rubros->fecha."',".$rubros->id.",1,".$request->id_estudiante.")");
 
                        }
                        

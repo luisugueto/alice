@@ -49,6 +49,7 @@
                             
                               &nbsp;&nbsp;&nbsp;&nbsp;  Docente:{{ $docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres."  C.I.: ".$docentes->cedula }}<br>
                               Lista de Asignaturas y Secciones asignadas
+                              <?php $id_prof=$docentes->id; ?>
                               
                               </h3>
                             </div>
@@ -78,9 +79,7 @@
                                <td>
                                 <div class="btn-group">
                                                                           
-                                      {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
-
-                                    <br><br>
+                                      <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$id_prof}},{{$docentes->id_seccion }},{{$docentes->id_curso}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
                                    
                                     
                                 </div>
@@ -187,7 +186,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                 {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
-                 <input type="text" id="codigo" name="codigo">
+                 <input type="hidden" id="codigo" name="codigo">
               <input type="hidden" id="id_prof" name="id_prof">
               <input type="hidden" id="id_seccion" name="id_seccion">
               <input type="hidden" id="id_curso" name="id_curso">
