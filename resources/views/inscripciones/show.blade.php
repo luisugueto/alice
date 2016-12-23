@@ -47,15 +47,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach($estudiantes as $estudiante)
-                                        <tr>
-                                            <td> {{ $estudiante->codigo_matricula }} </td>
-                                            <td> {{ $estudiante->cedula }} </td>
-                                            <td> {{ $estudiante->apellidos }}</td>
-                                            <td> {{ $estudiante->nombres }}</td>
-                                            <td> {{ $estudiante->genero }}</td>
-                                            <td>  
-                                            <?php $encontrar=0;
-                                                $id_estudiante=$estudiante->id;
+
+											<?php 	$encontrar=0;
+                                                	$id_estudiante=$estudiante->id;
 
                                              ?>
                                             @foreach($estudiante->cursos as $key)
@@ -64,12 +58,26 @@
                                                         <?php $encontrar++; ?>
                                                     @endif
                                             @endforeach
-                                            @if(count($estudiante->cursos)==0 and $encontrar==0)
+                                            <tr><td colspan="6">{{$encontrar}}</td></tr>
+								
+                                            @if(count($estudiante->cursos)==0 and $encontrar>0)
+					
+
+                                        <tr>
+                                            <td> {{ $estudiante->codigo_matricula }} </td>
+                                            <td> {{ $estudiante->cedula }} </td>
+                                            <td> {{ $estudiante->apellidos }}</td>
+                                            <td> {{ $estudiante->nombres }}</td>
+                                            <td> {{ $estudiante->genero }}</td>
+                                            <td>  
+                                            
+                                            
                                                     
                                                 {!! link_to_route('inscripciones.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-newspaper-o fa-2x','title' => 'Seleccione para realizar inscripción del estudiante en este periodo']) !!}
-                                            @endif
-                                            </td>
+                                          </td>
                                         </tr>
+                                            @endif
+                                          
                                     @endforeach
                                 </tfoot>
                             </table>

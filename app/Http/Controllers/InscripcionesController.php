@@ -72,7 +72,9 @@ class InscripcionesController extends Controller
      */
     public function show($id)
     {
-        //
+        $estudiantes=Estudiante::all();
+
+        return View('inscripciones.show',compact('estudiantes'));
     }
 
     /**
