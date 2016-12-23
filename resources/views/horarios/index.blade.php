@@ -25,16 +25,14 @@
                                     <th>Curso</th>
                                     <th>Sección</th>
                                     <th>Periodo</th>
-                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($secciones as $seccion)
+                                @foreach($horarios as $horario)
                                     <tr>
-                                        <td>{{$seccion->curso->curso}}</td>
-                                        <td>{{$seccion->literal}}</td>
-                                        <td>{{$periodo->nombre}}</td>
-                                        <td></td>
+                                        <td>{{$horario->curso}}</td>
+                                        <td>{{$horario->literal}}</td>
+                                        <td>{{$horario->nombre}}</td> 
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -38,10 +38,14 @@ class HorariosController extends Controller
     public function index()
     {
 
-        $secciones = Seccion::all();
-        $periodo = Periodos::where('id', Session::get('periodo'))->first();
-
-        return view('horarios.index', compact('secciones', 'periodo'));
+        $horarios = \DB::table('asignacion_bloques')
+                             ->join('secciones', 'asignacion_bloques.id_seccion', '=', 'secciones.id')
+                             ->join('periodos', 'asignacion_bloques.id_periodo', '=', 'periodos.id')
+                             ->join('cursos', 'secciones.id_curso', '=', 'cursos.id')
+                             ->groupBy('id_seccion')
+                             ->get();
+        //dd($horarios);
+        return view('horarios.index', compact('horarios'));
     }
 
     /**
@@ -53,10 +57,10 @@ class HorariosController extends Controller
     {
         //dd($request->all());
 
-        $bloques = DB::table('bloques')->get();
+    /*  $bloques = DB::table('bloques')->get();
         $horas = DB::table('bloques')->where('id_dia', 1)->get();
         $dias = DB::table('dias')->get();
-        
+        */
 
         $bloques = \DB::table('bloques')->get();
         $horas = \DB::table('bloques')->where('id_dia', 1)->get();
@@ -169,7 +173,7 @@ class HorariosController extends Controller
                 
                 Session::flash('message', 'SE HAN CREADO NUEVOS REGISTROS');
 
-                return redirect()->back();
+                return redirect('horarios/buscar');
             }
         }
     }
@@ -180,9 +184,47 @@ class HorariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $id)
+    public function show($id)
     {
-        //
+        $bloques = \DB::table('bloques')->get();
+        $horas = \DB::table('bloques')->where('id_dia', 1)->get();
+        $dias = \DB::table('dias')->get();
+        $periodo = Session::get('periodos');
+
+        $k=0;
+        
+        for ($i=0; $i < 9 ; $i++) { 
+    
+            for ($j=0; $j < 5 ; $j++) 
+            { 
+                $bloques2[$i][$j] = $bloques[$k];
+                $k++;
+            }
+        }
+
+        //BUSCANDO BLOQUES ASIGNADOS
+        $i= 0;
+        $j= 0;
+
+        $asignados = DB::table('asignacion_bloques')->where([['id_seccion', $id], ['id_periodo', Session::get('periodo')]])->get();
+
+        foreach ($asignados as $asignado) 
+        {
+            $bloques_asignados[$i] = $asignado->id_bloque;
+            $asignaturas_asignadas[$i] = $asignado->id_asig;
+            $i++;    
+        }
+
+        $aulas_asignadas = DB::table('aulas')
+                               ->join('secciones', 'secciones.id', '=', $id)
+                               ->join('asignacion_bloques', 'asignacion_bloques.id_aula', '=', 'aulas.id')
+                               ->join('periodos', Session::get('periodo'), '=', 'periodos.id')
+                               ->get();
+
+        dd($aulas_asignadas);
+        
+        return view('horarios.forms.show', '');
+
     }
 
     /**
