@@ -16,10 +16,8 @@ class CreateFacturacionTable extends Migration
             $table->increments('id');
             $table->integer('id_estudiante')->unsigned();
             $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
-            $table->string('nombre', 25);
-            $table->date('fecha_max');
-            $table->double('monto', 10,2);
-            $table->string('enviar_banco', 2);
+            $table->integer('id_rubro')->unsigned();
+            $table->foreign('id_rubro')->references('id')->on('rubros')->onDelete('Cascade');
             $table->timestamps();
         });
     }
