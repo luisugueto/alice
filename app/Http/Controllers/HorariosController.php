@@ -10,6 +10,7 @@ use App\Seccion;
 use App\Asignaturas;
 use App\Aula;
 use App\Personal;
+use App\Periodos;
 use Session;
 use DB;
 use Auth;
@@ -36,7 +37,11 @@ class HorariosController extends Controller
      */
     public function index()
     {
-        return view('horarios.index');
+
+        $secciones = Seccion::all();
+        $periodo = Periodos::where('id', Session::get('periodo'))->first();
+
+        return view('horarios.index', compact('secciones', 'periodo'));
     }
 
     /**

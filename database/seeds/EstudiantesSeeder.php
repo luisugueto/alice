@@ -22,6 +22,7 @@ class EstudiantesSeeder extends Seeder
         ]);
         DB::table('datos_generales_estudiante')->insert([
             'id_representante' => '1',
+            'foto' => '32970240_4634374391562_617028998_n.jpg',
             'codigo_matricula' => 'abc2131315',
             'apellido_paterno' => 'Quimotes',
             'apellido_materno' =>'Perez',
@@ -76,6 +77,7 @@ class EstudiantesSeeder extends Seeder
         ]);
         DB::table('datos_generales_estudiante')->insert([
             'id_representante'=>'2',
+            'foto' => '32970240_4634374391562_617028998_n.jp'.$i,
             'codigo_matricula' => 'abc124'.$i,
             'apellido_paterno'=>'Quimotes',
             'apellido_materno'=>'Jimenez',
@@ -128,6 +130,7 @@ class EstudiantesSeeder extends Seeder
         ]);
                 DB::table('datos_generales_estudiante')->insert([
                     'id_representante'=> $i,
+                    'foto' => '32970240_4634374391562_617028998_n.jpgf'.$i,
                     'codigo_matricula' => 'abc13a4'.$i,
                     'apellido_paterno'=>'Quimotes'.$i,
                     'apellido_materno'=>'Jimenez'.$i,

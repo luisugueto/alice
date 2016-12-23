@@ -29,6 +29,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($secciones as $seccion)
+                                    <tr>
+                                        <td>{{$seccion->curso->curso}}</td>
+                                        <td>{{$seccion->literal}}</td>
+                                        <td>{{$periodo->nombre}}</td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                          </table>
                            
