@@ -151,7 +151,7 @@
                 <a href="#"><i class='fa fa-link'></i> <span>Certificados</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
-                    <li><a href="{{ route('certificados.matricula') }}">Matrícula</a></li>
+                    <li><a href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a></li>
                     @endif
                   
                 </ul>
