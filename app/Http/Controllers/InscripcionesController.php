@@ -68,12 +68,6 @@ class InscripcionesController extends Controller
                        $suma=0;
                     for ($i=0; $i < $cuantos; $i++) { 
 
-                        $facturar=DB::insert("INSERT INTO facturacion(id_estudiante,id_rubro) VALUES(".$request->id_estudiante.",".$request->id_rubro[$i].")");
-                       $rubros=Rubros::find($request->id_rubro);
-                       foreach ($rubros as $rubros) {
-                           
-                       $pagar=DB::insert("INSERT INTO rubros_realizados(monto_pagado,monto_adeudado,fecha,id_rubro,id_modalidad,id_estudiante) VALUES(0,".$rubros->monto.",'".$rubros->fecha."',".$rubros->id.",1,".$request->id_estudiante.")");
-
                         $rubros=Rubros::find($request->id_rubro[$i]);
                        
                            $suma=$suma+$rubros->monto;

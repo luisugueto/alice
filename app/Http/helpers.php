@@ -138,7 +138,7 @@ use App\Periodos;
 		}
 	}
 
-<<<<<<< HEAD
+
 	function buscar($id_estudiante){
 		$id_periodo=Session::get('periodo');
 
@@ -208,8 +208,8 @@ use App\Periodos;
 		$parcial=count($buscar_p);
 
 		return $parcial;
+	}
 
-=======
 	function asignadas_id($bloque, $aulas)
 	{
 		foreach ($aulas as $key => $aula) 
@@ -223,5 +223,5 @@ use App\Periodos;
 				return $sql->id;
 			}
 		}
->>>>>>> 18ce1c5557511c84057a8e5e7e7fbcf7a748ae12
+
 	}
