@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CedulaEstudianteRequest;
 use App\RubrosRealizados;
 use App\Estudiante;
 use App\Rubros;
 use App\Modalidad;
 use App\FormasPago;
-
-
+use App\FacturasRubros;
+use Session;
+use App\Cursos;
 class FacturacionesController extends Controller
 {
     /**
@@ -21,10 +23,9 @@ class FacturacionesController extends Controller
      */
     public function index()
     {
-       
-
+        $facturacion = FacturasRubros::groupBy('id_factura')->get();
         //dd($facturacion);
-        //return view('facturaciones.index', compact('facturacion', 'estudiantes', 'rubros_e', 'representante', 'rubros'));
+        return view('facturaciones.index', compact('facturacion'));
     }
 
     /**
@@ -32,9 +33,24 @@ class FacturacionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CedulaEstudianteRequest $request)
     {
-        //
+        $cedula = $request->nacionalidad.$request->cedula;
+
+        $estudiante = Estudiante::where('cedula', $cedula)->first();
+        //dd($estudiante);
+        if(!empty($estudiante))
+        {
+            $cursos = Cursos::lists('curso', 'id');
+
+            return view('facturaciones.create', compact('estudiante', 'cursos'));
+        
+        }else{
+
+            Session::flash('message-error', 'EESTUDIANTE NO SE ENCUENTRA REGISTRADO EN LA BASE DE DATOS');
+
+            return redirect()->back();
+        }
     }
 
     /**
@@ -67,12 +83,11 @@ class FacturacionesController extends Controller
      */
     public function edit($id)
     {
-
-        $rubros = Rubros::find($id);
+        $facturacion = FacturasRubros::find($id);
         $modalidad = Modalidad::lists('modalidad', 'id');
-        $formas_pago = FormasPago::all();
-  
-        return view('facturaciones.edit', compact('rubros', 'modalidad', 'formas_pago'));
+        $formas_pago = FormasPago::get();
+
+        return view('facturaciones.edit', compact('facturacion', 'modalidad', 'formas_pago'));
     }
 
     /**
@@ -84,7 +99,145 @@ class FacturacionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $facturacion = FacturasRubros::find($id);
+  
+        $existe = $facturacion->realizados()->exists();
+
+        $forma_pago = Modalidad::find($request->id_modalidad);
+        
+ 
+        if($request->nro_transferencia == "")
+        {
+ 
+          $nro_transferencia="0";
+  
+        }else{
+ 
+              $nro_transferencia = $request->nro_transferencia;
+        }
+ 
+        if($request->nro_cheque=="")
+        { 
+
+            $nro_cheque="0";
+ 
+        }else{
+  
+            $nro_cheque = $request->nro_cheque;
+        }
+ 
+ 
+        if($existe)
+        {
+            $rubros_realizados = $facturacion->realizados->last();
+            
+            if($request->monto_pagar > $rubros_realizados->monto_adeudado)
+            {
+                Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
+ 
+                return redirect()->back();
+ 
+              }else{
+ 
+                  if($forma_pago->modalidad == 'Exacto')
+                  {
+ 
+                      $monto_deuda = $rubros_realizados->monto_adeudado-$rubros_realizados->monto_adeudado;
+  
+                      $rubros_realizado = new RubrosRealizados;
+                      $rubros_realizado->id_factura_rubro = $id;
+                      $rubros_realizado->monto_pagado = $rubros_realizados->monto_adeudado;
+                      $rubros_realizado->monto_adeudado = $monto_deuda;
+                      $rubros_realizado->fecha = new \DateTime();
+                      $rubros_realizado->id_modalidad = $request->id_modalidad;
+                      $rubros_realizado->no_transferencia = $nro_transferencia;
+                      $rubros_realizado->no_cheque = $nro_cheque;
+                      $rubros_realizado->save();
+  
+                      for($i=0; $i < count($request->id_forma); $i++)
+                      {
+                          $rubros_realizado->formas()->attach($request->id_forma[$i]);
+                      }   
+  
+                  }else{
+  
+                      $monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
+ 
+                      $rubros_realizado = new RubrosRealizados;
+                      $rubros_realizado->id_factura_rubro = $id; 
+                      $rubros_realizado->monto_pagado = $request->monto_pagar;
+                      $rubros_realizado->monto_adeudado = $monto_deuda;
+                      $rubros_realizado->fecha = new \DateTime();
+                      $rubros_realizado->id_modalidad = $request->id_modalidad;
+                      $rubros_realizado->no_transferencia = $nro_transferencia;
+                      $rubros_realizado->no_cheque = $nro_cheque;
+                      $rubros_realizado->save();
+  
+                      for($i=0; $i < count($request->id_forma); $i++)
+                      {
+                          $rubros_realizado->formas()->attach($request->id_forma[$i]);
+                      }   
+                  }
+  
+                  return redirect('facturaciones');
+            }
+  
+          }else{
+  
+              if($request->monto_pagar > $facturacion->factura->total_pago)
+              {
+                  Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
+  
+                  return redirect()->back();
+  
+              }else{
+                  
+                  if($forma_pago->modalidad == 'Exacto')
+                  {
+                      
+                    $monto_deuda = $facturacion->factura->total_pago-$facturacion->factura->total_pago;
+  
+                    $rubros_realizados = new RubrosRealizados;
+                    $rubros_realizados->id_factura_rubro = $id;
+                    $rubros_realizados->monto_pagado = $facturacion->factura->total_pago;
+                    $rubros_realizados->monto_adeudado = $monto_deuda;
+                    $rubros_realizados->fecha = new \DateTime();
+                    $rubros_realizados->id_modalidad = $request->id_modalidad;
+                    $rubros_realizados->no_transferencia = $nro_transferencia;
+                    $rubros_realizados->no_cheque = $nro_cheque;
+                    $rubros_realizados->save();
+  
+                     for($i=0; $i < count($request->id_forma); $i++)
+                     {
+                          $rubros_realizados->formas()->attach($request->id_forma[$i]);
+                     }
+ 
+                  }else{
+  
+                      $monto_deuda = $facturacion->factura->total_pago-$request->monto_pagar;
+ 
+                      $rubros_realizados = new RubrosRealizados;
+                      $rubros_realizados->id_factura_rubro = $id;
+                      $rubros_realizados->monto_pagado = $request->monto_pagar;
+                      $rubros_realizados->monto_adeudado = $monto_deuda;
+                      $rubros_realizados->fecha = new \DateTime();
+                      $rubros_realizados->id_modalidad = $request->id_modalidad;
+                      $rubros_realizados->no_transferencia = $nro_transferencia;
+                      $rubros_realizados->no_cheque = $nro_cheque;
+                      $rubros_realizados->save();
+  
+                    for($i=0; $i < count($request->id_forma); $i++)
+                    {
+                          $rubros_realizados->formas()->attach($request->id_forma[$i]);
+                    }
+                }
+  
+                  return redirect('facturaciones');
+              }
+        }
+
+        return redirect('facturaciones');
+    
     }
 
     /**
@@ -96,5 +249,10 @@ class FacturacionesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search()
+    {
+        return view('facturaciones.forms.fields-search');
     }
 }

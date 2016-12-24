@@ -40,25 +40,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($rubros as $key => $estudiante)
+                                @foreach($facturacion as $key => $facturaciones)
                                     <tr>
-                                        <?php $i = 0; $monto = 0; ?>
+                                        @if(count($facturaciones->realizados) > 0)
+                                            <?php $i = 0; $monto = 0; ?>
+                                            @foreach($facturaciones->realizados as $pagos)
+                                                
+                                                <?php 
+                                                   
+                                                    $i += $pagos->monto_pagado;
+                                                    $monto = $pagos->monto_adeudado; 
+                                                ?>
 
-                                        @foreach($rubros_e[$key]->rubros_realizados as $pagos)
-                                            <?php
-                                                //echo $pagos; 
-                                                $i += $pagos->monto_pagado;
-                                                $monto = $pagos->monto_adeudado; 
-                                             ?>
-
-                                        @endforeach
-
-                                        <td>{{$rubros_e[$key]->fecha}}</td>
-                                        <td>{{$representante[$key]->cedula_re}}</td>
-                                        <td>{{$representante[$key]->nombres_re}}</td>
-                                        <td>{{$rubros_e[$key]->monto}}</td>
-                                        <td>{{ $monto }}</td>
-                                        <td class="text-center">{!! link_to_route('facturaciones.edit', $title = '', $parameters = $facturacion[$key], $attributes = ['class'=>'fa fa-money fa-2x']) !!}</td>
+                                            @endforeach
+                                        @else
+                                            <?php $monto = $facturaciones->factura->total_pago; ?>
+                                        @endif
+                                        <td>{{$facturaciones->rubro->fecha}}</td>
+                                        <td>{{$facturaciones->factura->estudiante->cedula}}</td>
+                                        <td>{{$facturaciones->factura->estudiante->nombres}}</td>
+                                        <td>{{$facturaciones->factura->total_pago}}</td>
+                                        <td>{{$monto}}</td>
+                                        <td class="text-center">
+                                        @if($monto != '0')
+                                            {!! link_to_route('facturaciones.edit', $title = '', $parameters = $facturaciones->id, $attributes = ['class'=>'fa fa-money fa-2x']) !!}
+                                        @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

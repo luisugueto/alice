@@ -25,6 +25,6 @@ class FormasPago extends Model
 
     public function rubro()
     {
-        return $this->belongsToMany('App\RubrosRealizados', 'forma_rubros_realizados', 'id_forma', 'id_rubro');
+        return $this->belongsToMany('App\RubrosRealizados', 'forma_rubros_realizados', 'id_forma', 'id_rubro_realizado');
     }
 }

@@ -21,6 +21,6 @@ class FacturasRubros extends Model
 
     public function realizados()
     {
-    	return $this->belongsTo('App\RubrosRealizados', 'id_factura_rubro');
+    	return $this->hasMany('App\RubrosRealizados', 'id_factura_rubro');
     }
 }

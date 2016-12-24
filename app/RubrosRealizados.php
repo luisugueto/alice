@@ -9,7 +9,6 @@ class RubrosRealizados extends Model
     protected $fillable = ['id_factura_rubro', 'monto_pagado', 'monto_adeudado', 'fecha', 'id_modalidad', 'id_estudiante', 'no_transferencia', 'no_cheque'];
 
     protected $table = 'rubros_realizados';
-    public $timestamps = false;	
 
     public function estudiante()
     {
@@ -28,11 +27,11 @@ class RubrosRealizados extends Model
 
     public function formas()
     {
-        return $this->belongsToMany('App\FormasPago', 'forma_rubros_realizados', 'id_rubro', 'id_forma');
+        return $this->belongsToMany('App\FormasPago', 'forma_rubros_realizados', 'id_rubro_realizado', 'id_forma');
     }
 
     public function rubros_factura()
     {
-        return $this->hasMany('App\FacturasRubros', 'id', 'id_factura_rubro');
+        return $this->belongsTo('App\FacturasRubros', 'id_factura_rubro', 'id');
     }
 }

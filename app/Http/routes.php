@@ -36,7 +36,7 @@ Route::group(['middleware' => 'web'], function () {
 	//Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
-	Route::get('rubros/buscar/estudiante', ['uses' => 'RubrosController@search', 'as' => 'rubros.buscar.estudiante']);
+	Route::get('facturaciones/buscar/estudiante', ['uses' => 'FacturacionesController@search', 'as' => 'facturaciones.buscar']);
 	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {
 
 		$existe = \DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque]])->exists();
@@ -53,6 +53,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
 	Route::get('certificados/{id}/matricula',['uses' => 'CertificadosController@matricula', 'as' => 'certificados.matricula']);
 	Route::get('inscripciones/cambiarseccion/{id}/buscar',['uses' => 'InscripcionesController@cambiarseccion', 'as' => 'inscripciones.cambiarseccion.buscar']);
+	Route::get('horarios/{id}/pdf', ['uses' => 'HorariosController@pdf', 'as' => 'horarios.pdf']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
