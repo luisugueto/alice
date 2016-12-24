@@ -22,6 +22,7 @@
             </ul>
         </div>
     @endif
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
@@ -59,6 +60,7 @@
                                             
                                                     
                                                 {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-exchange fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
+                                                {!! link_to_route('certificados.matricula', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-print fa-2x','title' => 'Imprimir Certificado de Matrícula']) !!}
                                           </td>
                                         </tr>
                                             

@@ -154,22 +154,75 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
-        foreach ($user as $key) { $suma = $key->suma; }
-        if($suma>1) Session::flash('message-error', 'ERROR');
+        if($request['roles_id']==1)
+        {
+            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+            foreach ($user as $key) { $suma = $key->suma; }
+            if($suma>0) {
+                Session::flash('message-error', 'ERROR: DISCULPE.');
+                return redirect()->action('UsuariosController@index');
+            }
+            else{
+                $user = User::find($id);
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->roles_id = $request['roles_id'];
+                 
+                $user->save();
+                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                return redirect()->action('UsuariosController@index');
+            }
+        }
+        if($request['roles_id']==2)
+        {
+            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=2');
+            foreach ($user as $key) { $suma = $key->suma; }
+            if($suma>0) {
+                Session::flash('message-error', 'ERROR: DISCULPE.');
+                return redirect()->action('UsuariosController@index');
+            }
+            else{
+                $user = User::find($id);
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->roles_id = $request['roles_id'];
+                 
+                $user->save();
+                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                return redirect()->action('UsuariosController@index');
+            }
+        }
+        elseif($request['roles_id']==5)
+        {
+            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
+            foreach ($user as $key) { $suma = $key->suma; }
+            
+
+            if($suma>0){
+                Session::flash('message-error', 'ERROR: DISCULPE.');
+                return redirect()->action('UsuariosController@index');
+            }
+            else{
+                $user = User::find($id);
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->roles_id = $request['roles_id'];
+                 
+                $user->save();
+                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                return redirect()->action('UsuariosController@index');
+            }
+        }
         else{
-             $user = User::find($id);
-             $user->name = strtoupper($request['name']);
-             $user->email = strtolower($request['email']);
-             $user->roles_id = $request['roles_id'];
+            $user = User::find($id);
+            $user->name = strtoupper($request['name']);
+            $user->email = strtolower($request['email']);
+            $user->roles_id = $request['roles_id'];
              
-            #$user->fill($request->all());
             $user->save();
             Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
-
+            return redirect()->action('UsuariosController@index');
         }
-
-        return redirect::to('/usuarios');
     }
 
     /**

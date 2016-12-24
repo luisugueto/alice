@@ -6,10 +6,7 @@
 	{!! Form::label('Email', 'Correo Electrónico') !!}
 	{!! Form::text('email', null, ['class' => 'form-control', 'placeholder'=>'ejemplo@ejemplo.com']) !!} 
 </div>
-<div class="form-group">
-	{!! Form::label('Password', 'Contraseña') !!}
-	{!! Form::password('password', ['class' => 'form-control', 'placeholder' => '']) !!}
-</div>
+
 <div class="form-group">
 	{!! Form::label('Roles', 'Roles') !!}
 	<select name="roles_id" class="form-control select">
@@ -18,4 +15,9 @@
 			<option value="{{ $r->id }}">{{ $r->nombre }}</option>
 		@endforeach
 	</select>
+</div>
+
+<div class="form-group">
+	{{ Form::label('Contraseña', 'Contraseña') }}
+	{{ Form::password('password', ['class'=>'form-control', 'required']) }}
 </div>

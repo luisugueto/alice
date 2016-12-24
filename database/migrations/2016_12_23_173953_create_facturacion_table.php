@@ -15,9 +15,12 @@ class CreateFacturacionTable extends Migration
         Schema::create('facturacion', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_estudiante')->unsigned();
-            $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('Cascade');
-            $table->integer('id_rubro')->unsigned();
-            $table->foreign('id_rubro')->references('id')->on('rubros')->onDelete('Cascade');
+            $table->integer('numero')->unique();
+            $table->date('fecha');
+            $table->double('total_pago');
+
+            $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

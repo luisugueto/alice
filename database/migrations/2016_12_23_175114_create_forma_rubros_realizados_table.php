@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormaRubrosRalizadosTable extends Migration
+class CreateFormaRubrosRealizadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,12 @@ class CreateFormaRubrosRalizadosTable extends Migration
     {
         Schema::create('forma_rubros_realizados', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_rubro')->unsigned();
-            $table->foreign('id_rubro')->references('id')->on('rubros_realizados')->onDelete('Cascade');
             $table->integer('id_forma')->unsigned();
-            $table->foreign('id_forma')->references('id')->on('formas_pagos')->onDelete('Cascade');
+            $table->integer('id_rubro_realizado')->unsigned();
+
+            $table->foreign('id_forma')->references('id')->on('formas_pagos')->onDelete('cascade');
+            $table->foreign('id_rubro_realizado')->references('id')->on('rubros_realizados')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

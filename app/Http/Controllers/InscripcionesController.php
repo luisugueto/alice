@@ -13,6 +13,9 @@ use Session;
 use DB;
 use App\Rubros;
 use App\Periodos;
+use App\Facturacion;
+use App\FacturasRubros;
+use App\RubrosRealizados;
 class InscripcionesController extends Controller
 {
     /**
@@ -54,18 +57,35 @@ class InscripcionesController extends Controller
         $cuantos=count($request->id_rubro);
 
                 if($cuantos>0){
+                    $string="0123456789";
+                $su=strlen($string)-1;
+                $numero= substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1);
+                $facturar=DB::insert("INSERT INTO facturacion(id_estudiante,numero,fecha,total_pago) VALUES(".$request->id_estudiante.",".$numero.",'".date('Y-m-d')."',0)");
+                $factura=Facturacion::all()->last();
+                $id_factura=$factura->id;
+                //dd($id_factura);
 
+                       $suma=0;
                     for ($i=0; $i < $cuantos; $i++) { 
+<<<<<<< HEAD
                         $facturar=DB::insert("INSERT INTO facturacion(id_estudiante,id_rubro) VALUES(".$request->id_estudiante.",".$request->id_rubro[$i].")");
                        $rubros=Rubros::find($request->id_rubro);
                        foreach ($rubros as $rubros) {
                            
                        $pagar=DB::insert("INSERT INTO rubros_realizados(monto_pagado,monto_adeudado,fecha,id_rubro,id_modalidad,id_estudiante) VALUES(0,".$rubros->monto.",'".$rubros->fecha."',".$rubros->id.",1,".$request->id_estudiante.")");
+=======
+>>>>>>> d1d2519b3ca104e9f3dd023a43c80985fa50591a
 
-                       }
+                        $rubros=Rubros::find($request->id_rubro[$i]);
                        
-
+                           $suma=$suma+$rubros->monto;
+                           $pagar=FacturasRubros::create(['id_factura' => $id_factura,'id_rubro' => $request->id_rubro[$i]]);
+                     
                     }
+
+                $factura2=Facturacion::find($id_factura);
+                $factura2->total_pago=$suma;
+                $factura2->save();
 
                 }
         Session::flash('message', 'ESTUDIANTE INSCRITO EXITOSAMENTE EN EL CURSO '.$curso->curso.' EN LA SECCIÓN '.$seccion->literal);   

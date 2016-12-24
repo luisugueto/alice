@@ -41,6 +41,7 @@ class ParcialesController extends Controller
             $correo=Auth::user()->email;
             $id_periodo=Session::get('periodo');
             $periodo=Periodos::find($id_periodo);
+            $contador=0;
             foreach ($personal as $personal) {
 
                 
@@ -48,12 +49,19 @@ class ParcialesController extends Controller
 
                     $docente=Personal::find($personal->id);
                     $sql="SELECT asignacion.*,cursos.*,secciones.*,datos_generales_estudiante.* FROM asignacion,datos_generales_personal,cursos,secciones,inscripciones,datos_generales_estudiante WHERE datos_generales_personal.id=asignacion.id_prof AND asignacion.id_prof=".$personal->id." AND cursos.id=secciones.id_curso AND (inscripciones.id_seccion=asignacion.id_seccion AND inscripciones.id_periodo=".$id_periodo." AND asignacion.id_periodo=".$id_periodo.") GROUP BY inscripciones.id_estudiante";
-                   //dd($sql);
+                   /*dd($sql);*/
                    $estudiantes=DB::select($sql);
-
+                    $contador++;
                         //dd($docente->asignaturas);
                     return View('parciales.index',compact('docente','periodo','estudiantes'));
+                
                 }
+                
+            }
+
+            if($contador==0){
+               // Session::flash('message-error', 'DISCULPE, USTED NO PUEDE REALIZAR CARGA DE CALIFICACIONES');
+                 return View('home');
             }
        
       

@@ -7,19 +7,23 @@
 </head>
 <body>
 <div align="right">
-	<b>Guayaquil, {{ date('d-m-Y') }}</b>
+	<b>Guayaquil, <?php date_default_timezone_set('America/Guayaquil'); //puedes cambiar Guayaquil por tu Ciudad
+setlocale(LC_TIME, 'spanish');
+echo $fecha=strftime("%d de %B de %Y"); ?></b>
 </div>
+
 <div align="center">
 	<h1>CERTIFICADO DE MATRICULA</h1>
 </div>
 
-<div align="center">
-	<p>Por medio de la Presente la Secretaría de la Escuela de Educación Básica<br>Particular 
-	MARÍA MONTESSORI, certifica que el(a) estudiante:<br> <br>
-	<b>{{ strtoupper($nombres) }} {{ strtoupper($apellido) }}</b><br><br>
-	Se matriculó en esta institución en <b>{{ $curso }} grado de Educación General Básica</b> en el <br>
-	Periodo lectivo <b>{{ $periodo }}</b> según N° matricula <b>0245</b><br><br>
-	Así consta en los archivos de la Secretaría del Plantel, a los que remito en caso<br>necesario.</p>
+<div class="centrado">
+	<p align="justify">Por medio de la Presente la Secretaría de la Escuela de Educación Básica Particular MARÍA MONTESSORI, certifica que el(a) estudiante:<br> <br>
+	<div align="center">
+		<b><h2>{{ strtoupper($nombres) }} {{ strtoupper($apellido) }}</h2></b>
+	</div><br><br>
+	Se matriculó en esta institución en <b>{{ $curso }} grado de Educación General Básica</b> en el 
+	Periodo lectivo <b>{{ $periodo }}</b> según N° matricula <b>0245</b>.<br><br>
+	Así consta en los archivos de la Secretaría del Plantel, a los que remito en caso necesario.</p>
 	<br><br><br>
 
 	<p align="left">Es todo cuanto puedo certificar en honor a la verdad.	<br>

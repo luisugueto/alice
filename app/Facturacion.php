@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Facturacion extends Model
 {
-    protected $fillable = ['id_estudiante', 'nombre', 'fecha_max', 'monto', 'enviar_banco'];
+    protected $fillable = ['id_estudiante', 'numero', 'fecha', 'total_pago'];
 
     protected $table = 'facturacion';
 
@@ -15,13 +15,9 @@ class Facturacion extends Model
     	return $this->belongsTo('App\Estudiante', 'id_estudiante');
     }
 
-    public function rubros()
+    public function facturacion_rubros()
     {
-    	return $this->belongsToMany('App\Estudiante', 'rubros', 'id_factura', 'id_estudiante');
+    	return $this->hasMany('App\FacturasRubros', 'id_factura', 'id');
     }
 
-    public function rubros_realizados()
-    {
-        return $this->hasMany('App\RubrosRealizados', 'id_factura', 'id');
-    }
 }
