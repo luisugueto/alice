@@ -39,6 +39,7 @@
                                         <th>Nombre(s)</th>
                                         <th>Curso</th>
                                         <th>Sección</th>
+                                        <th>Cargar a:</th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -52,11 +53,17 @@
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->curso }} </td>
                                             <td> {{ $estudiante->literal }} </td>
+                                            <td>{{ buscar($estudiante->id)  }}</td>
                                             <td>  
-                                            
-                                            
-                                                    
-                                                {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
+                                            <?php $parcial=buscar_parcial($estudiante->id); ?>
+
+                                                    @if($parcial==3)
+                                                {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square-o fa-2x','title' => 'Seleccione para Agregar Quimestre']) !!}
+                                                    @else
+
+                                                {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}
+                                                
+                                                    @endif
                                           </td>
                                         </tr>
                                             

@@ -1,4 +1,5 @@
 <?php 
+use App\Periodos;
 
 	function asignados($bloque, $asignados)
 	{
@@ -99,4 +100,76 @@
 			}
 			
 		}
+	}
+
+	function buscar($id_estudiante){
+		$id_periodo=Session::get('periodo');
+
+		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$total_quimestres=count($buscar_q);
+
+		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
+		$cuantos=count($buscar_p);
+
+			if ($total_quimestres==0) {
+				$a="1 er Quimestre";
+			} else {
+				if ($total_quimestres==1) {
+					$a="2 do Quimestre";	
+				} else {
+					$a="Quimestres Completos";
+				}
+				
+				
+			}
+
+			if ($cuantos==0) {
+				$b="1 er  Parcial";
+			} else {
+				if ($cuantos==1) {
+					$b="2 do  Parcial";
+				} else {
+					if($cuantos==2){
+					$b="3 er Parcial";
+					}else{
+						$b="Parciales Completos";
+					}
+				}
+				
+			}
+
+				$cargar=$b." ".$a;
+
+		return $cargar;
+	}
+
+	function buscar_quimestre($id_estudiante){
+
+		#opcion==2 se han registrados los quimestres completos
+		#opcion==1 solo se ha registrado uno
+		#opcion==0 no se ha registrado ninguno
+		$id_periodo=Session::get('periodo');
+
+		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$opcion=count($buscar_q);
+
+
+		return $opcion;
+
+	}
+
+	function buscar_parcial($id_estudiante){
+
+		#parcial==0 no se ha registrado nin gun parcial
+		#parcial==1 se ha registrado solo 1 parcial
+		#parcial ==2 se ha registrado solo 2 parciales
+		#parcial == 3 se han registrado todos los parciales
+		$id_periodo=Session::get('periodo');
+
+
+		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
+		$parcial=count($buscar_p);
+
+		return $parcial;
+
 	}
