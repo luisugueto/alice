@@ -21,21 +21,10 @@ class FacturacionesController extends Controller
      */
     public function index()
     {
-        $rubros = \DB::table('facturacion')->get();
-
-        $i = 0;
-
-        foreach ($rubros as $key => $rubro) 
-        {
-            $facturacion[$i] = $rubro->id;
-            $estudiantes[$i] = Estudiante::find($rubro->id_estudiante);
-            $representante[$i] = $estudiantes[$i]->representante;
-            $rubros_e[$i] = Rubros::find($rubro->id_rubro);
-            $i++; 
-        }
+       
 
         //dd($facturacion);
-        return view('facturaciones.index', compact('facturacion', 'estudiantes', 'rubros_e', 'representante', 'rubros'));
+        //return view('facturaciones.index', compact('facturacion', 'estudiantes', 'rubros_e', 'representante', 'rubros'));
     }
 
     /**

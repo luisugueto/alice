@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\HorarioRequest;
 use App\Cursos;
 use App\Seccion;
 use App\Asignaturas;
@@ -53,7 +54,7 @@ class HorariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(HorarioRequest $request)
     {
         //dd($request->all());
 
@@ -80,7 +81,7 @@ class HorariosController extends Controller
 
         //BUSCANDO BLOQUES ASIGNADOS
         $i= 0;
-        $j= 0;
+        $m= 0;
 
         $asignados = DB::table('asignacion_bloques')->where([['id_seccion', $request->id_seccion], ['id_periodo', Session::get('periodo')]])->get();
 
@@ -115,7 +116,7 @@ class HorariosController extends Controller
             }
         }
 
-
+        //dd($aulas_asignadas);
         //dd($asignaturas_asignadas);
  
         //dd($asignados);
@@ -186,10 +187,14 @@ class HorariosController extends Controller
      */
     public function show($id)
     {
+        $seccion = Seccion::find($id);
+        $curso = $seccion->curso;
         $bloques = \DB::table('bloques')->get();
         $horas = \DB::table('bloques')->where('id_dia', 1)->get();
         $dias = \DB::table('dias')->get();
-        $periodo = Session::get('periodos');
+        $periodo = Session::get('periodo');
+
+        $horario = \DB::table('asignacion_bloques')->where([['id_seccion', $id], ['id_periodo', Session::get('periodo')]])->get();
 
         $k=0;
         
@@ -212,18 +217,30 @@ class HorariosController extends Controller
         {
             $bloques_asignados[$i] = $asignado->id_bloque;
             $asignaturas_asignadas[$i] = $asignado->id_asig;
+            $aulas[$i] = $asignado->id_aula;
             $i++;    
         }
 
-        $aulas_asignadas = DB::table('aulas')
-                               ->join('secciones', 'secciones.id', '=', $id)
-                               ->join('asignacion_bloques', 'asignacion_bloques.id_aula', '=', 'aulas.id')
-                               ->join('periodos', Session::get('periodo'), '=', 'periodos.id')
-                               ->get();
+        foreach ($bloques as $bloque) 
+        {
+            foreach ($aulas as $aula) 
+            {
+                 $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque->id]])->first();
+            }
 
-        dd($aulas_asignadas);
-        
-        return view('horarios.forms.show', '');
+            if(count($asignadas) > 0)
+            {
+                $aulas_asignadas[$j] = $asignadas->id_bloque;
+                $j++;    
+            }
+        }
+
+        //dd($aulas_asignadas);
+
+
+       // dd($aulas_asignadas);
+        return view('horarios.forms.show', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'periodo', 'seccion', 'asignatura', 'aula'));
+      //  return view('horarios.forms.show', compact('seccion', 'curso', 'bloques2', 'horas', 'dias', 'periodo')); 
 
     }
 
@@ -235,7 +252,69 @@ class HorariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $seccion = Seccion::find($id);
+        $curso = $seccion->curso;
+        $bloques = \DB::table('bloques')->get();
+        $horas = \DB::table('bloques')->where('id_dia', 1)->get();
+        $dias = \DB::table('dias')->get();
+        $periodo = Session::get('periodo');
+
+        $horario = \DB::table('asignacion_bloques')->where([['id_seccion', $id], ['id_periodo', Session::get('periodo')]])->get();
+
+        $k=0;
+        
+        for ($i=0; $i < 9 ; $i++) { 
+    
+            for ($j=0; $j < 5 ; $j++) 
+            { 
+                $bloques2[$i][$j] = $bloques[$k];
+                $k++;
+            }
+        }
+
+        //BUSCANDO BLOQUES ASIGNADOS
+        $i= 0;
+        $j= 0;
+
+        $asignados = DB::table('asignacion_bloques')->where([['id_seccion', $id], ['id_periodo', Session::get('periodo')]])->get();
+
+        foreach ($asignados as $asignado) 
+        {
+            $bloques_asignados[$i] = $asignado->id_bloque;
+            $asignaturas_asignadas[$i] = $asignado->id_asig;
+            $aulas[$i] = $asignado->id_aula;
+            $i++;    
+        }
+
+        foreach ($bloques as $bloque) 
+        {
+            if(!empty($aulas))
+            {
+                foreach ($aulas as $aula) 
+                {
+                     $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque->id]])->first();
+                }
+
+                if(count($asignadas) > 0)
+                {
+                    $aulas_asignadas[$j] = $asignadas->id_bloque;
+                    $j++;    
+                }
+
+            }else{
+
+                Session::flash('message-error', 'TODAS LAS ASIGNATURAS FUERON ELIMINADAS');
+
+                return redirect('horarios');
+            }
+        }
+
+        //dd($aulas_asignadas);
+
+
+       // dd($aulas_asignadas);
+        return view('horarios.edit', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'aulas', 'horas', 'dias', 'curso', 'periodo', 'seccion', 'asignatura', 'aula'));
+      //  return view('horarios.forms.show', compact('seccion', 'curso', 'bloques2', 'horas', 'dias', 'periodo'));  
     }
 
     /**
@@ -256,9 +335,13 @@ class HorariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request)
+    {   
+        $bloque = \DB::table('asignacion_bloques')->where([['id_bloque', $request->id_bloque], ['id_aula', $request->id_aula], ['id_asig', $request->id_asig], ['id_seccion', $request->id_seccion], ['id_periodo', Session::get('periodo')]])->delete();
+
+        Session::flash('message-error', 'ASIGNATURA ELIMINADA');
+
+        return redirect()->back();
     }
 
     public function search()

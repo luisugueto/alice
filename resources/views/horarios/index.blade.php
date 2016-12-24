@@ -25,6 +25,7 @@
                                     <th>Curso</th>
                                     <th>Sección</th>
                                     <th>Periodo</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +33,11 @@
                                     <tr>
                                         <td>{{$horario->curso}}</td>
                                         <td>{{$horario->literal}}</td>
-                                        <td>{{$horario->nombre}}</td> 
+                                        <td>{{$horario->nombre}}</td>
+                                        <td class="text-center">
+                                            {!! link_to_route('horarios.show', $title = '', $parameters = $horario->id_seccion, $attributes = ['class'=>'fa fa-eye fa-2x']) !!}
+                                            {!! link_to_route('horarios.edit', $title = '', $parameters = $horario->id_seccion, $attributes = ['class'=>'fa fa-edit fa-2x']) !!}
+                                        </td> 
                                     </tr>
                                 @endforeach
                             </tbody>

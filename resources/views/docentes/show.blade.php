@@ -188,9 +188,9 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                 {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
                  <input type="text" id="codigo" name="codigo">
-              <input type="hidden" id="id_prof" name="id_prof">
-              <input type="hidden" id="id_seccion" name="id_seccion">
-              <input type="hidden" id="id_curso" name="id_curso">
+                <input type="hidden" id="id_prof" name="id_prof">
+                <input type="hidden" id="id_seccion" name="id_seccion">
+                <input type="hidden" id="id_curso" name="id_curso">
                 <button type="submit" class="btn btn-primary">Aceptar</button>
                 {!! Form::close() !!}
               </div>
