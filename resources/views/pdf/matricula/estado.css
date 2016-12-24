@@ -1,5 +1,5 @@
 *{
-	font-family: sans-serif;
+	font-family: "Times New Roman", Georgia, Serif;
 	margin-left: 30px;
 	margin-right: 30px;
 }
@@ -11,4 +11,8 @@ table{
 	text-align: center;
 	border-collapse: collapse;
 	border: 1px solid black;
+}
+.center{
+	padding-left: 50px;
+	padding-right: 50px;
 }

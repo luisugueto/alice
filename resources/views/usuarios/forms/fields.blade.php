@@ -16,3 +16,8 @@
 		@endforeach
 	</select>
 </div>
+
+<div class="form-group">
+	{{ Form::label('Contraseña', 'Contraseña') }}
+	{{ Form::password('password', ['class'=>'form-control', 'required']) }}
+</div>

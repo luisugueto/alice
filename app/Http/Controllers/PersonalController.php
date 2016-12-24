@@ -15,6 +15,7 @@ use App\Http\Requests\PersonalRequest;
 use Session;
 use Response;
 use Redirect;
+use Mail;
 use DB;
 use PDO;
 use Auth;
@@ -100,6 +101,15 @@ class PersonalController extends Controller
         $per->correo = strtolower($request['correo']);
         $per->id_cargo = $request['id_cargo'];
         $per->ingreso_notas = 1;
+        $data['correo'] = $request['correo'];
+        define('correo', $request['correo']);
+        define('nombres', $request['nombres']);
+        $data['clave'] = $request['clave'];
+        \Mail::send('emails.message', $data, function($message)
+        {
+            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        });
+        
         if($request['seleccionar']=='on'){
             $per->clave = $request['clave'];
         }else $per->clave = '';
@@ -111,7 +121,7 @@ class PersonalController extends Controller
         foreach ($per as $p) {
             $id = $p->id;
         }
-        
+
         $ina = new InformacionAcademica();
         $ina->id_personal = $id;
         $ina->primaria = strtoupper($request['primaria']);
@@ -142,12 +152,14 @@ class PersonalController extends Controller
                 $user->password = bcrypt($request['clave']);
                 $user->roles_id = '3';
                 $user->save();
+                
             }
         }
-
-        $personal = Personal::all();
-        Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
-        return redirect()->route('personal.index');
+        if($request['tipo_registro']==2)
+            Session::flash('message', 'DOCENTE REGISTRADO CORRECTAMENTE, RECIBIRÁ UN CORREO CON SU USUARIO Y CONTRASEÑA DE ACCESO');
+        else
+            Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
+            return redirect()->route('personal.index');
     }
 
     /**
@@ -193,6 +205,7 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     { 
+        $user = User::where('id', $id)->first();
         $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
         $cuantos = count($cedula);
 
@@ -219,9 +232,18 @@ class PersonalController extends Controller
                       
             if($request['seleccionar']=='on'){
                 $per->clave = $request['clave'];
-            }else $per->clave = '';
+            }else {
+                $per->clave = '';
                 $per->save();
-            
+            }
+
+            if(count($user)>0)
+            {
+                $usuario = User::find($user->id);
+                $usuario->email = $request['correo'];
+                $usuario->save();
+            }
+                        
             
             $ina = InformacionAcademica::find($id);
             $ina->primaria = strtoupper($request['primaria']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Personal;
 use App\Http\Requests;
 use Auth;
 use Session;
@@ -78,14 +79,19 @@ class PerfilController extends Controller
     public function update(Request $request, $id)
     {    
         $fotoBorrar = User::where('id', $id)->first();
-
+        $personal = Personal::where('correo', $fotoBorrar->email)->first();
         $foto = $request->file('foto');
         #Storage::delete('file.jpg');
         #$name = $request->file('foto');
-        if($request['verificar']=='on')
+            if($request['verificar'] == 'on')
             {
                 if($request['nueva'] == $request['confirmar'])
                 {
+                    if(count($personal)>0){
+                        $persona = Personal::find($personal->id);
+                        $persona->correo = $request['email'];
+                        $persona->save();
+                    }
                     Storage::delete($fotoBorrar->foto);
                     $user = User::find($id);
                     $user->name = $request['name'];
@@ -94,20 +100,19 @@ class PerfilController extends Controller
                     $user->foto = $foto;
                     $user->save();
                     
-                    Session::flash('message', 'PERFIL EDITADO CORRECTAMENTE');
-                    $user = User::where('id', Auth::user()->id)->first();
-                    return view('perfils.index', compact('user'));
                 }
-                
                 else{
                     Session::flash('message-error', 'CONTRASEÑA INCORRECTA');
-                    $user = User::where('id', Auth::user()->id)->first();
-                    return view('perfils.index', compact('user'));
+                    return redirect()->action('PerfilController@index');
                 }
-
             }
             else
             {
+                if(count($personal)>0){
+                        $persona = Personal::find($personal->id);
+                        $persona->correo = $request['email'];
+                        $persona->save();
+                    }
                 Storage::delete($fotoBorrar->foto);
                 $user = User::find($id);
                 $user->name = $request['name'];
@@ -115,10 +120,9 @@ class PerfilController extends Controller
                 $user->foto = $foto;
                 $user->save();
                 
-                Session::flash('message', 'PERFIL EDITADO CORRECTAMENTE');
-                    $user = User::where('id', Auth::user()->id)->first();
-                    return view('perfils.index', compact('user'));
             }
+            Session::flash('message', 'PERFIL EDITADO CORRECTAMENTE');
+            return redirect()->action('PerfilController@index');
     }
 
     /**

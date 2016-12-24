@@ -9,14 +9,6 @@
 
 @section('main-content')                    
 <div class="col-md-12">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
     @include('alerts.errors')
      
     
@@ -33,9 +25,14 @@
                 {{ $user->email }}                
             </div>
             <div>
+            @if($user->foto == '')
+                {{ Form::label('Foto', 'Foto: ') }}
+                <img src="../../img/ingresar.jpg">
+            @else
                 {{ Form::label('Foto', 'Foto: ') }}
                 <img src="{{ asset('perfil/'.$user->foto)}}" style="width: 200px; height: 200px;">
-            </div>    
+            </div>
+            @endif    
             <div>
                  {!!link_to_route('user_perfil.edit', $title = '', $parameters = $user->id, $attributes = ['class'=>'btn btn-primary fa fa-edit fa-2x'])!!}
             </div> 
