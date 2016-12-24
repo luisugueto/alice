@@ -31,7 +31,7 @@
                                         <td>Area de Trabajo</td>
                                         <td>Capital</td>
                                         <td>Prestamos y Anticipos</td>
-                                        <td>Dcto Retardo Asistencia</td>
+                                        <td>Minutos de Retardo Asistencia</td>
                                         <td>Pago Total</td>
                                     </tr>
                             </thead>
@@ -45,8 +45,8 @@
                                         <td>{{$per->cargo->area->nombre}}</td>
                                         <td>{{ remuneracion($per->id) }}</td>
                                         <td>{{ totalPrestamos($per->id) }}</td>
-                                        <td>{{ (remuneracion($per->id)*0.001)*retardoAsistencia($per->id) }}</td>
-                                        <td>{{ (remuneracion($per->id)-totalPrestamos($per->id))-(remuneracion($per->id)*0.001)*retardoAsistencia($per->id) }}</td>
+                                        <td>{{ retardoAsistencia($per->id) }}</td>
+                                        <td>{{ remuneracion($per->id)-totalPrestamos($per->id) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
