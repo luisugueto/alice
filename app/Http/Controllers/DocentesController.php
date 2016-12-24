@@ -175,10 +175,10 @@ class DocentesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $docentes = Personal::find($id);
+        $docentes = Personal::find($request->id_prof);
         $id_periodo= Session::get('periodo');
 
-
+        
         if($docentes->cargo->nombre=="DOCENTE DE PLANTA"){
             $result=DB::table('asignacion')->where('id_seccion',$request->id_seccion)->where('id_prof',$request->id_prof)->where('id_periodo',$id_periodo)->delete();
             Session::flash('message', 'DOCENTE DESINCORPORADO DE LA CARGA ACADÉMICA');

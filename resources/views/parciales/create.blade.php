@@ -3,8 +3,11 @@
 @section('htmlheader_title')
     Parciales
 @endsection
+<?php 
+        $parcial=buscar($estudiantes->id);
+?>
 
-@section('contentheader_title', 'Registro del () Parcial del () Quimestre')
+@section('contentheader_title', 'Registro del '.$parcial)
 
 
 @section('main-content')  
@@ -23,8 +26,10 @@
                         <div class="box">
                             <div class="box-header">
                               <h3 class="box-title">
-                              Estudiante:
-                              Curso:
+                              Estudiante:<br>
+                        {{$estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres}}<br>
+                        <strong>Matrícula Nro: </strong>{{$estudiantes->codigo_matricula}}<br>
+
                               </h3>
                             </div>
                               <div class="box-body">

@@ -177,23 +177,19 @@
         <h4 class="modal-title">Eliminar Carga Académica del Docente</h4>
       </div>
       <div class="modal-body">
-       
+         <strong>Seguro desea Retirar la carga académica?</strong>
         
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                 {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
-<<<<<<< HEAD
-                 <input type="text" id="codigo" name="codigo">
-                <input type="hidden" id="id_prof" name="id_prof">
-                <input type="hidden" id="id_seccion" name="id_seccion">
-                <input type="hidden" id="id_curso" name="id_curso">
-=======
+
+
                  <input type="hidden" id="codigo" name="codigo">
               <input type="hidden" id="id_prof" name="id_prof">
               <input type="hidden" id="id_seccion" name="id_seccion">
               <input type="hidden" id="id_curso" name="id_curso">
->>>>>>> d1d2519b3ca104e9f3dd023a43c80985fa50591a
+
                 <button type="submit" class="btn btn-primary">Aceptar</button>
                 {!! Form::close() !!}
               </div>

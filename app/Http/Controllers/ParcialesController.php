@@ -10,11 +10,12 @@ use App\Categorias_parcial;
 use App\Equivalencias;
 use App\Comportamiento;
 use Auth;
-use App\Estudiantes;
+use App\Estudiante;
 use App\Personal;
 use Session;
 use App\Periodos;
 use DB;
+use App\Http\helpers;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -48,9 +49,10 @@ class ParcialesController extends Controller
                 if($correo==$personal->correo){
 
                     $docente=Personal::find($personal->id);
-                    $sql="SELECT asignacion.*,cursos.*,secciones.*,datos_generales_estudiante.* FROM asignacion,datos_generales_personal,cursos,secciones,inscripciones,datos_generales_estudiante WHERE datos_generales_personal.id=asignacion.id_prof AND asignacion.id_prof=".$personal->id." AND cursos.id=secciones.id_curso AND (inscripciones.id_seccion=asignacion.id_seccion AND inscripciones.id_periodo=".$id_periodo." AND asignacion.id_periodo=".$id_periodo.") GROUP BY inscripciones.id_estudiante";
-                   
+                    $sql="SELECT inscripciones.*,datos_generales_estudiante.*,cursos.curso,cursos.id AS id_curso,secciones.literal FROM cursos,secciones, inscripciones,datos_generales_estudiante WHERE inscripciones.id_seccion=secciones.id AND inscripciones.id_curso=cursos.id AND inscripciones.id_estudiante=datos_generales_estudiante.id AND inscripciones.id_periodo=".$id_periodo." ";
+                   //dd($sql);
                    $estudiantes=DB::select($sql);
+
 
                     $contador++;
                         //dd($docente->asignaturas);
@@ -100,12 +102,16 @@ class ParcialesController extends Controller
      */
     public function show($id)
     {
-        $asignaturas=Asignaturas::where('id_curso',$id)->get();
+        $estudiantes=Estudiante::find($id);
+        $id_curso=buscar_curso($id);
+
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
         $categorias=Categorias_parcial::all();
         $equivalencias=Equivalencias::all();
         $comportamiento=Comportamiento::all();
         $promedio_comp=Comportamiento::lists('literal','id');
-        return View('parciales.create',compact('asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+        return View('parciales.create',compact('estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+    
     }
 
     /**
@@ -116,7 +122,17 @@ class ParcialesController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $estudiantes=Estudiante::find($id);
+        $id_curso=buscar_curso($id);
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        $categorias=Categorias_parcial::all();
+        $equivalencias=Equivalencias::all();
+        $comportamiento=Comportamiento::all();
+        $promedio_comp=Comportamiento::lists('literal','id');
+        return View('parciales.create',compact('estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+    
     }
 
     /**

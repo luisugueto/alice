@@ -175,7 +175,7 @@ use App\Periodos;
 				
 			}
 
-				$cargar=$b." ".$a;
+				$cargar=$b." del  ".$a;
 
 		return $cargar;
 	}
@@ -224,4 +224,17 @@ use App\Periodos;
 			}
 		}
 
+	}
+
+	function buscar_curso($id){
+
+		$id_periodo=Session::get('periodo');
+		$sql="SELECT cursos.* FROM inscripciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=inscripciones.id_curso AND id_periodo=".$id_periodo;
+		//dd($sql);
+		$curso = DB::select($sql);
+		foreach ($curso as $curso) {
+			$id_curso=$curso->id;
+		}
+		/*$id_curso=0;*/
+		return  $id_curso;
 	}
