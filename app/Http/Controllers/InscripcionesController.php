@@ -73,10 +73,6 @@ class InscripcionesController extends Controller
                            $suma=$suma+$rubros->monto;
                            $pagar=FacturasRubros::create(['id_factura' => $id_factura,'id_rubro' => $request->id_rubro[$i]]);
                      
-                       
-                    
-  
-
                     }
 
                 $factura2=Facturacion::find($id_factura);

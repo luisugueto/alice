@@ -37,7 +37,6 @@
                                         <th>Cédula</th>
                                         <th>Apellido(s)</th>
                                         <th>Nombre(s)</th>
-                                        <th>Género</th>
                                         <th>Curso</th>
                                         <th>Sección</th>
                                         <th>Opciones</th>
@@ -51,14 +50,13 @@
                                             <td> {{ $estudiante->cedula }} </td>
                                             <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
-                                            <td> {{ $estudiante->genero }}</td>
                                             <td> {{ $estudiante->curso }} </td>
                                             <td> {{ $estudiante->literal }} </td>
                                             <td>  
                                             
                                             
                                                     
-                                                {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-exchange fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
+                                                {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
                                           </td>
                                         </tr>
                                             

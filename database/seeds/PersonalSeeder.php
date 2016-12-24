@@ -37,7 +37,7 @@ class PersonalSeeder extends Seeder
             'name' => 'LUIS ESCOBAR',
             'email' => 'lui_su_gueto@hotmail.com',
             'password' => bcrypt('1234'),
-            'roles_id' => '5'
+            'roles_id' => '3'
         ]);
 
         DB::table('remuneracion')->insert([
@@ -86,7 +86,7 @@ class PersonalSeeder extends Seeder
             'name' => 'ORIONED CAMPOS',
             'email' => 'en4pami@gmail.com',
             'password' => bcrypt('1234'),
-            'roles_id' => '5'
+            'roles_id' => '3'
         ]);
 
         DB::table('remuneracion')->insert([

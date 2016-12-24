@@ -70,11 +70,8 @@
                               @foreach($docentes2 as $docentes)
                               <tr>
                                 
-                                <td><a href="{{ route('docentes.edit', [$docentes->id_prof]) }}"> {{$docentes->curso}}</a></td>
-                                <td><a href="{{ route('docentes.edit', [$docentes->id_prof]) }}">{{ $docentes->literal }}
-                              
-
-                                </a></td>
+                                <td> {{$docentes->curso}}</td>
+                                <td>{{ $docentes->literal }}</td>
                                 
                                <td>
                                 <div class="btn-group">

@@ -154,7 +154,7 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+        $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id='.$id);
         foreach ($user as $key) { $suma = $key->suma; }
         if($suma>1) Session::flash('message-error', 'ERROR');
         else{

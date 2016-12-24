@@ -59,9 +59,9 @@
                 @if($docentes->cargo->empleado->tipo_empleado=="DOCENTE")
                 <tr>
                   
-                  <td><a href="{{ route('docentes.edit', [$docentes->id]) }}"> {{$docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres}}</a></td>
-                  <td><a href="{{ route('docentes.edit', [$docentes->id]) }}"> {{$docentes->cedula}}</a></td>
-                  <td><a href="{{ route('docentes.edit', [$docentes->id]) }}"> {{$docentes->cargo->nombre}}</a></td>
+                  <td> {{$docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres}}</td>
+                  <td> {{$docentes->cedula}}</td>
+                  <td> {{$docentes->cargo->nombre}}</td>
                   
                  <td>
                   <div class="btn-group">
