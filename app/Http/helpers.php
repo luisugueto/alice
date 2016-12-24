@@ -13,6 +13,18 @@ use App\Periodos;
 		}
 	}
 
+	function asignados_id($bloque, $asignados)
+	{
+		foreach ($asignados as $as) 
+		{
+			if($bloque == $as)
+			{
+				return $bloque;
+			}
+			
+		}
+	}
+
 	function retardoAsistencia($id_personal)
 	{
 		$date = date("m");
@@ -90,6 +102,30 @@ use App\Periodos;
 			}	*/	
 	}
 
+	function asignaturas_id($id_bloque, $id_asignatura, $id_seccion)
+	{
+		foreach ($id_asignatura as $asignatura) 
+ 		{
+
+		$sql = \DB::table('asignacion_bloques')->where([['id_bloque', $id_bloque], ['id_asig', $asignatura], ['id_seccion', $id_seccion]])->first();
+ 
+ 			if(!empty($sql))
+ 			{
+ 				$sql = \DB::table('asignaturas')->where('id', $asignatura)->first();
+ 			
+ 				return $sql->id;
+ 			}
+ 		}
+        /*DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
+
+			$sql = DB::select('SELECT * FROM asignacion_bloques as b INNER JOIN asignaturas as a ON a.id=b.id_asig WHERE b.id_bloque = '.$id_bloque.' AND b.id_asig = '.$id_asignatura.' AND b.id_seccion = '.$id_seccion.' ');
+			$contar = count($sql);
+		
+			foreach ($sql as $key) {
+				return	$codigo = $key['codigo'];
+			}	*/	
+	}
+
 	function asignadas($bloque, $aulas)
 	{
 		foreach ($aulas as $as) 
@@ -102,6 +138,7 @@ use App\Periodos;
 		}
 	}
 
+<<<<<<< HEAD
 	function buscar($id_estudiante){
 		$id_periodo=Session::get('periodo');
 
@@ -172,4 +209,19 @@ use App\Periodos;
 
 		return $parcial;
 
+=======
+	function asignadas_id($bloque, $aulas)
+	{
+		foreach ($aulas as $key => $aula) 
+		{
+			$sql = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_aula', $aula]])->first();
+
+			if(!empty($sql))
+			{
+				$sql = \DB::table('aulas')->where('id', $aula)->first();
+
+				return $sql->id;
+			}
+		}
+>>>>>>> 18ce1c5557511c84057a8e5e7e7fbcf7a748ae12
 	}
