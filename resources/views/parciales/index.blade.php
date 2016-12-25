@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('contentheader_title', 'Estudiantes')
 
 @section('main-content')     
@@ -44,9 +43,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($docentes as $doc)
+
+                                <?php $id_seccion= $doc->id_seccion; ?>
                                 
                                     @foreach($estudiantes as $estudiante)
-                                        
+                                        @if($id_seccion==$estudiante->id_seccion)
 										<tr>
                                             <td> {{ $estudiante->codigo_matricula }} </td>
                                             <td> {{ $estudiante->cedula }} </td>
@@ -68,8 +70,10 @@
                                           </td>
                                         </tr>
                                             
-                                    
-                                    @endforeach
+                                       @endif
+                                @endforeach
+            
+                            @endforeach
                                 </tfoot>
                             </table>
                         </div>

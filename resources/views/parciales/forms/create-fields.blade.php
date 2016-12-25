@@ -8,6 +8,7 @@
 	}
 
 </style>
+ {!! Form::hidden('id_estudiante',$estudiantes->id,['id' => 'id_estudiante']); !!}
 
 <?php
 $color=['#32CD32','#F5F5DC','#1E90FF','#FF69B4','#FF4500'];
@@ -35,11 +36,18 @@ $j=0; ?>
 			</tr>
 			</thead>
 			<tbody>
-			@foreach($asignaturas as $asignaturas)
+			
+			@foreach($docentes as $doce)
+
+			{!! Form::hidden('id_personal',$doce->id_prof); !!}
+			<?php 
+			$id_asig=$doce->id_asignatura; ?>
+			@foreach($asignaturas as $asig)
+			@if($id_asig==$asig->id)
 			<tr align="center">
 
 			<td>{{$i}}</td>
-			<td>{{$asignaturas->asignatura}}</td>
+			<td>{!! Form::hidden('id_asignatura[]',$id_asig,['id' => 'id_asignatura']) !!}    {{$asig->asignatura}}</td>
 			<td>
 				<div class="form-group">{!! Form::number('deberes[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación de la categoria de Deberes para esta asignatura', 'min' => '1', 'max' => '10', 'required' => 'required', 'onkeyup' => 'promediar()', 'id' => 'deberes', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar()'])!!} 
 				</div>
@@ -72,6 +80,8 @@ $j=0; ?>
 
 			</tr>
 			<?php $i++; ?>
+			@endif
+			@endforeach
 			@endforeach
 			<tr>
 			<td colspan="7"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
