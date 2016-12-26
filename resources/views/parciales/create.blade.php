@@ -151,7 +151,7 @@ function promediar(){
                                   var p=(parseFloat(d) + parseFloat(ind) + parseFloat(g) + parseFloat(l) + parseFloat(a))/5;
                                   p =parseFloat(Math.round(p * 100) / 100).toFixed(2);
                                     promedio.value=p;
-                                    promedio2.value>=p;
+                                    promedio2.value=p;
                                    
                                     //--------------------calculando nota cualitativa------------
                                     if(p>=1 && p<=4){
@@ -235,7 +235,7 @@ function promediar(){
                                   var p=(parseFloat(d) + parseFloat(ind) + parseFloat(g) + parseFloat(l) + parseFloat(a))/5;
                                   p =parseFloat(Math.round(p * 100) / 100).toFixed(2);
                                     promedio[i].value=p;
-                                    promedio2[i].value>=p;
+                                    promedio2[i].value=p;
                                    
                                     //--------------------calculando nota cualitativa------------
                                     if(p>=1 && p<=4){
