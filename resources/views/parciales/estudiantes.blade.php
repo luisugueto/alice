@@ -54,11 +54,12 @@
                                             <td> {{ $estudiante->cedula }} </td>
                                             <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
-                                            <td>{{ buscar($estudiante->id)  }}</td>
+                                            <td>{{ buscar_dr($estudiante->id)  }}</td>
                                             <td>  
                                             <?php 
                                             $quimestre=buscar_quimestre($estudiante->id);
                                             $parcial=buscar_parcial($estudiante->id); ?>
+                                            
 
                                                 @if($quimestre!=2)
         
