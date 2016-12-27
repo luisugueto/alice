@@ -14,7 +14,7 @@
     </div> 
     <div class="col-md-12">
         <div class="row" style="padding-top: 5px">
-        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('rubros/create') }}'";>
+        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('facturaciones/buscar/estudiante') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
         </button>
         </div>

@@ -35,6 +35,7 @@
                                     <th>Apellido(s)</th>
                                     <th>Nombre(s)</th>
                                     <th>Género</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +46,11 @@
                                         <td> {{ $estudiante->apellidos }}</td>
                                         <td> {{ $estudiante->nombres }}</td>
                                         <td> {{ $estudiante->genero }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('estudiantes.show', $estudiante->id) }}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('estudiantes.edit', $estudiante->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
+                                            <a href="{{ route('estudiantes.destroy', $estudiante->id) }}" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

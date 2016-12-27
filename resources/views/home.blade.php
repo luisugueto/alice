@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-	Bienvenido
-@endsection
-
+@section('contentheader_title', 'Bienvenido')
+@section('contentheader_description', 'Inicio')
 
 @section('main-content')
+
 	<div class="container spark-screen">
 	@if(Session::has('message-error'))
         <div class="alert alert-success alert-dismissible" role="alert">

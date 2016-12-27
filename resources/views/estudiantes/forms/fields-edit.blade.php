@@ -1,14 +1,33 @@
-<div class="tab-pane active" id="tab_0">
+<div class="tab-pane active" id="tab_1">
 	<div class="box-body">
-		@include('estudiantes.forms.fields-photo')
-	</div>
+		<div class="col-md-3">
+			<div class="form-group">
+	            @if($estudiante->foto == '')
+	                {{ Form::label('Foto', 'Foto') }}
+	                <img src="/../../img/ingresar.jpg" style="width: 200px; height: 200px;" id="img_prev">
+	            @else
+	            	{{ Form::label('Foto', 'Foto ') }}
+	            	<div class="form-group">
+	                	<img src="{{ asset('img/'.$estudiante->foto)}}" style="width: 200px; height: 200px;">
+	            	</div>
+	            @endif    
+	        </div>
+	    </div>
+	    <div class="col-md-4">
+	    	<div class="form-group">
+	    		{!! Form::label('foto', 'Nueva') !!}
+	        	<input type="file" name="foto" onchange="readURL(this)">
+	        </div>
+	    </div>
+    </div>
 </div>
-<div class="tab-pane" id="tab_1">
+
+<div class="tab-pane" id="tab_2">
 	<div class="box-body">
 		<div class="col-md-4">
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-				{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!} {!! Form::hidden('cedula', $cedula) !!} 
+				{!! Form::text('cedula', $estudiante->cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
 				{!! Form::label('apellido_paterno', 'Apellido paterno') !!} <small class="text-red">*</small>
@@ -77,59 +96,13 @@
 		</div>
 	</div>
 </div>
-<div class="tab-pane" id="tab_2">
-	<div class="box-body">
-		@include('estudiantes.forms.fields-family')
-	</div>
-</div>
 <div class="tab-pane" id="tab_3">
 	<div class="box-body">
 		@include('estudiantes.forms.fields-medic')
 	</div>
 </div>
-
 <!-- <div class="tab-pane" id="tab_4">
 	<div class="box-body">
 		@include('estudiantes.forms.fields-news')
 	</div>
 </div> -->
-
-<!-- <div class="tab-pane" id="tab_5">
-	<div class="box-body">
-		@include('estudiantes.forms.fields-documentations')
-	</div>
-</div> -->
-
-<div class="tab-pane" id="tab_6">
-	 <div id="contenedor">
-	</div>
-	<div class="box-body">
-
-		@include('estudiantes.forms.fields-items')
-		<!-- <div class="col-md-4">
-			<div class="form-group">
-				{!! Form::label('nombre', 'Nombre') !!}
-				{!! Form::text('nombre[0]', null, ['class' => 'form-control', 'id' => 'nombre', 'placeholder' => 'MATRICULA INICIAL', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="form-group">
-				{!! Form::label('fecha_max', 'Fecha') !!}
-				{!! Form::date('fecha_max[0]', null, ['class' => 'form-control', 'id' => 'fecha_max', 'placeholder' => '35']) !!}
-			</div>
-		</div>
-		<div class="col-md-3">
-			<div class="form-group">
-				{!! Form::label('monto', 'Monto') !!}
-				{!! Form::number('monto[0]', null, ['class' => 'form-control', 'id' => 'monto', 'placeholder' => '35']) !!}
-			</div>
-		</div>
-		<div class="col-md-1">
-			<center>
-				{!! Form::label('agregar', 'Nuevo') !!}
-				<a href="#" id="agregarCampo" class="text-muted"><i class="fa fa-plus-square btn-lg"></i></a>	
-			</center>
-		</div> -->
-		{!! Form::hidden('id_representante', $representante->id) !!}
-	</div>
-</div>

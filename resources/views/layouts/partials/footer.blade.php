@@ -2,8 +2,8 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        <a href="https://github.com/acacha/adminlte-laravel"></a><b>Sistema María Montessori</b></a>
+        <a href="https://github.com/Jessetl/alice"><b>Sistema María Montessori</b></a>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016. Ing. Luis Ugueto, Ing. Cesar Characo, Ing. Jesús Matute</a>
+    <strong>Copyright &copy; 2016. Ing. Luis Ugueto, Ing. Cesar Characo, Ing. Jesús Matute</strong>
 </footer>

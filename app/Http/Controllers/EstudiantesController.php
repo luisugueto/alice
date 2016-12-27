@@ -16,6 +16,9 @@ use App\Http\Requests\EstudianteRequest;
 use App\Http\Requests\CedulaEstudianteRequest;
 use Auth;
 use Session;
+use DB;
+use PDO;
+use Storage;
 
 class EstudiantesController extends Controller
 {
@@ -544,7 +547,17 @@ class EstudiantesController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $estudiante = DB::table('datos_generales_estudiante')
+                        ->join('datos_medicos', 'datos_medicos.id_estudiante', '=', 'datos_generales_estudiante.id')
+                        //->join('padres_has_estudiantes', 'padres_has_estudiantes.id_estudiante', '=', 'datos_generales_estudiante.id')
+                        //->join('datos_padres', 'datos_padres.id', '=', 'padres_has_estudiantes.id_padre')
+                        //->join('datos_unidad_precedente', 'datos_unidad_precedente.id_estudiante', '=', 'datos_generales_estudiante.id')
+                        ->where('datos_generales_estudiante.id', '=', $id)
+                        ->first();
+
+        return view('estudiantes.edit', compact('estudiante'));
+        
     }
 
     /**
@@ -554,9 +567,35 @@ class EstudiantesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EstudianteRequest $request, $id)
     {
-        //
+
+        if(!empty($request->foto))
+        {
+
+            $estudiante = Estudiante::find($id);
+
+            Storage::delete($estudiante->foto);
+
+            $estudiante->fill($request->all())->save();
+            $estudiante->medicos->fill($request->all())->save();
+
+            Session::flash('message', 'ESTUDIANTE ACTUALIZADO EXITOSAMENTE');
+
+            return redirect()->back();
+        
+        }else{
+
+            $estudiante = Estudiante::find($id);
+
+            $estudiante->fill($request->all())->save();
+            $estudiante->medicos->fill($request->all())->save();
+
+            Session::flash('message', 'ESTUDIANTE ACTUALIZADO EXITOSAMENTE');
+
+            return redirect()->back();
+        }
+
     }
 
     /**

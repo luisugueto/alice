@@ -3,9 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Routing\Route;
 
 class EstudianteRequest extends Request
 {
+    function __construct(Route $route)
+    {
+        $this->route = $route;
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,13 +28,12 @@ class EstudianteRequest extends Request
      */
     public function rules()
     {
-        
         return [
             'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'nacionalidad'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'genero'           => 'required',
             'direccion'        => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'codigo_matricula' => 'required',
+            'codigo_matricula' => 'required|unique:datos_generales_estudiante,codigo_matricula,' . $this->route->getParameter('estudiantes'),
             'apellido_materno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'provincia'        => 'required',
             'estado_actual'    => 'required',
@@ -40,6 +44,7 @@ class EstudianteRequest extends Request
             'tipo_registro'    => 'required',
             'correo'           => 'required|unique:datos_generales_estudiante',
             'fecha_nacimiento' => 'required',
+            'correo'           => 'required|unique:datos_generales_estudiante,correo,' .  $this->route->getParameter('estudiantes'),
             //
             'grupo_sanguineo'           => 'required',
             'capacidad_especial'        => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',

@@ -13,10 +13,10 @@
         </div>  
     </div> 
     <div class="col-md-12">
-        <div class="row" style="padding-top: 5px">
-        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('aulas/create') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-        </button>
+        <div class="row" style="padding-top: 5px;">
+            <button class="btn btn-primary" title="Registrar Asignatura" onclick="window.location.href = '{{ URL::to('aulas/create') }}'";>
+                <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+            </button>
         </div>
     </div>
     <section class="content">
@@ -47,10 +47,10 @@
                                 @endforeach
                             </tbody>
                          </table>
-                           
                     </div>            
                 </div>
             </div>
         </div>
     </section>
+</div>
 @endsection
