@@ -1,6 +1,7 @@
 <?php 
 use App\Periodos;
-
+use App\Parciales;
+use App\Personal;
 	function asignados($bloque, $asignados)
 	{
 		foreach ($asignados as $as) 
@@ -152,6 +153,7 @@ use App\Periodos;
 				$a="1 er Quimestre";
 			} else {
 				if ($total_quimestres==1) {
+
 					$a="2 do Quimestre";	
 				} else {
 					$a="Quimestres Completos";
@@ -237,4 +239,77 @@ use App\Periodos;
 		}
 		/*$id_curso=0;*/
 		return  $id_curso;
+	}
+
+	function buscar_mi_asignatura_parcial($id_estudiante,$id_asignatura,$id_parcial){
+
+		$id_periodo=Session::get('periodo');
+		$sql=DB::select("SELECT * FROM calificacion_parcial WHERE id_estudiante=".$id_estudiante." AND id_parcial=".$id_parcial." AND id_asignatura=".$id_asignatura);
+
+		$encontrada=count($sql);
+
+
+		return $encontrada;
+
+	}
+
+	function buscar_mi_asignatura_quimestre($id_estudiante,$id_asignatura,$id_quimestre){
+
+		$id_periodo=Session::get('periodo');
+		$sql=DB::select("SELECT * FROM calificacion_quimestre WHERE id_estudiante=".$id_estudiante." AND id_quimestre=".$id_quimestre." AND id_asignatura=".$id_asignatura."");
+	$encontrado=count($sql);
+
+		return $encontrado;
+
+
+	}	
+
+	function buscar_id_parcial($id_estudiante){
+
+		$id_periodo=Session::get('periodo');
+
+		$parcial=Parciales::where('id_estudiante',$id_estudiante)->first();
+		
+		$id_parcial=$parcial->id;
+
+		return $id_parcial;
+
+
+	}
+
+	function buscar_id_quimestre($id_estudiante){
+
+		$id_periodo=Session::get('periodo');
+
+		$quimestre=Quimestrales::where('id_estudiante',$id_estudiante)->first();
+
+		$id_quimestre=$quimestre->id_quimestre;
+
+		return $id_quimestre;
+
+
+	}
+
+	function buscar_asignatura_asignada($id_prof){
+
+		$id_periodo=Session::get('periodo');
+
+		$asignatura=DB::select("SELECT * FROM asignacion WHERE id_prof=".$id_prof." AND id_periodo=".$id_periodo);
+
+	}
+
+	function tipo_docente(){
+
+		$correo=Auth::user()->email;
+
+		$docente=Personal::where('correo',$correo)->first();
+
+		/*
+		foreach($docente->cargo as $cargo){
+		$tipo=$cargo->cargo;
+		}*/
+		$tipo=$docente->cargo->nombre;
+		return $tipo;
+
+
 	}

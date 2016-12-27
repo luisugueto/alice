@@ -49,4 +49,14 @@ class Seccion extends Model
     {
         return $this->belongsToMany('App\Periodos', 'asignacion_bloques', 'id_seccion', 'id_periodo')->withPivot('id_seccion', 'id_aula', 'id_bloque');
     }
+    public function asignaturas(){
+
+        return $this->belongsToMany('App\Asignaturas','asignacion','id_seccion','id_asignatura')->withPivot('id_prof');
+    }
+
+    public function personal(){
+
+        return $this->belongsToMany('App\Personal','asignacion','id_seccion','id_prof')->withPivot('id_asignatura');
+    }
+
 }

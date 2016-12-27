@@ -1,3 +1,7 @@
+<?php
+use App\Http\helpers;
+?>
+
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 <?php $user = Auth::user()->foto; ?>
@@ -99,6 +103,12 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.show',1) }}">Nuevo</a></li>
                 </ul>
+                <?php $tipo=tipo_docente(); ?>
+                @if($tipo=="DOCENTE ROTATIVO")
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('parciales.asignaturas') }}">Asignaturas Asignadas</a></li>
+                </ul>
+                @endif
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.index') }}">Lista de Estudiantes</a></li>
                 </ul>

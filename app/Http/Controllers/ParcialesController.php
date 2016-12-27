@@ -20,6 +20,7 @@ use App\Parciales;
 use App\Calificacion_parcial_subtotal;
 use App\Calificacion_parcial;
 use App\Quimestres;
+use App\Seccion;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -221,6 +222,15 @@ class ParcialesController extends Controller
         }
     }
 
+    public function store2(Request $request){
+
+
+        //dd($request->all());
+        
+        
+
+
+    }
     /**
      * Display the specified resource.
      *
@@ -253,7 +263,7 @@ class ParcialesController extends Controller
 
 
 
-        
+        $cuantos_q=buscar_quimestre($id);
         $estudiantes=Estudiante::find($id);
         $id_curso=buscar_curso($id);
         
@@ -265,7 +275,10 @@ class ParcialesController extends Controller
         $categorias=Categorias_parcial::all();
         $equivalencias=Equivalencias::all();
         $comportamiento=Comportamiento::all();
-        $promedio_comp=Comportamiento::lists('literal','id');   
+        $promedio_comp=Comportamiento::lists('literal','id'); 
+
+           
+            
         $quimestres=Quimestres::find(1);
         return View('parciales.quimestres',compact('parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
     
@@ -337,5 +350,37 @@ class ParcialesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function asignaturas(){
+
+            $correo=Auth::user()->email;
+        $personal=Personal::where('correo',$correo)->first();
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+       /* dd($personal->asignaturas);*/
+
+       $asignaturas=DB::select("SELECT * FROM asignacion,asignaturas,secciones,cursos WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." AND asignaturas.id=asignacion.id_asignatura AND asignacion.id_seccion=secciones.id AND secciones.id_curso=cursos.id");
+
+        return View('parciales.asignaturas',compact('personal','periodo','asignaturas'));
+
+    }
+
+    public function estudiantes($id_seccion){
+
+        $seccion=Seccion::find($id_seccion);
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+
+
+        $estudiantes=DB::select("SELECT datos_generales_estudiante.* FROM datos_generales_estudiante,secciones,cursos,inscripciones WHERE 
+            inscripciones.id_estudiante = datos_generales_estudiante.id AND
+            inscripciones.id_seccion = secciones.id AND 
+            secciones.id_curso= cursos.id AND 
+            inscripciones.id_seccion= ".$id_seccion);
+
+
+        return View('parciales.estudiantes',compact('seccion','estudiantes','periodo'));
+
     }
 }

@@ -1,7 +1,8 @@
 <?php
-$asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS','ATRASOS INJUSTIFICADOS', 'TOTAL DE FALTAS']
+$asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS','ATRASOS INJUSTIFICADOS', 'TOTAL DE FALTAS'];
 ?>
-
+{!!  Form::text('id_estudiante',$estudiantes->id); !!}
+{!!  Form::text('id_quimestre',$quimestres->id) !!}
 
 <table class="table table-bordered">
 <thead>
@@ -121,19 +122,59 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 <tr>
 	<td></td>
 	<td colspan="4" align="center"><strong>ASISTENCIA QUIMESTRAL DETALLADA</strong></td>
-	<td colspan="6"></td>
+	<td ><strong>TOTAL DE FALTAS</strong></td>
+	<td colspan="5"></td>
 </tr>
+<?php
+	$fj=0;
+	$fi=0;
+	$aj=0;
+	$ai=0;
 
-@for($i=0;$i< count($asistencia);$i++)
+
+ ?>
+@for($i=0;$i< count($asistencia)-1;$i++)
 <tr>
 	<td></td>
 	<td><strong>{{$asistencia[$i]}}</strong></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td colspan="6"></td>
-</tr>
+	@if($i==0)
+	@for($j=0;$j<3;$j++)
+	<?php $fj+=$parciales[$j]->faltas_j; ?>
+	<td>{{$parciales[$j]->faltas_j}}</td>
 
+	@endfor
+	<td> {{$fj}} {!! Form::hidden('total_faltas_j',$fj); !!} </td>
+	<td colspan="5"></td>
+	@endif
+	@if($i==1)
+	@for($j=0;$j<3;$j++)
+	<?php $fi+=$parciales[$j]->faltas_i; ?>
+	<td>{{$parciales[$j]->faltas_i}}</td>
+	@endfor
+	<td> {{$fi}} {!! Form::hidden('total_faltas_i',$fi); !!}</td>
+	<td colspan="5"></td>
+	@endif
+	@if($i==2)
+	@for($j=0;$j<3;$j++)
+	<?php $aj+=$parciales[$j]->atrasos_j; ?>
+	<td>{{$parciales[$j]->atrasos_j}}</td>
+	@endfor
+	<td> {{$aj}} {!! Form::hidden('total_atrasos_j',$aj); !!} </td>
+	<td colspan="5"></td>
+	@endif
+	@if($i==3)
+	@for($j=0;$j<3;$j++)
+	<?php $ai+=$parciales[$j]->atrasos_i ?>
+	<td>{{$parciales[$j]->atrasos_i}}</td>
+	@endfor
+	<td> {{$aj}} {!! Form::hidden('total_atrasos_i',$ai); !!} </td>
+	<td colspan="5"></td>
+	@endif
+	
+</tr>
 @endfor
+
+
+
 </tbody>
 </table>
