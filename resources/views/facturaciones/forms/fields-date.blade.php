@@ -12,7 +12,12 @@
             @include('alerts.errors') 
         </div>  
     </div> 
-
+    <div class="col-md-1">
+        <div class="row" style="padding-top: 5px">
+        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarMorosos') }}"> <span class="text-light-blue">Excel</span></a>
+        </button>
+        </div>
+    </div>
     <section class="content">
         <div class="row">
             <div class="col-md-12" style="padding-top: 20px">

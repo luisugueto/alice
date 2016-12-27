@@ -33,6 +33,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('descargarPagos', 'PagosController@descargar');
 	Route::get('descargarListado', 'PagosController@descargarListado');
 	Route::get('descargarControl', 'PagosController@descargarControl');
+	Route::get('descargarMorosos', 'FacturacionesController@descargarMorosos');
 	//Route::get('asignaturas/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);

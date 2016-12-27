@@ -17,6 +17,7 @@ use App\Cursos;
 use Carbon\Carbon;
 use Session;
 use DB;
+use Excel;
 
 class FacturacionesController extends Controller
 {
@@ -66,6 +67,22 @@ class FacturacionesController extends Controller
 						  ->get();
 
 			return view('facturaciones.forms.fields-date', compact('morosos'));
+		}
+
+		public function descargarMorosos()
+		{
+			$morosos = DB::table('morosos')
+						  ->join('datos_generales_estudiante', 'datos_generales_estudiante.id', '=', 'morosos.id_estudiante')
+						  ->join('datos_representantes', 'datos_representantes.id', '=', 'datos_generales_estudiante.id_representante')
+						  ->join('facturacion', 'facturacion.id', '=', 'morosos.id_factura')
+						  ->get();
+			Excel::create("Listado Total de Morosos", function ($excel) use ($morosos) {
+               
+                $excel->setTitle("Listado Total de Morosos");
+                $excel->sheet("Pestaña 1", function ($sheet) use ($morosos) {
+                    $sheet->loadView('facturaciones.excel.descargarMorosos')->with('morosos', $morosos);
+                });
+            })->download('xls');
 		}
 
 		/**
