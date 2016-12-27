@@ -16,6 +16,7 @@ use App\Facturacion;
 use App\Cursos;
 use Carbon\Carbon;
 use Session;
+use DB;
 
 class FacturacionesController extends Controller
 {
@@ -54,6 +55,51 @@ class FacturacionesController extends Controller
 
 						return redirect()->back();
 				}
+		}
+
+		public function morosos()
+		{
+			$sql = DB::select("SELECT *, ru.fecha as fecha_calcular, fa_ru.id as id_fa_ru FROM facturas_rubros as fa_ru LEFT JOIN facturacion as fa ON fa.id = fa_ru.id_factura LEFT JOIN rubros as ru ON fa_ru.id_rubro = ru.id");
+
+			foreach ($sql as $key) {
+				$fechaActual = Carbon::now();
+				$fechaCalcular = new Carbon($key->fecha_calcular);
+				$difference = $fechaCalcular->diff($fechaActual)->days;
+				$id_factura = $key->id_factura;
+				$id_estudiante = $key->id_estudiante;
+
+				if($difference>5)
+				{
+					$facturacion = DB::select("SELECT * FROM morosos WHERE id_factura = '".$id_factura."'");
+					$contadorFacturacion = count($facturacion);
+					$rubros_realizados = DB::select("SELECT * FROM rubros_realizados WHERE id_factura_rubro = ".$key->id_fa_ru." ORDER BY id DESC LIMIT 1");
+					if(count($rubros_realizados)>0){
+						foreach ($rubros_realizados as $key2) {
+							$monto_adeudado = $key2->monto_adeudado;
+						}
+
+						if($monto_adeudado > 0){
+							if($contadorFacturacion==0)
+							{
+								$sql2 = DB::insert("INSERT INTO morosos (id_estudiante, id_factura, fecha) VALUES(".$id_estudiante.", ".$id_factura.", now())");
+							}
+						}
+						
+					}else{
+
+						$monto_adeudado = $key->total_pago;
+
+						if($monto_adeudado > 0){
+							if($contadorFacturacion==0)
+							{
+								$sql2 = DB::insert("INSERT INTO morosos (id_estudiante, id_factura, fecha) VALUES(".$id_estudiante.", ".$id_factura.", now())");
+							}
+						}
+					}
+					
+
+				}
+			}
 		}
 
 		/**

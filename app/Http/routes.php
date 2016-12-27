@@ -37,6 +37,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 	Route::get('facturaciones/buscar/estudiante', ['uses' => 'FacturacionesController@search', 'as' => 'facturaciones.buscar']);
+	Route::get('morosos', ['uses' => 'FacturacionesController@morosos', 'as' => 'facturaciones.morosos']);
 	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {
 
 		$existe = \DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque]])->exists();

@@ -75,6 +75,7 @@ use App\Http\helpers;
                     <li><a href="{{ url('facturaciones/buscar/estudiante') }}">Nuevo</a></li>
                     <li><a href="{{ url('facturaciones') }}">Listado Total</a></li>
                     <li><a href="#">Listado del Mes Actual</a></li>
+                    <li><a href="{{ url('morosos') }}">Morosos</a></li>
                 </ul>
             </li>
             @endif 
