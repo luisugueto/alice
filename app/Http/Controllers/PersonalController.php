@@ -105,10 +105,7 @@ class PersonalController extends Controller
         define('correo', $request['correo']);
         define('nombres', $request['nombres']);
         $data['clave'] = $request['clave'];
-        \Mail::send('emails.message', $data, function($message)
-        {
-            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
-        });
+       
         
         if($request['seleccionar']=='on'){
             $per->clave = $request['clave'];
@@ -155,10 +152,20 @@ class PersonalController extends Controller
                 
             }
         }
-        if($request['tipo_registro']==2)
+        if($request['tipo_registro']==2){
+             \Mail::send('emails.message', $data, function($message)
+        {
+            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        });
             Session::flash('message', 'DOCENTE REGISTRADO CORRECTAMENTE, RECIBIRÁ UN CORREO CON SU USUARIO Y CONTRASEÑA DE ACCESO');
-        else
+        }
+        else{
             Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
+         \Mail::send('emails.message', $data, function($message)
+        {
+            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        });
+        }
             return redirect()->route('personal.index');
     }
 

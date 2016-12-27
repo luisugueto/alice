@@ -182,6 +182,47 @@ use App\Personal;
 		return $cargar;
 	}
 
+	function buscar_dr($id_estudiante,$id_asignatura){
+		$id_periodo=Session::get('periodo');
+
+		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$total_quimestres=count($buscar_q);
+
+		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
+		$cuantos=count($buscar_p);
+
+			if ($total_quimestres==0) {
+				$a="1 er Quimestre";
+			} else {
+				if ($total_quimestres==1) {
+
+					$a="2 do Quimestre";	
+				} else {
+					$a="Quimestres Completos";
+				}
+				
+				
+			}
+
+			if ($cuantos==0) {
+				$b="1 er  Parcial";
+			} else {
+				if ($cuantos==1) {
+					$b="2 do  Parcial";
+				} else {
+					if($cuantos==2){
+					$b="3 er Parcial";
+					}else{
+						$b="Parciales Completos";
+					}
+				}
+				
+			}
+
+				$cargar=$b." del  ".$a;
+
+		return $cargar;
+	}
 	function buscar_quimestre($id_estudiante){
 
 		#opcion==2 se han registrados los quimestres completos
@@ -303,12 +344,15 @@ use App\Personal;
 		$correo=Auth::user()->email;
 
 		$docente=Personal::where('correo',$correo)->first();
+		if (count($docente)==0) {
+			$tipo="Admin";
+		} else {
+			$tipo=$docente->cargo->nombre;
+		}
+		
 
-		/*
-		foreach($docente->cargo as $cargo){
-		$tipo=$cargo->cargo;
-		}*/
-		$tipo=$docente->cargo->nombre;
+	
+		
 		return $tipo;
 
 

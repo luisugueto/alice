@@ -27,7 +27,7 @@
                         <div class="box-header">
                             <h3 class="box-title">Lista de Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{$periodo->status}} )</h3>
                         </div>
-
+                   <?php $tipo=tipo_docente(); ?>
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-hover">
                                 <thead>
@@ -38,8 +38,10 @@
                                         <th>Nombre(s)</th>
                                         <th>Curso</th>
                                         <th>Sección</th>
+                                        @if($tipo!="DOCENTE ROTATIVO")
                                         <th>Cargar a:</th>
                                         <th>Opciones</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +58,8 @@
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->curso }} </td>
                                             <td> {{ $estudiante->literal }} </td>
+                                            
+                                            @if($tipo!="DOCENTE ROTATIVO")
                                             <td>{{ buscar($estudiante->id_estudiante)  }}</td>
                                             <td>  
                                             <?php 
@@ -75,6 +79,7 @@
 
                                                 @endif
                                           </td>
+                                          @ENDIF
                                         </tr>
                                             
                                        @endif
