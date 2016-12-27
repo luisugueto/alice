@@ -156,7 +156,6 @@ class AuthController extends Controller
             */
 
 
-
         $periodos = Periodos::lists('nombre', 'id');
         $periodos2= Periodos::where('status','activo')->first();
         return view('auth.login', ['periodos' => $periodos,'periodos2' => $periodos2]);
@@ -205,6 +204,13 @@ class AuthController extends Controller
                 }                
             }
 
+            /*
+                MOROSOS
+            */
+            $query = DB::select("SELECT * FROM morosos");
+            $contarMororos = count($query);
+
+            Session::put('morosos', $contarMororos);
             Session::put('valor', $suma);
             Session::flash('message', 'Bienvenido');
             Session::put('periodo', $request['periodos']);

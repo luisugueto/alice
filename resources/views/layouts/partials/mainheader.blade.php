@@ -22,31 +22,21 @@
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-group"></i>
-                        <span class="label label-success">1</span>
+                        <span class="label label-success">{{ Session::get('morosos') }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">{{ trans('adminlte_lang::message.tabmessages') }}</li>
+                         <li class="header"></li>
                         <li>
-                            <!-- inner menu: contains the messages -->
+                            <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
-                                <li><!-- start message -->
+                                <li><!-- start notification -->
                                     <a href="#">
-                                        <div class="pull-left">
-                                            <!-- User Image -->
-                                            <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-                                        </div>
-                                        <!-- Message title and timestamp -->
-                                        <h4>
-                                            Se le notifica X
-                                            <!-- <small><i class="fa fa-clock-o"></i> 5 mins</small> -->
-                                        </h4>
-                                        <!-- The message -->
-                                        <p>Ya se le va a vencer la cuota.</p>
+                                        <i class="fa fa-users" style="color:black"> Tiene {{ Session::get('morosos') }} Clientes Morosos.</i> 
                                     </a>
-                                </li><!-- end message -->
-                            </ul><!-- /.menu -->
+                                </li><!-- end notification -->
+                            </ul>
                         </li>
-                        <li class="footer"><a href="#">c</a></li>
+                        <li class="footer"><a href="{{ url('morosos') }}">Ver Más</a></li>
                     </ul>
                 </li><!-- /.messages-menu -->
 
@@ -66,7 +56,7 @@
                             <ul class="menu">
                                 <li><!-- start notification -->
                                     <a href="#">
-                                        <i class="fa fa-users"> Tiene {{ Session::get('valor') }} Personales Morosos.</i> 
+                                        <i class="fa fa-users" style="color:black"> Tiene {{ Session::get('valor') }} Personales Morosos.</i> 
                                     </a>
                                 </li><!-- end notification -->
                             </ul>
