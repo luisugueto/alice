@@ -59,47 +59,13 @@ class FacturacionesController extends Controller
 
 		public function morosos()
 		{
-			$sql = DB::select("SELECT *, ru.fecha as fecha_calcular, fa_ru.id as id_fa_ru FROM facturas_rubros as fa_ru LEFT JOIN facturacion as fa ON fa.id = fa_ru.id_factura LEFT JOIN rubros as ru ON fa_ru.id_rubro = ru.id");
+			$morosos = DB::table('morosos')
+						  ->join('datos_generales_estudiante', 'datos_generales_estudiante.id', '=', 'morosos.id_estudiante')
+						  ->join('datos_representantes', 'datos_representantes.id', '=', 'datos_generales_estudiante.id_representante')
+						  ->join('facturacion', 'facturacion.id', '=', 'morosos.id_factura')
+						  ->get();
 
-			foreach ($sql as $key) {
-				$fechaActual = Carbon::now();
-				$fechaCalcular = new Carbon($key->fecha_calcular);
-				$difference = $fechaCalcular->diff($fechaActual)->days;
-				$id_factura = $key->id_factura;
-				$id_estudiante = $key->id_estudiante;
-
-				if($difference>5)
-				{
-					$facturacion = DB::select("SELECT * FROM morosos WHERE id_factura = '".$id_factura."'");
-					$contadorFacturacion = count($facturacion);
-					$rubros_realizados = DB::select("SELECT * FROM rubros_realizados WHERE id_factura_rubro = ".$key->id_fa_ru." ORDER BY id DESC LIMIT 1");
-					if(count($rubros_realizados)>0){
-						foreach ($rubros_realizados as $key2) {
-							$monto_adeudado = $key2->monto_adeudado;
-						}
-
-						if($monto_adeudado > 0){
-							if($contadorFacturacion==0)
-							{
-								$sql2 = DB::insert("INSERT INTO morosos (id_estudiante, id_factura, fecha) VALUES(".$id_estudiante.", ".$id_factura.", now())");
-							}
-						}
-						
-					}else{
-
-						$monto_adeudado = $key->total_pago;
-
-						if($monto_adeudado > 0){
-							if($contadorFacturacion==0)
-							{
-								$sql2 = DB::insert("INSERT INTO morosos (id_estudiante, id_factura, fecha) VALUES(".$id_estudiante.", ".$id_factura.", now())");
-							}
-						}
-					}
-					
-
-				}
-			}
+			return view('facturaciones.forms.fields-date', compact('morosos'));
 		}
 
 		/**
@@ -246,7 +212,8 @@ class FacturacionesController extends Controller
 											{
 													$rubros_realizado->formas()->attach($request->id_forma[$i]);
 											}   
-	
+										
+											Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 									}else{
 	
 											$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
@@ -266,7 +233,9 @@ class FacturacionesController extends Controller
 													$rubros_realizado->formas()->attach($request->id_forma[$i]);
 											}   
 									}
-	
+
+									Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
+									
 									return redirect('facturaciones');
 						}
 	
@@ -319,8 +288,10 @@ class FacturacionesController extends Controller
 													$rubros_realizados->formas()->attach($request->id_forma[$i]);
 										}
 								}
-	
-									return redirect('facturaciones');
+
+								Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
+
+								return redirect('facturaciones');
 							}
 				}
 
@@ -341,6 +312,6 @@ class FacturacionesController extends Controller
 
 		public function search()
 		{
-				return view('facturaciones.forms.fields-search');
+			return view('facturaciones.forms.fields-search');
 		}
 }
