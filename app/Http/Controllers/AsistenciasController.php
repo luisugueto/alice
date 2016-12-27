@@ -149,7 +149,7 @@ class AsistenciasController extends Controller
                     }
 
                     if(!isset($bloqueInicial)){
-                        Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE CARGA ACADÉMICA');
+                        Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE HORARIO');
                         return redirect()->action('AsistenciasController@index');
                     }
                         

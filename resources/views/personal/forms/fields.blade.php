@@ -8,7 +8,7 @@
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
 				<div class="form-group">
-					{!! Form::number('cedula', null, ['required','class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
+					{!! Form::number('cedula', null, ['required','maxlength' => '11','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','class' => 'form-control', 'placeholder' => 'Ejm: 178455996', 'title' => 'Introduzca la cédula del personal']) !!}
 				</div>
 			</div>
 			<div class="form-group{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">
@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('edad') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Edad') !!} <small class="text-red">*</small>
-				{!! Form::number('edad', null, ['required','class' => 'form-control', 'title' => 'Introduzca la edad del personal', 'placeholder' => 'Ejm: ']) !!}
+				{!! Form::number('edad', null, ['required','min'=>'18','max'=>'99','maxlength' => '2','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','class' => 'form-control', 'title' => 'Introduzca la edad del personal', 'placeholder' => 'Ejm: ']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
 				{!! Form::label('nacimiento', 'Fecha nacimiento') !!} <small class="text-red">*</small>
@@ -64,7 +64,7 @@
 			</div>
 			<div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
 				{!! Form::label('telefono', 'Teléfono') !!} <small class="text-red">*</small>
-				{!! Form::number('telefono', null, ['required','class' => 'form-control', 'title' => 'Introduzca la telefono del personal', 'placeholder' => 'Ejm: 5931242145']) !!}
+				{!! Form::number('telefono', null, ['required','class' => 'form-control', 'maxlength' => '11','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'title' => 'Introduzca la telefono del personal', 'placeholder' => 'Ejm: 5931242145']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('correo') ? ' has-error' : '' }}">
 				{!! Form::label('correo', 'Correo') !!} <small class="text-red">*</small>
@@ -96,16 +96,16 @@
 	<div class="box-body">
 		<div class="col-md-12">
 			<div class="form-group{{ $errors->has('primaria') ? ' has-error' : '' }}">
-				{!! Form::label('primaria', 'Donde terminó la primaria?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('primaria', null, ['required','class' => 'form-control', 'title' => 'Introduzca Donde terminó la primaria?', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::label('primaria', '¿Dónde terminó la primaria?: ') !!} <small class="text-red">*</small>
+				{!! Form::text('primaria', null, ['required','class' => 'form-control', 'title' => 'Introduzca Dónde terminó la primaria?', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('secundaria') ? ' has-error' : '' }}">
-				{!! Form::label('secundaria', 'Donde terminó la secundaria?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('secundaria', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó la secundaria?:', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::label('secundaria', '¿Dónde terminó la secundaria?: ') !!} <small class="text-red">*</small>
+				{!! Form::text('secundaria', null, ['class' => 'form-control', 'title' => 'Introduzca Dónde terminó la secundaria?:', 'placeholder' => 'Ejm: Prueba', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('superior') ? ' has-error' : '' }}">
-				{!! Form::label('superi', 'Donde terminó Instr. Superior?: ') !!} <small class="text-red">*</small>
-				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Donde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+				{!! Form::label('superi', '¿Dónde terminó Instrucción Superior?: ') !!} <small class="text-red">*</small>
+				{!! Form::text('superior', null, ['class' => 'form-control', 'title' => 'Introduzca Dónde terminó Instr. Superior?:', 'placeholder' => 'Ejm: Universidad Central', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('titulo') ? ' has-error' : '' }}">
 				{!! Form::label('titulos', 'Título(s) Académico(s) Obtenido(s): ') !!} <small class="text-red">*</small>
@@ -135,7 +135,7 @@
 				{!! Form::number('sueldo_mens', null, ['required','class' => 'form-control', 'id'=>'sueldoMensual','onkeyup'=>'sueldo()','title' => 'Introduzca el Sueldo Mensual?:', 'placeholder' => 'Ejm: 300']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('prQuincena') ? ' has-error' : '' }}">
-				{!! Form::label('prQuincena', 'Sueldo 1era Quincena:: ') !!} <small class="text-red">*</small>
+				{!! Form::label('prQuincena', 'Sueldo 1era Quincena: ') !!} <small class="text-red">*</small>
 				{!! Form::number('prQuincena', null, ['class' => 'form-control','id'=>'prQuincena', 'disabled','title' => 'Introduzca el Sueldo 1era Quincena?', 'placeholder' => 'Ejm: 150']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('seQuincena') ? ' has-error' : '' }}">
@@ -162,7 +162,7 @@
 				{!! Form::number('bono_responsabilidad', null, ['class' => 'form-control', 'title' => 'Introduzca Bono Responsabilidad', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cuenta_bancaria') ? ' has-error' : '' }}">
-				{!! Form::label('cuenta', 'Cuenta Bancaria(Para Nomina): ') !!} <small class="text-red">*</small>
+				{!! Form::label('cuenta', 'Cuenta Bancaria(Para Nómina): ') !!} <small class="text-red">*</small>
 				{!! Form::number('cuenta_bancaria', null, ['class' => 'form-control', 'title' => 'Introduzca Cuenta Bancaria(Para Nomina)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 		</div>
@@ -174,7 +174,9 @@
 	</div>
 
 <script type="text/javascript">
-		
+		$(document).ready(function(){
+			$("#verificarr").prop("checked", false);
+		});
 
 		function verificar(){ 
 			for (i=0;i<document.f1.elements.length;i++) 

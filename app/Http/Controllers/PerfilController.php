@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Auth;
 use Session;
 use Storage;
+use Carbon\Carbon;
 
 class PerfilController extends Controller
 {
@@ -81,8 +82,7 @@ class PerfilController extends Controller
         $fotoBorrar = User::where('id', $id)->first();
         $personal = Personal::where('correo', $fotoBorrar->email)->first();
         $foto = $request->file('foto');
-        #Storage::delete('file.jpg');
-        #$name = $request->file('foto');
+
             if($request['verificar'] == 'on')
             {
                 if($request['nueva'] == $request['confirmar'])
@@ -92,12 +92,15 @@ class PerfilController extends Controller
                         $persona->correo = $request['email'];
                         $persona->save();
                     }
-                    Storage::delete($fotoBorrar->foto);
                     $user = User::find($id);
                     $user->name = $request['name'];
                     $user->email = $request['email'];
                     $user->password = bcrypt($request['nueva']);
-                    $user->foto = $foto;
+                    if(isset($foto)){     
+                        Storage::delete($fotoBorrar->foto);    
+                        $user->foto = $foto;
+                    }
+
                     $user->save();
                     
                 }
@@ -113,11 +116,13 @@ class PerfilController extends Controller
                         $persona->correo = $request['email'];
                         $persona->save();
                     }
-                Storage::delete($fotoBorrar->foto);
                 $user = User::find($id);
                 $user->name = $request['name'];
                 $user->email = $request['email'];
-                $user->foto = $foto;
+                if(isset($foto)){         
+                        Storage::delete($fotoBorrar->foto);
+                        $user->foto = $foto;
+                }
                 $user->save();
                 
             }
