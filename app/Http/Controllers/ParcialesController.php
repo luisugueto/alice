@@ -118,7 +118,7 @@ class ParcialesController extends Controller
                     $quimestre2=Quimestres::where('numero',2)->first();
                 }
 
-
+//dd($quimestre2);
 
 
         $cont=0;
@@ -153,7 +153,7 @@ class ParcialesController extends Controller
                                                          'atrasos_j' => $request->faltas[2],
                                                          'atrasos_i' => $request->faltas[3],
                                                          'observaciones' => $request->observaciones,
-                                                         'avg_aprovechamiento' => $request->avg_aprovechamiento]);
+                                                         'avg_aprovechamiento' => $request->promedio_ap2]);
                             //buscando el ultimo registro para tomar el id del parcial
                             $parcial2=Parciales::all()->last();    
 
@@ -167,7 +167,7 @@ class ParcialesController extends Controller
                                 $xparcial2=Parciales::all()->last();
                                 $cuantos=buscando_asignaturas_cargadas2($request->id_estudiante,$xparcial2->id,$quimestre2->id);
                                 $suma=suma_cargadas($request->id_estudiante,$xparcial2->id,$quimestre2->id);
-                                $promedio=($request->avg_aprovechamiento*count($request->id_asignatura)+$suma)/$cuantos+count($request->id_asignatura);
+                                $promedio=($request->promedio_ap2*count($request->id_asignatura)+$suma)/$cuantos+count($request->id_asignatura);
                                 if ($cuantos==0 || $cuantos==$cuantas) {
                                                   //si es igual a 0 no se ha cargado parciales aun por lo que se crea uno
                                                 //calculando promedio de aprovechamiento

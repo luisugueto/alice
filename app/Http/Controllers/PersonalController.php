@@ -153,18 +153,18 @@ class PersonalController extends Controller
             }
         }
         if($request['tipo_registro']==2){
-             \Mail::send('emails.message', $data, function($message)
+            /* \Mail::send('emails.message', $data, function($message)
         {
             $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
-        });
+        });*/
             Session::flash('message', 'DOCENTE REGISTRADO CORRECTAMENTE, RECIBIRÁ UN CORREO CON SU USUARIO Y CONTRASEÑA DE ACCESO');
         }
         else{
             Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
-         \Mail::send('emails.message', $data, function($message)
+        /* \Mail::send('emails.message', $data, function($message)
         {
             $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
-        });
+        });*/
         }
             return redirect()->route('personal.index');
     }

@@ -29,6 +29,7 @@
                             <br><h3>
                             Curso: {{$seccion->curso->curso}}
                             Sección: {{$seccion->literal}}
+                            <?php $id_seccion=$seccion->id; ?>
                             </h3>
                         </div>
 
@@ -54,22 +55,34 @@
                                             <td> {{ $estudiante->cedula }} </td>
                                             <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
-                                            <td>{{ buscar_dr($estudiante->id)  }}</td>
+                                           <?php $q=buscar_mi_asignatura_parcial($estudiante->id,$id_seccion); ?>
+                                            <td>@if($q==1)
+                                                1 er Quimestre
+                                                 @else
+
+                                                    @if($q==2)
+                                                        2 do Quimestre
+
+                                                        @else
+                                                            {{ buscar_dr($estudiante->id)  }}
+                                                    @endif
+                                                @endif
+                                                    </td>
                                             <td>  
                                             <?php 
                                             $quimestre=buscar_quimestre($estudiante->id);
-                                            $parcial=buscar_parcial($estudiante->id); ?>
-                                            
+                                            $parcial=buscar_parcial($estudiante->id); 
+                                             ?>
 
-                                                @if($quimestre!=2)
+                                                @if($q==1 || $q==2)
         
-                                                    @if($parcial==3)
+                                                   {{--  @if($parcial==3) --}}
                                                 {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square-o fa-2x','title' => 'Seleccione para Agregar Quimestre']) !!}
                                                     @else
 
                                                 {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}
                                                 
-                                                    @endif
+                                                   {{--  @endif --}}
                                                                           
 
                                                 @endif

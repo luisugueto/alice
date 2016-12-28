@@ -68,8 +68,8 @@ class Handler extends ExceptionHandler
         }
         else
         {
-            return redirect()->guest('/login');
-            //return parent::render($request, $e);
+            /*return redirect()->guest('/login');*/
+            return parent::render($request, $e);
         }
     }
 }

@@ -103,14 +103,7 @@ use App\Quimestrales;
  				return $sql->codigo;
  			}
  		}
-        /*DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
-
-			$sql = DB::select('SELECT * FROM asignacion_bloques as b INNER JOIN asignaturas as a ON a.id=b.id_asig WHERE b.id_bloque = '.$id_bloque.' AND b.id_asig = '.$id_asignatura.' AND b.id_seccion = '.$id_seccion.' ');
-			$contar = count($sql);
-		
-			foreach ($sql as $key) {
-				return	$codigo = $key['codigo'];
-			}	*/	
+        
 	}
 
 	function asignaturas_id($id_bloque, $id_asignatura, $id_seccion)
@@ -127,14 +120,7 @@ use App\Quimestrales;
  				return $sql->id;
  			}
  		}
-        /*DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
-
-			$sql = DB::select('SELECT * FROM asignacion_bloques as b INNER JOIN asignaturas as a ON a.id=b.id_asig WHERE b.id_bloque = '.$id_bloque.' AND b.id_asig = '.$id_asignatura.' AND b.id_seccion = '.$id_seccion.' ');
-			$contar = count($sql);
-		
-			foreach ($sql as $key) {
-				return	$codigo = $key['codigo'];
-			}	*/	
+      
 	}
 
 	function asignadas($bloque, $aulas)
@@ -195,14 +181,20 @@ use App\Quimestrales;
 	function buscar_dr($id_estudiante){
 		 $cc=0;
         $id_periodo=Session::get('periodo');
-            $quimestre=Quimestres::where('id_periodo',$id_periodo);
+            $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+            /*dd($quimestre);*/
             foreach ($quimestre as $q) {
-                $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
-                
-                $cc++;
+                $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
+                $cuantos=count($parciales);
+                if($cuantos>0){
+
+                $cc+=$cuantos;
+            	}
 
 
             }
+
+
 
             switch ($cc) {
             	case 0:
@@ -296,36 +288,45 @@ use App\Quimestrales;
 		$correo=Auth::user()->email;
 
 		$docente=Personal::where('correo',$correo)->first();
+
 		
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND 
-			id_seccion=".$id_seccion);
+			id_seccion=".$id_seccion." LIMIT 0,1");
+
 		$cuantas=count($asignaturas);
 		if($cuantas==0){
 
 			$encontrada=0;
 		}else{
-			$suma=0;
-			foreach ($asignaturas as $asig) {
+			
+					foreach ($asignaturas as $asig) {
+					
 					$sql="SELECT calificacion_parcial.* FROM parciales,calificacion_parcial,quimestres WHERE 
 					parciales.id_estudiante=".$id_estudiante." AND 
 					calificacion_parcial.id_parcial=parciales.id AND 
 					parciales.id_quimestre=quimestres.id AND 
 					quimestres.id_periodo=".$id_periodo." AND 
-					calificacion_parcial.id_asignatura=".$asignaturas->id_asignatura." 
-					GROUP BY calificacion_parcial.id_asignatura";
+					calificacion_parcial.id_asignatura=".$asig->id_asignatura." 
+					GROUP BY calificacion_parcial.id_parcial";
+					
 					$resultado=DB::select($sql);
 
+					}
+
 				$contar=count($resultado);
-				if($contar>0){
-					$suma++;
+				//dd($contar);
+				if($contar==3){
+					$encontrada=1;
+				}else{
+					if($contar==6){
+						$encontrada=2;
+
+					}else{
+					$encontrada=0;
+					}
 				}
 
-			}
-			if ($suma) {
-				
-			} else {
-				
-			}
+			
 			
 		}
 
@@ -424,7 +425,7 @@ use App\Quimestrales;
 		$buscar=DB::select("SELECT asignaturas.* FROM inscripciones,cursos,asignaturas WHERE 
                     inscripciones.id_curso=cursos.id AND 
                     asignaturas.id_curso=cursos.id AND 
-                    inscripciones.id_estudiante=".$request->id_estudiante);
+                    inscripciones.id_estudiante=".$id_estudiante);
                     $cuantas=count($buscar);
 
                     return $cuantas;
