@@ -14,8 +14,8 @@ class CreateParcialesTable extends Migration
     {
         Schema::create('parciales', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_estudiante')->unsigned();
-            $table->integer('id_personal')->unsigned();
+            $table->integer('id_estudiante')->unsigned();/*
+            $table->integer('id_personal')->unsigned();*/
             $table->integer('id_quimestre')->unsigned();
             $table->integer('id_comportamiento')->unsigned();
             $table->integer('faltas_j');
@@ -27,7 +27,7 @@ class CreateParcialesTable extends Migration
 
 
             $table->foreign('id_estudiante')->references('id')->on('datos_generales_estudiante')->onDelete('cascade');
-            $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('cascade');
+            /*$table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('cascade');*/
             $table->foreign('id_quimestre')->references('id')->on('quimestres')->onDelete('cascade');
             $table->foreign('id_comportamiento')->references('id')->on('comportamiento')->onDelete('cascade');
 

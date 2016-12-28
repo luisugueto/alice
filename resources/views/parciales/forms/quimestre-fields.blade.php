@@ -1,10 +1,10 @@
 <?php
 $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS','ATRASOS INJUSTIFICADOS', 'TOTAL DE FALTAS'];
 ?>
-{!!  Form::text('id_estudiante',$estudiantes->id); !!}
-{!!  Form::text('id_quimestre',$quimestres->id) !!}
+{!!  Form::hidden('id_estudiante',$estudiantes->id); !!}
+{!!  Form::hidden('id_quimestre',$quimestres->id) !!}
 
-<table class="table table-bordered">
+<table id="example1" class="table table-bordered table-hover">
 <thead>
 	<th colspan="2">&nbsp;</th>
 	<th colspan="3">DETALLES DE PARCIALES</th>
