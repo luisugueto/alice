@@ -153,18 +153,18 @@ class PersonalController extends Controller
             }
         }
         if($request['tipo_registro']==2){
-            /* \Mail::send('emails.message', $data, function($message)
-        {
-            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
-        });*/
+        //      \Mail::send('emails.message', $data, function($message)
+        // {
+        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        // });
             Session::flash('message', 'DOCENTE REGISTRADO CORRECTAMENTE, RECIBIRÁ UN CORREO CON SU USUARIO Y CONTRASEÑA DE ACCESO');
         }
         else{
             Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
-        /* \Mail::send('emails.message', $data, function($message)
-        {
-            $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
-        });*/
+        //  \Mail::send('emails.message', $data, function($message)
+        // {
+        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        // });
         }
             return redirect()->route('personal.index');
     }
@@ -280,14 +280,12 @@ class PersonalController extends Controller
             if($request['id_cargo'] != $verificarCargo->id_cargo){
                 if($contarCarga > 0){
                     Session::flash('message-error', 'DISCULPE: NO SE PUDO MODIFICAR EL CARGO. ESTE PERSONAL POSEE CARGA ACADÉMICA');
-                    $personal = Personal::all();
-                    return view('personal.personal', compact('personal'));
+                   return redirect()->action('PersonalController@index');
                 }else{
                     $per = Personal::find($id);
                     $per->id_cargo = $request['id_cargo'];
                     $per->save();
-                    $personal = Personal::all();
-                    return view('personal.personal', compact('personal'));
+                    return redirect()->action('PersonalController@index');
                 }
             }
         
@@ -295,8 +293,7 @@ class PersonalController extends Controller
         {
             Session::flash('message-error', 'DISCULPE: CODIGO PERSONAL, CEDULA Y CORREO YA EXISTENTES ');
         }
-        $personal = Personal::all();
-        return view('personal.personal', compact('personal'));
+        return redirect()->action('PersonalController@index');
     }
 
     /**
