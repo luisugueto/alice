@@ -74,20 +74,12 @@
 				{!! Form::label('cargo', 'Cargo') !!} <small class="text-red">*</small>
 				<select id="cargo" name="id_cargo" required class="form-control select"></select>
 			</div>
-		<div id="registroUser" >
-			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
-				<input type="checkbox" id="seleccionar" name="seleccionar" onclick="verificar()">
-				{!! Form::label('clave', 'Habilitar Usuario') !!}
+			<div id="registroUser" >
+				<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
+					{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small> <strong class="pull-right"> HABILITAR <input type="checkbox" id="seleccionar" name="seleccionar" onclick="verificar()"> </strong>
+					{!! Form::text('clave', null, ['class' => 'form-control', 'id' => 'clave', 'disabled' => 'true','title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
+				</div>
 			</div>
-			<div class="form-group{{ $errors->has('clave') ? ' has-error' : '' }}">
-				{!! Form::label('clave', 'Clave para los Procesos') !!} <small class="text-red">*</small>
-				{!! Form::text('clave', null, ['class' => 'form-control', 'id' => 'clave', 'disabled' => 'true','title' => 'Introduzca la clave del personal', 'placeholder' => 'Ejm: 124asfas']) !!}
-			</div>
-		</div>
-		</div>
-		<div class="col-md-12 text-center">
-			<hr>
-			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
 		</div>
 	</div>
 </div>
@@ -119,10 +111,6 @@
 				{!! Form::label('historia', 'Historia Laboral: ') !!} <small class="text-red">*</small>
 				{!! Form::textarea('historial_laboral', null, ['class' => 'form-control', 'title' => 'Introduzca la Historia Laboral', 'placeholder' => 'Ejm: ', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 			</div>
-		</div>
-		<div class="col-md-12 text-center">
-			<hr>
-			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
 		</div>
 	</div>	  			
 </div>
@@ -166,12 +154,8 @@
 				{!! Form::number('cuenta_bancaria', null, ['class' => 'form-control', 'title' => 'Introduzca Cuenta Bancaria(Para Nomina)', 'placeholder' => 'Ejm: Ing Informática']) !!}
 			</div>
 		</div>
-		
-		<div class="col-md-12 text-center">
-			<hr>
-			<span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
-		</div>
 	</div>
+</div>
 
 <script type="text/javascript">
 		$(document).ready(function(){
@@ -237,4 +221,3 @@
 		}
 </script>
 
-</div>
