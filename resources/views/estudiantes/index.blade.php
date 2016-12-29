@@ -7,16 +7,16 @@
 @section('main-content')                    
 <div class="col-md-12">
     <div class="col-md-12">
-        <div class="row" style="padding-top: 10px;">
+        <div class="row" style="padding-top: 10px">
             @include('alerts.request')
             @include('alerts.errors') 
         </div>  
     </div> 
     <div class="col-md-12">
         <div class="row" style="padding-top: 5px">
-        <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('representante/buscar') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-        </button>
+            <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('representante/buscar') }}'";>
+                <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+            </button>
         </div>
     </div>
     <section class="content">
@@ -54,11 +54,11 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                         </table>
-                           
+                        </table>                    
                     </div>            
                 </div>
             </div>
         </div>
     </section>
+</div>
 @endsection

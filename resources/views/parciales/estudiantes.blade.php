@@ -41,7 +41,7 @@
                                         <th>Cédula</th>
                                         <th>Apellido(s)</th>
                                         <th>Nombre(s)</th>
-                                        <th>Cargar a:</th>
+                                        <th>Pendiente por Cargar:</th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
