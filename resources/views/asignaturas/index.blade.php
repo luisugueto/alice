@@ -4,24 +4,23 @@
 @section('contentheader_description', 'Inicio')
 
 
-@section('main-content')                    
+@section('main-content')      
+
+
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 10px;">
-            @include('alerts.request')
-            @include('alerts.errors') 
-        </div>  
-    </div> 
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 5px">
+   
+    
+    @include('alerts.errors')
+    
+    <div class="col-md-14">
         <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('asignaturas/create') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
         </button>
-        </div>
     </div>
+    
     <section class="content">
         <div class="row">
-            <div class="col-md-12" style="padding-top: 20px">
+            <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Asignaturas</h3>
@@ -48,9 +47,8 @@
                             </tbody>
                          </table>
                            
-                    </div>            
-                </div>
-            </div>
-        </div>
-    </section>
+                        </div>
+                        
+                    </div>
+    
 @endsection

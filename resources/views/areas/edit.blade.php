@@ -5,17 +5,15 @@
 
 @section('main-content')
 
-<div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 20px;">
-            @include('alerts.request')
-            @include('alerts.errors')
-        </div>
-    </div>
 
-    <section class="content"> 
+<div class="col-md-12">
+   
+    @include('alerts.errors')
+    @include('alerts.request')
+    
+    <section class="content">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
 
                 {!!Form::model($area, ['route' => ['areas.update', $area->id], 'method'=>'PUT', 'files' => true])!!}
 
@@ -35,10 +33,5 @@
                     </div>
 
                 {!! Form::close() !!}
-
-            </div>
-        </div>
-    </section>
-</div>
 
 @endsection

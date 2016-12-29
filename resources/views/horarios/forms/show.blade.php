@@ -4,13 +4,17 @@
 @section('contentheader_description', 'Curso')
 
 @section('main-content') 
-<div class="col-md-12"><br><br>
-    @include('alerts.request')
-    @include('alerts.errors')
-    <div class="col-md-12">  
-        <section class="content">
-            <div class="row">
-                    <div class="col-md-12">
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+
                         <div class="box">
                             <div class="box-header">
                                 <h3 class="box-title">Curso: {{ $curso->curso }}</h3>
@@ -68,9 +72,5 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-            </div>
-        </section>
-    </div>
-</div>
+                  
 @endsection

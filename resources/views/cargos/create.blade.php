@@ -4,18 +4,16 @@
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
-
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 20px;">
-            @include('alerts.request')
-            @include('alerts.errors')
-        </div>
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
     </div>
-
-    <section class="content"> 
+    
+    <section class="content">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
 
                  {!! Form::open(['route' => 'cargos.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
 
@@ -36,9 +34,5 @@
 
                 {!! Form::close() !!}
 
-            </div>
-        </div>
-    </section>
-</div>
 
 @endsection

@@ -4,24 +4,21 @@
 @section('contentheader_description', 'Inicio')
 
 
-@section('main-content')                    
+@section('main-content')
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 10px;">
-            @include('alerts.request')
-            @include('alerts.errors') 
-        </div>  
-    </div> 
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 5px;">
-            <button class="btn btn-primary" title="Registrar Asignatura" onclick="window.location.href = '{{ URL::to('aulas/create') }}'";>
-                <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-            </button>
-        </div>
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
     </div>
+    
     <section class="content">
         <div class="row">
-            <div class="col-md-12" style="padding-top: 20px">
+            <div class="col-md-12">    
+                    <button class="btn btn-primary" title="Registrar Asignatura" onclick="window.location.href = '{{ URL::to('aulas/create') }}'";>
+                        <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+                    </button>
+    
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Aulas</h3>
@@ -49,8 +46,5 @@
                          </table>
                     </div>            
                 </div>
-            </div>
-        </div>
-    </section>
-</div>
+            
 @endsection

@@ -7,13 +7,18 @@
 @section('contentheader_title', 'Perfil')
 
 
-@section('main-content')                    
+@section('main-content')    
 <div class="col-md-12">
-    @include('alerts.errors')
-     
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
     
-<section class="content">
-    <br><br><br>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+
      <div class="content-fluid" align="center">   
         <div class="row">
             <div class="col-md-12 form-group">
@@ -37,6 +42,5 @@
                  {!!link_to_route('user_perfil.edit', $title = '', $parameters = $user->id, $attributes = ['class'=>'btn btn-primary fa fa-edit fa-2x'])!!}
             </div> 
         </div>
-    </div>
-</section>
+    
 @stop

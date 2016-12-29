@@ -4,16 +4,22 @@
 @section('contentheader_description', 'Periodo')
 
 
-@section('main-content')                    
-<div class="col-md-12"><br><br> 
-    @include('alerts.request')
-    @include('alerts.errors')
+@section('main-content')     
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">               
+
     <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('horarios/buscar') }}'";>
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo
     </button><br><br>
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
+   
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Horarios</h3>
@@ -45,7 +51,5 @@
                            
                     </div>            
                 </div>
-            </div>
-        </div>
-    </section>
+            
 @endsection

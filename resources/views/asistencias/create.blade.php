@@ -4,18 +4,14 @@
 @section('contentheader_description', 'Entrada')
 
 @section('main-content')
-
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 20px;">
-            @include('alerts.request')
-            @include('alerts.errors')
-        </div>
-    </div>
-
-    <section class="content"> 
+   
+    @include('alerts.errors')
+    @include('alerts.request')
+    
+    <section class="content">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12" style="padding-top: 20px">
 
                  {!! Form::open(['route' => 'asistencias.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
 
@@ -29,10 +25,5 @@
                     </div>
 
                 {!! Form::close() !!}
-
-            </div>
-        </div>
-    </section>
-</div>
 
 @endsection

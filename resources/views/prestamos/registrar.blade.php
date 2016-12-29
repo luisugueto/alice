@@ -36,10 +36,7 @@
 
                 {!! Form::close() !!}
 
-            </div>
-        </div>
-    </section>
-</div>
+        
 
 <script type="text/javascript">
 

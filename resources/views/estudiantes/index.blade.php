@@ -12,13 +12,11 @@
             @include('alerts.errors') 
         </div>  
     </div> 
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 5px">
+
             <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('representante/buscar') }}'";>
                 <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
             </button>
-        </div>
-    </div>
+      
     <section class="content">
         <div class="row">
             <div class="col-md-12" style="padding-top: 20px">
@@ -57,8 +55,5 @@
                         </table>                    
                     </div>            
                 </div>
-            </div>
-        </div>
-    </section>
-</div>
+          
 @endsection
