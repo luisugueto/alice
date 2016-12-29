@@ -4,14 +4,17 @@
 @section('contentheader_description', 'Inicio')
 
 
-@section('main-content')                    
+@section('main-content')       
+
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 10px;">
-            @include('alerts.request')
-            @include('alerts.errors') 
-        </div>  
-    </div> 
+   
+    @include('alerts.errors')
+    @include('alerts.request')
+    
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+
     <div class="col-md-12">
         <div class="row" style="padding-top: 5px">
         <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('asistencias/create') }}'";>
@@ -60,4 +63,5 @@
             </div>
         </div>
     </section>
+</div>
 @endsection

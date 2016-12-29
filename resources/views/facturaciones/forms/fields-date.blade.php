@@ -4,23 +4,21 @@
 @section('contentheader_description', 'Inicio')
 
 
-@section('main-content')                    
+@section('main-content')     
 <div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 10px;">
-            @include('alerts.request')
-            @include('alerts.errors') 
-        </div>  
-    </div> 
-    <div class="col-md-1">
-        <div class="row" style="padding-top: 5px">
-        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarMorosos') }}"> <span class="text-light-blue">Excel</span></a>
-        </button>
-        </div>
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
     </div>
+    
     <section class="content">
         <div class="row">
-            <div class="col-md-12" style="padding-top: 20px">
+            <div class="col-md-12">               
+
+        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel."><a href="{{ url('descargarMorosos') }}"> <span class="text-light-blue">Excel</span></a>
+        </button>
+   
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Morosos</h3>
@@ -48,7 +46,5 @@
                          </table>  
                     </div>            
                 </div>
-            </div>
-        </div>
-    </section>
+      
 @endsection

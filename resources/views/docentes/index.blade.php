@@ -7,33 +7,19 @@
 @section('contentheader_title', 'Docentes')
 
 
-@section('main-content')  
-
- 
+@section('main-content')
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
+    <section class="content">
+        <div class="row">
             <div class="col-md-12">
 
-    <section class="content">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @if(Session::has('message-error'))
-        <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                
-                {{Session::get('message-error')}}
-            </ul>
-        </div>
-    @endif
-    @include('alerts.request') 
-    <div class="row">
-      <div class="col-md-12">
-          <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
+                    <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
           
             
                      
@@ -92,8 +78,6 @@
             </div>                        
                       
            </form> 
-           </div>
-           </div>
-           </section>
-           </div>
+ 
+
 @stop

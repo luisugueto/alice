@@ -57,8 +57,5 @@
             </div>                        
                       
            {!! Form::close() !!}
-           </div>
-           </div>
-           </section>
-           </div>
+ 
 @stop

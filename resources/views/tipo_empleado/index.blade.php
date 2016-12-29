@@ -62,8 +62,5 @@
                         </div>
                         
                     </div>
-                </div>
-            </div>
-        </section>
-    </div>
+               
 @stop

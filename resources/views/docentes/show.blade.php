@@ -9,36 +9,23 @@
 
 @section('main-content')  
 
-
-            <div class="col-md-12">
-
-
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
     <section class="content">
-                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('docentes.asignar.show2',[$docentes->id]) }}'";>
+        <div class="row">
+            <div class="col-md-12">
+                   
+                 <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('docentes.asignar.show2',[$docentes->id]) }}'";>
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     Asignar</button>
-          
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @if(Session::has('message-error'))
-        <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                
-                {{Session::get('message-error')}}
-            </ul>
-        </div>
-    @endif
-    @include('alerts.request') 
-    <div class="row">
-      <div class="col-md-12">
-          <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
+
+
+                  <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
           
             
                      
@@ -143,14 +130,7 @@
                 @endforeach
 
                 @endif
-                </tbody>
-
-
-
-
-
-                
-                
+                </tbody>   
               </table>
                       @endif
                               </div>
@@ -161,10 +141,6 @@
             </div>                        
                       
            </form> 
-           </div>
-           </div>
-           </section>
-           </div>
 
       
 <div id="myModal" class="modal fade" role="dialog">

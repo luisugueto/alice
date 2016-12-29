@@ -80,10 +80,5 @@
                            
                         </div>
                         
-                    </div>
-                </div>
-            </section>
-        {!!link_to_route('pagos.mensual', $title = ' Exportar a Excel', $parameters = 'persona='.$per->id, $attributes = ['class'=>'btn btn-primary fa fa-file-excel-o'])!!}
-        </div>
             
 @stop

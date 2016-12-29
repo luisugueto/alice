@@ -5,23 +5,23 @@
 
 
 @section('main-content')
-
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
+    <section class="content">
+        <div class="row">
             <div class="col-xs-12">
                 <button class="btn btn-primary" title="Registrar Horario" onclick="window.location.href = '{{ URL::to('usuarios/create') }}'";>
                     <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
                 </button>
             </div>
-
-            <div class="col-xs-12" style="padding-top: 20px;">
-                <div class="box">
+            <div class="col-md-12">
+          
+                <div class="box" style="padding-top: 20px">
                     <div class="box-header">
                         <h3 class="box-title">Usuarios</h3>
                     </div>
@@ -50,8 +50,5 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
+                  
 @endsection

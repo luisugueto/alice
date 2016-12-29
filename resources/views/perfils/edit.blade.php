@@ -6,14 +6,19 @@
 @endsection
 
 
-@section('main-content')                    
-            <div class="col-md-12">
-    @include('alerts.request')
+@section('main-content')     
+<div class="col-md-12">
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
+    
     <section class="content">
-    <div class="row">
+        <div class="row">
+            <div class="col-md-12">
 
-      <div class="col-md-12">
-          {!!Form::model($user, ['route'=>['user_perfil.update', $user->id], 'method'=>'PUT', 'files'=>true])!!}
+                     {!!Form::model($user, ['route'=>['user_perfil.update', $user->id], 'method'=>'PUT', 'files'=>true])!!}
           {{ csrf_field() }}
           <input type="hidden" name="id" value="{{ $user->id }}">
           <br>

@@ -7,21 +7,18 @@
 @section('contentheader_title', 'IESS')
 
 
-@section('main-content')                    
+@section('main-content')     
 <div class="col-md-12">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @include('alerts.errors')
+   
+    <div class="row" style="padding-top: 20px;">
+        @include('alerts.request')
+        @include('alerts.errors')
+    </div>
     
     <section class="content">
         <div class="row">
-            <div class="col-md-14">
+            <div class="col-md-12">               
+
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Tabla</h3>
