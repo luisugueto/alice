@@ -91,7 +91,7 @@ use App\Http\helpers;
             <li class="treeview">
                 <a href="#"><i class='fa fa-list-alt'></i> <span>Parciales</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('parciales.show',1) }}">Nuevo</a></li>
+                    <li><a href="{{ route('parciales.show',1) }}">Todos los Estudiantes</a></li>
                 </ul>
                 <?php $tipo=tipo_docente(); ?>
                 @if($tipo=="DOCENTE ROTATIVO")
@@ -99,9 +99,11 @@ use App\Http\helpers;
                     <li><a href="{{ route('parciales.asignaturas') }}">Asignaturas Asignadas</a></li>
                 </ul>
                 @endif
+                @if(Auth::user()->roles_id == 3)
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('parciales.index') }}">Lista de Estudiantes</a></li>
+                    <li><a href="{{ route('parciales.index') }}">Lista de Mis Estudiantes</a></li>
                 </ul>
+                @endif
             </li>
             @endif
             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)

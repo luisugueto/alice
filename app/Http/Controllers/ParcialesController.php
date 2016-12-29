@@ -21,6 +21,7 @@ use App\Calificacion_parcial_subtotal;
 use App\Calificacion_parcial;
 use App\Quimestres;
 use App\Seccion;
+use App\Quimestrales;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -103,31 +104,57 @@ class ParcialesController extends Controller
         //buscando id del quimestre
         $cc=0;
         $id_periodo=Session::get('periodo');
-            $quimestre=Quimestres::where('id_periodo',$id_periodo);
+            $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
             foreach ($quimestre as $q) {
+
                 $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                
                 $cc+=count($parciales);
 
             }
-            //dd($cc);
+      /*      //dd($cc);
             if($cc<3){
                     $quimestre2=Quimestres::where('numero',1)->first();
 
                 }else{
                     $quimestre2=Quimestres::where('numero',2)->first();
-                }
+                }*/
 
-            if(count($quimestre2)>0){
+            if(count($quimestre)>0){
+                
 
                 //buscando el ultimo parcial registrado para el estudiante:
-                if($cc==0 || $cc==3){
+                if($cc==0){
                     $cargadas=0;
                 }else{
-                $ultimo=Parciales::where('id_quimestre',$quimestre2->id)->where('id_estudiante',$request->id_estudiante)->last();
-                $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$ultimo->id,$quimestre2->id);
-                //buscando las asignaturas cargadas
-                $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$ultimo->id,$quimestre2->id);
+
+                    foreach ($quimestre as $q) {
+                    
+                $ultimo=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                   //dd($ultimo);
+                        foreach ($ultimo as $last) {
+                            
+                        
+                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id);
+                            //dd($mias);
+                            if($mias==0){
+                                //buscando las asignaturas cargadas
+                                
+                                $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
+                                $id_quimestre=$q->id;
+                                $mias=0;
+                                $laster=Parciales::find($last->id);
+
+                            }
+                        }
+
+                    }
+
+                              
+                                
+
                 }
+
                 //buscando la cantidad de asignaturas que ve el estudiante
                 
                 $cuantas=buscando_asignaturas_cursadas($request->id_estudiante);
@@ -151,12 +178,12 @@ class ParcialesController extends Controller
                     // buscando al profesor que registra la calificacion
                     /*    $id_personal=personal();*/
                         
-                                if ($cargadas==0 || $cargadas==$cuantas || $mias==0) {
+                                if (($cargadas==0 || $cargadas==$cuantas) && $mias==0) {
                                  /*$subidas=count($request->id_asignatura);
                                 $promedio=$request->promedio_ap2/$subidas;*/
                             $parcial=Parciales::create(['id_estudiante' => $request->id_estudiante,/*
                                                          'id_personal' => $request->id_personal,*/
-                                                         'id_quimestre' => $quimestre2->id,
+                                                         'id_quimestre' => $id_quimestre,
                                                          'id_comportamiento' => $request->promedio_comp,
                                                          'faltas_j' => $request->faltas[0],
                                                          'faltas_i' => $request->faltas[1],
@@ -173,7 +200,7 @@ class ParcialesController extends Controller
                                     
                                         //si cuantos es menor que cuantas indica que ya se ha creado un parcial para ese estudiante
                                         //se busca el parcial creado
-                                        $parcial2=Parciales::where('id_estudiante',$request->id_estudiante)->where('id_quimestre',$quimestre2->id)->last();
+                                        $parcial2=Parciales::find($laster->id);
                                         //se actualizan los registros del parcial
                                             $parcial2->faltas_j=$parcial2->faltas_j+$request->faltas[0];
                                             $parcial2->faltas_i=$parcial2->faltas_i+$request->faltas[1];
@@ -256,7 +283,7 @@ class ParcialesController extends Controller
                 //calculando nuevo promedio de aprovechamiento
                 //
                 $subtotal=Calificacion_parcial_subtotal::where('id_parcial',$parcial2->id)->get();
-                $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$parcial2->id,$quimestre2->id);
+                $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$parcial2->id,$id_quimestre);
                 //dd($cargadas);
                 $suma=0;
                 foreach ($subtotal as $sub) {
@@ -316,7 +343,15 @@ class ParcialesController extends Controller
             }
 
 
+            if (Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1) {
 
+            $estudiantes=Estudiante::all();
+            Session::flash('message', 'CARGA DE PARCIALES CON NIVEL ADMIN');
+                return View('parciales.show-all',compact('estudiantes','periodo'));
+        
+
+            }else{
+               
         $cuantos_q=buscar_quimestre($id);
         $estudiantes=Estudiante::find($id);
         $id_curso=buscar_curso($id);
@@ -336,7 +371,8 @@ class ParcialesController extends Controller
             
         $quimestres=Quimestres::find(1);
         return View('parciales.quimestres',compact('parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
-    
+        }
+
     }
 
     /**
@@ -393,7 +429,25 @@ class ParcialesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //buscando id del quimestre
+        $cc=0;
+        $id_periodo=Session::get('periodo');
+            $quimestre=Quimestres::where('id_periodo',$id_periodo);
+            foreach ($quimestre as $q) {
+                $quimestral=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                $cc+=count($parciales);
+
+            }
+            //dd($cc);
+            if($cc==0){
+                    $quimestre2=Quimestres::where('numero',1)->first();
+
+                }else{
+                    $quimestre2=Quimestres::where('numero',2)->first();
+                }
+
+
+
     }
 
     /**
@@ -409,7 +463,7 @@ class ParcialesController extends Controller
 
     public function asignaturas(){
 
-            $correo=Auth::user()->email;
+        $correo=Auth::user()->email;
         $personal=Personal::where('correo',$correo)->first();
         $id_periodo=Session::get('periodo');
         $periodo=Periodos::find($id_periodo);
