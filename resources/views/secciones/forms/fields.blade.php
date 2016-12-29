@@ -1,6 +1,6 @@
 <div class="form-group">
 	{!! Form::label('Nombre', 'Literal') !!} <small class="text-red">*</small>
-	{!! Form::text('literal', null, ['required', 'maxlength'=>2, 'class'=>'form-control','placeholder'=> 'A','title' => 'Ingrese el literal o el número de la sección']) !!}
+	{!! Form::text('literal', null, ['required', 'maxlength'=>2, 'class'=>'form-control','placeholder'=> 'A','title' => 'Ingrese el literal o el número de la sección', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Capacidad', 'Capacidad de Estudiantes') !!} <small class="text-red">*</small>

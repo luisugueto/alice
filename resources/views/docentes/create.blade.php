@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @if($docentes->cargo->nombre=="DOCENTE DE PLANTA")
 @section('contentheader_title', 'Asignando Curso/Sección')
 @else
@@ -7,44 +8,41 @@
 @endif
 @section('contentheader_description', '')
 
-@section('main-content') 
+@section('main-content')
 
-<div class="col-md-12"><br><br>  
-    <section class="content">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @if(Session::has('message-error'))
-        <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                
-                {{Session::get('message-error')}}
-            </ul>
-        </div>
-    @endif
-        <div class="row">
+    <div class="row" style="padding-top: 25px;">
+        <div class="col-xs-12">
+
+            <div class="col-xs-12">
+                @include('alerts.request')
+                @include('alerts.errors')
+            </div>
+
             <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header">
-                        &nbsp;&nbsp;&nbsp;&nbsp;  Docente:{{ $docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres."  C.I.: ".$docentes->cedula }}<br>
-                              Lista de Asignaturas y Secciones asignadas
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Docente:{{ $docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres."  C.I.: ".$docentes->cedula }}</h3>
                     </div>
+
+                    {!! Form::open(['route' => 'docentes.store', 'method' => 'POST', 'class' => 'form']) !!}
+
                     <div class="box-body">
-                     {!! Form::open(['route' => 'docentes.store', 'method' => 'POST', 'class' => 'form']) !!}
-                        @include('docentes.forms.create-fields') 
-                        {!!Form::close()!!} 
+
+                        @include('docentes.forms.create-fields')
+
+                        <div class="box-footer">
+                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                        </div>
+
                     </div>
+
+                    {!! Form::close() !!}
+
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
 
 @endsection
 

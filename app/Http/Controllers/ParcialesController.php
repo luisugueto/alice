@@ -345,8 +345,10 @@ class ParcialesController extends Controller
             if (Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1) {
 
             $estudiantes=Estudiante::all();
+
             Session::flash('message', 'CARGA DE PARCIALES CON NIVEL ADMIN');
-                return View('parciales.show-all',compact('estudiantes','periodo'));
+
+            return view('parciales.show-all',compact('estudiantes','periodo'));
         
 
             }else{
@@ -371,6 +373,7 @@ class ParcialesController extends Controller
            
             
         $quimestres=Quimestres::find(1);
+
         return View('parciales.quimestres',compact('parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
         }
 

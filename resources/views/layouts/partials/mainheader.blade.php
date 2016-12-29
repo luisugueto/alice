@@ -77,8 +77,8 @@
                             @if(Auth::user()->foto == '')
                             <img src="{{asset('/img/user2-160x160.jpg')}}" class="user-image" alt="User Image"/>
                             @else
-                                    
-                                    <img src="{{asset('perfil/'.$user)}}" class="img-circle" alt="User Image" style="width: 20px; height: 20px; "/>
+
+                                <img src="{{asset('perfil/'.$user)}}" class="img-circle" alt="User Image" style="width: 20px; height: 20px; "/>
                                     
                             @endif
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
@@ -101,17 +101,17 @@
                                 </p>
                             </li>
                             <!-- Menu Body -->
-                         <!--    <li class="user-body">
+                         <!--<li class="user-body">
                                 <div class="col-xs-4 text-center">
-                                    <a href="#">{{ trans('adminlte_lang::message.followers') }}</a>
+                                    <a href="#">{{-- trans('adminlte_lang::message.followers') --}}</a>
                                 </div>
                                 <div class="col-xs-4 text-center">
-                                    <a href="#">{{ trans('adminlte_lang::message.sales') }}</a>
+                                    <a href="#">{{-- trans('adminlte_lang::message.sales') --}}</a>
                                 </div>
                                 <div class="col-xs-4 text-center">
-                                    <a href="#">{{ trans('adminlte_lang::message.friends') }}</a>
-                                </div> -->
-                            </li>
+                                    <a href="#">{{-- trans('adminlte_lang::message.friends') --}}</a>
+                                </div>
+                            </li>-->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
@@ -124,11 +124,6 @@
                         </ul>
                     </li>
                 @endif
-
-                <!-- Control Sidebar Toggle Button -->
-               <!--  <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li> -->
             </ul>
         </div>
     </nav>

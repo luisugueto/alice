@@ -1,41 +1,42 @@
 @extends('layouts.app')
 
-@section('contentheader_title', 'Tipo de Empleados')
-@section('contentheader_description', '')
+@section('contentheader_title', 'Empleado')
+@section('contentheader_description', 'Nuevo')
 
-@section('main-content') 
+@section('main-content')
 
-<div class="col-md-12"><br><br>  
-    <section class="content">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @if(Session::has('message-error'))
-        <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                
-                {{Session::get('message-error')}}
-            </ul>
-        </div>
-    @endif
-        <div class="row">
+    <div class="row" style="padding-top: 25px;">
+        <div class="col-xs-12">
+
+            <div class="col-xs-12">
+                @include('alerts.request')
+                @include('alerts.errors')
+            </div>
+
             <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Registrando Tipo de Empleado</h3>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Tipo de Empleado</h3>
                     </div>
+
+                    {!! Form::open(['route' => 'tipo_empleado.store', 'method' => 'POST', 'class' => 'form']) !!}
+
                     <div class="box-body">
-                     {!! Form::open(['route' => 'tipo_empleado.store', 'method' => 'POST', 'class' => 'form']) !!}
-                        @include('tipo_empleado.forms.create-fields') 
-                        {!!Form::close()!!} 
+
+                        @include('tipo_empleado.forms.create-fields')
+
+                        <div class="box-footer">
+                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                        </div>
+
                     </div>
+
+                    {!! Form::close() !!}
+
                 </div>
-          
+            </div>
+        </div>
+    </div>
 
 @endsection

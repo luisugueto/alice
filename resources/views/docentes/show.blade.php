@@ -1,180 +1,130 @@
 @extends('layouts.app')
 
-@section('htmlheader_title')
-    Docentes
-@endsection
-
 @section('contentheader_title', 'Docentes')
+@section('contentheader_description', 'Inicio')
 
+@section('main-content')
 
-@section('main-content')  
+    <div class="row" style="padding-top: 25px;">
+        <div class="col-xs-12">
 
-<div class="col-md-12">
-   
-    <div class="row" style="padding-top: 20px;">
-        @include('alerts.request')
-        @include('alerts.errors')
-    </div>
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                   
-                 <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('docentes.asignar.show2',[$docentes->id]) }}'";>
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    Asignar</button>
-
-
-                  <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
-          
-            
-                     
-                    <div class="tab-content">
-                        <div class="box">
-                            <div class="box-header">
-                              <h3 class="box-title">
-                            
-                              &nbsp;&nbsp;&nbsp;&nbsp;  Docente:{{ $docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres."  C.I.: ".$docentes->cedula }}<br>
-                              Lista de Asignaturas y Secciones asignadas
-                              <?php $id_prof=$docentes->id; ?>
-                              
-                              </h3>
-                            </div>
-                              <div class="box-body">
-                              
-                              @if($docentes->cargo->nombre=="DOCENTE DE PLANTA")
-                              <table id="example1" class="table table-bordered table-striped">
-
-                                <thead>
-                                <tr>
-                                  <th>Curso</th>
-                                  <th>Sección</th>
-                                  <th>Opciones</th>
-                                </tr>
-                                </thead>
-                              <tbody>
-                            
-                              @foreach($docentes2 as $docentes)
-                              <tr>
-                                
-                                <td> {{$docentes->curso}}</td>
-                                <td>{{ $docentes->literal }}</td>
-                                
-                               <td>
-                                <div class="btn-group">
-                                                                          
-                                      <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$id_prof}},{{$docentes->id_seccion }},{{$docentes->id_curso}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
-                                   
-                                    
-                                </div>
-                                </td>
-                                
-                              </tr>
-                             
-                             
-                              @endforeach
-                              </tbody>
-                </table>
-                @else
-                <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Curso</th>
-                  <th>Asignatura</th>
-                  <th>Sección</th>
-                  <th>Opciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                     @if($cuantos>0)
-                      <?php $docentes2=$docentes; ?>
-                      
-                @foreach($docentes2->asignaturas as $docentes)
-               <?php $id_seccion=$docentes->pivot->id_seccion;
-                ?>
-
-                <tr>
-                  
-                  <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->cursos->curso}}</a></td>
-                  <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->asignatura."(".$docentes->codigo.")"}}</a></td>
-                  <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}">
-                    
-                  @foreach($docentes->cursos->seccion as $secciones) 
-                     @if($secciones->id==$id_seccion)
-
-                      {{$secciones->literal}}
-                      @endif
-                     
-                  @endforeach
- 
-                  </a></td>
-                  
-                 <td>
-                  <div class="btn-group">
-                   {{--   {!!link_to_route('docentes.edit', $title = '', $parameters = $docentes->pivot->id_prof, $attributes = ['class'=>'fa fa-close fa-2x','title' => 'Presione si desea retirar la carga académica','id' => 'desincorporar'])!!}
- --}} 
-                   
-                 <button type="button" class="btn btn-info btn-lg" onclick="codigo({{ $docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }},{{$docentes->cursos->id}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-close"></i></button>
-                  {{--
-                     {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-calculator fa-2x'])!!} --}}
-
-                      <br><br>
-                     
-                      
-                  </div>
-                  </td>
-                  
-                </tr>
-               
-               
-                @endforeach
-
-                @endif
-                </tbody>   
-              </table>
-                      @endif
-                              </div>
-                                            
-                      
-
-                      </div>
-            </div>                        
-                      
-           </form> 
-
-      
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Eliminar Carga Académica del Docente</h4>
-      </div>
-      <div class="modal-body">
-         <strong>Seguro desea Retirar la carga académica?</strong>
-        
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
-
-
-                 <input type="hidden" id="codigo" name="codigo">
-              <input type="hidden" id="id_prof" name="id_prof">
-              <input type="hidden" id="id_seccion" name="id_seccion">
-              <input type="hidden" id="id_curso" name="id_curso">
-
-                <button type="submit" class="btn btn-primary">Aceptar</button>
-                {!! Form::close() !!}
-              </div>
+            <div class="col-xs-12">
+                @include('alerts.request')
+                @include('alerts.errors')
             </div>
+
+            <div class="col-xs-12">
+                <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('docentes.asignar.show2',[$docentes->id]) }}'";>
+                    <span class="fa fa-plus" aria-hidden="true"></span> Asignar
+                    <?php $id_prof=$docentes->id; ?>
+                </button>
+            </div>
+
+            <div class="col-xs-12" style="padding-top: 20px">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Docente: {{ $docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres."  C.I.: ".$docentes->cedula }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <div class="col-sm-12">
+                                @if($docentes->cargo->nombre=="DOCENTE DE PLANTA")
+
+                                <table id="example1" class="table table-bordered table-striped dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Curso</th>
+                                            <th>Sección</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($docentes2 as $docentes)
+                                        <tr>
+                                            <td> {{$docentes->curso}}</td>
+                                            <td>{{ $docentes->literal }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-danger btn-flat" onclick="codigo({{ $docentes->id}},{{$id_prof}},{{$docentes->id_seccion }},{{$docentes->id_curso}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+
+                                @else
+                                    <table id="example1" class="table table-bordered table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Curso</th>
+                                                <th>Asignatura</th>
+                                                <th>Sección</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($cuantos>0)
+                                                <?php $docentes2=$docentes; ?>
+
+                                                @foreach($docentes2->asignaturas as $docentes)
+                                                    <?php $id_seccion=$docentes->pivot->id_seccion; ?>
+                                                    <tr>
+                                                        <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->cursos->curso}}</a></td>
+                                                        <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->asignatura."(".$docentes->codigo.")"}}</a></td>
+                                                        <td>
+                                                            <a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}">
+                                                            @foreach($docentes->cursos->seccion as $secciones)
+                                                                @if($secciones->id==$id_seccion)
+                                                                    {{$secciones->literal}}
+                                                                @endif
+                                                            @endforeach
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a class="btn btn-danger btn-flat" onclick="codigo({{$docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }},{{$docentes->cursos->id}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-  </div>
-</div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar Carga Académica del Docente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Seguro desea Retirar la carga académica?</strong>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        {!!Form::model($docentes, ['route'=>['docentes.update',$docentes->id ], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
+
+
+                        <input type="hidden" id="codigo" name="codigo">
+                        <input type="hidden" id="id_prof" name="id_prof">
+                        <input type="hidden" id="id_seccion" name="id_seccion">
+                        <input type="hidden" id="id_curso" name="id_curso">
+
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
 
 @stop
 

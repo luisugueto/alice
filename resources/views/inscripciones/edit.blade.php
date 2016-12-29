@@ -3,7 +3,8 @@
 @section('contentheader_title', 'Cambio de Sección')
 @section('contentheader_description', '')
 
-@section('main-content') 
+@section('main-content')
+
 <div class="col-md-12">
    
     <div class="row" style="padding-top: 20px;">

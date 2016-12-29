@@ -38,11 +38,5 @@
 
 
 	@endif
-	<div class="col-md-12"><br>
-		<div class="box-footer">
-			
-			<button type="submit" class="btn btn-primary btn-flat">Guardar</button>
 
-		</div>
-	</div>
 </div>

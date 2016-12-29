@@ -8,76 +8,52 @@
 
 
 @section('main-content')
-<div class="col-md-12">
-   
-    <div class="row" style="padding-top: 20px;">
-        @include('alerts.request')
-        @include('alerts.errors')
-    </div>
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="row" style="padding-top: 25px;">
+        <div class="col-xs-12">
 
-                    <form action="{{ route('docentes.store') }}" method="POST" id="f1" name="f1">
-          
-            
-                     
-                    <div class="tab-content">
-                        <div class="box">
-                            <div class="box-header">
-                              <h3 class="box-title">
-                              &nbsp;&nbsp;&nbsp;&nbsp;  Listado de Docentes
-                              </h3>
+            <div class="col-xs-12">
+                @include('alerts.request')
+                @include('alerts.errors')
+            </div>
+
+            <div class="col-xs-12" style="padding-top: 20px">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Docentes</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <div class="col-sm-12">
+                                <table id="example1" class="table table-bordered table-striped dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Nombres</th>
+                                        <th>Cédula</th>
+                                        <th>Tipo</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($docentes as $docentes)
+                                        @if($docentes->cargo->empleado->tipo_empleado=="DOCENTE")
+                                            <tr>
+                                                <td> {{$docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres}}</td>
+                                                <td> {{$docentes->cedula}}</td>
+                                                <td> {{$docentes->cargo->nombre}}</td>
+                                                <td class="text-center">
+                                                    {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-eye fa-2x'])!!}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                              <div class="box-body">
-                              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Nombres</th>
-                  <th>Cédula</th>
-                  <th>Tipo</th>
-                  <th>Opciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($docentes as $docentes)
-                @if($docentes->cargo->empleado->tipo_empleado=="DOCENTE")
-                <tr>
-                  
-                  <td> {{$docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres}}</td>
-                  <td> {{$docentes->cedula}}</td>
-                  <td> {{$docentes->cargo->nombre}}</td>
-                  
-                 <td>
-                  <div class="btn-group">
-                  
-                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                     {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-eye fa-2x'])!!} 
-
-                      <br><br>
-                     
-                      
-                  </div>
-                  </td>
-                  
-                </tr>
-                @endif
-               
-                @endforeach
-                </tbody>
-                
-              </table>
-                      
-                              </div>
-                                            
-                      
-
-                      </div>
-            </div>                        
-                      
-           </form> 
- 
-
-@stop
+@endsection

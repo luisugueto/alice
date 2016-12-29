@@ -1,6 +1,6 @@
 <div class="form-group">
 	{!! Form::label('Asignatura', 'Asignatura') !!} <small class="text-red">*</small>
-	{!! Form::text('asignatura', null, ['required', 'class'=>'form-control','placeholder' => 'Matemáticas', 'title' => 'Introduzca el nombre de la asignatura']) !!}
+	{!! Form::text('asignatura', null, ['required', 'class'=>'form-control','placeholder' => 'Matemáticas', 'title' => 'Introduzca el nombre de la asignatura', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Curso', 'Curso') !!} <small class="text-red">*</small>

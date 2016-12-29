@@ -38,12 +38,6 @@
 
 
 	@endif
-	<div class="col-md-12"><br>
-		<div class="box-footer">
-			
-			<button type="submit" class="btn btn-primary btn-flat">Inscribir</button>
 
-		</div>
-	</div>
 	</div>
 </div>

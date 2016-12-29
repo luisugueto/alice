@@ -43,18 +43,17 @@ desired effect
         @include('layouts.partials.contentheader')
 
         <!-- Main content -->
-        <section class="content" style="height:60vw">
+        <section class="content">
             <!-- Your Page Content Here -->
             @yield('main-content')
         </section><!-- /.content -->
 
     </div><!-- /.content-wrapper -->
 
-
-   
+    @include('layouts.partials.footer')
 
 </div><!-- ./wrapper -->
-@include('layouts.partials.footer')
+
 
 @section('scripts')
     @include('layouts.partials.scripts')
