@@ -43,7 +43,7 @@ desired effect
         @include('layouts.partials.contentheader')
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="height:60vw">
             <!-- Your Page Content Here -->
             @yield('main-content')
         </section><!-- /.content -->
