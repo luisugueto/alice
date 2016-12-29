@@ -14,9 +14,9 @@
 </div>
 
 <div align="center">
-	<p>De conformidad con lo escrito en el Art. 197 del Reglamento General a la Ley Orgánica de<br>
-	Educación InterCultural y demás normativas vigentes, certifica que el/la estudiante <b>X</b><br>
-	del <b>X DE EDUCACIÓN GENERAL BÁSICA</b>, obtuvo las siguientes calificaciones durante el<br>
+	<p>De conformidad con lo escrito en el Art. 197 del Reglamento General a la Ley Orgánica de
+	Educación InterCultural y demás normativas vigentes, certifica que el/la estudiante <b>X</b>
+	del <b>X DE EDUCACIÓN GENERAL BÁSICA</b>, obtuvo las siguientes calificaciones durante el
 	presente año lectivo.</p>
 	<table border="1">
 	   <tr>
@@ -48,8 +48,8 @@
 	   		<td>X</td>
 	   </tr>
 	</table>
-	<p> Por lo tanto es promovido/a al <b>X DE EDUCACIÓN GENERAL BÁSICA</b> para<br>
-	certificar suscriben en unidad de acto la Directora de la Institución Educativa y la Secretaría General<br>
+	<p> Por lo tanto es promovido/a al <b>X DE EDUCACIÓN GENERAL BÁSICA</b> para
+	certificar suscriben en unidad de acto la Directora de la Institución Educativa y la Secretaría General
 	del Plantel, quienes certifican</p>
 </div>
 

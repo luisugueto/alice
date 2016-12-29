@@ -7,8 +7,13 @@
 </head>
 <body>
 <div align="center">
-	<h1><b>ESCUELA DE EDUCACION BASICA PARTICULAR MARIA MONTESSORI</b></h1>
+	<h3>ESCUELA DE EDUCACIÓN BÁSICA PARTÍCULAR</h3><br>
+	<img src="img/logo.jpg" alt="" width="200px" style="margin-top: -30px"><br>
+	<h4 style="margin-top:-10px">Dirección: Vía Daule Km. 8 1/2 Florida Norte Mz. 385 SL 18<br>
+	Coop. Unidos Somos Más<br>
+	Teléfono: 2260439</h4>
 </div>
+
 <div align="left">
 	<label><b>ESTADO DE CUENTA DETALLADO POR CURSO: </b></label>
 	<table>
