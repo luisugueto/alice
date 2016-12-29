@@ -14,9 +14,9 @@ use App\Quimestrales;
 
 	function asignados($bloque, $asignados)
 	{
-		foreach ($asignados as $as) 
+		foreach ($asignados as $asignado)
 		{
-			if($bloque == $as)
+			if($bloque == $asignado)
 			{
 				return true;
 			}
@@ -302,7 +302,7 @@ use App\Quimestrales;
 
 		$id_periodo=Session::get('periodo');
 		$sql="SELECT cursos.* FROM inscripciones,secciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=secciones.id_curso AND inscripciones.id_seccion=secciones.id AND inscripciones.id_periodo=".$id_periodo;
-		dd($sql);
+		//dd($sql);
 		$curso = DB::select($sql);
 		foreach ($curso as $curso) {
 			$id_curso=$curso->id;

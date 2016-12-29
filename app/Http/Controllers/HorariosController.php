@@ -79,44 +79,48 @@ class HorariosController extends Controller
             }
         }
 
-        //BUSCANDO BLOQUES ASIGNADOS
+        // BUSCANDO BLOQUES ASIGNADOS DE LA SECCIÓN
         $i= 0;
         $m= 0;
 
         $asignados = DB::table('asignacion_bloques')->where([['id_seccion', $request->id_seccion], ['id_periodo', Session::get('periodo')]])->get();
 
-        if(count($asignados) > 0)
+        if(!empty($asignados))
         {
             foreach ($asignados as $asignado) 
             {
                 $bloques_asignados[$i] = $asignado->id_bloque;
                 $asignaturas_asignadas[$i] = $asignado->id_asig;
-                $aulas[$i] = $asignado->id_aula;
                 $i++;
-                
             }
 
         }else{
 
-            $aulas_asignadas = array();
             $bloques_asignados = array(); 
             $asignaturas_asignadas = array();
         }
 
+        // BUSCANDO BLOQUES ASIGNADOS CON EL AULA
+
         foreach ($bloques as $bloque) 
         {
-            $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque->id]])->get();
+            $asignadas = DB::table('asignacion_bloques')->where([['id_bloque', $bloque->id], ['id_aula', $request->id_aula], ['id_periodo', Session::get('periodo')]])->first();
 
-            if(count($asignadas) > 0)
+            if(!empty($asignadas))
             {
-                foreach ($asignadas as $asignadas) 
-                {
-                    $aulas_asignadas[$j] = $asignadas->id_bloque;
-                    $j++;
-                }
+                $aulas_asignadas[$j] = $asignadas->id_bloque;
+                $j++;
             }
+
         }
 
+        //VERIFICO SI NO HAY NINGÚNA AULA ASIGNADA
+
+        if(empty($aulas_asignadas))
+        {
+            $aulas_asignadas = array();
+        }
+        //dd($bloques);
         //dd($aulas_asignadas);
         //dd($asignaturas_asignadas);
  

@@ -35,8 +35,8 @@
                                         <td>{{$horario->literal}}</td>
                                         <td>{{$horario->nombre}}</td>
                                         <td class="text-center">
-                                            {!! link_to_route('horarios.show', $title = '', $parameters = $horario->id_seccion, $attributes = ['class'=>'fa fa-eye fa-2x']) !!}
-                                            {!! link_to_route('horarios.edit', $title = '', $parameters = $horario->id_seccion, $attributes = ['class'=>'fa fa-edit fa-2x']) !!}
+                                            <a href="{{ route('horarios.show', $horario->id_seccion) }}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('horarios.edit', $horario->id_seccion) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
                                         </td> 
                                     </tr>
                                 @endforeach
