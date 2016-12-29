@@ -42,7 +42,6 @@
         </tbody>
     </table>
 
-
     <div class="col-md-5 col-sm-offset-1"><br>
         <div class="row">
             <table class="table table-bordered">

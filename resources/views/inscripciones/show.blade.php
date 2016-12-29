@@ -3,7 +3,7 @@
 @section('contentheader_title', 'Estudiantes')
 @section('contentheader_description', 'Inscritos')
 
-<<<<<<< HEAD
+
 @section('main-content')
 
     <div class="row">
@@ -13,28 +13,11 @@
                 @include('alerts.request')
                 @include('alerts.errors')
             </div>
-=======
-@section('main-content')     
-<div class="col-md-12">
-   
-    <div class="row" style="padding-top: 20px;">
-        @include('alerts.request')
-        @include('alerts.errors')
-    </div>
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Lista de Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{$periodo->status}} )</h3>
-                        </div>
->>>>>>> c3d61a96ede7f5d62f85cb72c7d430a41dfd07a3
 
             <div class="col-xs-12" style="padding-top: 20px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }} ( {{$periodo->status}} )</h3>
+                        <h3 class="box-title">Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{$periodo->status}} )</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
