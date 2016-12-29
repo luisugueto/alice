@@ -3,9 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Routing\Route;
 
 class PersonalRequest extends Request
 {
+    function __construct(Route $route)
+    {
+        $this->route = $route;
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,10 +29,10 @@ class PersonalRequest extends Request
     public function rules()
     {
         return [
-            'codigo_pesonal' => 'required|unique:datos_generales_personal',
+            'codigo_pesonal' => 'required|digits_between:10,11|unique:datos_generales_personal,codigo_pesonal,'.  $this->route->getParameter('personal'),
             'nombres' => 'required',
             'apellido_paterno' => 'required',
-            'cedula' => 'required|numeric|unique:datos_generales_personal|digits_between:10,11',
+            'cedula' => 'required|numeric|digits_between:10,11|unique:datos_generales_personal,cedula,'.  $this->route->getParameter('personal'),
             'fecha_nacimiento' => 'required',
             'fecha_ingreso' => 'required',
             'edad' => 'required|numeric|max:99|min:18',
@@ -39,9 +44,9 @@ class PersonalRequest extends Request
             'primaria' => 'required',
             'telefono' => 'required|numeric|digits_between:10,11',
             'id_cargo' => 'required',
-            'correo' => 'required|email|unique:datos_generales_personal',
+            'correo' => 'required|email|unique:users,email|unique:datos_generales_personal,correo,'.  $this->route->getParameter('personal'),
             'sueldo_mens' => 'required|numeric',
-            'cuenta_bancaria' => 'required|numeric|unique:remuneracion'
+            'cuenta_bancaria' => 'required|numeric',
         ];
     }
 }

@@ -3,7 +3,7 @@
 		<div class="col-md-6">
 			<div class="form-group{{ $errors->has('codigo_pesonal') ? ' has-error' : '' }}">
 				{!! Form::label('codigo', 'Código Personal') !!} <small class="text-red">*</small>
-				{!! Form::text('codigo_pesonal', null, ['required','class' => 'form-control', 'title' => 'Introduzca el codigo del personal', 'placeholder' => 'Ejm: 1189124']) !!}
+				{!! Form::text('codigo_pesonal', null, ['required','maxlength' => '11','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','class' => 'form-control', 'title' => 'Introduzca el codigo del personal', 'placeholder' => 'Ejm: 1189124']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
 				{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>

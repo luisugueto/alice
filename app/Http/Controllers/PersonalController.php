@@ -210,14 +210,10 @@ class PersonalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PersonalRequest $request, $id)
     { 
-        $user = User::where('id', $id)->first();
-        $cedula = DB::select("SELECT * FROM datos_generales_personal WHERE id != '".$id."' AND (cedula = ".$request->cedula." OR codigo_pesonal = '".$request->codigo_pesonal."' OR correo = '".$request->correo."')");
-        $cuantos = count($cedula);
-
-        if($cuantos==0)
-        {
+            $user = User::where('id', $id)->first();
+    
             $per = Personal::find($id);
             $per->codigo_pesonal = $request['codigo_pesonal'];
             $per->nombres = strtoupper($request['nombres']);
@@ -250,7 +246,6 @@ class PersonalController extends Controller
                 $usuario->email = $request['correo'];
                 $usuario->save();
             }
-                        
             
             $ina = InformacionAcademica::find($id);
             $ina->primaria = strtoupper($request['primaria']);
@@ -289,10 +284,6 @@ class PersonalController extends Controller
                 }
             }
         
-        }else
-        {
-            Session::flash('message-error', 'DISCULPE: CODIGO PERSONAL, CEDULA Y CORREO YA EXISTENTES ');
-        }
         return redirect()->action('PersonalController@index');
     }
 

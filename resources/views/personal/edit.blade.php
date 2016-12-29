@@ -31,9 +31,9 @@
                     {!!Form::submit('Actualizar', ['class'=>'btn btn-primary'])!!}
                   {!!Form::close()!!}
                   <br>
-                  {!!Form::open(['route'=>['personal.destroy', $personal['id']], 'method'=>'DELETE'])!!}
+                  <!-- {!!Form::open(['route'=>['personal.destroy', $personal['id']], 'method'=>'DELETE'])!!}
                     <br>
                       {!!Form::submit('Eliminar', ['class'=>'btn btn-danger'])!!}
-                    {!!Form::close()!!}
+                    {!!Form::close()!!} -->
                
 @stop
