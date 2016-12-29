@@ -3,14 +3,16 @@
 		<div class="col-md-3">
 			<div class="form-group">
 	            @if($estudiante->foto == '')
-	                {{ Form::label('Foto', 'Foto') }}
-	                <img src="/../../img/ingresar.jpg" style="width: 200px; height: 200px;" id="img_prev">
+	                {{ Form::label('Foto', 'Perfil') }}
+					<div class="form-group">
+	                	<img src="/../../img/ingresar.jpg" style="width: 200px; height: 200px;" id="img_prev">
+					</div>
 	            @else
 	            	{{ Form::label('Foto', 'Foto ') }}
 	            	<div class="form-group">
 	                	<img src="{{ asset('img/'.$estudiante->foto)}}" style="width: 200px; height: 200px;">
 	            	</div>
-	            @endif    
+	            @endif
 	        </div>
 	    </div>
 	    <div class="col-md-4">
