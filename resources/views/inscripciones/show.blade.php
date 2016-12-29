@@ -13,7 +13,6 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-<
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Lista de Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{$periodo->status}} )</h3>

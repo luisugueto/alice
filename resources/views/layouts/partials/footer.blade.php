@@ -1,5 +1,5 @@
 <!-- Main Footer -->
-<footer class="main-footer navbar-fixed-bottom" >
+<footer class="main-footer navbar-fixed-bottom hidden-xs">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
         <a href="https://github.com/Jessetl/alice"><b>Sistema María Montessori</b></a>
