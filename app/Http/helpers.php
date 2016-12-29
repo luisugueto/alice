@@ -301,14 +301,19 @@ use App\Quimestrales;
 	function buscar_curso($id){
 
 		$id_periodo=Session::get('periodo');
-		$sql="SELECT cursos.* FROM inscripciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=inscripciones.id_curso AND id_periodo=".$id_periodo;
-		//dd($sql);
+		$sql="SELECT cursos.* FROM inscripciones,secciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=secciones.id_curso AND inscripciones.id_seccion=secciones.id AND inscripciones.id_periodo=".$id_periodo;
+		dd($sql);
 		$curso = DB::select($sql);
 		foreach ($curso as $curso) {
 			$id_curso=$curso->id;
 		}
-		/*$id_curso=0;*/
-		return  $id_curso;
+		if (count($curso)>0) {
+			return $id_curso;
+		}else{
+			return  0;
+
+		}
+		
 	}
 
 	function buscar_mi_asignatura_parcial($id_estudiante,$id_seccion){

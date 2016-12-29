@@ -179,8 +179,7 @@ class ParcialesController extends Controller
                     /*    $id_personal=personal();*/
                         
                                 if (($cargadas==0 || $cargadas==$cuantas) && $mias==0) {
-                                 /*$subidas=count($request->id_asignatura);
-                                $promedio=$request->promedio_ap2/$subidas;*/
+                                 $subidas=count($request->id_asignatura);
                             $parcial=Parciales::create(['id_estudiante' => $request->id_estudiante,/*
                                                          'id_personal' => $request->id_personal,*/
                                                          'id_quimestre' => $id_quimestre,
@@ -354,7 +353,9 @@ class ParcialesController extends Controller
                
         $cuantos_q=buscar_quimestre($id);
         $estudiantes=Estudiante::find($id);
+
         $id_curso=buscar_curso($id);
+
         
         /*$parciales=Parciales::where('id_estudiante',$estudiantes->id)->where('id_personal',$id_prof)->get();*/
         $parciales=Parciales::where('id_estudiante',$estudiantes->id)->get();

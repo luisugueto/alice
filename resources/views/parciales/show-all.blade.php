@@ -36,8 +36,7 @@
                                         <th>Cédula</th>
                                         <th>Apellido(s)</th>
                                         <th>Nombre(s)</th>
-                                        <th>Curso</th>
-                                        <th>Sección</th>
+                                        <th colspan="2">Estado</th>
                                         
                                         <th>Pendiente por Cargar:</th>
                                         <th>Opciones</th>
@@ -54,9 +53,12 @@
                                             <td> {{ $estudiante->cedula }} </td>
                                             <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
-                                            <td> {{ $estudiante->curso }} </td>
-                                            <td> {{ $estudiante->literal }} </td>
+                                            @if(count($estudiante->cursos)>0)
+                                            <td colspan="2"> Inscrito </td>
+                                            @else
                                             
+                                            <td colspan="2">Sin Inscribir</td>
+                                            @endif
                                             <td>{{ buscar_dr($estudiante->id)  }}</td>
                                             <td>  
                                             
