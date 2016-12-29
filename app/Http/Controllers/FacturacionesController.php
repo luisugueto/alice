@@ -99,7 +99,9 @@ class FacturacionesController extends Controller
 			{
 				$suma = 0;
 				
-				$numero = date('dmhis');
+				$string="0123456789";
+                $su=strlen($string)-1;
+                $numero= substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1);
 
 				$factura = new Facturacion;
 				$factura->id_estudiante = $request->id_estudiante;

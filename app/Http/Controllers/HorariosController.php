@@ -91,6 +91,7 @@ class HorariosController extends Controller
             {
                 $bloques_asignados[$i] = $asignado->id_bloque;
                 $asignaturas_asignadas[$i] = $asignado->id_asig;
+                $aulas[$i] = $asignado->id_aula;
                 $i++;
                 
             }
@@ -123,10 +124,11 @@ class HorariosController extends Controller
         //dd($bloques_asignados);
         $curso = Cursos::find($request->id_curso);
         $seccion = Seccion::find($request->id_seccion);
+        $asignaturas = Asignaturas::where('id_curso', $request->id_curso)->get();
         $asignatura = Asignaturas::find($request->id_asignatura);
         $aula = Aula::find($request->id_aula);
         
-        return view('horarios.create', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));
+        return view('horarios.create', compact('bloques', 'bloques2', 'bloques_asignados', 'asignaturas_asignadas', 'aulas_asignadas', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'asignaturas', 'aula'));
 
         // dd($periodo);
         // return view('horarios.create', compact('bloques', 'bloques2', 'horas', 'dias', 'curso', 'seccion', 'asignatura', 'aula'));

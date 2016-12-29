@@ -38,15 +38,16 @@ desired effect
 
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="min-height: 946px;">
 
         @include('layouts.partials.contentheader')
 
         <!-- Main content -->
-        <section class="content" style="height: 100vw">
+        <section class="content">
             <!-- Your Page Content Here -->
             @yield('main-content')
         </section><!-- /.content -->
+
     </div><!-- /.content-wrapper -->
 
 
