@@ -16,7 +16,7 @@
             	
             	@for($i = 0; $i < 9; $i++)
                     @if($i == 4)
-                        <tr>    
+                        <tr>
                             <th class="text-center" colspan="7"> RECREO </th>
                         </tr>   
                     @else
@@ -55,34 +55,34 @@
             </tbody>
         </table>
     </div>
-</div>
-<div class="col-md-3">
+
     {!! Form::hidden('id_curso', $curso->id) !!}
     {!! Form::hidden('id_seccion', $seccion->id) !!}
     {!! Form::hidden('id_asig', $asignatura->id) !!}
     {!! Form::hidden('id_aula', $aula->id) !!}
-</div>
-<div class="col-md-6"><br><br>
-    <div class="box-body no-padding">
-        <table class="table table-condensed">
-            <tbody>
-                <tr>
-                    <th class="text-center" colspan="3">LEYENDA</th>
-                </tr>
-                <tr>
-                    <th style="width: 150px">ASIGNATURA</th>
-                    <th></th>
-                    <th style="width: 60px"> Periodo </th>
-                </tr>
-                <tr>
-                    <td colspan="2">{{ $asignatura->asignatura }}</td>
-                    <td class="pull-right"><span class="badge bg-green">2016</span></td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="col-md-5"><br>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ASIGNATURAS</th>
+                        <th class="text-center">CÓDIGO</th>
+                    </tr>
+                </thead>
+                <thbody>
+                    @foreach ($asignaturas as $asignatura)
+                        <tr>
+                            <td>{{ $asignatura->asignatura }}</td>
+                            <td class="text-center text-red">{{ $asignatura->codigo }}</td>
+                        </tr>
+                    @endforeach
+                </thbody>
+            </table>
+        </div>
     </div>
 </div>
-<div class="col-md-12"><br><br>
+<div class="col-md-12">
 	<div class="box-footer">
 		<button type="reset" class="btn btn-default btn-flat">Cancelar</button>
 	    <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
