@@ -80,9 +80,14 @@
                                         </tr>
                                             
                                     @endforeach
-                                </tfoot>
+                                    </tbody>
+                                
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+    </div>
                
 @endsection

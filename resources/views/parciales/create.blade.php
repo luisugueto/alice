@@ -50,6 +50,10 @@
             </div>                        
                       
            </form> 
+           </div>
+           </div>
+           </section>
+           </div>
          
 @stop
 <script type="text/javascript">
