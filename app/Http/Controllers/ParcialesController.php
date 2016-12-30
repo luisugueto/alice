@@ -615,4 +615,90 @@ class ParcialesController extends Controller
         return View('parciales.estudiantes',compact('seccion','estudiantes','periodo'));
 
     }
+
+    public function mostrarcalificaciones(){
+
+            $personal=Personal::all();
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+            foreach ($personal as $personal) {
+
+                
+                if($correo==$personal->correo){
+
+                    $docente=Personal::find($personal->id);
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." GROUP BY id_seccion";
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+                    $sql="SELECT inscripciones.*,datos_generales_estudiante.*,cursos.curso,cursos.id AS id_curso,secciones.literal FROM cursos,secciones, inscripciones,datos_generales_estudiante WHERE inscripciones.id_seccion=secciones.id AND inscripciones.id_curso=cursos.id AND inscripciones.id_estudiante=datos_generales_estudiante.id AND inscripciones.id_periodo=".$id_periodo." ";
+                   //dd($sql);
+                   $estudiantes=DB::select($sql);
+
+
+                    $contador++;
+                        //dd($docente->asignaturas);
+                    return View('parciales.calificaciones_cargadas',compact('docente','docentes','periodo','estudiantes'));
+                
+                }
+                
+            }
+
+            if($contador==0){
+               // Session::flash('message-error', 'DISCULPE, USTED NO PUEDE REALIZAR CARGA DE CALIFICACIONES');
+                 return View('home');
+            }
+       
+
+    }
+
+    public function showcalificacionesparcial($i,$id_estudiante){
+
+        $personal=Personal::all();
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+            foreach ($personal as $personal) {
+
+                
+                if($correo==$personal->correo){
+
+                    $docente=Personal::find($personal->id);
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." GROUP BY id_seccion";
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+                   
+                
+                }
+                
+            }
+
+
+        $estudiantes=Estudiante::find($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante);
+        $promedio_comp=Comportamiento::lists('literal','id');
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        $categorias=Categorias_parcial::all();
+
+        $sql="SELECT * FROM parciales, calificacion_parcial,quimestres,asignaturas WHERE 
+                        id_estudiante=".$id_estudiante." AND 
+                        asignaturas.id=calificacion_parcial.id_asignatura AND            
+                        quimestres.id=parciales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_parcial.id_parcial=parciales.id ";
+                        //dd($sql);
+        
+        $buscar2=DB::select($sql);
+
+
+
+        return View('parciales.mostrar-parcial',compact('asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp'));
+
+    }
+
+
 }

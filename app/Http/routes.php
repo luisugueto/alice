@@ -59,6 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('parciales/store2',['uses' => 'ParcialesController@store2', 'as' => 'parciales.store2']);
 	Route::get('parciales/asignaturas',['uses' => 'ParcialesController@asignaturas', 'as' => 'parciales.asignaturas']);
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
+	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
+	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
+
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

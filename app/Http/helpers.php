@@ -623,3 +623,110 @@ use App\Quimestrales;
                     return $cuantos;
 
 	}
+
+	function buscar_calificacion_parcial($i,$id_estudiante){
+		$id_periodo=Session::get('periodo');
+		$correo=Auth::user()->email;
+
+		$docente=Personal::where('correo',$correo)->first();
+
+
+		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." LIMIT 0,1");
+		foreach ($asignaturas as $asig) {
+			$id_asignatura=$asig->id_asignatura;
+		
+			$sql="SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
+                        id_estudiante=".$id_estudiante." AND 
+                        quimestres.id=parciales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_parcial.id_parcial=parciales.id AND 
+                        calificacion_parcial.id_asignatura=".$id_asignatura." 
+                        GROUP BY calificacion_parcial.id_asignatura ";
+                        //dd($sql);
+        
+		$buscar2=DB::select($sql);
+		}
+
+		$cuantos=count($buscar2);
+
+
+		$parciales=Parciales::where('id_estudiante',$id_estudiante)->get();
+		if(count($parciales)>0 && $cuantos>0){
+			$j=0;
+			foreach ($parciales as $p) {
+				
+				$j++;
+				if ($j==$i) {
+					$promedio=$p->avg_aprovechamiento;	
+					break;
+				} 
+				
+			}
+			if ($j==$i) {
+				$nota=$promedio;
+			} else {
+				$nota="Sin cargar";
+			}
+			
+		}else{
+				$nota="Sin Cargar";
+			
+		}
+
+		return $nota;
+
+	}
+
+	function buscar_calificacion_quimestre($i,$id_estudiante){
+		$id_periodo=Session::get('periodo');
+		$correo=Auth::user()->email;
+
+		$docente=Personal::where('correo',$correo)->first();
+
+
+		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." LIMIT 0,1");
+		foreach ($asignaturas as $asig) {
+			$id_asignatura=$asig->id_asignatura;
+		
+			$sql="SELECT * FROM quimestrales, calificacion_quimestre,quimestres WHERE 
+                        quimestrales.id_estudiante=".$id_estudiante." AND 
+                        quimestres.id=quimestrales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+                        calificacion_quimestre.id_asignatura=".$id_asignatura." 
+                        GROUP BY calificacion_quimestre.id_asignatura ";
+            //dd($sql);
+        
+		$buscar2=DB::select($sql);
+		}
+
+		$cuantos=count($buscar2);
+
+
+		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->get();
+		if(count($quimestrales)>0 && $cuantos>0){
+			$j=0;
+			foreach ($quimestrales as $q) {
+				
+				$j++;
+				if ($j==$i) {
+					$promedio=$q->avg_aprovechamiento_q;
+					$promedio=number_format($promedio,2,".",",");	
+					break;
+				} 
+				
+			}
+			if ($j==$i) {
+				$nota=$promedio;
+			} else {
+				$nota="Sin cargar";
+			}
+			
+		}else{
+				$nota="Sin Cargar";
+			
+		}
+
+		return $nota;
+
+	}
