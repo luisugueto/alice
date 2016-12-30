@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Sistema María Montessori</title>
     <meta name="description" content="">
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom Theme files -->
     <link href="{{ asset('css/style.css" rel="stylesheet') }}" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}">

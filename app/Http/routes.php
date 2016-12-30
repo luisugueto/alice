@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
 	Route::get('certificados/{id}/matricula',['uses' => 'CertificadosController@matricula', 'as' => 'certificados.matricula']);
 	Route::get('inscripciones/cambiarseccion/{id}/buscar',['uses' => 'InscripcionesController@cambiarseccion', 'as' => 'inscripciones.cambiarseccion.buscar']);
-	Route::get('horarios/{id}/pdf', ['uses' => 'HorariosController@pdf', 'as' => 'horarios.pdf']);
+	Route::get('horarios/{seccion}/{curso}/{periodo}/pdf', ['uses' => 'HorariosController@pdf', 'as' => 'horarios.pdf']);
 	Route::post('parciales/store2',['uses' => 'ParcialesController@store2', 'as' => 'parciales.store2']);
 	Route::get('parciales/asignaturas',['uses' => 'ParcialesController@asignaturas', 'as' => 'parciales.asignaturas']);
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);

@@ -33,9 +33,9 @@
                                 @else
                                     <input type="checkbox" name="id_bloque[]" value="{{ $bloques2[$i][$j]->id }}" title="Seleccione el día correspondiente de la asignatura" id="id_bloque">
                                 @endif
+                            </td>
                         @endif
                     @endfor
-                            </td>
                 </tr>
             @endif
         @endfor

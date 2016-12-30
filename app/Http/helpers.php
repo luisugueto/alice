@@ -36,6 +36,21 @@ use App\Quimestrales;
 		}
 	}
 
+	function aulas($bloque, $aulas, $seccion)
+    {
+        foreach ($aulas as $aula)
+        {
+            $sql = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_aula', $aula], ['id_seccion', $seccion], ['id_periodo', Session::get('periodo')] ])->first();
+
+            if(!empty($sql))
+            {
+                $aula_asignada = \DB::table('aulas')->where('id', $sql->id_aula)->first();
+
+                return $aula_asignada->nombre;
+            }
+        }
+    }
+
 	function retardoAsistencia($id_personal)
 	{
 		$date = date("m");
