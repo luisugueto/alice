@@ -103,7 +103,11 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 <tr>	
 	<td colspan="5"><strong></strong></td>
 	<td colspan="4"><strong>COMPORTAMIENTO  ESTUDIANTIL<strong></td>
-	<td><div class="form-group">{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp'])!!} 
+	<td><div class="form-group">
+
+
+
+	{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp'])!!} 
 				
 		</div>
 	</td>

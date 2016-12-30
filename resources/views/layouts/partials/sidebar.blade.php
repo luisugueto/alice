@@ -104,6 +104,7 @@ use App\Http\helpers;
                 @if(Auth::user()->roles_id == 3)
                 <ul class="treeview-menu">
                     <li><a href="{{ route('parciales.index') }}">Lista de Mis Estudiantes</a></li>
+                    <li><a href="{{ route('parciales.mostrarcalificaciones') }}"  >Calificaciones Cargadas</a></li>
                 </ul>
                 @endif
             </li>
