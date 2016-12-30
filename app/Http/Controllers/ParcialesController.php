@@ -22,6 +22,7 @@ use App\Calificacion_parcial;
 use App\Quimestres;
 use App\Seccion;
 use App\Quimestrales;
+use App\Calificacion_quimestre;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -112,39 +113,40 @@ class ParcialesController extends Controller
                 $cc+=count($parciales);
 
             }
-      /*      //dd($cc);
-            if($cc<3){
-                    $quimestre2=Quimestres::where('numero',1)->first();
-
-                }else{
-                    $quimestre2=Quimestres::where('numero',2)->first();
-                }*/
-
+     
             if(count($quimestre)>0){
                 
 
                 //buscando el ultimo parcial registrado para el estudiante:
                 if($cc==0){
                     $cargadas=0;
+                    $mias=0;
+                    $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
+                    $id_quimestre=$quimestre->id;
                 }else{
 
                     foreach ($quimestre as $q) {
                     
                 $ultimo=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
-                   //dd($ultimo);
+                   $p=count($ultimo);
                         foreach ($ultimo as $last) {
                             
                         
                             $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id);
+                            $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
                             //dd($mias);
                             if($mias==0){
                                 //buscando las asignaturas cargadas
                                 
-                                $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
+                                
                                 $id_quimestre=$q->id;
                                 $mias=0;
                                 $laster=Parciales::find($last->id);
+                                break;
 
+                            }
+                            else{
+                                $id_quimestre=$q->id;
                             }
                         }
 
@@ -177,8 +179,9 @@ class ParcialesController extends Controller
 
                     // buscando al profesor que registra la calificacion
                     /*    $id_personal=personal();*/
+                    //dd($cargadas."-".$cuantas."-".$mias);
                         
-                                if (($cargadas==0 || $cargadas==$cuantas) && $mias==0) {
+                                if (($cargadas==0 || $cargadas==$cuantas) && $mias==0 || $mias==1) {
                                  $subidas=count($request->id_asignatura);
                             $parcial=Parciales::create(['id_estudiante' => $request->id_estudiante,/*
                                                          'id_personal' => $request->id_personal,*/
@@ -293,22 +296,152 @@ class ParcialesController extends Controller
                 $parcial2->save();
 
                  
-                     Session::flash('message', 'CALIFICACIONES REGISTRADAS EXITOSAMENTE');
+                     Session::flash('message', 'CALIFICACIONES DEL PARCIAL REGISTRADAS EXITOSAMENTE');
                      return redirect(route('parciales.index'));
         }
             }else{
-                        Session::flash('message-error', 'NO SE HA REGISTRADO NINGÚN QUIMESTRE PARA ESTERIODO ESCOLAR');
+                        Session::flash('message-error', 'NO SE HA REGISTRADO NINGÚN QUIMESTRE PARA ESTE PERIODO ESCOLAR');
                      return redirect(route('parciales.index'));       
             }
     }
 
     public function store2(Request $request){
 
+        //buscando id del quimestre
+        $cc=0;
+        $id_periodo=Session::get('periodo');
+            $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+            //dd(count($quimestre));
+            foreach($quimestre as $q) {
+                $quimestral=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                //dd(count($quimestral));
+                $cc+=count($quimestral);
 
-        
-        
-        
+            }
 
+             if(count($quimestre)>0){
+
+
+          //buscando el ultimo parcial registrado para el estudiante:
+                if($cc==0){
+                    $cargadas=0;
+                    $mias=0;
+                    $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
+                    $id_quimestre=$quimestre->id;
+                }else{
+
+                    foreach ($quimestre as $q) {
+                    
+                $ultimo=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                   //dd($ultimo);
+                        foreach ($ultimo as $last) {
+                            
+                        
+                            $mias=buscar_mis_asignaturas_cargadas_q($request->id_estudiante,$last->id,$q->id);
+                            //dd($mias);
+                            if($mias==0){
+                                //buscando las asignaturas cargadas
+                                
+                                $cargadas=buscando_asignaturas_cargadas2_q($request->id_estudiante,$last->id,$q->id);
+                                $id_quimestre=$q->id;
+                                //dd($id_quimestre);
+                                $mias=0;
+                                $laster=Quimestrales::find($last->id);
+                                break;
+
+                            }
+                        }
+
+                    }
+
+                }
+
+         $cuantas=buscando_asignaturas_cursadas($request->id_estudiante);
+                    $cont=0;
+                for ($i=0; $i <count($request->avg_q_cualitativa2) ; $i++) { 
+                    if($request->avg_q_cualitativa2[$i]==""){
+                        $cont++;
+                    }
+                }
+             if($cont>0){
+                     Session::flash('message-error', 'DEBE GREGAR TODAS LAS CALIFICACIONES');
+                     return redirect()->back();
+
+            }else{
+
+                        if (($cargadas==0 || $cargadas==$cuantas) && $mias==0 || $mias==1) {
+
+                            $subidas=count($request->id_asignatura);
+                            $parcial=Quimestrales::create(['id_estudiante' => $request->id_estudiante,
+                                                         'id_quimestre' => $id_quimestre,
+                                                         'total_faltas_j' => $request->total_faltas_j,
+                                                         'total_faltas_i' => $request->total_faltas_i,
+                                                         'total_atrasos_j' => $request->total_atrasos_j,
+                                                         'total_atrasos_i' => $request->total_atrasos_i,
+                                                         'sumatoria' => $request->sumatoria2,
+                                                         'avg_aprovechamiento_q' => $request->avg_aprovechamiento_q2,
+                                                         'id_comportamiento' => $request->promedio_comp,
+                                                         'observaciones' => $request->observaciones,
+                                                         'recomendaciones' => $request->recomendaciones]);
+                            //buscando el ultimo registro para tomar el id del parcial
+                            
+                            $id_quimestral=DB::getPdo()->lastInsertId();
+                            $quimestral2=Quimestrales::find($id_quimestral);
+                        }else{
+
+                            //si cuantos es menor que cuantas indica que ya se ha creado un parcial para ese estudiante
+                                        //se busca el parcial creado
+                                        $quimestral2=Quimestrales::find($laster->id);
+                                        //se actualizan los registros del parcial
+                                            
+                                            $quimestral2->total_faltas_j=$quimestral2->total_faltas_j+$request->total_faltas_i;
+                                            $quimestral2->total_faltas_i=$quimestral2->total_faltas_i+$request->total_faltas_j;
+                                            $quimestral2->total_atrasos_j=$quimestral2->total_atrasos_j+$request->total_atrasos_j;
+                                            $quimestral2->total_atrasos_i=$quimestral2->total_atrasos_i+$request->total_atrasos_i;
+                                            $quimestral2->sumatoria=$request->sumatoria2;
+
+                                            $quimestral2->save();
+                        }
+
+                         $final=count($request->id_asignatura);
+                         for ($j=0; $j < $final ; $j++) {
+
+                            $equivalencia=Equivalencias::where('literales',$request->avg_q_cualitativa2[$j])->first();
+
+                            $calificacion=Calificacion_quimestre::create(['id_quimestrales' => $quimestral2->id,
+                                                                         'id_asignatura' => $request->id_asignatura[$j],
+                                                                         'avg_gp' => $request->avg_gp[$j],
+                                                                         'avg_gp80' => $request->avg_gp80[$j],
+                                                                         'examen_q' => $request->examen_q[$j],
+                                                                         'examen_q20' => $request->examen_q20[$j],
+                                                                         'avg_q_cuantitativa' => $request->avg_q_cuantitativa2[$j],
+                                                                         'id_equivalencia' => $equivalencia->id]);
+
+                         }
+
+                         //calculando nuevo promedio de aprovechamiento
+                //
+                $subtotal=Calificacion_quimestre::where('id_quimestrales',$quimestral2->id)->get();
+                $cargadas=buscando_asignaturas_cargadas2_q($request->id_estudiante,$quimestral2->id,$id_quimestre);
+                //dd($cargadas);
+                $suma=0;
+                foreach ($subtotal as $sub) {
+                    $suma+=$sub->avg_q_cuantitativa;
+                }
+                $promedio=$suma/$cargadas;
+                $quimestral2->avg_aprovechamiento_q=$promedio;
+                $quimestral2->save();
+
+
+
+
+                     Session::flash('message', 'CALIFICACIONES DEL QUIMESTRE REGISTRADAS EXITOSAMENTE');
+                     return redirect(route('parciales.index'));
+                }
+            }else{
+                        Session::flash('message-error', 'NO SE HA REGISTRADO NINGÚN QUIMESTRE PARA ESTE PERIODO ESCOLAR');
+                     return redirect(route('parciales.index'));       
+            }
 
     }
     /**
@@ -433,22 +566,7 @@ class ParcialesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //buscando id del quimestre
-        $cc=0;
-        $id_periodo=Session::get('periodo');
-            $quimestre=Quimestres::where('id_periodo',$id_periodo);
-            foreach ($quimestre as $q) {
-                $quimestral=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
-                $cc+=count($parciales);
-
-            }
-            //dd($cc);
-            if($cc==0){
-                    $quimestre2=Quimestres::where('numero',1)->first();
-
-                }else{
-                    $quimestre2=Quimestres::where('numero',2)->first();
-                }
+        
 
 
 

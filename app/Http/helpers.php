@@ -186,7 +186,7 @@ use App\Quimestrales;
             foreach ($quimestre as $q) {
                 $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
                 $cuantos=count($parciales);
-
+                	//dd($cuantos);
                 if($cuantos>0){
                 	foreach ($parciales as $p) {
                 		
@@ -200,10 +200,17 @@ use App\Quimestrales;
 		                			//buscando la carga academica cargada del estudiante
 		                			$mias=bucar_mis_asignaturas_cargadas($id_estudiante,$p->id,$q->id);
 		                			//buscando la cantidad de asignaturas cargadas
+		                			
 		                			$cargadas=buscando_asignaturas_cargadas2($id_estudiante,$p->id,$q->id);
-		                				//dd($mias);
-		                			if ($cargadas==0 || $cargadas==$cuantas || $mias!=0) {
+		                				//dd($cargadas);
+		                			if (($cargadas==0 || $cargadas==$cuantas) && $mias!=0) {
 		                					$cc+=$cuantos;
+
+		                			}else{
+		                				if($mias!=0){
+		                				$cc+=1;
+		                				//echo $cc."-";
+		                				}
 		                			}
 
 		                	}else{
@@ -354,10 +361,61 @@ use App\Quimestrales;
 				$contar=count($resultado);
 				//dd($cc);
 				if($contar==3){
-					$encontrada=1;
+					
+					$cc2=0;
+					foreach ($asignaturas as $asig) {
+					
+					$sql="SELECT calificacion_quimestre.* FROM quimestrales,calificacion_quimestre,quimestres WHERE 
+					quimestrales.id_estudiante=".$id_estudiante." AND 
+					calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+					quimestrales.id_quimestre=quimestres.id AND 
+					quimestres.id_periodo=".$id_periodo." AND 
+					calificacion_quimestre.id_asignatura=".$asig->id_asignatura." 
+					GROUP BY calificacion_quimestre.id_quimestrales";
+					//dd($sql);
+					$result=DB::select($sql);
+					if(count($result)>0){
+						$cc2++;
+					}
+
+					}
+
+					if ($cc2==0) {
+						$encontrada=1;
+					} else {
+						$encontrada=0;
+					}
+					
+
+
+
+
 				}else{
 					if($contar==6){
+						$cc2=0;
+					foreach ($asignaturas as $asig) {
+					
+					$sql="SELECT calificacion_quimestre.* FROM quimestrales,calificacion_quimestre,quimestres WHERE 
+					quimestrales.id_estudiante=".$id_estudiante." AND 
+					calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+					quimestrales.id_quimestre=quimestres.id AND 
+					quimestres.id_periodo=".$id_periodo." AND 
+					calificacion_quimestre.id_asignatura=".$asig->id_asignatura." 
+					GROUP BY calificacion_quimestre.id_quimestrales";
+					//dd($sql);
+					$result=DB::select($sql);
+					if(count($result)>0){
+						$cc2++;
+					}
+
+					}
+
+					if ($cc2==0) {
 						$encontrada=2;
+					} else {
+						$encontrada=0;
+					}
+					
 
 					}else{
 					$encontrada=0;
@@ -374,50 +432,9 @@ use App\Quimestrales;
 
 	}
 
-	function buscar_mi_asignatura_quimestre($id_estudiante,$id_asignatura,$id_quimestre){
-
-		$id_periodo=Session::get('periodo');
-		$sql=DB::select("SELECT * FROM calificacion_quimestre WHERE id_estudiante=".$id_estudiante." AND id_quimestre=".$id_quimestre." AND id_asignatura=".$id_asignatura."");
-	$encontrado=count($sql);
-
-		return $encontrado;
-
-
-	}	
-
-	function buscar_id_parcial($id_estudiante){
-
-		$id_periodo=Session::get('periodo');
-
-		$parcial=Parciales::where('id_estudiante',$id_estudiante)->first();
 		
-		$id_parcial=$parcial->id;
-
-		return $id_parcial;
 
 
-	}
-
-	function buscar_id_quimestre($id_estudiante){
-
-		$id_periodo=Session::get('periodo');
-
-		$quimestre=Quimestrales::where('id_estudiante',$id_estudiante)->first();
-
-		$id_quimestre=$quimestre->id_quimestre;
-
-		return $id_quimestre;
-
-
-	}
-
-	function buscar_asignatura_asignada($id_prof){
-
-		$id_periodo=Session::get('periodo');
-
-		$asignatura=DB::select("SELECT * FROM asignacion WHERE id_prof=".$id_prof." AND id_periodo=".$id_periodo);
-
-	}
 
 	function tipo_docente(){
 
@@ -470,11 +487,11 @@ use App\Quimestrales;
 	}
 
 	function buscando_asignaturas_cargadas($id_estudiante){
-
+		$id_periodo=Session::get('periodo');
 		$buscar2=DB::select("SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
                         quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=3 
+                        quimestres.id_periodo=".$id_periodo." 
                         GROUP BY calificacion_parcial.id_asignatura");
 
                     $cuantos=count($buscar2);
@@ -483,11 +500,12 @@ use App\Quimestrales;
 	}
 
 	function buscando_asignaturas_cargadas2($id_estudiante,$id_parcial,$id_quimestre){
+		$id_periodo=Session::get('periodo');
 
 		$sql="SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
                         quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=3 AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
                         calificacion_parcial.id_parcial=parciales.id AND 
                         parciales.id=".$id_parcial." AND 
                         parciales.id_quimestre=".$id_quimestre." 
@@ -503,11 +521,12 @@ use App\Quimestrales;
 	}
 
 	function suma_cargadas($id_estudiante,$id_parcial,$id_quimestre){
+		$id_periodo=Session::get('periodo');
 
 		$buscar2=DB::select("SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
                         quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=3 AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
                         calificacion_parcial.id_parcial=parcial.id AND 
                         parciales.id=".$id_parcial." AND 
                         parciales.id=".$id_quimestre." 
@@ -536,7 +555,7 @@ use App\Quimestrales;
 			$sql="SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
                         quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=3 AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
                         calificacion_parcial.id_parcial=parciales.id AND 
                         parciales.id=".$id_parcial." AND 
                         parciales.id_quimestre=".$id_quimestre." AND 
@@ -552,3 +571,55 @@ use App\Quimestrales;
 
 	}
 
+	function buscar_mis_asignaturas_cargadas_q($id_estudiante,$id_quimestral,$id_quimestre){
+
+		$id_periodo=Session::get('periodo');
+		$correo=Auth::user()->email;
+
+		$docente=Personal::where('correo',$correo)->first();
+
+
+		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." LIMIT 0,1");
+		foreach ($asignaturas as $asig) {
+			$id_asignatura=$asig->id_asignatura;
+		}
+			$sql="SELECT * FROM quimestrales, calificacion_quimestre,quimestres WHERE 
+                        quimestrales.id_estudiante=".$id_estudiante." AND 
+                        quimestres.id=quimestrales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+                        quimestrales.id=".$id_quimestral." AND 
+                        quimestrales.id_quimestre=".$id_quimestre." AND 
+                        calificacion_quimestre.id_asignatura=".$id_asignatura." 
+                        GROUP BY calificacion_quimestre.id_asignatura ";
+                        //dd($sql);
+		$buscar2=DB::select($sql);
+
+		$cuantos=count($buscar2);
+
+		return $cuantos;
+
+	}
+
+	function buscando_asignaturas_cargadas2_q($id_estudiante,$id_quimestral,$id_quimestre){
+
+		$id_periodo=Session::get('periodo');
+
+		$sql="SELECT * FROM quimestrales, calificacion_quimestre,quimestres WHERE 
+                        quimestrales.id_estudiante=".$id_estudiante." AND 
+                        quimestres.id=quimestrales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+                        quimestrales.id=".$id_quimestral." AND 
+                        quimestrales.id_quimestre=".$id_quimestre." 
+                        GROUP BY calificacion_quimestre.id_asignatura ";
+
+                        //dd($sql);
+
+		$buscar2=DB::select($sql);
+
+                    $cuantos=count($buscar2);
+
+                    return $cuantos;
+
+	}

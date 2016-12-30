@@ -14,8 +14,7 @@ class Comportamiento extends Model
     
     protected $table = 'comportamiento';
 
-    protected $fillable = [
-        'literal', 'descripcion'
+    protected $fillable = ['id','literal', 'descripcion'
     ];
 
     /**
