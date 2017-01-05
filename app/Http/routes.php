@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('horarios/buscar', ['uses' => 'HorariosController@search','as' => 'horarios.buscar']);
 	Route::get('secciones/{id}/destroy',['uses' => 'SeccionController@destroy','as'  => 'secciones.destroy']);
+	Route::get('personal/{id}/destroy',['uses' => 'PersonalController@destroy','as'  => 'personal.destroy']);
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');
 	Route::get('/verPrestamo', ['uses' => 'PrestamosAnticiposController@listado', 'as' => 'prestamos.listado']);
 	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');

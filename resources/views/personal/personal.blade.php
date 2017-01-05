@@ -36,7 +36,6 @@
                                             <th>Cédula</th>
                                             <th>Cargo</th>
                                             <th>Área de Trabajo</th>
-                                            <th>Fecha Ingreso</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
@@ -48,8 +47,12 @@
                                             <td>{{$per->cedula}}</td>
                                             <td>{{$per->cargo->nombre}}</td>
                                             <td>{{$per->cargo->area->nombre}}</td>
-                                            <td>{{$per->fecha_ingreso}}</td>
-                                            <td>{!!link_to_route('personal.edit', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>
+                                            <td>
+                                                <!-- <a href="{{ route('personal.show', $per->id) }}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a> -->
+                                                 <a href="{{ route('personal.edit', $per->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
+                                                <a href="personal/{{ $per->id }}/destroy" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                     </tbody>

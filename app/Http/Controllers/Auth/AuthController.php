@@ -155,8 +155,8 @@ class AuthController extends Controller
             
             */
 
-
-        $periodos = Periodos::lists('nombre', 'id');
+        $año = date('Y');
+        $periodos = Periodos::where('nombre', '<=', $año)->lists('nombre', 'id');
         $periodos2= Periodos::where('status','activo')->first();
         return view('auth.login', ['periodos' => $periodos,'periodos2' => $periodos2]);
     }

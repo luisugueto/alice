@@ -177,7 +177,7 @@ class PersonalController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -295,10 +295,17 @@ class PersonalController extends Controller
      */
     public function destroy($id)
     {
-        Personal::destroy($id);
-        InformacionAcademica::where('id_personal', $id)->delete();
-        Session::flash('message', 'USUARIO ELIMINADO CORRECTAMENTE');
-
-        return redirect::to('/personal');
+        $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
+        $contarCarga = count($cargaAcademica);
+        if($contarCarga > 0){
+            Session::flash('message-error', 'DISCULPE: NO SE PUEDE ELIMINAR EL PERSONAL. ESTE PERSONAL POSEE CARGA ACADÉMICA');
+            return redirect()->action('PersonalController@index');
+        }else{
+            Personal::destroy($id);
+            InformacionAcademica::where('id_personal', $id)->delete();
+            Session::flash('message', 'PERSONAL ELIMINADO CORRECTAMENTE');
+            return redirect()->action('PersonalController@index');
+        }
     }
+
 }
