@@ -156,6 +156,7 @@ class UsuariosController extends Controller
         $user = User::find($id);
         $director = User::where('roles_id', '2')->count();
         $dace = User::where('roles_id', '5')->count();
+
         if($director>0 && $dace>0)
         {
             $roles = Roles::where('id', '!=', '1')->where('id', '!=', 2)->where('id', '!=', 5)->get();

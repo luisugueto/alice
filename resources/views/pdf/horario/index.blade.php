@@ -18,7 +18,7 @@
 </head>
 <body>
 <div align="center">
-    <h3>ESCUELA DE EDUCACIÓN BÁSICA PARTÍCULAR</h3><br>
+    <h3>ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</h3><br>
     <img src="img/logo.jpg" alt="" width="200px" style="margin-top: -30px"><br>
     <h4 style="margin-top:-10px">Dirección: Vía Daule Km. 8 1/2 Florida Norte Mz. 385 SL 18<br>
         Coop. Unidos Somos Más<br>
@@ -31,7 +31,6 @@
 </div>
     <div class="row" style="padding-top: 25px;">
         <div class="col-xs-12">
-
             <div class="col-sm-12">
                     <div class="box-body">
                         <div class="table-responsive">
@@ -124,6 +123,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

@@ -21,7 +21,7 @@
             <div class="col-xs-12" style="padding-top: 20px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Empleados</h3>
+                        <h3 class="box-title">Tipo de Empleados</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">
@@ -39,7 +39,7 @@
                                             <td>{{ $tipo_empleado->tipo_empleado}}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('tipo_empleado.edit', [$tipo_empleado->id]) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
-                                                <a href="{{ route('tipo_empleado.destroy', [$tipo_empleado->id]) }}" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>
+                                               <!-- <a href="{{-- route('tipo_empleado.destroy', [$tipo_empleado->id]) --}}" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>-->
                                             </td>
                                         </tr>
                                     @endforeach

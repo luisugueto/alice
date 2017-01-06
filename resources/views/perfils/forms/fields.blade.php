@@ -1,7 +1,7 @@
 <div class="form-group">
-            {!! Form::label('Nombre', 'Nombre') !!}
-            {!! Form::text('name', null, ['required','class'=>'form-control','placeholder'=>'Ingresa Nombre']) !!}
-          </div>
+    {!! Form::label('Nombre', 'Nombre') !!}
+    {!! Form::text('name', null, ['required','class'=>'form-control','placeholder'=>'Ingresa Nombre']) !!}
+</div>
           <div class="form-group">
             {!! Form::label('Correo', 'Correo') !!}
             {!! Form::email('email', null, ['required', 'class'=>'form-control','placeholder'=>'Ingresa Correo']) !!}

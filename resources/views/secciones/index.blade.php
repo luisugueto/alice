@@ -44,8 +44,7 @@
                                             <td>{{ $i->capacidad }} </td>
                                             <td>{{ $i->curso->curso }}</td>
                                             <td class="text-center">
-                                                {!! link_to_route('secciones.edit', $title = '', $parameters = $i->id, $attributes = ['class'=> 'fa fa-edit fa-2x']) !!}
-                                                {!! link_to_route('secciones.destroy', $title = '', $parameters = $i->id, $attributes = ['class'=>'fa fa-trash fa-2x']) !!}
+                                                <a href="{{ route('secciones.edit', $i->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

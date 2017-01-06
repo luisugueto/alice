@@ -6,8 +6,6 @@
 @section('main-content')
 
 
-<div class="col-md-12">
-
     <div class="row" style="padding-top: 25px;">
         <div class="col-xs-12">
 
