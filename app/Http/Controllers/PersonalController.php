@@ -212,8 +212,13 @@ class PersonalController extends Controller
      */
     public function update(PersonalRequest $request, $id)
     { 
-            $user = User::where('id', $id)->first();
-    
+            $personal = Personal::where('id',$id)->first();
+            $user = User::where('email', $personal->correo)->exists();
+            if($user)
+            {
+                $user1 = User::where('email', $personal->correo)->first();
+            }
+
             $per = Personal::find($id);
             $per->codigo_pesonal = $request['codigo_pesonal'];
             $per->nombres = strtoupper($request['nombres']);
@@ -240,11 +245,14 @@ class PersonalController extends Controller
                 $per->save();
             }
 
-            if(count($user)>0)
+            if($user)
             {
-                $usuario = User::find($user->id);
-                $usuario->email = $request['correo'];
-                $usuario->save();
+                $contar = User::where('email', $personal->correo)->where('id', '!=', $user1->id)->count();
+                if($contar == 0){
+                    $usuario = User::find($user1->id);
+                    $usuario->email = $request['correo'];
+                    $usuario->save();
+                }
             }
             
             $ina = InformacionAcademica::find($id);

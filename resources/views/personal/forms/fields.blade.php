@@ -135,7 +135,7 @@
 			<div class="form-group{{ $errors->has('descuento_iess') ? ' has-error' : '' }}">
 				<input type="checkbox" id="verificarr" name="descuenta" onclick="verificarDescuento()">
 				{!! Form::label('descuento', 'Descuenta el IESS Sobre: ') !!} <small class="text-red">*</small>
-				{!! Form::number('descuento_iess', null, ['class' => 'form-control', 'disabled','id'=>'descuenta','title' => 'Introduzca Descuenta el IESS Sobre', 'placeholder' => 'Ejm: 30']) !!}
+				{!! Form::number('descuento_iess', null, ['max'=>'100','class' => 'form-control', 'disabled','id'=>'descuenta','title' => 'Introduzca Descuenta el IESS Sobre', 'placeholder' => 'Ejm: 30']) !!}
 			</div>
 			<div class="form-group{{ $errors->has('horas_extras') ? ' has-error' : '' }}">
 				{!! Form::label('horasExtras', 'Se paga horas extras al Colaborador: ') !!} <small class="text-red">*</small>

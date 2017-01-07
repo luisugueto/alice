@@ -44,7 +44,7 @@ class PersonalRequest extends Request
             'primaria' => 'required',
             'telefono' => 'required|numeric|digits_between:10,11',
             'id_cargo' => 'required',
-            'correo' => 'required|email|unique:users,email|unique:datos_generales_personal,correo,'.  $this->route->getParameter('personal'),
+            'correo' => 'required|email|unique:datos_generales_personal,correo,'.  $this->route->getParameter('personal'),
             'sueldo_mens' => 'required|numeric',
             'cuenta_bancaria' => 'required|numeric',
         ];
