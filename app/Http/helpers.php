@@ -84,10 +84,6 @@ use App\Quimestrales;
         }
 
         $pagadoTotal = $monto_prestamos-$monto_pagos;
-    
-        $suma = $per->sueldo_mens + $per->bono_responsabilidad;
-
-        $pres = $suma-$pagadoTotal;
 
         return $pagadoTotal;
 	}
@@ -98,7 +94,9 @@ use App\Quimestrales;
 		if(!empty($sql))
 		{
 			foreach ($sql as $key) {
-				$capital = ($sql->sueldo_mens+$sql->bono_responsabilidad)-$sql->descuento_iess;
+				$suma = $sql->sueldo_mens + $sql->bono_responsabilidad;
+		        $descuento = ($suma*$sql->descuento_iess)/100;
+		        $capital = $suma-$descuento;
 			}
 		}
 		return $capital;

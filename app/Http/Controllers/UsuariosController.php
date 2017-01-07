@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\UsuarioRequest;
+use App\Http\Requests\EditarUsuarioRequest;
 use App\User;
 use App\Personal;
 use App\Roles;
@@ -154,25 +155,26 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $director = User::where('roles_id', '2')->count();
-        $dace = User::where('roles_id', '5')->count();
+        // $director = User::where('roles_id', '2')->count();
+        // $dace = User::where('roles_id', '5')->count();
 
-        if($director>0 && $dace>0)
-        {
-            $roles = Roles::where('id', '!=', '1')->where('id', '!=', 2)->where('id', '!=', 5)->get();
-        }
-        elseif($dace>0 || $director>0)
-        {
-            if($dace>0)
-                $roles = Roles::where('id', '!=', '1')->where('id', '!=', 5)->get();
-            else
-                $roles = Roles::where('id', '!=', '1')->where('id', '!=', 2)->get();            
-        }
-        else{
-            $roles = Roles::where('id', '!=', '1')->get();
-        }
+        // if($director>0 && $dace>0)
+        // {
+        //     $roles = Roles::where('id', '!=', '1')->where('id', '!=', 2)->where('id', '!=', 5)->get();
+        // }
+        // elseif($dace>0 || $director>0)
+        // {
+        //     if($dace>0)
+        //         $roles = Roles::where('id', '!=', '1')->where('id', '!=', 5)->get();
+        //     else
+        //         $roles = Roles::where('id', '!=', '1')->where('id', '!=', 2)->get();            
+        // }
+        // else{
+        //     $roles = Roles::where('id', '!=', '1')->get();
+        // }
+        $roles = Roles::all();
 
-            return view('usuarios.edit', ['user'=>$user, 'roles'=>$roles]);
+        return view('usuarios.edit', ['user'=>$user, 'roles'=>$roles]);
     }
 
     /**
@@ -182,7 +184,7 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditarUsuarioRequest $request, $id)
     {
         $userr = User::find($id);
         $email = $userr->email;
@@ -205,7 +207,7 @@ class UsuariosController extends Controller
         {
             $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
             foreach ($user as $key) { $suma = $key->suma; }
-            if($suma>0) {
+            if($suma>0 && $userr->roles_id != 1) {
                 Session::flash('message-error', 'ERROR: DISCULPE.');
                 return redirect()->action('UsuariosController@index');
             }
@@ -216,10 +218,11 @@ class UsuariosController extends Controller
                 $user->roles_id = $request['roles_id'];
                  
                 $user->save();
-
-                $personal = Personal::find($personal->id);
-                $personal->correo = strtolower($request['email']);
-                $personal->save();
+                if($personall){
+                    $personal = Personal::find($personal->id);
+                    $personal->correo = strtolower($request['email']);
+                    $personal->save();
+                }
                 Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
                 return redirect()->action('UsuariosController@index');
             }
@@ -228,7 +231,7 @@ class UsuariosController extends Controller
         {
             $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=2');
             foreach ($user as $key) { $suma = $key->suma; }
-            if($suma>0) {
+            if($suma>0 && $userr->roles_id != 2) {
                 Session::flash('message-error', 'ERROR: DISCULPE.');
                 return redirect()->action('UsuariosController@index');
             }
@@ -239,6 +242,11 @@ class UsuariosController extends Controller
                 $user->roles_id = $request['roles_id'];
                  
                 $user->save();
+                if($personall){
+                    $personal = Personal::find($personal->id);
+                    $personal->correo = strtolower($request['email']);
+                    $personal->save();
+                }
                 Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
                 return redirect()->action('UsuariosController@index');
             }
@@ -249,7 +257,7 @@ class UsuariosController extends Controller
             foreach ($user as $key) { $suma = $key->suma; }
             
 
-            if($suma>0){
+            if($suma>0 && $userr->roles_id != 5){
                 Session::flash('message-error', 'ERROR: DISCULPE.');
                 return redirect()->action('UsuariosController@index');
             }
@@ -258,9 +266,11 @@ class UsuariosController extends Controller
                 $user->name = strtoupper($request['name']);
                 $user->email = strtolower($request['email']);
                 $user->roles_id = $request['roles_id'];
-                $personal = Personal::find($personal->id);
-                $personal->correo = strtolower($request['email']);
-                $personal->save();
+                if($personall){
+                    $personal = Personal::find($personal->id);
+                    $personal->correo = strtolower($request['email']);
+                    $personal->save();
+                }
                  
                 $user->save();
                 Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');

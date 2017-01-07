@@ -57,7 +57,7 @@
                                             <td>{{$per->fecha }}</td>
                                             <td>{{$per->personal->nombres}}</td>
                                             <td>{{$per->personal->apellido_paterno}} {{ $per->personal->apellido_materno }}</td>
-                                            <td>{{ $per->personal->remuneracion->sueldo_mens+$per->personal->remuneracion->bono_responsabilidad }}</td>
+                                            <td>{{ remuneracion($per->personal->id) }}</td>
                                             <td>{{$per->tipo}}</td>
                                             <td>{{$per->monto }}</td>
                                             @if($per->tipo == 'Prestamo')

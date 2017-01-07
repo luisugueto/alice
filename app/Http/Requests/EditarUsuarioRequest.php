@@ -3,9 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Routing\Route;
 
-class UsuarioRequest extends Request
+class EditarUsuarioRequest extends Request
 {
+    function __construct(Route $route)
+    {
+        $this->route = $route;
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,6 +20,7 @@ class UsuarioRequest extends Request
     {
         return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,12 +28,10 @@ class UsuarioRequest extends Request
      */
     public function rules()
     {
-        return [
-            'email'    => 'required|unique:users',
-            'password' => 'required',
+         return [
+            'email'    => 'required|unique:users,email,' . $this->route->getParameter('usuarios'),
             'name'     => 'required',
             'roles_id' => 'required',
-            #'personal' =>'required|unique:users,id_personal',
         ];
     }
 }

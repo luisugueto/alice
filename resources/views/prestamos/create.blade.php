@@ -5,7 +5,7 @@
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
+   <div class="row" style="padding-top: 25px;">
         <div class="col-xs-12">
 
             <div class="col-xs-12">

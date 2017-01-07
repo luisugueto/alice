@@ -133,10 +133,11 @@ class PrestamosAnticiposController extends Controller
         }
 
         $pagadoTotal = $monto_prestamos-$monto_pagos;
-    
+        
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
-
-        $pres = $suma-$pagadoTotal;
+        $descuento = ($suma*$per->descuento_iess)/100;
+        $capital = $suma-$descuento;
+        $pres = $capital-$pagadoTotal;
 
         if($request['monto']>$pres) {
             Session::flash('message-error', 'DISCULPE: NO SE PUDO REALIZAR SU PRESTAMO EN EL MES. EL MONTO INTRODUCIDO ES SUPERIOR A SU CAPITAL. EL MONTO MAX ES: '.$pres);
