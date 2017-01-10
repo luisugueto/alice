@@ -60,10 +60,14 @@
                                             @if($per->tipo == 'Prestamo')
                                                 @if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
                                                     <td>0</td>
+                                                    <td></td>
                                                 @else
                                                     <td></td>
                                                     <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
                                                 @endif
+                                            @else
+                                            <td></td>
+                                            <td></td>
                                             @endif
                                         </tr>
 

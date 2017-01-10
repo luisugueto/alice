@@ -23,7 +23,7 @@
                     {!! Form::open(['route' => 'facturaciones.create', 'method' => 'GET', 'name' => 'form', 'id' => 'form']) !!}
 
                         <div class="box-body">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 {!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
 
                                 <div class="form-group form-inline">

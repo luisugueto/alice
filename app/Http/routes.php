@@ -53,8 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('asistencias/salidas', ['uses' => 'AsistenciasController@salidas', 'as' => 'asistencias.salidas']);
 	Route::get('inscripciones/rubros/{id}/buscar',['uses' => 'InscripcionesController@buscarrubros', 'as' => 'inscripciones.rubros.buscar']);
 	Route::get('personal/control_de_pagos', 'PersonalController@control');
-	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
-	Route::get('certificados/{id}/matricula',['uses' => 'CertificadosController@matricula', 'as' => 'certificados.matricula']);
 	Route::get('inscripciones/cambiarseccion/{id}/buscar',['uses' => 'InscripcionesController@cambiarseccion', 'as' => 'inscripciones.cambiarseccion.buscar']);
 	Route::get('horarios/{seccion}/{curso}/{periodo}/pdf', ['uses' => 'HorariosController@pdf', 'as' => 'horarios.pdf']);
 	Route::post('parciales/store2',['uses' => 'ParcialesController@store2', 'as' => 'parciales.store2']);
@@ -62,6 +60,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
 	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
+
+
+	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
+	Route::get('certificados/{id}/matricula',['uses' => 'CertificadosController@matricula', 'as' => 'certificados.matricula']);
+	Route::get('certificados/laboral',['uses' => 'CertificadosController@laboral', 'as' => 'certificados.laboral']);
+	Route::get('certificados/listado_personal',['uses' => 'CertificadosController@personal', 'as' => 'certificados.personal']);
+	Route::get('certificados/comportamiento',['uses' => 'CertificadosController@comportamiento', 'as' => 'certificados.comportamiento']);
+	Route::get('certificados/listado_estudiantes_comportamiento',['uses' => 'CertificadosController@estudiantesComportamiento', 'as' => 'certificados.estudiantesComportamiento']);
 
 
 	Route::resource('asistencias', 'AsistenciasController');
@@ -89,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('inscripciones','InscripcionesController');
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('facturaciones', 'FacturacionesController');
+	Route::resource('periodos', 'PeriodosController');
 
 	
 });

@@ -50,10 +50,14 @@ use App\Http\helpers;
             <li class="treeview">
                 <a href="#"><i class='fa fa-child'></i> <span>Estudiantes</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                    @if(verificarPeriodo()=='activo')
                     <li><a href="{{ route('representantes.cedula') }}">Nuevo</a></li>
+                    @endif
                     <li><a href="{{ route('estudiantes.index') }}">Listado</a></li>
                     <li><a href="{{ route('inscripciones.show',[0]) }}">Inscritos</a></li>
+                    @if(verificarPeriodo()=='activo')
                     <li><a href="{{ route('inscripciones.index') }}">Realizar Inscripción</a></li>
+                    @endif
                 </ul>
             </li>
             @endif
@@ -125,6 +129,8 @@ use App\Http\helpers;
                 <ul class="treeview-menu">
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li><a href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a></li>
+                    <li><a href="{{ url('certificados/listado_estudiantes_comportamiento') }}">Comportamiento</a></li>
+                    <li><a href="{{ url('certificados/listado_personal') }}">Laboral</a></li>
                     @endif
                   
                 </ul>
@@ -135,6 +141,9 @@ use App\Http\helpers;
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                    @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
+                    <li><a href="{{ route('periodos.index') }}">Activar Nuevo Periodo</a></li>
+                    @endif
                     @if(Auth::user()->roles_id == 4)
                     <li><a href="{{ route('iess.index') }}">IESS</a></li>
                     @endif

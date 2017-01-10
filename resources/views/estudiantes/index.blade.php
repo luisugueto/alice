@@ -12,12 +12,14 @@
                 @include('alerts.request')
                 @include('alerts.errors')
             </div>
+        @if(verificarPeriodo()=='activo')
 
             <div class="col-xs-12">
                 <button class="btn btn-primary" title="Registrar Estudiante" onclick="window.location.href = '{{ URL::to('representante/buscar') }}'";>
                     <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
                 </button>
             </div>
+        @endif
 
             <div class="col-xs-12" style="padding-top: 20px">
                 <div class="box">

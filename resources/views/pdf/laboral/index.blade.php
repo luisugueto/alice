@@ -22,12 +22,14 @@ echo $fecha=strftime("%d de %B de %Y"); ?></b>
 	<h1>CERTIFICADO LABORAL</h1>
 </div>
 
-<div align="center">
+<div align="justify">
 
 	<p>Yo, Msc. <b>Wilson Muñoz Fortún</b> con <b>C.I 170925662</b> en calidad de director de esta
-	Institución Educativa certifico a <b>X</b> con <b>C.I X</b>ha laborado en el areá de <b>X</b>realizando su respectivo trabajo, durante el periodo comprendido desde <b>X</b>, demostrando en supermanencia responsabilidad, honestidad y dedicación en las labores que le fueron encomendadas.</p>
+	Institución Educativa certifico a <b>{{ strtoupper($nombres) }} {{ strtoupper($apellido) }}</b> con <b>C.I {{ $cedula }}</b>ha laborado en el areá de <b>{{ $area }}</b> realizando su respectivo trabajo, durante el periodo comprendido, demostrando en supermanencia responsabilidad, honestidad y dedicación en las labores que le fueron encomendadas.</p>
 	
 	<br><br><br><br>
+</div>
+<div align="center">
 	Atte.<br><br>
 	________________________<br><br><br>C.I 170925662<br><b>Msc. Wilsonn Muñoz Fortún</b></p>
 </div>

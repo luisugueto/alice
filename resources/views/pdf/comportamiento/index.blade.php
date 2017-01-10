@@ -22,13 +22,15 @@ echo $fecha=strftime("%d de %B de %Y"); ?></b>
 	<h1>CERTIFICADO DE COMPORTAMIENTO</h1>
 </div>
 
-<div align="center">
+<div align="justify">
 
-	<p>Por medio de la Presente la Secretaría de la Escuela de Educación Básica<br>Particular 
+	<p>Por medio de la Presente la Secretaría de la Escuela de Educación Básica Particular 
 	MARÍA MONTESSORI, certifica que el(a) estudiante:<br> <br>
-	<b>X</b><br><br>
-	Se matriculó en el <b>X grado de Educación General Básica</b>obteniendo un comportamiento<br>
-	equivalente a <b>SATISFACTORIO</b>.<br><br>Así consta en los archivos de la Secretaría del Plantel, a los que me remito en caso<br>necesario</p>
+	<div align="center">
+		<b><h2>{{ strtoupper($nombre) }} {{ strtoupper($apellido) }}</h2></b>
+	</div><br><br>
+	Se matriculó en el <b>{{ $curso }} grado de Educación General Básica</b> obteniendo un comportamiento 
+	equivalente a <b>SATISFACTORIO</b>.<br><br>Así consta en los archivos de la Secretaría del Plantel, a los que me remito en caso necesario</p>
 	
 	<br><br><br>
 

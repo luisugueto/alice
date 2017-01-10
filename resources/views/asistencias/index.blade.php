@@ -26,7 +26,7 @@
             <div class="col-xs-12" style="padding-top: 20px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Usuarios</h3>
+                        <h3 class="box-title">Asistencias</h3>
                     </div>
                     <div class="box-body">
                         <div class="table-responsive">

@@ -15,7 +15,7 @@ class PeriodosSeeder extends Seeder
 
         for($i = 0; $i < 30; $i++)
         {
-            if($i == 2){
+            if($i == 3){
                 DB::table('periodos')->insert([
                     'nombre' => $valor+$i,
                     'status' => 'activo'

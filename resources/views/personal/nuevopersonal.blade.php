@@ -5,7 +5,7 @@
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
+    <div class="row" style="">
         <div class="col-xs-12">
 
             <div class="col-xs-12">
@@ -26,7 +26,7 @@
                                 <li class="pull-right"><a href="#" class="text-muted" ><i class="fa fa-gear"></i></a></li>
                             </ul>
                             <div class="tab-content">
-
+                                <br>
                                 @include('personal.forms.fields')
 
                                 <div class="text-center">
