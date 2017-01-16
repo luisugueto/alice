@@ -64,13 +64,37 @@ class DocentesController extends Controller
             if ($cuantos>0) {
                     Session::flash('message-error', 'DISCULPE, ESTA SECCIÓN DE ESTE CURSO YA SE ENCUENTRA ASIGNADA A UN DOCENTE');
             } else { 
+                    //---- BUSCARNDO SI SE HAN CARGADO DE DICHA SECCION CALIFICACIONES
+                    //BUSCANDO EN LA TABLA INSCRIPCIONES LA SECCION PARA VERIFICAR SI TIENE ESTUDIANTES INSCRITOS
+                    $buscar3=DB::select("SELECT * FROM inscripciones WHERE id_seccion=".$request->id_seccion);
+                    $n=count($buscar3);
+                    $contar=0;
+                            if($n>0){
 
-                    $asignaturas=Asignaturas::where('id_curso',$request->id_curso)->get();
-                    foreach ($asignaturas as $asignaturas) {
-                        $asignacion=DB::insert('INSERT INTO asignacion(id_prof,id_asignatura,id_seccion,id_periodo) VALUES('.$request->id_prof.','.$asignaturas->id.','.$request->id_seccion.','.$id_periodo.')');
+                               
+                                //BUSCANDO DE LOS ESTUDIANTES INSCRITOS SI SE LE HA CARGADO CALIFICACION
+                                foreach($buscar3 as $b){
 
-                    }
-                    Session::flash('message', 'CURSO Y SECCIÓN ASIGNADA EXITOSAMENTE');
+                                    $buscar4=DB::select("SELECT * FROM parciales WHERE id_estudiante=".$b->id_estudiante);
+                                    $contar+=count($buscar4);
+                                }
+
+                            }
+
+                    //--------------------------------------------------------------
+                                if($contar==0){
+
+                                $asignaturas=Asignaturas::where('id_curso',$request->id_curso)->get();
+                                        foreach ($asignaturas as $asignaturas) {
+                                            $asignacion=DB::insert('INSERT INTO asignacion(id_prof,id_asignatura,id_seccion,id_periodo) VALUES('.$request->id_prof.','.$asignaturas->id.','.$request->id_seccion.','.$id_periodo.')');
+
+                                        }
+                                Session::flash('message', 'CURSO Y SECCIÓN ASIGNADA EXITOSAMENTE');
+                                }else{
+
+                                Session::flash('message-error', 'LA SECCION NO PUEDE SER ASIGNADA DEBIDO A QUE YA SE LES HA CARGADO CALIFICACIONES A UN ESTUDIANTE DE DICHA SECCION');
+                                }
+                        
             }
 
         }else{
@@ -82,11 +106,36 @@ class DocentesController extends Controller
                     Session::flash('message-error', 'DISCULPE, ESTA ESTA ASIGNATURA Y SECCIÓN DE ESTE CURSO YA SE ENCUENTRA ASIGNADA A UN DOCENTE');
             } else { 
 
+                //---- BUSCARNDO SI SE HAN CARGADO DE DICHA SECCION CALIFICACIONES
+                    //BUSCANDO EN LA TABLA INSCRIPCIONES LA SECCION PARA VERIFICAR SI TIENE ESTUDIANTES INSCRITOS
+                    $buscar3=DB::select("SELECT * FROM inscripciones WHERE id_seccion=".$request->id_seccion);
+                    $n=count($buscar3);
+                    $contar=0;
+                            if($n>0){
+
+                               
+                                //BUSCANDO DE LOS ESTUDIANTES INSCRITOS SI SE LE HA CARGADO CALIFICACION
+                                foreach($buscar3 as $b){
+
+                                    $buscar4=DB::select("SELECT * FROM parciales WHERE id_estudiante=".$b->id_estudiante);
+                                    $contar+=count($buscar4);
+                                }
+
+                            }
+
+                    //--------------------------------------------------------------
+                    
+                    if($contar==0){
+
                     
                         $asignacion=DB::insert('INSERT INTO asignacion(id_prof,id_asignatura,id_seccion,id_periodo) VALUES('.$request->id_prof.','.$request->id_asignatura.','.$request->id_seccion2.','.$id_periodo.')');
 
                     
                     Session::flash('message', 'CURSO, SECCIÓN Y ASIGNATURA ASIGNADA EXITOSAMENTE');
+                    }else{
+
+                         Session::flash('message-error', 'LA SECCION NO PUEDE SER ASIGNADA DEBIDO A QUE YA SE LES HA CARGADO CALIFICACIONES A UN ESTUDIANTE DE DICHA SECCION');
+                    }
             }
 
         }

@@ -71,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('certificados/listado_estudiantes_comportamiento',['uses' => 'CertificadosController@estudiantesComportamiento', 'as' => 'certificados.estudiantesComportamiento']);
 	Route::get('docentes/{id}/coordinacion',['uses' => 'DocentesController@coordinacion', 'as' => 'docentes.coordinacion']);
 	Route::get('docentes/{id}/destroy',['uses' => 'DocentesController@destroy', 'as' => 'docentes.destroy']);
+	Route::get('parciales/coordinacion',['uses' => 'ParcialesController@coordinacion', 'as' => 'parciales.coordinacion']);
+	Route::get('parciales/{id}/show-estudiantes',['uses' => 'ParcialesController@buscarestudiantes', 'as' => 'parciales.show-estudiantes']);
+
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
