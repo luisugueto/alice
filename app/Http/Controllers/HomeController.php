@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Session;
 
 /**
  * Class HomeController
@@ -33,7 +34,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        Session::flash('message-welcome', '');
+
+        return view('home');
     }
 
     public function usuarios()
