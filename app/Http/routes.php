@@ -60,7 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
 	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
-
+	Route::get('docentes/asignar/{id}/show3',['uses' => 'DocentesController@show3', 'as' => 'docentes.asignar.show3']);
+	Route::post('docentes/store2',['uses' => 'DocentesController@store2', 'as' => 'docentes.store2']);
 
 	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
 	Route::get('certificados/{id}/matricula',['uses' => 'CertificadosController@matricula', 'as' => 'certificados.matricula']);
@@ -68,7 +69,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('certificados/listado_personal',['uses' => 'CertificadosController@personal', 'as' => 'certificados.personal']);
 	Route::get('certificados/comportamiento',['uses' => 'CertificadosController@comportamiento', 'as' => 'certificados.comportamiento']);
 	Route::get('certificados/listado_estudiantes_comportamiento',['uses' => 'CertificadosController@estudiantesComportamiento', 'as' => 'certificados.estudiantesComportamiento']);
-
+	Route::get('docentes/{id}/coordinacion',['uses' => 'DocentesController@coordinacion', 'as' => 'docentes.coordinacion']);
+	Route::get('docentes/{id}/destroy',['uses' => 'DocentesController@destroy', 'as' => 'docentes.destroy']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

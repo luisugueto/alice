@@ -41,7 +41,9 @@
                                             <td><a href="{{ route('quimestres.edit', [$quimestres->id]) }}"> {{$quimestres->periodos->nombre}}({{$quimestres->periodos->status}})</a></td>
                                             <td>
                                                 {!!link_to_route('quimestres.edit', $title = '', $parameters = $quimestres->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}
-                                                    <a href="{{ route('quimestres.destroy', [$quimestres->id]) }}"><button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" title="Presionando este botón puede eliminar el registro" ><i class="fa fa-trash"></i></button></a>
+                                                    <a href="{{ route('quimestres.destroy', [$quimestres->id]) }}">
+
+                                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" title="Presionando este botón puede eliminar el registro" ><i class="fa fa-trash"></i></button></a>
                                                 {!!link_to_route('quimestres.show', $title = '', $parameters = $quimestres->id, $attributes = ['class'=>'fa fa-calculator fa-2x'])!!}
                                             </td>
                                         </tr>

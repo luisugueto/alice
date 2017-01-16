@@ -41,7 +41,10 @@
                                                 <td> {{$docentes->cedula}}</td>
                                                 <td> {{$docentes->cargo->nombre}}</td>
                                                 <td class="text-center">
-                                                    {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-eye fa-2x'])!!}
+                                                    {!!link_to_route('docentes.show', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Visualizar cargas académicas'])!!}
+                                                    @if($docentes->cargo->nombre=="DOCENTE ROTATIVO")
+                                                     {!!link_to_route('docentes.coordinacion', $title = '', $parameters = $docentes->id, $attributes = ['class'=>'fa fa-group fa-2x','title' => 'Asignar Coordinación de Cursos '])!!}
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endif

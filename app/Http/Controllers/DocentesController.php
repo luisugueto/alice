@@ -94,6 +94,27 @@ class DocentesController extends Controller
         return View('docentes.index',compact('docentes'));
     }
 
+    public function store2(Request $request)
+    {
+        $id_periodo= Session::get('periodo');
+        
+                
+                $buscar2=DB::select('SELECT * FROM asignacion_coordinador WHERE id_seccion='.$request->id_seccion.' AND id_periodo='.$id_periodo.'');
+                $cuantos=count($buscar2);
+            if ($cuantos>0) {
+                    Session::flash('message-error', 'DISCULPE, ESTA SECCIÓN DE ESTE CURSO YA SE ENCUENTRA ASIGNADA A UN DOCENTE COMO COORDINADOR');
+            } else { 
+
+                    $asignacion=DB::insert('INSERT INTO asignacion_coordinador(id_prof,id_seccion,id_periodo) VALUES('.$request->id_prof.','.$request->id_seccion.','.$id_periodo.')');
+
+                    Session::flash('message', 'CURSO Y SECCIÓN ASIGNADA EXITOSAMENTE PARA COORDINACIÓN');
+            }
+
+        
+         $docentes=Personal::all();
+        return View('docentes.index',compact('docentes'));
+    }
+
     /**
      * Display the specified resource.
      *
@@ -143,6 +164,14 @@ class DocentesController extends Controller
         /*dd($docentes2);*/
     }
 
+    public function show3($id)
+    {
+        $docentes=Personal::find($id);
+        $cursos=Cursos::where('id','>','4')->lists('curso','id');
+        //dd($docentes);
+        return View('docentes.create2',compact('docentes','cursos'));
+        /*dd($docentes2);*/
+    }
     public function buscar($id)
     {
         return $seccion = Seccion::where('id_curso',$id)->get();  
@@ -193,6 +222,28 @@ class DocentesController extends Controller
 
     }
 
+    public function coordinacion($id){
+    
+        $id_periodo= Session::get('periodo');
+        $docentes=Personal::find($id);
+        //dd($docentes);
+      
+
+            $docentes=Personal::find($id);
+            $sql='SELECT ac.id,secc.literal,cursos.curso FROM asignacion_coordinador ac INNER JOIN secciones secc ON ac.id_seccion = secc.id INNER JOIN cursos ON secc.id_curso=cursos.id WHERE ac.id_prof='.$id.' AND ac.id_periodo='.$id_periodo;
+                //dd($sql);
+            $docentes2 = DB::select(DB::raw($sql));
+                $cuantos=count($docentes2);
+                //dd($docentes->secciones_coordinacion);
+                if($cuantos==0){                   
+                    return View('docentes.show2',compact('cuantos','docentes'));
+                }else{
+                    return View('docentes.show2',compact('docentes','cuantos','docentes2'));
+                }
+            
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -201,6 +252,18 @@ class DocentesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $delete=DB::table('asignacion_coordinador')->where('id',$id)->delete();
+        if($delete){
+             Session::flash('message', 'COORDINACIÓN ELIMINADA EXITOSAMENTE');
+              $docentes=Personal::all();
+        return View('docentes.index',compact('docentes'));
+        }else{
+
+            Session::flash('message-error', 'LA COORDINACIÓN NO HA SIDO ELIMINADA');
+              $docentes=Personal::all();
+        return View('docentes.index',compact('docentes'));;
+
+        }
     }
 }
