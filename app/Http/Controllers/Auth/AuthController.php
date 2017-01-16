@@ -209,7 +209,8 @@ class AuthController extends Controller
             */
             $query = DB::select("SELECT * FROM morosos");
             $contarMororos = count($query);
-
+            $nombrePeriodo = Periodos::where('id', $request['periodos'])->first();
+            Session::put('periodoNombre', $nombrePeriodo->nombre);
             Session::put('morosos', $contarMororos);
             Session::put('valor', $suma);
             Session::flash('message', 'Bienvenido');

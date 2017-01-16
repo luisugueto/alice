@@ -1,4 +1,4 @@
-REQUIRED JS SCRIPTS -->
+<!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
@@ -38,50 +38,3 @@ SHORTCUTS
 
  -->
 
-<script>
-    $(document).hotkey('shift+p', function() {
-        window.location.href = '/prestamos/create';
-    });  
-    $(document).hotkey('ctrl+m', function() {
-        window.location.href = '/inscripciones';
-    });  
-    $(document).hotkey('ctrl+l', function() {
-        window.location.href = '/estudiantes';
-    });  
-    $(document).hotkey('ctrl+c', function() {
-        window.location.href = '/personal';
-    });  
-    $(document).hotkey('shift+k', function() {
-        window.location.href = '/parciales/{{ Auth::user()->id }}';
-    });  
-    $(document).hotkey('ctrl+b', function() {
-        window.location.href = '/parciales/mostrarcalificaciones';
-    });  
-</script>
-<!-- <script>
-    
-    $(document).ready( function () 
-    {
-
-        $(document).on('click', '[type=checkbox]', function(event) {
-            
-            var aula = document.form.id_aula.value;  
-            var bloque = $(this).val(); 
-            
-            //console.log(aula);
-            $.get("/bloques/"+bloque+'/'+aula+"", function(data) 
-            {
-                    
-                //console.log(data);
-                if(data)
-                {
-                    $("input:checkbox").attr('checked', false);
-                    alert('AULA OCUPADA');
-                }
-
-            });
-        }); 
-
-    });
-
-</script>
