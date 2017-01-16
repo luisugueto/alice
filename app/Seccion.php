@@ -59,4 +59,10 @@ class Seccion extends Model
         return $this->belongsToMany('App\Personal','asignacion','id_seccion','id_prof')->withPivot('id_asignatura');
     }
 
+    public function personal_coordinacion(){
+
+        return $this->belongsToMany('App\Personal','asignacion_coordinador','id_seccion','id_prof')->withPivot('id_periodo')->withTimestamps();
+
+    }
+
 }
