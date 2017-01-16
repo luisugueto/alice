@@ -23,7 +23,7 @@
                 <!-- block -->
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">TAREA COMUNES (ACCESO RAPIDO)</div>
+                        <div class="muted pull-left">TAREA COMUNES (ACCESO RÁPIDO)</div>
                     </div>
                     <div class="block-content collapse in">
 

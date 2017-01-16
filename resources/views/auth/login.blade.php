@@ -5,67 +5,43 @@
 @endsection
 
 @section('content')
-<br><br>
-<div class="login-logo">
-           <b>Sistema Administrativo y Académico<br>María Montessori</b>
-        </div>
-<body class="hold-transition login-page">
-    <div class="login-box" >
-        <!-- /.login-logo -->
+    <br><br>
+    <div class="login-logo">
+        <h2><b>Sistema Administrativo y Académico<br>María Montessori</b></h2>
+    </div>
+    <body class="hold-transition login-page">
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
-    <div class="login-box-body">
-    <p class="login-box-msg"> Iniciar Sesión <br> Periodo Lectivo Activo: {{$periodos2->nombre}} </p>
-    <form action="{{ url('/login') }}" method="post">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email"/>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
 
-            {!! Form::select('periodos',$periodos, $periodos2->id, ['class' => 'form-control','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
-            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
-        </div>
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox" name="remember"> {{ trans('adminlte_lang::message.remember') }}
-                    </label>
+    <div id="login">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Disculpe!</strong><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <div class="container">
+
+            <form class="form-signin" action="{{ url('/login') }}" method="post">
+                <p class="login-box-msg"> Iniciar Sesión <br> Periodo Lectivo Activo: {{$periodos2->nombre}} </p>
+                {{ csrf_field() }}
+                <input type="email" required class="input-block-level" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email"/>
+                <input type="password" required class="input-block-level" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
+                {!! Form::select('periodos',$periodos, $periodos2->id, ['class' => 'input-block-level','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
+                <div align="center">
+                    <button class="btn btn-large btn-primary" type="submit">Entrar</button>
                 </div>
-            </div><!-- /.col -->
-            <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
-            </div><!-- /.col -->
+                <br><a href="{{ url('/password/reset') }}">Reestablecer Contraseña</a>
+            </form>
         </div>
-    </form>
+    </div> <!-- /container -->
 
-    @include('auth.partials.social_login')
 
-    <!-- <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br> -->
-    <a href="{{ url('/password/reset') }}">Reestablecer Contraseña</a><br>
- <!--    <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a> -->
 
-</div><!-- /.login-box-body -->
-
-</div><!-- /.login-box -->
-
-    @include('layouts.partials.scripts_auth')
 
     <script>
         $(function () {
@@ -76,6 +52,6 @@
             });
         });
     </script>
-</body>
+    </body>
 
 @endsection

@@ -213,7 +213,6 @@ class AuthController extends Controller
             Session::put('periodoNombre', $nombrePeriodo->nombre);
             Session::put('morosos', $contarMororos);
             Session::put('valor', $suma);
-            Session::flash('message', 'Bienvenido');
             Session::put('periodo', $request['periodos']);
             return Redirect::to('/home');
         }
