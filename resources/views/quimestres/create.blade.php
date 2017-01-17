@@ -1,40 +1,30 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Quimestre')
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Quimestre</h3>
-                    </div>
-
-                    {!! Form::open(['route' => 'quimestres.store', 'method' => 'POST', 'name' => 'f1', 'id' => 'f1']) !!}
-
-                    <div class="box-body">
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Quimestre</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+                {!! Form::open(['route' => 'quimestres.store', 'method' => 'POST', 'name' => 'f1', 'id' => 'f1', 'class' => 'form-horizontal    ']) !!}
+                    <fieldset>
+                        <legend>Nuevo</legend>
 
                         @include('quimestres.forms.create-fields')
 
-                        <div class="box-footer">
-                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                        <div class="span12 text-center">
+                            <div class="form-actions">
+                                <button type="reset" class="btn btn-primary">Borrar</button>
+                                <button type="submit" class="btn">Guardar</button>
+                            </div>
                         </div>
-
-                    </div>
-
-                    {!! Form::close() !!}
-
-                </div>
+                    </fieldset>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

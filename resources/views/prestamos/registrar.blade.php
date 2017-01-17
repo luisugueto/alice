@@ -1,41 +1,37 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Prestamos')
 @section('contentheader_description', 'Pago')
 
 @section('main-content')
 
-<div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 20px;">
-            @include('alerts.request')
-            @include('alerts.errors')
+    <div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Prestamos y Anticipos</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span3"></div>
+                <div class="span4">
+
+                    {!! Form::open(['route' => 'pagos.store', 'method' => 'POST', 'class'=>'form-horizontal','name' => 'form', 'id' => 'form', 'onsubmit' => 'return validateForm()']) !!}
+
+
+                            <div class="box-body">
+
+                                @include('prestamos.forms.register')
+
+                                <div class="box-footer">
+                                    <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                                </div>
+                            </div>
+                    {!! Form::close() !!}
+
+                 </div>
+            </div>
         </div>
     </div>
-
-    <section class="content"> 
-        <div class="row">
-            <div class="col-md-12"> 
-
-                {!! Form::open(['route' => 'pagos.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form', 'onsubmit' => 'return validateForm()']) !!}
-
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Pago</h3>
-                        </div>
-                        <div class="box-body">
-                            
-                            @include('prestamos.forms.register')
-
-                            <div class="box-footer">
-                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                                <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
-                            </div>
-                        </div>   
-                    </div>
-
-                {!! Form::close() !!}
-
         
 
 <script type="text/javascript">

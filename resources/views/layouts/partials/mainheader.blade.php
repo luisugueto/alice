@@ -61,7 +61,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="{{ url('/prestamosTotal') }}">Préstamos</a>
+                                <a href="{{ route('prestamos.create') }}">Préstamos</a>
 
                             </li>
                             <li><a href="{{ url('verificarPrestamos') }}">Verificar Préstamo</a></li>

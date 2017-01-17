@@ -1,53 +1,44 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Facturación')
 @section('contentheader_description', 'Buscar')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Buscar</div>
             </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <fieldset>
+                        <legend>Estudiante</legend>
 
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Estudiante</h3>
-                    </div>
+                        {!! Form::open(['route' => 'facturaciones.create', 'method' => 'GET', 'name' => 'form', 'class' => 'form-horizontal' , 'id' => 'form']) !!}
 
+                        <div class="control-group">
+                            <div class="span5">
+                                <label class="control-label" for="select01">Cédula</label>
+                                <div class="controls{{ $errors->has('cedula') ? ' has-error' : '' }}">
+                                    <select id="select01" name="nacionalidad" class="chzn-select" style="width: 50px">
+                                        <option value="N-">N</option>
+                                        <option value="E-">E</option>
+                                    </select>
 
-                    {!! Form::open(['route' => 'facturaciones.create', 'method' => 'GET', 'name' => 'form', 'id' => 'form']) !!}
-
-                        <div class="box-body">
-                            <div class="col-md-12">
-                                {!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-
-                                <div class="form-group form-inline">
-                                    <div class="input-group">
-                                        <div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
-                                            <select class="form-control" name="nacionalidad" title="Seleccioné la nacionalidad" id="nationality">
-                                                <option value="N-">N</option>
-                                                <option value="E">E</option>
-                                            </select>
-
-                                            {!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del estudiante.', 'placeholder' => '25607932', 'size' => '30']) !!}
-
-                                            <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-default" id="buscar" title="Buscar">
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    {!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del representante.', 'placeholder' => '25607932', 'size' => '30']) !!}
                                 </div>
                             </div>
                         </div>
 
-                    {!! Form::close() !!}
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                            <button type="reset" class="btn">Cancelar</button>
+                        </div>
+
+                        {!! Form::close() !!}
+                    </fieldset>
                 </div>
             </div>
         </div>

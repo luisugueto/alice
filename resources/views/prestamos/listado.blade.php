@@ -54,7 +54,7 @@
                                             <td></td>
                                         @else
                                             <td>0</td>
-                                            <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
+                                            <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}</td>
                                         @endif
                                     @endif
                                 </tr>

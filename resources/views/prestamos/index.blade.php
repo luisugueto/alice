@@ -56,7 +56,7 @@
                                             <td></td>
                                         @else
                                             <td>{{ $per->monto-$i }}</td>
-                                            <td class="text-center"> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'fa fa-money fa-2x'])!!}</td>
+                                            <td class="text-center"> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}</td>
                                         @endif
                                     @endif
                                 </tr>
