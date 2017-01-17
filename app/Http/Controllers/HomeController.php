@@ -10,6 +10,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Session;
+use App\Estudiante;
+use App\Inscripciones;
+use DB;
+use App\Seccion;
 
 /**
  * Class HomeController
@@ -34,9 +38,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Session::flash('message-welcome', '');
+        $estudiante = Estudiante::all()->count();
+        $capacidad = DB::select('SELECT sum(capacidad) as capacidad FROM secciones');
+        foreach ($capacidad as $cap){ $suma = $cap->capacidad; }
 
-        return view('home');
+        $activos = Inscripciones::where('id_periodo', Session::get('periodo'))->count();
+
+        return view('home', compact('estudiante', 'suma', 'activos'));
     }
 
     public function usuarios()

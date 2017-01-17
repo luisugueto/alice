@@ -1,42 +1,40 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Representante')
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
+    <div class="row-fluid">
+        <!-- block -->
+        <div class="block">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Formulario</div>
             </div>
+            <div class="block-content collapse in">
+                <div class="span12">
+                    <fieldset>
+                        <legend>Representante</legend>
 
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Representante </h3>
-                    </div>
+                        {!! Form::open(['route' => 'representantes.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
 
-                    {!! Form::open(['route' => 'representantes.store', 'method' => 'POST', 'class' => 'form']) !!}
+                            @include('representantes.forms.fields')
 
-                    <div class="box-body">
-
-                        @include('representantes.forms.fields')
-
-                        <div class="box-footer">
-                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <button type="reset" class="btn">Borrar</button>
+                                <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                            </div>
                         </div>
 
-                    </div>
+                        {!! Form::close() !!}
 
-                    {!! Form::close() !!}
-
+                    </fieldset>
                 </div>
             </div>
         </div>
+        <!-- /block -->
     </div>
 
+   
 @endsection

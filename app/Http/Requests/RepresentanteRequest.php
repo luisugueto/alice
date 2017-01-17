@@ -27,7 +27,7 @@ class RepresentanteRequest extends Request
             'cedula_re'       => 'required|unique:datos_representantes',
             'nombres_re'      => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'nacionalidad_re' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'telefono_re'     => 'required|digits_between:10,11',
+            'telefono_re'     => 'required',
             'vive_con'        => 'required',
             'direccion_re'    => 'required|regex:/^([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/'
         ];

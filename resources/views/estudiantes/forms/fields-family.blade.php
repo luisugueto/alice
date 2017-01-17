@@ -1,212 +1,112 @@
-<div id="contenido">
-	@if(empty($padre))
-	<div class="col-md-12">
-		<div class="pull-right">
-			<div class="form-group">
-			{!! Form::label('habilitar', 'HABILITAR') !!} &nbsp;
-			<input type="checkbox" onclick="padre_ch()" id="habilitar" name="padre">
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">                        
-        {!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
+<div class="span11">
+    @if(empty($padre))
+        <div class="span4">
+            <div class="control-group">
+                {!! Form::label('nacionalidad_pa', 'Nacionalidad', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('nacionalidad_pa') ? ' has-error' : '' }}">
+                    <select name="nacionalidad_pa" id="padre" disabled="disabled" title="Seleccioné la nacionalidad" class="chzn-select" style="width: 50px">
+                        <option value="N-">N</option>
+                        <option value="E-">E</option>
+                    </select>
 
-        <div class="form-group form-inline">
-             <div class="input-group">
-                <div class="form-group{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
-                    <select class="form-control" name="nacionalidad_padre" id="padre" disabled="disabled" title="Seleccioné la nacionalidad" id="nationality">
-                       	<option value="N-">N</option>
-                        <option value="E">E</option>
-                    </select>           
-
-        			{!! Form::text('cedula_pa', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del padre.', 'id' => 'padre', 'placeholder' => '25607932', 'size' => '36', 'disabled' => 'disabled']) !!}
-                  
-         		</div>
+                    <span class="help-inline"><input type="checkbox" onclick="padre_ch()" id="habilitar" name="padre"/></span>
+                </div>
             </div>
-        </div>  
-
-      
-		<div class="form-group{{ $errors->has('nacionalidad_pa') ? ' has-error' : '' }}">
-			{!! Form::label('nacionalidad_pa', 'Nacionalidad') !!} <small class="text-red">*</small>
-			{!! Form::text('nacionalidad_pa', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('nombres_pa') ? ' has-error' : '' }}">
-			{!! Form::label('nombres_pa', 'Nombres') !!} <small class="text-red">*</small>
-			{!! Form::text('nombres_pa', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
-			{!! Form::label('telefono_pa', 'Teléfono') !!} <small class="text-red">*</small>
-			{!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group">
-			{!! Form::label('nivel_educacion', 'Nivel de educación') !!}
-			{!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('correo_pa') ? ' has-error' : '' }}">
-			{!! Form::label('correo_pa', 'Correo') !!} <small class="text-red">*</small>
-			{!! Form::email('correo_pa', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="form-group{{ $errors->has('lugar_trabajo') ? ' has-error' : '' }}">
-			{!! Form::label('lugar_trabajo', 'Lugar trabajo') !!} <small class="text-red">*</small>
-			{!! Form::textarea('lugar_trabajo', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('direccion_pa') ? ' has-error' : '' }}">
-			{!! Form::label('direccion_pa', 'Dirección') !!} <small class="text-red">*</small>
-			{!! Form::textarea('direccion_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	@else
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
-			{!! Form::label('cedula_pa', 'Cédula') !!} <small class="text-red">*</small>
-			{!! Form::text('cedula_pa', $padre->cedula_pa, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('nacionalidad_pa') ? ' has-error' : '' }}">
-			{!! Form::label('nacionalidad_pa', 'Nacionalidad') !!} <small class="text-red">*</small>
-			{!! Form::text('nacionalidad_pa', $padre->nacionalidad_pa, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('nombres_pa') ? ' has-error' : '' }}">
-			{!! Form::label('nombres_pa', 'Nombres') !!} <small class="text-red">*</small>
-			{!! Form::text('nombres_pa', $padre->nombres_pa, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
-			{!! Form::label('telefono_pa', 'Teléfono') !!} <small class="text-red">*</small>
-			{!! Form::text('telefono_pa', $padre->telefono_pa, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group">
-			{!! Form::label('nivel_educacion', 'Nivel de educación') !!}
-			{!! Form::text('nivel_educacion', $padre->nivel_educacion, ['class' => 'form-control', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('correo_pa') ? ' has-error' : '' }}">
-			{!! Form::label('correo_pa', 'Correo') !!} <small class="text-red">*</small>
-			{!! Form::email('correo_pa', $padre->correo_pa, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="form-group{{ $errors->has('lugar_trabajo') ? ' has-error' : '' }}">
-			{!! Form::label('lugar_trabajo', 'Lugar trabajo') !!} <small class="text-red">*</small>
-			{!! Form::textarea('lugar_trabajo', $padre->lugar_trabajo, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('direccion_pa') ? ' has-error' : '' }}">
-			{!! Form::label('direccion_pa', 'Dirección') !!} <small class="text-red">*</small>
-			{!! Form::textarea('direccion_pa', $padre->direccion_pa, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	@endif
-	<div class="col-md-12">
-		<hr>
-	</div>
-	@if(empty($madre))
-	<div class="col-md-12">
-		<div class="pull-right">
-			<div class="form-group">
-			{!! Form::label('habilitar', 'HABILITAR') !!} &nbsp;
-			<input type="checkbox" onclick="padre_ch2()" id="habilitar2" name="padre2">
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		{!! Form::label('cedula', 'Cédula') !!} <small class="text-red">*</small>
-
-        <div class="form-group form-inline{{ $errors->has('cedula_ma') ? ' has-error' : '' }}">
-             <div class="input-group">
-                <div class="form-group{{ $errors->has('cedula') ? ' has-error' : '' }}">
-                    <select class="form-control" name="nacionalidad_madre" id="padre2" disabled="disabled"title="Seleccioné la nacionalidad" id="nationality">
-                       	<option value="N-">N</option>
-                        <option value="E">E</option>
-                    </select>           
-
-        			{!! Form::text('cedula_ma', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula de la madre.', 'placeholder' => '25607932', 'size' => '36', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-                  
-         		</div>
+            <div class="control-group">
+                <label class="control-label" for="select01">Cédula</label>
+                <div class="controls{{ $errors->has('cedula_re') ? ' has-error' : '' }}">
+                    {!! Form::text('cedula_pa', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del padre.', 'id' => 'padre', 'placeholder' => '25607932', 'size' => '40', 'disabled' => 'disabled']) !!}
+                </div>
             </div>
-        </div> 
-		<div class="form-group{{ $errors->has('nacionalidad_ma') ? ' has-error' : '' }}">
-			{!! Form::label('nacionalidad_ma', 'Nacionalidad') !!} <small class="text-red">*</small>
-			{!! Form::text('nacionalidad_ma', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('nombres_ma') ? ' has-error' : '' }}">
-			{!! Form::label('nombres_ma', 'Nombres') !!} <small class="text-red">*</small>
-			{!! Form::text('nombres_ma', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('telefono_ma') ? ' has-error' : '' }}">
-			{!! Form::label('telefono_ma', 'Teléfono') !!} <small class="text-red">*</small>
-			{!! Form::text('telefono_ma', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group">
-			{!! Form::label('nivel_educacion_ma', 'Nivel de educación') !!}
-			{!! Form::select('nivel_educacion_ma', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('correo_ma') ? ' has-error' : '' }}">
-			{!! Form::label('correo_ma', 'Correo') !!} <small class="text-red">*</small>
-			{!! Form::email('correo_ma', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="form-group{{ $errors->has('lugar_trabajo_ma') ? ' has-error' : '' }}">
-			{!! Form::label('lugar_trabajo_ma', 'Lugar trabajo') !!} <small class="text-red">*</small>
-			{!! Form::textarea('lugar_trabajo_ma', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('direccion_ma') ? ' has-error' : '' }}">
-			{!! Form::label('direccion_ma', 'Dirección') !!} <small class="text-red">*</small>
-			{!! Form::textarea('direccion_ma', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
+            <div class="control-group">
+                {!! Form::label('nombres_pa', 'Nombres', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('nombres_pa') ? ' has-error' : '' }}">
+                    {!! Form::text('nombres_pa', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="control-group">
+                {!! Form::label('telefono_pa', 'Teléfono', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
+                    {!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('nivel_educacion', 'Educación', ['class' => 'control-label']) !!}
+                <div class="controls">
+                    {!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('correo_pa', 'Correo', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('correo_pa') ? ' has-error' : '' }}">
+                    {!! Form::email('correo_pa', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="control-group">
+                {!! Form::label('lugar_trabajo', 'Lugar trabajo', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('lugar_trabajo') ? ' has-error' : '' }}">
+                    {!! Form::textarea('lugar_trabajo', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('direccion_pa', 'Dirección', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('direccion_pa') ? ' has-error' : '' }}">
+                    {!! Form::textarea('direccion_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
 	@else
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('cedula_ma') ? ' has-error' : '' }}">
-			{!! Form::label('cedula_ma', 'Cédula') !!} <small class="text-red">*</small>
-			{!! Form::text('cedula_ma', $madre->cedula_pa, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('nacionalidad_ma') ? ' has-error' : '' }}">
-			{!! Form::label('nacionalidad_ma', 'Nacionalidad') !!} <small class="text-red">*</small>
-			{!! Form::text('nacionalidad_ma', null, ['class' => 'form-control', 'placeholder' => 'Ecuador', 'title' => 'Introduzca la nacionalidad del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group{{ $errors->has('nombres_ma') ? ' has-error' : '' }}">
-			{!! Form::label('nombres_ma', 'Nombres') !!} <small class="text-red">*</small>
-			{!! Form::text('nombres_ma', $madre->nombres_pa, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('telefono_ma') ? ' has-error' : '' }}">
-			{!! Form::label('telefono_ma', 'Teléfono') !!} <small class="text-red">*</small>
-			{!! Form::text('telefono_ma', $madre->telefono_pa, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="form-group">
-			{!! Form::label('nivel_educacion_ma', 'Nivel de educación') !!}
-			{!! Form::text('nivel_educacion_ma', $madre->nivel_educacion, ['class' => 'form-control', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('correo_ma') ? ' has-error' : '' }}">
-			{!! Form::label('correo_ma', 'Correo') !!} <small class="text-red">*</small>
-			{!! Form::email('correo_ma', $madre->correo_pa, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="form-group{{ $errors->has('lugar_trabajo_ma') ? ' has-error' : '' }}">
-			{!! Form::label('lugar_trabajo_ma', 'Lugar trabajo') !!} <small class="text-red">*</small>
-			{!! Form::textarea('lugar_trabajo_ma', $madre->lugar_trabajo, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-		<div class="form-group{{ $errors->has('direccion_ma') ? ' has-error' : '' }}">
-			{!! Form::label('direccion_ma', 'Dirección') !!} <small class="text-red">*</small>
-			{!! Form::textarea('direccion_ma', $madre->direccion_pa, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre2', 'disabled' => 'disabled']) !!}
-		</div>
-	</div>
-	@endif
+        <div class="span4">
+            <div class="control-group">
+                {!! Form::label('cedula_pa', 'Cédula', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
+                    {!! Form::text('cedula_pa', $padre->cedula_pa, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('nombres_pa', 'Nombres', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('nombres_pa') ? ' has-error' : '' }}">
+                    {!! Form::text('nombres_pa', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="control-group">
+                {!! Form::label('telefono_pa', 'Teléfono', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
+                    {!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('nivel_educacion', 'Educación', ['class' => 'control-label']) !!}
+                <div class="controls">
+                    {!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('correo_pa', 'Correo', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('correo_pa') ? ' has-error' : '' }}">
+                    {!! Form::email('correo_pa', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="control-group">
+                {!! Form::label('lugar_trabajo', 'Lugar trabajo', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('lugar_trabajo') ? ' has-error' : '' }}">
+                    {!! Form::textarea('lugar_trabajo', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+            <div class="control-group">
+                {!! Form::label('direccion_pa', 'Dirección', ['class' => 'control-label']) !!}
+                <div class="controls{{ $errors->has('direccion_pa') ? ' has-error' : '' }}">
+                    {!! Form::textarea('direccion_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
-	

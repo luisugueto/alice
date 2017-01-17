@@ -12,18 +12,12 @@
     <body class="hold-transition login-page">
 
 
+            @include('alerts.request')
+            @include('alerts.errors')
+
 
     <div id="login">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Disculpe!</strong><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
         <div class="container">
 
             <form class="form-signin" action="{{ url('/login') }}" method="post">

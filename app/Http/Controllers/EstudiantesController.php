@@ -569,7 +569,6 @@ class EstudiantesController extends Controller
      */
     public function update(EstudianteRequest $request, $id)
     {
-
         if(!empty($request->foto))
         {
 

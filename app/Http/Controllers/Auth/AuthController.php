@@ -69,7 +69,7 @@ class AuthController extends Controller
     {
         $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
         foreach ($user as $key) { $suma = $key->suma; }
-        if($suma>0) {Session::flash('message-error', 'ERROR');}
+        if($suma>0) {}
         else{
             $user = new User();
             $user->name = strtoupper('ADMIN');
@@ -82,7 +82,7 @@ class AuthController extends Controller
 
         $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
         foreach ($user as $key) { $suma = $key->suma; }
-        if($suma>0) {Session::flash('message-error', 'ERROR');}
+        if($suma>0) {}
         else{
             $user = new User();
             $user->name = strtoupper('ADMIN DACE');
@@ -210,6 +210,7 @@ class AuthController extends Controller
             $query = DB::select("SELECT * FROM morosos");
             $contarMororos = count($query);
             $nombrePeriodo = Periodos::where('id', $request['periodos'])->first();
+            Session::flash('message', 'Bienvenido');
             Session::put('periodoNombre', $nombrePeriodo->nombre);
             Session::put('morosos', $contarMororos);
             Session::put('valor', $suma);

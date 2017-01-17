@@ -23,15 +23,21 @@
             </ul>
             <ul class="nav">
                 <li class="active">
-                    <a href="#">Inicio</a>
+                    <a href="{{ url('/home') }}">Inicio</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Certificados <i class="caret"></i>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Certificados <i class="caret"></i>
 
                     </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a tabindex="-1" href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="{{ url('certificados/listado_personal') }}">Laboral</a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="{{ url('certificados/listado_estudiantes_comportamiento') }}">Comportamiento</a>
                         </li>
                     </ul>
                 </li>
@@ -56,7 +62,9 @@
                             <li class="divider"></li>
                             <li>
                                 <a href="{{ url('/prestamosTotal') }}">Préstamos</a>
+
                             </li>
+                            <li><a href="{{ url('verificarPrestamos') }}">Verificar Préstamo</a></li>
                         </ul>
                     </li>
                 @endif

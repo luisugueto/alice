@@ -11,6 +11,8 @@
 <script src="{{ asset('Bootstrap-Admin-Theme-master/assets/DT_bootstrap.js') }}"></script>
 <script src="{{ asset('js/funciones.js') }}"></script>
 <script src="{{ asset('js/jquery.shortcuts.min.js') }}"></script>
+<script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/jquery-validation/jquery.maskedinput.min.js') }}"></script>
+<script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/wizard/jquery.bootstrap.wizard.min.js') }}"></script>
 
 <script>
     $(function() {
@@ -33,7 +35,7 @@
         window.location.href = '/personal';
     });
     $(document).hotkey('shift+k', function() {
-        window.location.href = '/parciales/{{ Auth::user()->id }}';
+        window.location.href = '/parciales/1';
     });
     $(document).hotkey('ctrl+b', function() {
         window.location.href = '/parciales/mostrarcalificaciones';
@@ -51,6 +53,55 @@
             "info": true,
             "autoWidth": false
         });
+    });
+</script>
+
+<script>
+
+    $(document).ready(function(){
+
+        $("#phone").mask("(9999) 999-9999");
+
+        $("#phone").on("blur", function() {
+            var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+            if( last.length == 3 ) {
+                var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                var lastfour = move + last;
+
+                var first = $(this).val().substr( 0, 9 );
+
+                $(this).val( first + '-' + lastfour );
+            }
+        });
+
+    });
+
+</script>
+
+<script>
+
+    $(function() {
+
+        $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+            var $total = navigation.find('li').length;
+            var $current = index+1;
+            var $percent = ($current/$total) * 100;
+            $('#rootwizard').find('.bar').css({width:$percent+'%'});
+            // If it's the last tab then hide the last button and show the finish instead
+            if($current >= $total) {
+                $('#rootwizard').find('.pager .next').hide();
+                $('#rootwizard').find('.pager .finish').show();
+                $('#rootwizard').find('.pager .finish').removeClass('disabled');
+            } else {
+                $('#rootwizard').find('.pager .next').show();
+                $('#rootwizard').find('.pager .finish').hide();
+            }
+        }});
+        /*$('#rootwizard .finish').click(function() {
+            alert('Finished!, Starting over!');
+            $('#rootwizard').find("a[href*='tab1']").trigger('click');
+        });*/
     });
 </script>
 

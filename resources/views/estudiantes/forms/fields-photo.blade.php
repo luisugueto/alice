@@ -5,8 +5,5 @@
 </div>
 
 <div class="form-group">
-
-	{!! Form::label('image', 'Imagen') !!}
-
 	<input type="file" name="foto" onchange="readURL(this)">
 </div>

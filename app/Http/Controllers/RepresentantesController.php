@@ -49,7 +49,7 @@ class RepresentantesController extends Controller
         if(!empty($request->cedula_pa))
         {
             
-            $cedula_pa = $request->nacionalidad.$request->cedula_pa;
+            $cedula_pa = $request->nacionalidad_pa.$request->cedula_pa;
             $padre = Padres::where('cedula_pa', $cedula_pa)->first();
 
             if(count($padre) == 0)
@@ -64,7 +64,7 @@ class RepresentantesController extends Controller
 
         if(!empty($request->cedula_ma))
         {
-            $cedula_ma = $request->nacionalidad.$request->cedula_ma;
+            $cedula_ma = $request->nacionalidad_ma.$request->cedula_ma;
 
             $madre = Padres::where('cedula_pa', $cedula_ma)->first();
 

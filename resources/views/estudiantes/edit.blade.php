@@ -1,56 +1,58 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Estudiante')
 @section('contentheader_description', 'Editar')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ $estudiante->nombres }}</h3>
-                    </div>
-
-                    {!!Form::model($estudiante, ['route'=>['estudiantes.update', $estudiante->id], 'method'=>'PUT', 'files' => true])!!}
-
-                    <div class="box-body">
-
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Foto</a></li>
-                                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Generales</a></li>
-                                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Medicos</a></li>
-                                <!-- <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Novedades</a></li> -->
-                                <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                            </ul>
-                            <div class="tab-content">
-                                @include('estudiantes.forms.fields-edit')
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Estudiante</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+                <div id="rootwizard">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <ul class="nav nav-pills">
+                                    <li class="active"><a href="#tab1" data-toggle="tab">FOTO</a></li>
+                                    <li><a href="#tab2" data-toggle="tab">GENERALES</a></li>
+                                    <li><a href="#tab3" data-toggle="tab">MÉDICOS</a></li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
-                        </div><br>
-
-                        <div class="box-footer">
-                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
-                        </div>
-
                     </div>
 
-                    {!! Form::close() !!}
+                    {!!Form::model($estudiante, ['route'=>['estudiantes.update', $estudiante->id_estudiante], 'method'=>'PUT', 'id' => 'form','class' => 'form-horizontal' , 'files' => true])!!}
 
+                    <div id="bar" class="progress progress-striped active">
+                        <div class="bar" style="width: 33.3333%;"></div>
+                    </div>
+                    <div class="tab-content">
+
+                        @include('estudiantes.forms.fields-edit')
+
+                    </div>
+                    <ul class="pager wizard">
+                        <li class="previous first" style="display:none;"><a href="javascript:void(0);">Primero</a></li>
+                        <li class="previous"><a href="javascript:void(0);">Anterior</a></li>
+                        <li class="next last" style="display:none;"><a href="javascript:void(0);">Último</a></li>
+                        <li class="next"><a href="javascript:void(0);">Siguiente</a></li>
+                        <li class="next finish" style="display:none;"><a href="javascript:document.getElementById('form').submit();">Guardar</a></li>
+                    </ul>
                 </div>
+
+                <div class="text-center">
+                    <hr>
+                    <span>CAMPOS OBLIGATORIOS SON MARCADOS CON</span> (<small class="text-red">*</small>)
+                </div><br>
+
+                {!! Form::close() !!}
             </div>
         </div>
+    </div>
+
     </div>
 
 @endsection

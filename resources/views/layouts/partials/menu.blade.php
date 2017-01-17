@@ -95,6 +95,8 @@ use App\Http\helpers;
                     <ul class="dropdown-menu">
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li><a href="{{ url('certificados/listado_estudiantes_inscritos') }}">Matrícula</a></li>
+                    <li><a href="{{ url('certificados/listado_personal') }}">Laboral</a></li>
+                    <li><a href="{{ url('certificados/listado_estudiantes_comportamiento') }}">Comportamiento</a></li>
                     @endif
                   
                 </ul>
