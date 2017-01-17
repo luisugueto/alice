@@ -737,8 +737,29 @@ class ParcialesController extends Controller
 
     public function show_rectificar_parcial($id_parcial){
 
+            $id_periodo=Session::get('periodo');
+
             $parcial = Parciales::find($id_parcial);
-        return View('parciales.show-rectificar-parcial',compact('parcial'));
+            //buscando la seccion del estudiante
+            $sql="SELECT * FROM inscripciones WHERE id_estudiante=".$parcial->id_estudiante." AND id_periodo=".$id_periodo;
+            $estudiante=DB::select($sql);
+            //buscando las asginaturas del docente
+            
+            $correo=Auth::user()->email;
+
+            $docente=Personal::where('correo',$correo)->first();
+
+            foreach ($estudiante as $est) {
+            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion);    
+            }
+            //dd($mis_asignaturas);
+            $asignaturas=Asignaturas::all();
+            
+            
+        //buscando categorias
+            $categorias=Categorias_parcial::lists('categoria','id');
+            
+        return View('parciales.show-rectificar-parcial',compact('parcial','asignaturas','categorias','mis_asignaturas'));
 
 
     }

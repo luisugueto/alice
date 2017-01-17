@@ -1,31 +1,30 @@
-@extends('layouts.app')
-@section('contentheader_title', 'Estudiantes')
+@extends('welcome')
 
-@section('main-content')    
-<div class="col-md-12">
-   
-    <div class="row" style="padding-top: 20px;">
-        @include('alerts.request')
-        @include('alerts.errors')
-    </div>
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12"> 
+@section('contentheader_title', 'Usuario')
+@section('contentheader_description', 'Nuevo')
 
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Rectificación de Calificación de Parcial</h3>
-                            
+@section('main-content')
+
+<div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Rectificación de Calificación de Parcial</div>
+            </div>
+            <div class="block-content collapse in">
+                    <div class="span3"></div>
+                    <div class="span4">
+                    {!! Form::open(['route' => 'usuarios.store', 'method' => 'POST', 'role' => 'form', 'id' => 'form', 'class'=>'form-horizontal']) !!}
+                            @include('parciales.forms.rectificacion-fields')
+
+                            <div class="form-actions">
+                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                            <button type="submit" class="btn btn-primary btn-flat">Actualizar</button>
                         </div>
+                    {!! Form::close() !!}
 
-                        <div class="box-body">
-                            
-                        </div>
-                    </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
-               
+
 @endsection
