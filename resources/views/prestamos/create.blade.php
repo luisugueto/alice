@@ -11,8 +11,7 @@
                 <div class="muted pull-left">Prestamos y Anticipos</div>
             </div>
             <div class="block-content collapse in">
-                <div class="span3"></div>
-                <div class="span4">
+
                     {!! Form::open(['route' => 'prestamos.store', 'method' => 'POST', 'class'=>'form-horizontal','name' => 'form', 'id' => 'form']) !!}
 
                         @include('prestamos.forms.fields')
@@ -24,7 +23,6 @@
 
                     {!! Form::close() !!}
 
-                </div>
             </div>
         </div>
     </div>

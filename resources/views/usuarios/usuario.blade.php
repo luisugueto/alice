@@ -6,8 +6,6 @@
 
 @section('main-content')
 
-
-
     <div class="col-xs-12">
         <button class="btn btn-primary" title="Registrar Nuevo Usuario" onclick="window.location.href = '{{ URL::to('usuarios/create') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo

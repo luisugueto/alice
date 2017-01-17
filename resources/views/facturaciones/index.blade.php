@@ -53,9 +53,9 @@
                                     <td>{{$facturaciones->factura->estudiante->nombres}}</td>
                                     <td>{{$facturaciones->factura->total_pago}}</td>
                                     <td>{{$monto}}</td>
-                                    <td class="text-center">
+                                    <td>
                                         @if($monto != '0')
-                                            {!! link_to_route('facturaciones.edit', $title = '', $parameters = $facturaciones->id, $attributes = ['class'=>'fa fa-money fa-2x']) !!}
+                                            <a href="{{ route('facturaciones.edit', $facturaciones->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
                                         @endif
                                     </td>
                                 </tr>

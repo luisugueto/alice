@@ -19,16 +19,14 @@ $monto = 0;
     <hr>
 </div>
 <div class="control-group">
-    <div class="span12">
-        @foreach($forma as $for)
-            {{ Form::label('Tipo', $for->forma, ['class'=>'control-label']) }}
-            <div class="controls">
-                <input type="checkbox" class="checkbox" onclick="{{ $for->forma }}s()" id="{{ $for->forma }}" name="{{ $for->forma }}">
-            </div>
-        @endforeach
+    @foreach($forma as $for)
+    <div class="span2">
+        {{ Form::label('Tipo', $for->forma, ['class'=>'control-label']) }}
+        &nbsp;<input type="checkbox" class="checkbox" onclick="{{ $for->forma }}s()" id="{{ $for->forma }}" name="{{ $for->forma }}">
     </div>
+    @endforeach
 </div>
-<div class="span12">
+<div class="control-group">
     <hr>
 </div>
 <div class="control-group transferencias" style="display:none">

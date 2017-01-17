@@ -43,7 +43,7 @@
                                     <td> {{ $estudiante->genero }}</td>
                                     <td class="text-center">
                                         <!--<a href="-- route('estudiantes.show', $estudiante->id) --}}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a>-->
-                                        <a href="{{ route('estudiantes.edit', $estudiante->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
+                                        <a href="{{ route('estudiantes.edit', $estudiante->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
                                         <!--<a href="-- route('estudiantes.destroy', $estudiante->id) --}}" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>-->
                                     </td>
                                 </tr>

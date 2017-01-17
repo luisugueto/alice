@@ -232,7 +232,7 @@ class FacturacionesController extends Controller
 													$rubros_realizado->formas()->attach($request->id_forma[$i]);
 											}   
 										
-											Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
+											Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 									}else{
 	
 											$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
@@ -253,7 +253,7 @@ class FacturacionesController extends Controller
 											}   
 									}
 
-									Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
+									Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 									
 									return redirect('facturaciones');
 						}
@@ -308,7 +308,7 @@ class FacturacionesController extends Controller
 										}
 								}
 
-								Session::flash('message-error', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
+								Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 
 								return redirect('facturaciones');
 							}

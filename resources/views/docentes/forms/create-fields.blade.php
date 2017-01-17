@@ -1,4 +1,4 @@
-<div class="box-body">
+
 	{!! Form::hidden('id_prof',$docentes->id) !!}
 	{!! Form::hidden('cargo',$docentes->cargo->nombre) !!}
 	@if($docentes->cargo->nombre=="DOCENTE DE PLANTA")
@@ -36,7 +36,5 @@
 		</select>
 	</div>
 
-
 	@endif
 
-</div>

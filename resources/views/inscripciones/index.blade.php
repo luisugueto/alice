@@ -47,7 +47,7 @@
                                         @endforeach
                                         @if(count($estudiante->cursos)==0 and $encontrar==0)
 
-                                            <a href="{{ route('inscripciones.edit', $estudiante->id) }}" class="btn btn-primary btn-flat" title="Seleccione para realizar inscripción del estudiante en este periodo"><i class="fa fa-newspaper-o"></i></a>
+                                            <a href="{{ route('inscripciones.edit', $estudiante->id) }}" class="btn" title="Seleccione para realizar inscripción del estudiante en este periodo"><i class="icon-list-alt"></i></a>
                                         @endif
                                     </td>
                                 </tr>

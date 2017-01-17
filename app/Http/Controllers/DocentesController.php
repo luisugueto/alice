@@ -53,6 +53,7 @@ class DocentesController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $id_periodo= Session::get('periodo');
         if($request->cargo=="DOCENTE DE PLANTA"){
 
@@ -108,7 +109,7 @@ class DocentesController extends Controller
 
                 //---- BUSCARNDO SI SE HAN CARGADO DE DICHA SECCION CALIFICACIONES
                     //BUSCANDO EN LA TABLA INSCRIPCIONES LA SECCION PARA VERIFICAR SI TIENE ESTUDIANTES INSCRITOS
-                    $buscar3=DB::select("SELECT * FROM inscripciones WHERE id_seccion=".$request->id_seccion);
+                    $buscar3=DB::select("SELECT * FROM inscripciones WHERE id_seccion=".$request->id_seccion2);
                     $n=count($buscar3);
                     $contar=0;
                             if($n>0){

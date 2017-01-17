@@ -1,5 +1,7 @@
-@extends('layouts.app')
+@extends('welcome')
+
 @section('contentheader_title', 'Estudiantes')
+@section('contentheader_description', 'Parciales')
 
 @section('main-content')    
 <div class="col-md-12">

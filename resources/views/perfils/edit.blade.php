@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Perfil')
 @section('contentheader_description', 'Editar')
@@ -6,37 +6,27 @@
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Usuario</h3>
-                    </div>
-
-                    {!!Form::model($user, ['route'=>['user_perfil.update', $user->id], 'method'=>'PUT', 'files'=>true])!!}
-                        {{ csrf_field() }}
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Usuario</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+                {!!Form::model($user, ['route'=>['user_perfil.update', $user->id], 'class' => 'form-horizontal', 'method'=>'PUT', 'files' => true])!!}
+                {{ csrf_field() }}
+                    <fieldset>
                         <input type="hidden" name="id" value="{{ $user->id }}">
+                        <legend>Form Horizontal</legend>
 
-                        <div class="box-body">
+                        @include('perfils.forms.fields')
 
-                            @include('perfils.forms.fields')
-
-                            <div class="box-footer">
-                                <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                                <button type="submit" class="btn btn-primary pull-right btn-flat">Actualizar</button>
-                            </div>
-
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Actulizar</button>
+                            <button type="reset" class="btn">Cancelar</button>
                         </div>
+                    </fieldset>
+                </form>
 
-                    {!! Form::close()!!}
-                </div>
             </div>
         </div>
     </div>

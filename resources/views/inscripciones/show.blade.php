@@ -6,12 +6,6 @@
 
 @section('main-content')
 
-    <div class="col-xs-12">
-        <button class="btn btn-primary" title="Registrar Nueva Área" onclick="window.location.href = '{{ URL::to('areas/create') }}'";>
-            <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
-        </button>
-    </div>
-
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
@@ -44,8 +38,8 @@
                                     <td> {{ $estudiante->curso }} </td>
                                     <td> {{ $estudiante->literal }} </td>
                                     <td>
-                                        {!! link_to_route('inscripciones.cambiarseccion.buscar', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-exchange fa-2x','title' => 'Seleccione para Cambiar de Seccion']) !!}
-                                        {!! link_to_route('certificados.matricula', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-print fa-2x','title' => 'Imprimir Certificado de Matrícula']) !!}
+                                        <a href="{{ route('certificados.matricula', $estudiante->id_estudiante) }}" class="btn btn-inverse"><i class="icon-print icon-white"></i></a>
+                                        <a href="{{ route('inscripciones.cambiarseccion.buscar', $estudiante->id_estudiante) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

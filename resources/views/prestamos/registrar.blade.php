@@ -11,24 +11,16 @@
                 <div class="muted pull-left">Prestamos y Anticipos</div>
             </div>
             <div class="block-content collapse in">
-                <div class="span3"></div>
-                <div class="span4">
-
                     {!! Form::open(['route' => 'pagos.store', 'method' => 'POST', 'class'=>'form-horizontal','name' => 'form', 'id' => 'form', 'onsubmit' => 'return validateForm()']) !!}
-
-
-                            <div class="box-body">
 
                                 @include('prestamos.forms.register')
 
-                                <div class="box-footer">
+                                <div class="form-actions">
                                     <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                                    <button type="submit" class="btn btn-primary btn-flat">Guardar</button>
                                 </div>
-                            </div>
                     {!! Form::close() !!}
 
-                 </div>
             </div>
         </div>
     </div>

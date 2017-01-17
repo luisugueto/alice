@@ -1,46 +1,29 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Inscripción')
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Inscripción</h3>
-                        {{$estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres}}<br>
-                        <strong>Matrícula Nro: </strong>{{$estudiantes->codigo_matricula}}<br>
-
-                        @foreach($edad as $edad)
-                            <strong>Edad: </strong>{{$edad->edad}} años
-                        @endforeach
-                    </div>
-
-                    {!! Form::open(['route' => 'inscripciones.store', 'method' => 'POST', 'class' => 'form']) !!}
-
-                    <div class="box-body">
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Inscripción</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+                {!! Form::open(['route' => 'inscripciones.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                    <fieldset>
+                        <legend> {{ $estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres }}</legend>
 
                         @include('inscripciones.forms.create-fields')
 
-                        <div class="box-footer">
-                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                            <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="reset" class="btn">Borrar</button>
                         </div>
+                    </fieldset>
+                {!! Form::close() !!}
 
-                    </div>
-
-                    {!! Form::close() !!}
-
-                </div>
             </div>
         </div>
     </div>
@@ -51,6 +34,7 @@
 function seccion(){
 
    var id = $("#id_curso").val();
+
     $.get("/inscripciones/secciones/"+id+"/buscar", function(data) 
     {
         $("#id_seccion").empty();
@@ -65,28 +49,29 @@ function seccion(){
              $("#id_seccion").attr('disabled', false);
         }
     });
-    $.get("/inscripciones/rubros/"+id+"/buscar",function(data){
-        $("#id_rubros").empty();
-        $("#id_rubros").append("<table class='table'>"+
-                                "<thead>"+
-                                    "<th>Agregar</th>"+
-                                    "<th>Nombre del Rubro</th>"+
-                                    "<th>Fecha límite de Pago</th>"+
-                                    "<th>Monto</th>"+
-                                "</thead>"+
-                                "<tbody>");                    
-            
-            if (data.length>0) {
-                for (var j = 0; j < data.length ; j++) 
-                {
-                            $("#id_rubros").append("<div class='col-md-12'> <table class='table table-bordered table-hover'><tbody><tr aling='center'><td aling='center'  width='60'><input type='checkbox' id='id_rubro' name='id_rubro[]' value='"+ data[j].id +"'></td>"+
-                                "<td width='400' aling='center'>" + data[j].nombre +"</td><td aling='center'>" + data[j].fecha +"</td><td aling='center'>" + data[j].monto + "</td></tr></tbody></table></div>");
-                 
-                }
 
-            };
-      
-        $("#id_rubros").append('</tbody></table>');
+    var id = $("#id_curso").val();
+
+    $.get("/inscripciones/rubros/"+id+"/buscar", function(data)
+    {
+
+        $("#id_rubros").empty();
+
+        if (data.length > 0)
+        {
+            $("#id_rubros").append('<table class="table table-bordered"><thead><tr><th class="text-center">AGREGAR</th><th>NOMBRE DEL RUBRO</th><th>FECHA LÍMITE DE PAGO</th><th class="text-center">MONTO</th></tr></thead><tbody id="rubros"></tbody></table><div id="boton"></div>');
+
+            $.each(data, function(index, typeObj)
+            {
+                $("#rubros").append('<tr><td class="text-center" width="60"><input type="checkbox" id="id_rubro" name="id_rubro[]"" value='+ typeObj.id +'>'+
+                    '</td><td>'+ typeObj.nombre +'</td><td>'+ typeObj.fecha +'</td><td class="text-center">'+ typeObj.monto +'</td></tr></tbody></table>');
+
+            });
+
+        }else{
+
+            $("#rubros").append('<tr><td class="text-center" colspan="4">No se encontraron resultados</td></tr>');
+        }
     });
 }
 </script>

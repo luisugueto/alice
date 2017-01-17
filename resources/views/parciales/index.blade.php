@@ -53,8 +53,7 @@
                                                     @if($quimestre!=2)
 
                                                         @if($parcial==3)
-                                                            {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-plus-square-o fa-2x','title' => 'Seleccione para Agregar Quimestre']) !!}
-                                                            <a href="{{ route('parciales.show',$estudiante->id_estudiante) }}">Q</a>
+                                                            <a href="{{ url('parciales.show', $estudiante->id_estudiante) }}" class="btn"><i class="icon-eye-open"></i></a>
                                                         @else
 
                                                             {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}

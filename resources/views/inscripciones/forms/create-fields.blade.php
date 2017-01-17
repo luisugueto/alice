@@ -1,43 +1,34 @@
-<div class="tab-pane active" id="tab_1">
-	<div class="box-body">
-	{{ Form::hidden('id_estudiante',$estudiantes->id) }}
-	@if($estado=="Nuevo Ingreso")
 
-	<div class="form-group">
-		{!! Form::label('repite','Estudiante Nuevo Ingreso') !!}
+{{ Form::hidden('id_estudiante',$estudiantes->id) }}
+
+@if($estado=="Nuevo Ingreso")
+
+	<div class="control-group">
+		{!! Form::label('nuevo_ingreso','ESTUDIANTE NUEVO INGRESO') !!}
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			{!! Form::label('repite','ESTÁ BECADO') !!}
+			{!! Form::checkbox('becado','Si',false,['id' => 'becado','title' => 'Seleccione si el estudiante esta becado']) !!}
+		</div>
+	</div>
+	<div class="control-group">
+		{!! Form::label('cursos','Cursos', ['class' => 'control-label'])!!}
+		<div class="controls">
+			{!! Form::select('id_curso',$cursos,null,['class' => 'form-control','required' => 'required', 'placeholder' => 'SELECCIONE' , 'title' => 'Seleccione un Curso', 'id' => 'id_curso','onchange' => 'seccion()']) !!}
+		</div>
+	</div>
+	<div class="control-group">
+		{!! Form::label('seccion','Secciones', ['class' => 'control-label'])!!}
+		<div class="controls">
+			<select name="id_seccion" id="id_seccion" title="Seleccione la sección" required="required" class="form-control select">
+			</select>
+		</div>
 	</div>
 
-	<div class="form-group">
-		{!! Form::label('repite','Está Becado') !!}
-		{!! Form::checkbox('becado','Si',false,['id' => 'becado','title' => 'Seleccione si el estudiante esta becado']) !!}
+	<div id="id_rubros"></div>
+@else
+	<div class="control-group">
+		{!! Form::label('repite','ESTUDIANTE REPITIENTE') !!}
 	</div>
-
-
-	<div class="form-group">
-		{!! Form::label('cursos','Cursos')!!}
-		{!! Form::select('id_curso',$cursos,null,['class' => 'form-control','required' => 'required', 'title' => 'Seleccione un Curso', 'id' => 'id_curso','onchange' => 'seccion()']) !!}
-	</div>
-
-	<div class="form-group">
-		{!! Form::label('seccion','Secciones')!!}
-		<select name="id_seccion" id="id_seccion" title="Seleccione la sección" required="required" class="form-control select">
-			
-		</select>
-	</div>
-	<div id="id_rubros">
-		
-
-
-	</div>
-
-	@else
-	<div class="form-group">
-		{!! Form::label('repite','Estudiante Repitiente') !!}
-	</div>
-
-
-
-	@endif
-
-	</div>
-</div>
+@endif

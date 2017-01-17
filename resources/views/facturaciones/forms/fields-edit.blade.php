@@ -1,12 +1,12 @@
-<div class="box-body">
-	<div class="col-md-12">
+
+	<div class="span12">
 		{!! Form::label('modalidad', 'Modalidades de Pago') !!}
 		{!! Form::select('id_modalidad', $modalidad, null,  ['class' => 'form-control', 'id' => 'id_modalidad', 'onchange' => 'modalidad()']) !!}
 	</div>
-	<div class="col-md-12">
+	<div class="span12">
 		<hr>
 	</div>
-	<div class="col-md-12">
+	<div class="span4">
 		@foreach($formas_pago as $formas)
 			<div class="form-group">     
 		        <?php if($formas->forma=='Efectivo'){ ?>
@@ -34,4 +34,3 @@
 		</div>
 		{!! Form::hidden('id_factura_rubro', $facturacion->id) !!}
 	</div>
-</div>

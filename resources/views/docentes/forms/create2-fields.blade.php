@@ -1,11 +1,10 @@
-<div class="box-body">
-	{!! Form::hidden('id_prof',$docentes->id) !!}
-	{!! Form::hidden('cargo',$docentes->cargo->nombre) !!}
-	
+{!! Form::hidden('id_prof',$docentes->id) !!}
+{!! Form::hidden('cargo',$docentes->cargo->nombre) !!}
 
+<div class="span4">
 	<div class="form-group">
 		{!! Form::label('cursos','Cursos')!!}
-		{!! Form::select('id_curso',$cursos,null,['class' => 'form-control','required' => 'required', 'title' => 'Seleccione un Curso', 'id' => 'id_curso','onchange' => 'secciones()']) !!}
+		{!! Form::select('id_curso',$cursos,null,['class' => 'form-control','required' => 'required', 'title' => 'Seleccione un Curso', 'id' => 'id_curso','onchange' => 'secciones()', 'placeholder' => 'SELECCIONE']) !!}
 	</div>
 
 	<div class="form-group">
@@ -14,8 +13,4 @@
 			
 		</select>
 	</div>
-
-
-	
-
 </div>

@@ -43,9 +43,8 @@
                                     <td>{{$per->cargo->area->nombre}}</td>
                                     @if(verificarPeriodo()=='activo')
                                         <td>
-                                        <!-- <a href="{{ route('personal.show', $per->id) }}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a> -->
                                             <a href="{{ route('personal.edit', $per->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
-                                            <a href="personal/{{ $per->id }}/destroy" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-danger btn-flat" onclick="codigo({{ $per->id }})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i></a>
                                         </td>
                                     @else
                                         <td></td>
@@ -61,4 +60,38 @@
         </div>
     </div>
 
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Eliminar Personal</h4>
+                </div>
+                <div class="modal-body">
+                    <strong>Seguro eliminar el personal?</strong>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+
+                    <form action="personal/destroy" method="get">
+                        <input type="hidden" id="codigo" name="id">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+<script type="text/javascript">
+
+    function codigo(codigo){
+        $('#codigo').val(codigo);
+    }
+
+</script>

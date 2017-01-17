@@ -1,49 +1,40 @@
-@extends('layouts.app')
-@section('contentheader_title', 'Asignaturas Asignadas')
+@extends('welcome')
+
+@section('contentheader_title', 'Asignaturas')
+@section('contentheader_description', 'Asignadas')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
+    <div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">ASIGNATURAS ASIGNADAS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
             </div>
-
-            <div class="col-xs-12" style="padding-top: 20px">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Asignaturas Asignadas en el periodo lectivo : {{ $periodo->nombre }} ( {{$periodo->status}} )</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <div class="col-sm-12">
-                                <table id="example1" class="table table-bordered table-striped dataTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Asignatura</th>
-                                        <th>Curso</th>
-                                        <th>Sección</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($asignaturas as $asig)
-                                        <tr>
-                                            <td> {{ $asig->asignatura }} </td>
-                                            <td> {{ $asig->curso }} </td>
-                                            <td> {{ $asig->literal }}</td>
-                                            <td>
-                                                {!! link_to_route('parciales.estudiantes', $title = '', $parameters = $asig->id_seccion, $attributes = ['class'=>'fa fa-th-list fa-2x','title' => 'Listar Estudiantes']) !!}
-                                                <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}">Aquí</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <div class="block-content collapse in">
+                <div class="table-responsive">
+                    <div class="span12">
+                        <table id="example1" class="table table-striped table-bordered dataTable">
+                            <thead>
+                            <tr>
+                                <th>Asignatura</th>
+                                <th>Curso</th>
+                                <th>Sección</th>
+                                <th>Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($asignaturas as $asig)
+                                <tr>
+                                    <td> {{ $asig->asignatura }} </td>
+                                    <td> {{ $asig->curso }} </td>
+                                    <td> {{ $asig->literal }}</td>
+                                    <td>
+                                        <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}" class="btn"><i class=" icon-refresh"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

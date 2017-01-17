@@ -301,8 +301,9 @@ class PersonalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $id = $request->id;
         $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
         $contarCarga = count($cargaAcademica);
         if($contarCarga > 0){

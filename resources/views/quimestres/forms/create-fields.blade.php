@@ -9,7 +9,7 @@
 <div class="control-group">
     {!! Form::label('fin','Fin', ['class' => 'control-label']) !!}
     <div class="controls{{ $errors->has('fin') ? ' has-error' : '' }}">
-        {!! Form::date('fin', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de finailzación del quimestre', 'placeholder' => '']) !!}
+        {!! Form::date('fin', null, ['class' => 'form-control', 'title' => 'Introduzca la fecha de finalización del quimestre', 'placeholder' => '']) !!}
     </div>
 </div>
 <div class="control-group">
