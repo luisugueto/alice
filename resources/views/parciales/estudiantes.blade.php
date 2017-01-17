@@ -41,14 +41,18 @@
                                     @foreach($estudiantes as $estudiante)
                                        
 										<tr>
-                                            <td> {{ $estudiante->codigo_matricula }} </td>
+                                            <td> {{ $estudiante->codigo_matricula }}</td>
                                             <td> {{ $estudiante->cedula }} </td>
                                             <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                             <td> {{ $estudiante->nombres }}</td>
                                            <?php $q=buscar_mi_asignatura_parcial($estudiante->id,$id_seccion); ?>
-                                            <td>@if($q==1)
+                                            
+                                            <td>
+
+                                           
+                                            @if($q==1)
                                                 1 er Quimestre
-                                                 @else
+                                                @else
 
                                                     @if($q==2)
                                                         2 do Quimestre
@@ -56,21 +60,23 @@
                                                         @else
                                                             {{ buscar_dr($estudiante->id)  }}
                                                     @endif
-                                                @endif
+                                            @endif
                                                     </td>
                                             <td>  
                                             <?php 
                                             $quimestre=buscar_quimestre($estudiante->id);
                                             $parcial=buscar_parcial($estudiante->id); 
-                                             ?>
+                                             ?>{{$q}}
 
                                                 @if($q==1 || $q==2)
         
                                                    {{--  @if($parcial==3) --}}
                                                 {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square-o fa-2x','title' => 'Seleccione para Agregar Quimestre']) !!}
+                                                    <a href="{{ route('parciales.show',$estudiante->id) }}">Q</a>
                                                     @else
 
                                                 {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}
+                                                <a href="{{ route('parciales.edit',$estudiante->id) }}">P</a>
                                                 
                                                    {{--  @endif --}}
                                                                           

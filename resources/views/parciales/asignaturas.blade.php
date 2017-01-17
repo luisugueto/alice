@@ -36,6 +36,7 @@
                                             <td> {{ $asig->literal }}</td>
                                             <td>
                                                 {!! link_to_route('parciales.estudiantes', $title = '', $parameters = $asig->id_seccion, $attributes = ['class'=>'fa fa-th-list fa-2x','title' => 'Listar Estudiantes']) !!}
+                                                <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}">Aquí</a>
                                             </td>
                                         </tr>
                                     @endforeach

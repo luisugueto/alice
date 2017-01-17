@@ -46,9 +46,12 @@
                                                     <td> {{ $estudiante->codigo_matricula }} </td>
                                                     <td> {{ $estudiante->cedula }} </td>
                                                     <td align="center"> {{buscar_calificacion_parcial(1,$estudiante->id)}}
+
                                                             <br>
 
                                                         @if(buscar_calificacion_parcial(1,$estudiante->id) != "Sin Cargar")
+                                                        <?php $id_parcial=buscar_id_parcial(1,$estudiante->id); ?>
+                                                        <a href="{{ route('parciales.show-rectificar-parcial',$id_parcial) }}">Rectificar</a>
                                                             {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!}
 
                                                         {{--     {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-edit fa-2x','title' => 'Seleccione para rectificación de la Calificación']) !!} --}}

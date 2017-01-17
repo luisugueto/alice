@@ -735,5 +735,13 @@ class ParcialesController extends Controller
 
     }
 
+    public function show_rectificar_parcial($id_parcial){
+
+            $parcial = Parciales::find($id_parcial);
+        return View('parciales.show-rectificar-parcial',compact('parcial'));
+
+
+    }
+
 
 }

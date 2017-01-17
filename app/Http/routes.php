@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('docentes/{id}/destroy',['uses' => 'DocentesController@destroy', 'as' => 'docentes.destroy']);
 	Route::get('parciales/coordinacion',['uses' => 'ParcialesController@coordinacion', 'as' => 'parciales.coordinacion']);
 	Route::get('parciales/{id}/show-estudiantes',['uses' => 'ParcialesController@buscarestudiantes', 'as' => 'parciales.show-estudiantes']);
+	Route::get('parciales/{id}/show-rectificar-parcial',['uses' => 'ParcialesController@show_rectificar_parcial','as' => 'parciales.show-rectificar-parcial']);
 
 
 	Route::resource('asistencias', 'AsistenciasController');

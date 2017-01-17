@@ -1,5 +1,4 @@
 @extends('welcome')
-
 @section('contentheader_title', 'Estudiantes')
 
 @section('main-content')
@@ -7,7 +6,9 @@
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }} ( {{$periodo->status}} )</div>
+                <div class="muted pull-left">Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }} ( {{$periodo->status}} )
+                    <?php $tipo=$docente->cargo->nombre; ?>
+                </div>
             </div>
             <div class="block-content collapse in">
                 <div class="table-responsive">
@@ -53,14 +54,16 @@
 
                                                         @if($parcial==3)
                                                             {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-plus-square-o fa-2x','title' => 'Seleccione para Agregar Quimestre']) !!}
+                                                            <a href="{{ route('parciales.show',$estudiante->id_estudiante) }}">Q</a>
                                                         @else
 
                                                             {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}
-
-                                                        @endif
-
+                                                            <a href="{{ route('parciales.edit',$estudiante->id_estudiante) }}">P</a>
 
                                                     @endif
+
+
+                                            @endif
                                                 </td>
                                             @endif
                                         </tr>
