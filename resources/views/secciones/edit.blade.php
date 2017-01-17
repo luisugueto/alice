@@ -1,38 +1,29 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Sección')
 @section('contentheader_description', 'Editar')
 
 @section('main-content')
 
-<div class="col-md-12">
-    <div class="col-md-12">
-        <div class="row" style="padding-top: 20px;">
-            @include('alerts.request')
-            @include('alerts.errors')
-        </div>
-    </div>
+  <div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">{{ $seccion->nombre }}</div>
+            </div>
+            <div class="block-content collapse in">
+                    <div class="span3"></div>
+                    <div class="span4">
+                    
 
-    <section class="content"> 
-        <div class="row">
-            <div class="col-md-12"> 
-
-                {!! Form::model($seccion, ['route'=> ['secciones.update', $seccion->id], 'method'=>'PUT', 'files' => true]) !!}
-
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Sección {{ $seccion->literal }}</h3> 
-                        </div>
-                        <div class="box-body">
+                {!! Form::model($seccion, ['route'=> ['secciones.update', $seccion->id], 'method'=>'PUT', 'files' => true, 'class'=>'form-horizontal']) !!}
                             
                             @include('secciones.forms.fields')  
 
-                            <div class="box-footer">
+                            <div class="form-actions">
                                 <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
                                 <button type="submit" class="btn btn-primary pull-right btn-flat">Actualizar</button>
                             </div>
                         </div>   
-                    </div>
 
                 {!! Form::close() !!}
 

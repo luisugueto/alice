@@ -1,36 +1,28 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Rubro')
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
-
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
+      <div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Rubro</div>
             </div>
+            <div class="block-content collapse in">
+                    <div class="span3"></div>
+                    <div class="span4">
+                    
 
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Rubro</h3>
-                    </div>
-
-                    {!! Form::open(['route' => 'rubros.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form']) !!}
-
-                    <div class="box-body">
+                    {!! Form::open(['route' => 'rubros.store', 'method' => 'POST', 'name' => 'form', 'id' => 'form', 'class'=>'form-horizontal']) !!}
 
                         @include('rubros.forms.fields')
 
-                        <div class="box-footer">
+                        <div class="form-actions">
                             <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
                             <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
                         </div>
-
-                    </div>
 
                     {!! Form::close() !!}
 

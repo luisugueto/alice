@@ -36,7 +36,9 @@
                                     <td>{{$aula->nombre}}</td>
                                     <td>{{$aula->created_at}}</td>
                                     <td>{{$aula->updated_at }}</td>
-                                    <td class="text-center">{!!link_to_route('aulas.edit', $title = '', $parameters = $aula->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>
+                                    <td align="center">
+                                        <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

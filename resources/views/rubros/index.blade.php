@@ -39,7 +39,7 @@
                                     <td>{{$rubros->fecha }}</td>
                                     <td>{{$rubros->curso->curso}}</td>
                                     <td>{{$rubros->periodo->nombre}}</td>
-                                    <td class="text-center">{!! link_to_route('rubros.edit', $title = '', $parameters = $rubros->id, $attributes = ['class'=>'fa fa-edit fa-2x']) !!}</td>
+                                    <td class="text-center">{!! link_to_route('rubros.edit', $title = '', $parameters = $rubros->id, $attributes = ['class'=>'btn btn-primary btn-flat']) !!}</td>
                                 </tr>
                             @endforeach
                             </tbody>

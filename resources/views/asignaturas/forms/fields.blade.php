@@ -1,12 +1,18 @@
-<div class="form-group">
-	{!! Form::label('Asignatura', 'Asignatura') !!} <small class="text-red">*</small>
-	{!! Form::text('asignatura', null, ['required', 'class'=>'form-control','placeholder' => 'Matemáticas', 'title' => 'Introduzca el nombre de la asignatura', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+<div class="control-group">
+	{!! Form::label('Asignatura', 'Asignatura', ['class'=>'control-label']) !!}
+	<div class="controls">
+		{!! Form::text('asignatura', null, ['required', 'class'=>'input-xlarge','placeholder' => 'Matemáticas', 'title' => 'Introduzca el nombre de la asignatura', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+	</div>
 </div>
-<div class="form-group">
-	{!! Form::label('Curso', 'Curso') !!} <small class="text-red">*</small>
-	{!! Form::select('id_curso', $curso, null, ['class'=>'form-control']) !!}
+<div class="control-group">
+	{!! Form::label('Curso', 'Curso', ['class'=>'control-label']) !!} 
+	<div class="controls">
+		{!! Form::select('id_curso', $curso, null, ['class'=>'input-xlarge']) !!}
+	</div>
 </div>
-<div class="form-group">
-	{!! Form::label('Optativo') !!} <small class="text-red">*</small>
-	{!! Form::select('optativo', array('Y'=>'Si', 'N'=>'No'), null, ['class'=>'form-control', 'placeholder' => 'Seleccione']) !!}
+<div class="control-group">
+	{!! Form::label('Optativo', 'Optativo', ['class'=>'control-label']) !!} 
+	<div class="controls">
+		{!! Form::select('optativo', array('Y'=>'Si', 'N'=>'No'), null, ['class'=>'input-xlarge', 'placeholder' => 'Seleccione']) !!}
+	</div>
 </div>

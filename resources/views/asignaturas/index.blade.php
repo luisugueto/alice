@@ -35,7 +35,7 @@
                                     <td>{{ $asignatura->asignatura }}</td>
                                     <td>{{ $asignatura->codigo }}</td>
                                     <td>{{ $asignatura->cursos->curso }}</td>
-                                    <td class="text-center">{!!link_to_route('asignaturas.edit', $title = '',$parameters = $asignatura->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>
+                                    <td class="text-center">{!!link_to_route('asignaturas.edit', $title = '',$parameters = $asignatura->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}</td>
                                 </tr>
                             @endforeach
                             </tbody>

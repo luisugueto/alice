@@ -35,7 +35,7 @@
                                     <td>{{ $cargo->area->nombre}}</td>
                                     <td class="text-center">
                                         @if($cargo->nombre!="DOCENTE DE PLANTA" AND $cargo->nombre!="DOCENTE ROTATIVO")
-                                            {!!link_to_route('cargos.edit', $title = '', $parameters = $cargo->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}
+                                            {!!link_to_route('cargos.edit', $title = '', $parameters = $cargo->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}
                                         @endif
                                     </td>
                                 </tr>

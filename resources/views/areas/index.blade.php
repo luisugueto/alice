@@ -35,7 +35,7 @@
                                     <td>{{ $area->nombre}}</td>
                                     <td>{{ $area->created_at }}</td>
                                     <td>{{ $area->updated_at }}</td>
-                                    <td class="text-center">{!!link_to_route('areas.edit', $title = '',$parameters = $area->id, $attributes = ['class'=>'fa fa-edit fa-2x'])!!}</td>
+                                    <td class="text-center">{!!link_to_route('areas.edit', $title = '',$parameters = $area->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}</td>
                                 </tr>
                             @endforeach
                             </tbody>
