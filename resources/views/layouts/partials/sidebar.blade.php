@@ -102,6 +102,7 @@ use App\Http\helpers;
                 <?php $tipo=tipo_docente(); ?>
                 @if($tipo=="DOCENTE ROTATIVO")
                 <ul class="treeview-menu">
+                    <li><a href="{{ route('parciales.coordinacion') }}">Coordinaciones</a></li>
                     <li><a href="{{ route('parciales.asignaturas') }}">Asignaturas Asignadas</a></li>
                 </ul>
                 @endif

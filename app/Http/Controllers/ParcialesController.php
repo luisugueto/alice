@@ -700,5 +700,40 @@ class ParcialesController extends Controller
 
     }
 
+    public function coordinacion(){
+    
+        $id_periodo= Session::get('periodo');
+        $correo=Auth::user()->email;
+        $docentes=Personal::where('correo',$correo)->first();
+        //dd($docentes);
+      
+
+            //$docentes=Personal::find($id);
+            $sql='SELECT secc.id,secc.literal,cursos.curso FROM asignacion_coordinador ac INNER JOIN secciones secc ON ac.id_seccion = secc.id INNER JOIN cursos ON secc.id_curso=cursos.id WHERE ac.id_prof='.$docentes->id.' AND ac.id_periodo='.$id_periodo;
+                //dd($sql);
+            $docentes2 = DB::select(DB::raw($sql));
+                $cuantos=count($docentes2);
+                //dd($docentes->secciones_coordinacion);
+                if($cuantos==0){                   
+                    return View('parciales.show2',compact('cuantos','docentes'));
+                }else{
+                    return View('parciales.show2',compact('docentes','cuantos','docentes2'));
+                }
+            
+        
+    }
+
+    public function buscarestudiantes($id){
+
+        $id_periodo= Session::get('periodo');
+        $periodo = Periodos::find($id_periodo);
+        $sql="SELECT datos_generales_estudiante.*,inscripciones.id_curso FROM inscripciones,datos_generales_estudiante WHERE inscripciones.id_seccion=".$id." AND inscripciones.id_periodo=".$id_periodo." AND inscripciones.id_estudiante=datos_generales_estudiante.id";
+
+        $buscar =DB::select($sql);
+
+        return View('parciales.show-estudiantes',compact('buscar','periodo'));    
+
+    }
+
 
 }

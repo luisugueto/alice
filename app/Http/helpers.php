@@ -190,6 +190,222 @@ use App\Quimestrales;
 
 		return $cargar;
 	}
+	function cargas_completas($id_estudiante,$num)
+	{
+		$p1=0;$p2=0;$p3=0;$p4=0;$p5=0;$p6=0;
+		$id_periodo=Session::get('periodo');
+		$quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+		foreach ($quimestre as $q) {
+			$parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
+			$cuantos=count($parciales);
+
+			if ($cuantos>0) {
+				foreach ($parciales as $p) {
+					//buscar la carga academica del estudiante
+		            $cuantas=buscando_asignaturas_cursadas($id_estudiante);
+					$cargadas=buscando_asignaturas_cargadas2($id_estudiante,$p->id,$q->id);
+
+					switch ($cuantos) {
+						case 1:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p1=1;
+							  }
+							break;
+						case 2:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p2=1;
+							 }
+							break;
+						case 3;
+							if ($cuantas==$cargadas) 
+							{
+							  	$p3=1;
+							}
+							break;
+						case 4:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p4=1;
+							}
+							break;
+						case 5:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p5=1;
+							}
+							break;
+						case 6:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p6=1;
+							}
+							break;
+					}
+
+				}
+			}
+			
+		}
+
+		switch ($num) {
+			case 1:
+				return $p1;
+				break;
+			case 2:
+				return $p2;
+				break;
+			case 3:
+				return $p3;
+				break;
+			case 4:
+				return $p4;
+				break;
+			case 5:
+				return $p5;
+				break;
+			case 6:
+				return $p6;
+				break;
+
+			
+		}
+
+
+	}
+	function cargas_completas_parcial($id_estudiante,$num)
+	{
+		$p1=0;$p2=0;$p3=0;$p4=0;$p5=0;$p6=0;
+		$id_periodo=Session::get('periodo');
+		$quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+		foreach ($quimestre as $q) {
+			$parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
+			$cuantos=count($parciales);
+
+			if ($cuantos>0) {
+				foreach ($parciales as $p) {
+					//buscar la carga academica del estudiante
+		            $cuantas=buscando_asignaturas_cursadas($id_estudiante);
+					$cargadas=buscando_asignaturas_cargadas2($id_estudiante,$p->id,$q->id);
+
+					switch ($cuantos) {
+						case 1:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p1=$p->id;
+							  }
+							break;
+						case 2:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p2=$p->id;
+							 }
+							break;
+						case 3;
+							if ($cuantas==$cargadas) 
+							{
+							  	$p3=$p->id;
+							}
+							break;
+						case 4:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p4=$p->id;
+							}
+							break;
+						case 5:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p5=$p->id;
+							}
+							break;
+						case 6:
+							if ($cuantas==$cargadas) 
+							{
+							  	$p6=$p->id;
+							}
+							break;
+					}
+
+				}
+			}
+			
+		}
+
+		switch ($num) {
+			case 1:
+				return $p1;
+				break;
+			case 2:
+				return $p2;
+				break;
+			case 3:
+				return $p3;
+				break;
+			case 4:
+				return $p4;
+				break;
+			case 5:
+				return $p5;
+				break;
+			case 6:
+				return $p6;
+				break;
+
+			
+		}
+
+
+	}
+function cargas_completas_quimestre($id_estudiante,$num)
+	{
+		$q1=0;$q2=0;
+		$id_periodo=Session::get('periodo');
+		$quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+		foreach ($quimestre as $q) {
+			$quimestres=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
+			$cuantos=count($quimestres);
+
+			if ($cuantos>0) {
+				foreach ($quimestres as $qt) {
+					//buscar la carga academica del estudiante
+		            $cuantas=buscando_asignaturas_cursadas($id_estudiante);
+					$cargadas=buscando_asignaturas_cargadas($id_estudiante,$qt->id,$q->id);
+
+					switch ($cuantos) {
+						case 1:
+							if ($cuantas==$cargadas) 
+							{
+							  	$q1=$qt->id;
+							  }
+							break;
+						case 2:
+							if ($cuantas==$cargadas) 
+							{
+							  	$q2=$qt->id;
+							 }
+							break;
+					}
+
+				}
+			}
+			
+		}
+
+		switch ($num) {
+			case 1:
+				return $q1;
+				break;
+			case 2:
+				return $q2;
+				break;
+			
+			
+		}
+
+
+	}
 
 	function buscar_dr($id_estudiante){
 		 $cc=0;
@@ -499,13 +715,16 @@ use App\Quimestrales;
                     return $cuantas;
 	}
 
-	function buscando_asignaturas_cargadas($id_estudiante){
+	function buscando_asignaturas_cargadas($id_estudiante,$id_quimestrales,$id_quimestre){
 		$id_periodo=Session::get('periodo');
-		$buscar2=DB::select("SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
+		$buscar2=DB::select("SELECT * FROM quimestrales, calificacion_quimestre,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
-                        quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=".$id_periodo." 
-                        GROUP BY calificacion_parcial.id_asignatura");
+                        quimestres.id=quimestrales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+                        quimestrales.id=".$id_quimestrales." AND 
+                        quimestrales.id_quimestre=".$id_quimestre." 
+                        GROUP BY calificacion_quimestre.id_asignatura");
 
                     $cuantos=count($buscar2);
 
