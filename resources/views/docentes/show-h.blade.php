@@ -1,7 +1,7 @@
 @extends('welcome')
 
-@section('contentheader_title', 'Usuario')
-@section('contentheader_description', 'Nuevo')
+@section('contentheader_title', 'Horario')
+@section('contentheader_description', 'Profesor')
 
 @section('main-content')
 
