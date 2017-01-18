@@ -47,16 +47,63 @@
 
                                                 @if(buscar_calificacion_parcial(1,$estudiante->id) != "Sin Cargar")
                                                     <?php $id_parcial=buscar_id_parcial(1,$estudiante->id); ?>
-                                                    <a href="{{ route('parciales.show-rectificar-parcial',$id_parcial) }}">Rectificar</a>
-                                                    {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!}
 
-                                                    {{--     {!! link_to_route('parciales.show', $title = '', $parameters = $estudiante->id, $attributes = ['class'=>'fa fa-edit fa-2x','title' => 'Seleccione para rectificación de la Calificación']) !!} --}}
+                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
+
+                                                
                                                 @endif
 
                                             </td>
-                                            <td> {{buscar_calificacion_parcial(2,$estudiante->id)}} </td>
-                                            <td> {{buscar_calificacion_parcial(3,$estudiante->id)}} </td>
-                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id)}} </td>
+                                            <td> {{buscar_calificacion_parcial(2,$estudiante->id)}}
+                                                <br>
+
+                                                @if(buscar_calificacion_parcial(2,$estudiante->id) != "Sin Cargar")
+                                                    <?php $id_parcial=buscar_id_parcial(2,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
+
+                                                
+                                                @endif
+                                             </td>
+                                            <td> {{buscar_calificacion_parcial(3,$estudiante->id)}} 
+
+                                                <br>
+
+                                                @if(buscar_calificacion_parcial(3,$estudiante->id) != "Sin Cargar")
+                                                    <?php $id_parcial=buscar_id_parcial(3,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
+
+                                                
+                                                @endif
+                                                </td>
+                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id)}} 
+                                                <br>
+
+                                                @if(buscar_calificacion_quimestre(1,$estudiante->id) != "Sin Cargar")
+                                                    <?php $id_parcial=buscar_id_quimestre(1,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_quimestre) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
+
+                                                
+                                                @endif
+                                            </td>
                                             <td> {{buscar_calificacion_parcial(4,$estudiante->id)}} </td>
                                             <td> {{buscar_calificacion_parcial(5,$estudiante->id)}} </td>
                                             <td> {{buscar_calificacion_parcial(6,$estudiante->id)}} </td>

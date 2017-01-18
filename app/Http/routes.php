@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/coordinacion',['uses' => 'ParcialesController@coordinacion', 'as' => 'parciales.coordinacion']);
 	Route::get('parciales/{id}/show-estudiantes',['uses' => 'ParcialesController@buscarestudiantes', 'as' => 'parciales.show-estudiantes']);
 	Route::get('parciales/{id}/show-rectificar-parcial',['uses' => 'ParcialesController@show_rectificar_parcial','as' => 'parciales.show-rectificar-parcial']);
-
+	Route::post('parciales.rectificacion',['uses' => 'ParcialesController@rectificacion', 'as' => 'parciales.rectificacion']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

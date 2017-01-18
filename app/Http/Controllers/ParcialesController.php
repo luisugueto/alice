@@ -764,5 +764,182 @@ class ParcialesController extends Controller
 
     }
 
+    public function rectificacion(Request $request)
+    {
+            $id_periodo=Session::get('periodo');
+            //primero verificar si tiene quimestres registrados para este periodo
+            $buscar=Quimestrales::where('id_estudiante',$request->id_estudiante)->get();
+
+            $q=count($buscar);
+
+            if ($q==0) {
+                //en caso de no tener ningun quimestral registrado solo se hace la actualización y 
+                //cálculo del nuevo promedio del parcial
+                
+                $calificaciones=Calificacion_parcial::where('id_parcial',$request->id_parcial)->where('id_categoria',$request->id_categoria)->where('id_asignatura',$request->id_asignatura)->first();
+                //dd($calificaciones);
+                //actualizar calificacion
+                $calificaciones->calificacion=$request->calificacion;
+                $calificaciones->save();
+                //actualizar promedio de la asignatura
+                $cal=Calificacion_parcial::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->get();
+                    $suma=0;
+                    foreach ($cal as $c) {
+                        $suma+=$c->calificacion;
+                    }
+                $nuevo_avg=$suma/5;
+                $cal2=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->first();
+                $cal2->avg_total=$nuevo_avg;
+                 //----- actualizando caificacion cualitativa de la asignatura
+                         if($nuevo_avg>=9 AND $nuevo_avg<=10){
+                            $cal2->id_equivalencia=1;
+                         }
+                         if($nuevo_avg>=7 AND $nuevo_avg<9){
+                            $cal2->id_equivalencia=2;
+                         }
+                         if($nuevo_avg>4 AND $nuevo_avg<7){
+                            $cal2->id_equivalencia=3;
+                         }
+                         if($nuevo_avg>=1 AND $nuevo_avg<=4){
+                            $cal2->id_equivalencia=4;
+                         }
+                         //----------------------------------------
+                $cal2->save();
+                //actualizando promedio del parcial
+                $cal3=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->get();
+                    $suma2=0;
+                    $cuantos=count($cal3);
+                    foreach ($cal3 as $c3) {
+                        $suma2+=$c3->avg_total;
+                    }
+                    $nuevo_avg_parcial=$suma2/$cuantos;
+                        $parcial=Parciales::find($request->id_parcial);
+                        $parcial->avg_aprovechamiento=$nuevo_avg_parcial;
+                        $parcial->save();
+
+
+
+
+            } else {
+                    //-------------------------------------------------------------------------
+
+                //en caso de no tener ningun quimestral registrado solo se hace la actualización y 
+                //cálculo del nuevo promedio del parcial
+                
+                $calificaciones=Calificacion_parcial::where('id_parcial',$request->id_parcial)->where('id_categoria',$request->id_categoria)->where('id_asignatura',$request->id_asignatura)->first();
+                //dd($calificaciones);
+                //actualizar calificacion
+                $calificaciones->calificacion=$request->calificacion;
+                $calificaciones->save();
+                //actualizar promedio de la asignatura
+                $cal=Calificacion_parcial::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->get();
+                    $suma=0;
+                    foreach ($cal as $c) {
+                        $suma+=$c->calificacion;
+                    }
+                $nuevo_avg=$suma/5;
+                $cal2=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->first();
+                $cal2->avg_total=$nuevo_avg;
+                //----- actualizando caificacion cualitativa de la asignatura
+                         if($nuevo_avg>=9 AND $nuevo_avg<=10){
+                            $cal2->id_equivalencia=1;
+                         }
+                         if($nuevo_avg>=7 AND $nuevo_avg<9){
+                            $cal2->id_equivalencia=2;
+                         }
+                         if($nuevo_avg>4 AND $nuevo_avg<7){
+                            $cal2->id_equivalencia=3;
+                         }
+                         if($nuevo_avg>=1 AND $nuevo_avg<=4){
+                            $cal2->id_equivalencia=4;
+                         }
+                         //----------------------------------------
+                $cal2->save();
+                //actualizando promedio del parcial
+                $cal3=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->get();
+                    $suma2=0;
+                    $cuantos=count($cal3);
+                    foreach ($cal3 as $c3) {
+                        $suma2+=$c3->avg_total;
+                    }
+                        $nuevo_avg_parcial=$suma2/$cuantos;
+                        $parcial=Parciales::find($request->id_parcial);
+                        $parcial->avg_aprovechamiento=$nuevo_avg_parcial;
+                        $parcial->save();
+
+                    //-------------------------------------------------------------------------
+
+                //en caso de tener quimestres registrados
+                //verificar cuantos quimestres tiene
+                //verificar el numero del parcial primero
+                $quimestres=Quimestres::where('id_periodo',$id_periodo)->get();
+                foreach ($quimestres as $q) {
+                    $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                            $i=0;
+                        foreach ($parciales as $p) {
+                            $i++;
+                             if($parciales->id==$request->id_parcial){
+                                    $posicion=$i;
+                                    break;
+                             }
+                         } 
+                }
+                //ya encontrada la posicion determinar que quimestre se debe actualizar
+                if ($posicion<=3) {
+                    //en este caso el parcial corresponde al primer quimestre
+                   $id_quimestre=$quimestres=Quimestres::where('id_periodo',$id_periodo)->first();
+
+                } else {
+                    // en este caso el parcial corresponde al segundo quimestre
+                    $id_quimestre=$quimestres=Quimestres::where('id_periodo',$id_periodo)->last();
+
+                }
+                    $parciales2=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->get();
+                    $suma3=0;
+                        //calculando nuevo promedio de los parciales
+                        foreach ($parciales2 as $p2) {
+                            $suma3+=$p2->avg_total;
+                        }
+                        $nuevo_avg_gp=$suma3/3;
+                        $nuevo_avg_gp80=$nuevo_avg_gp*80/100;
+
+
+                        $quimestral=Quimestrales::where('id_estudiante',$request->id_estudiante)->where('id_quimestre',$id_quimestre)->first();
+
+                        $calq=Calificacion_quimestre::where('id_quimestrales',$quimestral->id)->where('id_asignatura',$request->id_asignatura)->first();
+
+                        $calq->avg_gp=$nuevo_avg_gp;
+                        $calq->avg_gp80=$nuevo_avg_gp80;
+                        $nuevo_avg_q_cuantitativa=$calq->examen_q20+$nuevo_avg_gp80;
+                        $calq->avg_q_cuantitativa=$nuevo_avg_q_cuantitativa;
+
+                        //----- actualizando caificacion cualitativa de la asignatura
+                         if($nuevo_avg_q_cuantitativa>=9 AND $nuevo_avg_q_cuantitativa<=10){
+                            $calq->id_equivalencia=1;
+                         }
+                         if($nuevo_avg_q_cuantitativa>=7 AND $nuevo_avg_q_cuantitativa<9){
+                            $calq->id_equivalencia=2;
+                         }
+                         if($nuevo_avg_q_cuantitativa>4 AND $nuevo_avg_q_cuantitativa<7){
+                            $calq->id_equivalencia=3;
+                         }
+                         if($nuevo_avg_q_cuantitativa>=1 AND $nuevo_avg_q_cuantitativa<=4){
+                            $calq->id_equivalencia=4;
+                         }
+                         //---------------------------------------------------------
+                         $calq->save();
+                    
+
+                
+                
+                
+            }//fin del else de si existen quimestres registrados
+            
+            Session::flash('message', 'CALIFICACIÓN CORREGIDA EXITOSAMENTE');
+                     return redirect(route('parciales.index'));            
+
+
+    }
+
 
 }

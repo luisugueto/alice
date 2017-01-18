@@ -1096,3 +1096,48 @@ function buscar_id_parcial($i,$id_estudiante){
     }
 
 
+function buscar_id_quimestre($i,$id_estudiante){
+		$id_periodo=Session::get('periodo');
+		$correo=Auth::user()->email;
+
+		$docente=Personal::where('correo',$correo)->first();
+
+
+		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." LIMIT 0,1");
+		foreach ($asignaturas as $asig) {
+			$id_asignatura=$asig->id_asignatura;
+		
+			$sql="SELECT * FROM quimestrales, calificacion_quimestre,quimestres WHERE 
+                        id_estudiante=".$id_estudiante." AND 
+                        quimestres.id=quimestrales.id_quimestre AND 
+                        quimestres.id_periodo=".$id_periodo." AND 
+                        calificacion_quimestre.id_quimestrales=quimestrales.id AND 
+                        calificacion_quimestre.id_asignatura=".$id_asignatura." 
+                        GROUP BY calificacion_quimestre.id_asignatura ";
+                        //dd($sql);
+        
+		$buscar2=DB::select($sql);
+		}
+
+		$cuantos=count($buscar2);
+
+
+		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->get();
+		if(count($quimestrales)>0 && $cuantos>0){
+			$j=0;
+			foreach ($quimestrales as $q) {
+				
+				$j++;
+				if ($j==$i) {
+					$id_quimestre=$q->id;	
+					break;
+				} 
+				
+			}
+		}
+				
+
+		return $id_quimestre;
+
+	}
+

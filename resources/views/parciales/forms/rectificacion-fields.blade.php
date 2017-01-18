@@ -1,3 +1,7 @@
+{{-- campos ocultos	 --}}
+{!! Form::hidden('id_parcial',$parcial->id) !!}
+
+{!!  Form::hidden('id_estudiante',$parcial->id_estudiante) !!}
 <div class="control-group">
 	{!! Form::label('Asignaturas', 'Asignaturas', ['class'=>'control-label']) !!}
 	<div class="controls">

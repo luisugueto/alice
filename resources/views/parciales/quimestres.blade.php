@@ -217,7 +217,7 @@ function promediar2(){
 
       suma=suma/parseInt(avg_q_cuantitativa.length);
        
-
+      suma=parseFloat(Math.round(suma * 100) / 100).toFixed(2);
        
        //alert(''+suma);
        avg_aprovechamiento_q.value=suma;

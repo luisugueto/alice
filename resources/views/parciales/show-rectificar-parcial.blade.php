@@ -13,7 +13,7 @@
             <div class="block-content collapse in">
                     <div class="span3"></div>
                     <div class="span4">
-                    {!! Form::open(['route' => 'usuarios.store', 'method' => 'POST', 'role' => 'form', 'id' => 'form', 'class'=>'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'parciales.rectificacion', 'method' => 'POST', 'role' => 'form', 'id' => 'form', 'class'=>'form-horizontal']) !!}
                             @include('parciales.forms.rectificacion-fields')
 
                             <div class="form-actions">

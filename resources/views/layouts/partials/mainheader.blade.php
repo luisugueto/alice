@@ -121,6 +121,9 @@
                             <?php $tipo=tipo_docente(); ?>
                             @if($tipo=="DOCENTE ROTATIVO")
                                 <li>
+                                    <a href="{{ route('parciales.coordinacion') }}">Coordinaciones</a>
+                                </li>
+                                <li>
                                     <a tabindex="-1" href="{{ route('parciales.asignaturas') }}">Asignaturas</a>
                                 </li>
                             @endif
