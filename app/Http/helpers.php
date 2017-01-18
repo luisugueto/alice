@@ -952,7 +952,7 @@ function buscar_id_parcial($i,$id_estudiante){
 			}
 		}
 				
-
+		
 		return $id_parcial;
 
 	}

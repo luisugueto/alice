@@ -93,7 +93,7 @@
                                                 <br>
 
                                                 @if(buscar_calificacion_quimestre(1,$estudiante->id) != "Sin Cargar")
-                                                    <?php $id_parcial=buscar_id_quimestre(1,$estudiante->id); ?>
+                                                    <?php $id_quimestre=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_quimestre) }}'";>
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
