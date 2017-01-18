@@ -3,7 +3,7 @@
 @section('htmlheader_title')
     Parciales
 @endsection
-<?php 
+<?php
         $parcial=buscar($estudiantes->id);
 ?>
 

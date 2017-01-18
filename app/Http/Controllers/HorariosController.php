@@ -48,6 +48,34 @@ class HorariosController extends Controller
         //dd($horarios);
         return view('horarios.index', compact('horarios'));
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index2(Request $request)
+    {
+        $periodos = Periodos::lists('nombre', 'id');
+
+        $user = Auth::user();
+
+        $docente = Personal::where('correo', $user->email)->first();
+
+        $request->periodo ? $periodo = Periodos::find($request->periodo) : $periodo = false;
+
+        if(!empty($periodo))
+        {
+            $bloques = \DB::table('bloques')->get();
+            $horas = \DB::table('bloques')->where('id_dia', 1)->get();
+            $dias = \DB::table('dias')->get();
+
+            return view('docentes.show-h', compact('periodos', 'docente', 'periodo', 'bloques', 'horas', 'dias', 'asignaturas'));
+
+        } else {
+
+            return view('docentes.show-h', compact('periodos', 'docente', 'periodo'));
+    }
+    }
 
     /**
      * Show the form for creating a new resource.

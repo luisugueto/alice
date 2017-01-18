@@ -1,62 +1,61 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Horarios')
 @section('contentheader_description', 'Buscar')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Horarios</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
 
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
+                    {!! Form::open(['route' => 'horarios.create', 'method' => 'GET', 'name' => 'form', 'class'=>'form-horizontal']) !!}
 
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Secciones</h3>
-                    </div>
 
-                    {!! Form::open(['route' => 'horarios.create', 'method' => 'GET', 'name' => 'form']) !!}
+                                <div class="control-group">
+                                    {!! Form::label('cursos', 'Curso', ['class'=>'control-label']) !!}
+                                    <div class="controls">
+                                        {!! Form::select('id_curso', $cursos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'id' => 'curso']) !!}
+                                    </div>
+                                </div>
 
-                        <div class="box-body">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('cursos', 'Curso') !!} <small class="text-red">*</small>
-                                    {!! Form::select('id_curso', $cursos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'id' => 'curso']) !!}
+                                <div class="control-group">
+                                    {!! Form::label('secciones', 'Secciones', ['class'=>'control-label']) !!}
+                                    <div class="controls">
+                                        {!! Form::select('id_seccion', ['Seleccione'], null, ['disabled', 'id' => 'seccion', 'class' => 'form-control']) !!}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('secciones', 'Secciones') !!} <small class="text-red">*</small>
-                                    {!! Form::select('id_seccion', ['Seleccione'], null, ['disabled', 'id' => 'seccion', 'class' => 'form-control']) !!}
+
+
+                                <div class="control-group">
+                                    {!! Form::label('asignatura', 'Asignaturas', ['class'=>'control-label']) !!}
+                                    <div class="controls">
+                                        {!! Form::select('id_asignatura', ['Seleccione'], null, ['disabled', 'id' => 'asignatura', 'class' => 'form-control']) !!}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('asignatura', 'Asignaturas') !!} <small class="text-red">*</small>
-                                    {!! Form::select('id_asignatura', ['Seleccione'], null, ['disabled', 'id' => 'asignatura', 'class' => 'form-control']) !!}
+
+
+                                <div class="control-group">
+                                    {!! Form::label('aulas', 'Aulas', ['class'=>'control-label']) !!}
+                                    <div class="controls">
+                                        {!! Form::select('id_aula', $aulas, null, ['disabled', 'placeholder' => 'Seleccione', 'id' => 'aula', 'class' => 'form-control']) !!}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('aulas', 'Aulas') !!} <small class="text-red">*</small>
-                                    {!! Form::select('id_aula', $aulas, null, ['disabled', 'placeholder' => 'Seleccione', 'id' => 'aula', 'class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-12"><br>
-                                <div class="box-footer">
+
+
+                                <div class="form-actions">
                                     <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button>
+                                    <button type="submit" class="btn btn-primary btn-flat">Siguiente</button>
                                 </div>
-                            </div>
-                        </div>
+
+
 
                     {!! Form::close() !!}
 
-                </div>
+
             </div>
         </div>
     </div>

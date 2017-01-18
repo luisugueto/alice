@@ -17,7 +17,7 @@
                         @include('tipo_empleado.forms.create-fields')
 
                         <div class="form-actions">
-                            <button type="reset" class="btn btn-default btn-flat">Cancelar</button>
+                            <button type="reset" class="btn btn-default btn-flat">Borrar</button>
                             <button type="submit" class="btn btn-primary btn-flat">Guardar</button>
                         </div>
 

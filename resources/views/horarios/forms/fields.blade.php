@@ -42,24 +42,21 @@
         </tbody>
     </table>
 
-    <div class="col-md-5 col-sm-offset-1"><br>
-        <div class="row">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ASIGNATURAS</th>
-                        <th class="text-center">CÓDIGO</th>
-                    </tr>
-                </thead>
-                <thbody>
-                    @foreach ($asignaturas as $asignatura)
-                        <tr>
-                            <td>{{ $asignatura->asignatura }}</td>
-                            <td class="text-center text-red">{{ $asignatura->codigo }}</td>
-                        </tr>
-                    @endforeach
-                </thbody>
-            </table>
-        </div>
-    </div>
-</div>
+<br>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ASIGNATURAS</th>
+                <th class="text-center">CÓDIGO</th>
+            </tr>
+        </thead>
+        <thbody>
+            @foreach ($asignaturas as $asignatura)
+                <tr>
+                    <td>{{ $asignatura->asignatura }}</td>
+                    <td class="text-center text-red">{{ $asignatura->codigo }}</td>
+                </tr>
+            @endforeach
+        </thbody>
+    </table>
+

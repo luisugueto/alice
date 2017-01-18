@@ -25,6 +25,7 @@
                 <li class="active">
                     <a href="{{ url('/home') }}">Inicio</a>
                 </li>
+                @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Certificados <i class="caret"></i>
 
@@ -41,6 +42,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Personal <b class="caret"></b>
@@ -148,16 +150,26 @@
                         </ul>
                     </li>
                 @endif
+                @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1 || Auth::user()->roles_id == 3)
                 <li class="dropdown">
                     <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Horarios <i class="caret"></i>
 
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a tabindex="-1" href="{{ route('horarios.index') }}">Horarios</a>
-                        </li>
-                    </ul>
+                    @if(Auth::user()->roles_id == 3)
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a tabindex="-1" href="{{ route('horario.profesor') }}">Horario</a>
+                            </li>
+                        </ul>
+                    @else
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a tabindex="-1" href="{{ route('horarios.index') }}">Horarios</a>
+                            </li>
+                        </ul>
+                    @endif
                 </li>
+                @endif
                 @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                     <li class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Configuración <i class="caret"></i>

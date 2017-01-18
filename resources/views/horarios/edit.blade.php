@@ -1,31 +1,33 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Horario')
 @section('contentheader_description', 'Curso')
 
 @section('main-content')
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Horarios</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
+                <fieldset>
+                    <legend>Curso: {{ $curso->curso }}</legend>
 
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-sm-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Curso: {{ $curso->curso }}</h3>
-                    </div>
                     <div class="box-body">
+
                         @include('horarios.forms.fields-edit')
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary btn-flat" onclick="javascript:history.back()">Regresar</button>
+                        </div>
+
                     </div>
-                </div>
+                </fieldset>
+
             </div>
         </div>
     </div>
-
 @endsection
 
 <script type="text/javascript">
