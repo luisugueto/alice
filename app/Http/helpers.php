@@ -1010,3 +1010,89 @@ function buscar_id_parcial($i,$id_estudiante){
 		return $nota;
 
 	}
+
+	function bloqueProfesor($bloque, $asignadas){
+
+	    foreach ($asignadas as $asignada){
+
+	        $bloque_asignado = \DB::table('asignacion_bloques')->where([['id_asig', $asignada->id_asignatura], ['id_seccion', $asignada->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+	        if(!empty($bloque_asignado))
+            {
+
+                $validandoBloque = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_periodo', $bloque_asignado->id_periodo], ['id_asig', $asignada->id_asignatura], ['id_seccion', $bloque_asignado->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+                if(!empty($validandoBloque))
+                {
+                    return true;
+                }
+            }
+        }
+
+    }
+
+
+    function asignaturaProfesor($bloque, $asignadas){
+
+        foreach ($asignadas as $asignada){
+
+            $bloque_asignado = \DB::table('asignacion_bloques')->where([['id_asig', $asignada->id_asignatura], ['id_seccion', $asignada->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+            if(!empty($bloque_asignado))
+            {
+                $validandoBloque = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_periodo', $bloque_asignado->id_periodo], ['id_asig', $asignada->id_asignatura], ['id_seccion', $bloque_asignado->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+                if(!empty($validandoBloque))
+                {
+                    $asignatura = \DB::table('asignaturas')->where('id', $validandoBloque->id_asig)->first();
+
+                    return $asignatura->codigo;
+                }
+            }
+        }
+
+    }
+
+    function aulaProfesor($bloque, $asignadas){
+
+        foreach ($asignadas as $asignada){
+
+            $bloque_asignado = \DB::table('asignacion_bloques')->where([['id_asig', $asignada->id_asignatura], ['id_seccion', $asignada->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+            if(!empty($bloque_asignado))
+            {
+                $validandoBloque = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_periodo', $bloque_asignado->id_periodo], ['id_asig', $asignada->id_asignatura], ['id_seccion', $bloque_asignado->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+                if(!empty($validandoBloque))
+                {
+                    $aula = \DB::table('aulas')->where('id', $validandoBloque->id_aula)->first();
+
+                    return $aula->nombre;
+                }
+            }
+        }
+
+    }
+
+    function seccionProfesor($bloque, $asignadas){
+
+        foreach ($asignadas as $asignada){
+
+            $bloque_asignado = \DB::table('asignacion_bloques')->where([['id_asig', $asignada->id_asignatura], ['id_seccion', $asignada->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+            if(!empty($bloque_asignado))
+            {
+                $validandoBloque = \DB::table('asignacion_bloques')->where([['id_bloque', $bloque], ['id_periodo', $bloque_asignado->id_periodo], ['id_asig', $asignada->id_asignatura], ['id_seccion', $bloque_asignado->id_seccion], ['id_periodo', $asignada->id_periodo]])->first();
+
+                if(!empty($validandoBloque))
+                {
+                    $seccion = \DB::table('secciones')->where('id', $validandoBloque->id_seccion)->first();
+
+                    return $seccion->literal;
+                }
+            }
+        }
+
+    }
+
+

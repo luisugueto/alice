@@ -55,26 +55,50 @@ class HorariosController extends Controller
      */
     public function index2(Request $request)
     {
-        $periodos = Periodos::lists('nombre', 'id');
+        $id_periodo=Session::get('periodo');
+        $periodo = Periodos::find($id_periodo);
+
 
         $user = Auth::user();
 
         $docente = Personal::where('correo', $user->email)->first();
 
-        $request->periodo ? $periodo = Periodos::find($request->periodo) : $periodo = false;
+        $bloques = \DB::table('bloques')->get();
+        $horas = \DB::table('bloques')->where('id_dia', 1)->get();
+        $dias = \DB::table('dias')->get();
 
-        if(!empty($periodo))
-        {
-            $bloques = \DB::table('bloques')->get();
-            $horas = \DB::table('bloques')->where('id_dia', 1)->get();
-            $dias = \DB::table('dias')->get();
+        $asignadas = \DB::table('asignacion')->where([['id_prof', $docente->id], ['id_periodo', $periodo->id]])->get();
 
-            return view('docentes.show-h', compact('periodos', 'docente', 'periodo', 'bloques', 'horas', 'dias', 'asignaturas'));
+        $k= 0;
+
+        for ($i=0; $i < 9 ; $i++) {
+
+            for ($j=0; $j < 5 ; $j++)
+            {
+                $bloques2[$i][$j] = $bloques[$k];
+                $k++;
+            }
+        }
+
+        $l= 0;
+
+        foreach ($asignadas as $asignada){
+
+            $asignaturas[$l] = \DB::table('asignaturas')->where('id', $asignada->id_asignatura)->first();
+
+            $l++;
+        }
+
+        if (empty($asignadas)){
+
+            Session::flash('message-error', 'DISCULPE NO POSEE CARGA ACADEMICA EN EL PERIODO INICIADO');
+
+            return redirect()->back();
 
         } else {
 
-            return view('docentes.show-h', compact('periodos', 'docente', 'periodo'));
-    }
+            return view('docentes.show-h', compact('periodos', 'docente', 'periodo', 'bloques', 'horas', 'dias', 'asignadas', 'bloques2', 'asignaturas'));
+        }
     }
 
     /**
