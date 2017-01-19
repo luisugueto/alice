@@ -29,16 +29,16 @@ class Calificacion_parcial_subtotal extends Model
 
     public function parciales(){
 
-    	return $this->belognsTo('App\Parciales','id_parcial');
+    	return $this->belongsTo('App\Parciales','id_parcial');
     }
 
     public function asignaturas(){
 
-    	return $this->belognsTo('App\Asignaturas','id_asignatura');
+    	return $this->belongsTo('App\Asignaturas','id_asignatura');
     }
 
-    public function equivalecias(){
+    public function equivalencias(){
 
-    	return $this->belognsTo('App\Equivalencias','id_equivalencia');
+    	return $this->belongsTo('App\Equivalencias','id_equivalencia');
     }
 }

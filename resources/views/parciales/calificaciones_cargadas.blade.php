@@ -45,14 +45,15 @@
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(1,$estudiante->id) != "Sin Cargar")
+                                                @if(buscar_calificacion_parcial(1,$estudiante->id) != "Sin cargar")
                                                     <?php $id_parcial=buscar_id_parcial(1,$estudiante->id); ?>
 
-                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
                                                         
                                                     </button>
-                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
+                                                  
+                                                  <a href="{{ route('parciales.showparcial',[1,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -61,15 +62,14 @@
                                             <td> {{buscar_calificacion_parcial(2,$estudiante->id)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(2,$estudiante->id) != "Sin Cargar")
+                                                @if(buscar_calificacion_parcial(2,$estudiante->id) != "Sin cargar")
                                                     <?php $id_parcial=buscar_id_parcial(2,$estudiante->id); ?>
 
-                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
                                                         
                                                     </button>
-                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
-
+                                                 <a href="{{ route('parciales.showparcial',[2,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                              </td>
@@ -77,15 +77,14 @@
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(3,$estudiante->id) != "Sin Cargar")
+                                                @if(buscar_calificacion_parcial(3,$estudiante->id) != "Sin cargar")
                                                     <?php $id_parcial=buscar_id_parcial(3,$estudiante->id); ?>
 
-                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 3 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
                                                         
                                                     </button>
-                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
-
+                                                  <a href="{{ route('parciales.showparcial',[3,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                                 </td>
@@ -93,21 +92,76 @@
                                                 <br>
 
                                                 @if(buscar_calificacion_quimestre(1,$estudiante->id) != "Sin Cargar")
-                                                    <?php $id_quimestre=buscar_id_quimestre(1,$estudiante->id); ?>
+                                                    <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
-                                                    <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_quimestre) }}'";>
+                                                    <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
                                                         
                                                     </button>
-                                                  {{--   {!! link_to_route('parciales.showparcial', $title = '', $parameters = [1,$estudiante->id], $attributes = ['class'=>'fa fa-eye fa-2x','title' => 'Seleccione para ver la Calificación']) !!} --}}
-
+                                                 <a href="{{ route('parciales.showquimestre',[1,$estudiante->id]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                             </td>
-                                            <td> {{buscar_calificacion_parcial(4,$estudiante->id)}} </td>
-                                            <td> {{buscar_calificacion_parcial(5,$estudiante->id)}} </td>
-                                            <td> {{buscar_calificacion_parcial(6,$estudiante->id)}} </td>
-                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id)}} </td>
+                                            <td> {{buscar_calificacion_parcial(4,$estudiante->id)}} 
+                                                <br>
+                                             @if(buscar_calificacion_parcial(4,$estudiante->id) != "Sin cargar")
+                                                    <?php $id_parcial=buscar_id_parcial(4,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                  
+                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+
+                                                
+                                                @endif
+
+                                            </td>
+                                            <td> {{buscar_calificacion_parcial(5,$estudiante->id)}} 
+                                                <br>
+                                             @if(buscar_calificacion_parcial(5,$estudiante->id) != "Sin cargar")
+                                                    <?php $id_parcial=buscar_id_parcial(5,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+
+                                                
+                                                @endif
+ </td>
+                                            <td> {{buscar_calificacion_parcial(6,$estudiante->id)}}  
+                                                <br>
+
+                                             @if(buscar_calificacion_parcial(6,$estudiante->id) != "Sin cargar")
+                                                    <?php $id_parcial=buscar_id_parcial(6,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                 <a href="{{ route('parciales.showparcial',[6,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+
+                                                
+                                                @endif
+</td>
+                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id)}}
+                                                <br>
+
+                                                @if(buscar_calificacion_quimestre(2,$estudiante->id) != "Sin Cargar")
+                                                    <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
+
+                                                    <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
+                                                        <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
+                                                        
+                                                    </button>
+                                                 <a href="{{ route('parciales.showquimestre',[2,$estudiante->id]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
+
+                                                
+                                                @endif
+                                                 </td>
 
                                         </tr>
 
