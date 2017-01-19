@@ -14,11 +14,10 @@
                 {!! Form::open(['route' => 'certificados.laboral', 'method' => 'GET', 'name' => 'form', 'id' => 'form', 'class'=>'form-horizontal']) !!}
                 <fieldset>
                         <div class="control-group">
-                            {!! Form::label('Personal', 'Personal', ['class'=>'control-label']) !!}
-
+                            {!! Form::label('PERSONAL', 'PERSONAL', ['class'=>'control-label']) !!}
                             <div class="controls">
-                                <select name="persona" required class="form-control select">
-                                    <option  disabled selected>Seleccione</option>
+                                <select name="persona" data-placeholder="SELECCIONE" class="chosen-select" style="width:350px;" tabindex="2">
+                                    <option value=""></option>
                                     @foreach($personal as $per)
                                         <option value="{{ $per->id }}">{{ $per->nombres }} {{ $per->apellido_paterno }}</option>
                                     @endforeach

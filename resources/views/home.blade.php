@@ -26,7 +26,7 @@
                             <div class="muted pull-left">ESTADÍSTICA ANUAL DE POBLACIÓN</div>
                         </div>
                         <div class="block-content collapse in">
-                            TOTAL DE CAPACIDAD <span class="badge badge-info pull-right"> {{ $suma-$estudiante  }} </span>
+                            TOTAL DE CAPACIDAD <span class="badge badge-info pull-right"> {{ $suma-$activos  }} </span>
                             <div class="progress progress-striped active">
                                 <div style="width: {{ ($activos/$suma)*100  }}%;" class="bar"></div>
                             </div>
@@ -61,7 +61,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="span3">
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
@@ -77,4 +76,27 @@
         </div>
     @endif
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).hotkey('shift+p', function() {
+            window.location.href = '/prestamos/create';
+        });
+        $(document).hotkey('ctrl+m', function() {
+            window.location.href = '/inscripciones';
+        });
+        $(document).hotkey('shift+l', function() {
+            window.location.href = '/estudiantes';
+        });
+        $(document).hotkey('ctrl+c', function() {
+            window.location.href = '/personal';
+        });
+        $(document).hotkey('shift+k', function() {
+            window.location.href = '/parciales/1';
+        });
+        $(document).hotkey('ctrl+b', function() {
+            window.location.href = '/parciales/mostrarcalificaciones';
+        });
+    </script>
 @endsection

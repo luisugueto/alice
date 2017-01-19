@@ -13,6 +13,19 @@
 <script src="{{ asset('js/jquery.shortcuts.min.js') }}"></script>
 <script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/jquery-validation/jquery.maskedinput.min.js') }}"></script>
 <script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/wizard/jquery.bootstrap.wizard.min.js') }}"></script>
+<script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/chosen.jquery.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    var config = {
+        '.chosen-select'           : {},
+        '.chosen-select-deselect'  : {allow_single_deselect:true},
+        '.chosen-select-no-single' : {disable_search_threshold:10},
+        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+        '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>
 
 <script>
     $(function() {
@@ -21,26 +34,7 @@
     });
 </script>
 
-<script>
-    $(document).hotkey('shift+p', function() {
-        window.location.href = '/prestamos/create';
-    });
-    $(document).hotkey('ctrl+m', function() {
-        window.location.href = '/inscripciones';
-    });
-    $(document).hotkey('shift+l', function() {
-        window.location.href = '/estudiantes';
-    });
-    $(document).hotkey('ctrl+c', function() {
-        window.location.href = '/personal';
-    });
-    $(document).hotkey('shift+k', function() {
-        window.location.href = '/parciales/1';
-    });
-    $(document).hotkey('ctrl+b', function() {
-        window.location.href = '/parciales/mostrarcalificaciones';
-    });
-</script>
+
 
 <script>
     $(function () {
