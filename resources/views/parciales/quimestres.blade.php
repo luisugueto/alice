@@ -1,53 +1,40 @@
-@extends('layouts.app')
+@extends('welcome')
 
-@section('htmlheader_title')
-    Quimestres
-@endsection
+@section('contentheader_title', 'Parciales')
+@section('contentheader_description', 'Quimestre')
 
+@section('htmlheader_title', 'Quimestres')
 @section('contentheader_title', 'Registro del Quimestre')
 
 
 @section('main-content')  
-<div class="col-md-12">
-   
-    <div class="row" style="padding-top: 20px;">
-        @include('alerts.request')
-        @include('alerts.errors')
-    </div>
-    
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-          <form action="{{ route('parciales.store2') }}" method="POST" id="f1" name="f1">
-          
-            
-                     
-                    <div class="tab-content">
-                        <div class="box">
-                            <div class="box-header">
-                              <h3 class="box-title">
-                              Calculando Calificaciones del Quimestre: Nro. {{$quimestres->numero}} <br>
-                              Estudiante: Curso:
-                              </h3>
-                            </div>
-                              <div class="box-body">
-                      @include('parciales.forms.quimestre-fields')
-                    </div>
-                      <input type="hidden" name="_token" value="{{ CSRF_TOKEN()}}">                        
-                      <div align="center">
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" value="Aceptar">
-                            </div>
-                        </div>
 
-                      </div>
-            </div>                        
-                      
-           </form>
-          </div>
+ <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Estudiante</div>
         </div>
-      </section>
+        <div class="block-content collapse in">
+            <div class="span12">
+                
+                <form action="{{ route('parciales.store2') }}" method="POST" id="f1" name="f1">
+                    {{ csrf_field() }}
+                    <fieldset>
+                        <legend> CALCULANDO CALIFICACIONES DEL QUIMESTRE NRO: {{$quimestres->numero}}
+                            <strong>MATRÍCULA NRO: </strong>{{$estudiantes->codigo_matricula}}</legend>
+
+                        @include('parciales.forms.quimestre-fields')
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="reset" class="btn">Borrar</button>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
     </div>
+
           
 @stop
 <script type="text/javascript">
