@@ -1,7 +1,7 @@
 @extends('welcome')
 
-@section('contentheader_title', 'Usuario')
-@section('contentheader_description', 'Nuevo')
+@section('contentheader_title', 'Calificación de Parcial')
+@section('contentheader_description', 'Rectificación')
 
 @section('main-content')
 

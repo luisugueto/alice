@@ -172,7 +172,7 @@ class ParcialesController extends Controller
         }
 
         if($cont>0){
-                     Session::flash('message-error', 'DEBE GREGAR TODAS LAS CALIFICACIONES');
+                     Session::flash('message-error', 'DEBE AGREGAR TODAS LAS CALIFICACIONES');
                      return redirect()->back();
 
         }else{
@@ -364,7 +364,7 @@ class ParcialesController extends Controller
                     }
                 }
              if($cont>0){
-                     Session::flash('message-error', 'DEBE GREGAR TODAS LAS CALIFICACIONES');
+                     Session::flash('message-error', 'DEBE AGREGAR TODAS LAS CALIFICACIONES');
                      return redirect()->back();
 
             }else{
@@ -655,26 +655,24 @@ class ParcialesController extends Controller
 
     public function showcalificacionesparcial($i,$id_estudiante){
 
-        $personal=Personal::all();
+        
             $correo=Auth::user()->email;
+            $personal=Personal::where('correo',$correo)->first();
             $id_periodo=Session::get('periodo');
             $periodo=Periodos::find($id_periodo);
             $contador=0;
-            foreach ($personal as $personal) {
-
+                //buscando la seccion del estudiante
+                $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
+                //dd($seccion);
+                foreach ($seccion as $secc) {
+                    
                 
-                if($correo==$personal->correo){
-
-                    $docente=Personal::find($personal->id);
-                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." GROUP BY id_seccion";
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
                     //dd($sql2);
-                    $docentes=DB::select($sql2);
-                   
-                
                 }
-                
-            }
-
+                    $docentes=DB::select($sql2);
+            
+             //dd($docentes);
 
         $estudiantes=Estudiante::find($id_estudiante);
         $id_curso=buscar_curso($id_estudiante);
@@ -682,21 +680,80 @@ class ParcialesController extends Controller
 
         
         $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        //dd($asignaturas);
         $categorias=Categorias_parcial::all();
 
-        $sql="SELECT * FROM parciales, calificacion_parcial,quimestres,asignaturas WHERE 
-                        id_estudiante=".$id_estudiante." AND 
-                        asignaturas.id=calificacion_parcial.id_asignatura AND            
-                        quimestres.id=parciales.id_quimestre AND 
-                        quimestres.id_periodo=".$id_periodo." AND 
-                        calificacion_parcial.id_parcial=parciales.id ";
-                        //dd($sql);
+        $id_parcial=buscar_id_parcial($i,$id_estudiante);
+
+        $buscar2=Calificacion_parcial::where('id_parcial',$id_parcial)->get();
+        $buscar3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial)->get();
+        $buscar4=Parciales::find($id_parcial);
+
+
+
+
+        return View('parciales.mostrar-parcial',compact('buscar4','buscar3','asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp'));
+
+    }
+public function showcalificacionesquimestre($i,$id_estudiante){
+
         
-        $buscar2=DB::select($sql);
+            $correo=Auth::user()->email;
+            $personal=Personal::where('correo',$correo)->first();
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+                //buscando la seccion del estudiante
+                $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
+                //dd($seccion);
+                foreach ($seccion as $secc) {
+                    
+                
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
+                    //dd($sql2);
+                }
+                    $docentes=DB::select($sql2);
+            
+             //dd($docentes);
+
+        $estudiantes=Estudiante::find($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante);
+        $promedio_comp=Comportamiento::lists('literal','id');
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        
+        $id_quimestrales=buscar_id_quimestre($i,$id_estudiante);
+
+        $buscar2=Calificacion_quimestre::where('id_quimestrales',$id_quimestrales)->get();
+
+        $buscar4=Quimestrales::find($id_quimestrales);
+        //buscando los promedios de los parciales del estudiante segun el quimestral
+        //
+        if ($i==1) {
+            
+                $id_parcial1=buscar_id_parcial(1,$id_estudiante);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(2,$id_estudiante);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(3,$id_estudiante);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+        } else {
+
+                $id_parcial1=buscar_id_parcial(4,$id_estudiante);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(5,$id_estudiante);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(6,$id_estudiante);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+        }
+        
 
 
 
-        return View('parciales.mostrar-parcial',compact('asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp'));
+        return View('parciales.mostrar-quimestre',compact('parcial1','parcial2','parcial3','buscar4','asignaturas','id_curso','estudiantes','docentes','buscar2'));
 
     }
 
@@ -935,7 +992,85 @@ class ParcialesController extends Controller
                 
             }//fin del else de si existen quimestres registrados
             
-            Session::flash('message', 'CALIFICACIÓN CORREGIDA EXITOSAMENTE');
+            Session::flash('message', 'CALIFICACIÓN DEL PARCIAL CORREGIDA EXITOSAMENTE');
+                     return redirect(route('parciales.index'));            
+
+
+    }
+
+    public function show_rectificar_quimestral($id_quimestral){
+
+            $id_periodo=Session::get('periodo');
+
+            $quimestrales = Quimestrales::find($id_quimestral);
+            //buscando la seccion del estudiante
+            $sql="SELECT * FROM inscripciones WHERE id_estudiante=".$quimestrales->id_estudiante." AND id_periodo=".$id_periodo;
+            $estudiante=DB::select($sql);
+            //buscando las asginaturas del docente
+            
+            $correo=Auth::user()->email;
+
+            $docente=Personal::where('correo',$correo)->first();
+
+            foreach ($estudiante as $est) {
+            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion);    
+            }
+            //dd($mis_asignaturas);
+            $asignaturas=Asignaturas::all();
+            
+            
+        return View('parciales.show-rectificar-quimestral',compact('quimestrales','asignaturas','mis_asignaturas'));
+
+
+    }
+
+    public function rectificacion2(Request $request)
+    {
+            $id_periodo=Session::get('periodo');
+           //primero calcular el valor de 20% del examen
+            $nuevo_examenq20=$request->calificacion*20/100;
+            //buscar el quimestral para la asignatura de ese estudiante
+            $buscar2=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->where('id_asignatura',$request->id_asignatura)->first();
+            //actualizar el vallor del examen
+                $buscar2->examen_q=$request->calificacion;
+                $buscar2->examen_q20=$nuevo_examenq20;
+                $nuevo_avg_q_cuantitativa=$buscar2->avg_gp80+$nuevo_examenq20;
+                $buscar2->avg_q_cuantitativa=$nuevo_avg_q_cuantitativa;
+
+             //----- actualizando calificacion cualitativa de la asignatura
+                         if($nuevo_avg_q_cuantitativa>=9 AND $nuevo_avg_q_cuantitativa<=10){
+                            $buscar2->id_equivalencia=1;
+                         }
+                         if($nuevo_avg_q_cuantitativa>=7 AND $nuevo_avg_q_cuantitativa<9){
+                            $buscar2->id_equivalencia=2;
+                         }
+                         if($nuevo_avg_q_cuantitativa>4 AND $nuevo_avg_q_cuantitativa<7){
+                            $buscar2->id_equivalencia=3;
+                         }
+                         if($nuevo_avg_q_cuantitativa>=1 AND $nuevo_avg_q_cuantitativa<=4){
+                            $buscar2->id_equivalencia=4;
+                         }
+                         //----------------------------------------
+                $buscar2->save();
+            //actualizar promedio general del parcial
+            $buscar3=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->get();
+                    $suma=0;
+                    foreach ($buscar3 as $b3) {
+                        $suma+=$b3->avg_q_cuantitativa;
+                    }
+
+                    $nuevo_avg_aprovechamiento_q=$suma/count($buscar3);
+                $buscar=Quimestrales::find($request->id_quimestrales);
+
+                    $buscar->sumatoria=$suma;
+                    $buscar->avg_aprovechamiento_q=$nuevo_avg_aprovechamiento_q;
+
+                    $buscar->save();
+
+
+
+
+            Session::flash('message', 'CALIFICACIÓN DEL EXAMEN QUIMESTRAL CORREGIDA EXITOSAMENTE');
                      return redirect(route('parciales.index'));            
 
 

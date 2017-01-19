@@ -937,7 +937,7 @@ function buscar_id_parcial($i,$id_estudiante){
 
 		$cuantos=count($buscar2);
 
-
+		$id_parcial=0;
 		$parciales=Parciales::where('id_estudiante',$id_estudiante)->get();
 		if(count($parciales)>0 && $cuantos>0){
 			$j=0;
@@ -951,9 +951,10 @@ function buscar_id_parcial($i,$id_estudiante){
 				
 			}
 		}
-				
 		
-		return $id_parcial;
+			return $id_parcial;
+		
+		
 
 	}
 
@@ -999,7 +1000,7 @@ function buscar_id_parcial($i,$id_estudiante){
 			if ($j==$i) {
 				$nota=$promedio;
 			} else {
-				$nota="Sin cargar";
+				$nota="Sin Cargar";
 			}
 			
 		}else{
@@ -1121,7 +1122,7 @@ function buscar_id_quimestre($i,$id_estudiante){
 
 		$cuantos=count($buscar2);
 
-
+		$id_quimestre=0;
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->get();
 		if(count($quimestrales)>0 && $cuantos>0){
 			$j=0;
@@ -1135,9 +1136,10 @@ function buscar_id_quimestre($i,$id_estudiante){
 				
 			}
 		}
-				
+		
+					return $id_quimestre;
+						
 
-		return $id_quimestre;
 
 	}
 

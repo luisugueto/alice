@@ -22,10 +22,10 @@ $j=0; ?>
 			<tr>
 			<th>#</th>
 			<th><strong>Asignatura</strong></th>
-		@foreach($categorias as $categorias)
+		@foreach($categorias as $categ)
 			<th style="width:40px;" align="center" bgcolor="<?=$color[$j]?>" >
 				<div class="vertical"> 
-			{{ $categorias->categoria}}
+			{{ $categ->categoria}}
 			</div>
 			</th>
 			<?php $j++; ?>
@@ -36,7 +36,7 @@ $j=0; ?>
 			</tr>
 			</thead>
 			<tbody>
-
+			
 			
 			@foreach($docentes as $doce)
 
@@ -44,83 +44,157 @@ $j=0; ?>
 			<?php $id_asig=$doce->id_asignatura;
 
 			 ?>
-			@foreach($buscar2 as $asig)
-			@if($id_asig==$asig->id_asignatura && $asig->id_estudiante==$estudiantes->id)
-			<tr align="center">
+			@foreach($asignaturas as $asig)
+			@if($id_asig==$asig->id)
+			 <tr align="center">
 
 			<td>{{$i}}</td>
-			<td>  {{$asig->asignatura}}</td>
-			<td>
-				@if($asig->id_categoria==$categorias->id)
+			<td>  {{$asig->asignatura}}  </td>
+				{{-- primera categoria (deberes)--}}
+				@foreach($categorias as $cat)
+					@if($cat->id==1)		
+						<?php $id_cat=$cat->id; ?>
+						@foreach($buscar2 as $b2)
+							
 
-					{{$asig->calificacion}}
+									@if($id_asig==$b2->id_asignatura and $b2->id_categoria==$id_cat)
+											<td>{{ $b2->calificacion }}</td>
+											@break;
+									@endif		
 
-				@endif
-			</td>
-			<td>
-				@if($asig->id_categoria==$categorias->id)
+						@endforeach
+					@endif
+					@if($cat->id==2)		
+						<?php $id_cat=$cat->id; ?>
+						@foreach($buscar2 as $b2)
+							
 
-					{{$asig->calificacion}}
+									@if($id_asig==$b2->id_asignatura and $b2->id_categoria==$id_cat)
+											<td>{{ $b2->calificacion }}</td>
+											@break;
+									@endif		
 
-				@endif
-			</td>
-			<td>
-				@if($asig->id_categoria==$categorias->id)
+						@endforeach
+					@endif
 
-					{{$asig->calificacion}}
+					
 
-				@endif
-			</td>
-			<td>
-				@if($asig->id_categoria==$categorias->id)
+					@if($cat->id==3)		
+						<?php $id_cat=$cat->id; ?>
+						@foreach($buscar2 as $b2)
+							
 
-					{{$asig->calificacion}}
+									@if($id_asig==$b2->id_asignatura and $b2->id_categoria==$id_cat)
+											<td>{{ $b2->calificacion }}</td>
+											@break;
+									@endif		
 
-				@endif
-			</td>
-			<td>
-				@if($asig->id_categoria==$categorias->id)
+						@endforeach
+					@endif
 
-					{{$asig->calificacion}}
+					@if($cat->id==4)		
+						<?php $id_cat=$cat->id; ?>
+						@foreach($buscar2 as $b2)
+							
 
-				@endif
-			</td>
-			<td><div class="form-group">{!! Form::text('promedio[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio Total', 'required' => 'required','id' => 'promedio','disabled' => 'disabled'])!!} 
-				</div>
-				{!! Form::hidden('promedio2[]',1,['id' => 'promedio2'])!!} 
+									@if($id_asig==$b2->id_asignatura and $b2->id_categoria==$id_cat)
+											<td>{{ $b2->calificacion }}</td>
+											@break;
+									@endif		
+
+						@endforeach
+					@endif
+
+					@if($cat->id==5)		
+						<?php $id_cat=$cat->id; ?>
+						@foreach($buscar2 as $b2)
+							
+
+									@if($id_asig==$b2->id_asignatura and $b2->id_categoria==$id_cat)
+											<td>{{ $b2->calificacion }}</td>
+											@break;
+									@endif		
+
+						@endforeach
+					@endif
+				@endforeach
+				<?php $suma=0; ?>
+				@foreach($buscar3 as $b3)
+						<?php $suma= $suma+$b3->avg_total; ?>
+						@if($id_asig==$b3->id_asignatura)
+
+							
+
+							<td>{{ $b3->avg_total }}</td>
+							<td>{{ $b3->equivalencias->literales }}</td>
+
+							
+
+						@endif
+
+				@endforeach
 				
-				</td>
-			<td><div class="form-group">{!! Form::text('cualitativa[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '','title' => 'Calificación Cualitativa', 'required' => 'required','id' => 'cualitativa','disabled' => 'disabled'])!!} 
-				</div>
-				{!! Form::hidden('cualitativa2[]',null,['id' => 'cualitativa2'])!!} 
-				</td>
 
-			</tr>
+				
 			<?php $i++; ?>
 			@endif
 			@endforeach
 			@endforeach
 			<tr>
 			<td colspan="7"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
-				<td align="center"><div class="form-group">{!! Form::text('promedio_ap',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio de Aprovechamiento', 'required' => 'required','id' => 'promedio_ap','disabled' => 'disabled'])!!} 
-				</div>
-				{!! Form::hidden('promedio_ap2',1,['id' => 'promedio_ap2'])!!} 
+				<td align="center"><div class="form-group">
+				<?php 
+					$avg_aprovechamiento=$suma/count($buscar3);
+				$avg_aprovechamiento=number_format($avg_aprovechamiento,2,".",","); ?>
+
+				{{ $avg_aprovechamiento }}
 				</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan="7"><strong>PROMEDIO DE COMPORTAMIENTO</strong></td>
-				<td colspan="2"><div class="form-group">{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp'])!!} 
+				<td colspan="2"><div class="form-group">{{ $buscar4->comportamiento->literal }}
 				</div></td>
 			</tr>
 			<tr>
 				<td colspan="2"><strong>OBSERVACIONES</strong></td>
 				<td colspan="7">
 					<div class="form-group">
-						{!! Form::textarea('observaciones',null,['class' => 'form-control', 'placeholder' => 'Aprobado para el siguiente parcial','title' => 'Ingrese alguna observación con respecto a este parcial', 'rows' => '2']) !!}
+						{{ $buscar4->observaciones }}
 					</div>
 				</td>
-			
+			<tr>
+			<tr>
+				
+				<td colspan="9"><strong>FALTAS</strong></td>
+				
+			</tr>
+			<tr>
+				
+				<td> <strong>JUSTIFICADAS</strong> </td>
+				<td>{{ $buscar4->faltas_j }} </td>
+				<td colspan="7"></td>
+			</tr>
+			<tr>
+				
+				<td> <strong>INJUSTIFICADAS</strong> </td>
+				<td>{{ $buscar4->faltas_i }} </td>
+				<td colspan="7"></td>
+			</tr>
+
+			<tr>
+				
+				<td> <strong>ATRASOS JUSTIFICADOS</strong> </td>
+				<td>{{ $buscar4->atrasos_j }} </td>
+				<td colspan="7"></td>
+			</tr>
+
+			<tr>
+				
+				<td> <strong>ATRASOS INJUSTIFICADOS</strong> </td>
+				<td>{{ $buscar4->atrasos_j }} </td>
+				<td colspan="7"></td>
+			</tr>
 			
 		</tbody>
 

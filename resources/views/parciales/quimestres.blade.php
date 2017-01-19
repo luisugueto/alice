@@ -3,9 +3,6 @@
 @section('contentheader_title', 'Parciales')
 @section('contentheader_description', 'Quimestre')
 
-@section('htmlheader_title', 'Quimestres')
-@section('contentheader_title', 'Registro del Quimestre')
-
 
 @section('main-content')  
 

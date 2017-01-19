@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
 	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
+	Route::get('parciales/showquimestre/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesquimestre', 'as' => 'parciales.showquimestre']);
 	Route::get('docentes/asignar/{id}/show3',['uses' => 'DocentesController@show3', 'as' => 'docentes.asignar.show3']);
 	Route::post('docentes/store2',['uses' => 'DocentesController@store2', 'as' => 'docentes.store2']);
 
@@ -76,6 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/{id}/show-estudiantes',['uses' => 'ParcialesController@buscarestudiantes', 'as' => 'parciales.show-estudiantes']);
 	Route::get('parciales/{id}/show-rectificar-parcial',['uses' => 'ParcialesController@show_rectificar_parcial','as' => 'parciales.show-rectificar-parcial']);
 	Route::post('parciales.rectificacion',['uses' => 'ParcialesController@rectificacion', 'as' => 'parciales.rectificacion']);
+	Route::get('parciales/{id}/show-rectificar-quimestral',['uses' => 'ParcialesController@show_rectificar_quimestral','as' => 'parciales.show-rectificar-quimestral']);
+	Route::post('parciales.rectificacion2',['uses' => 'ParcialesController@rectificacion2', 'as' => 'parciales.rectificacion2']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
