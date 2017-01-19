@@ -9,7 +9,7 @@
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">Estudiantes inscritos en el periodo lectivo : {{ $periodo->nombre }}( {{ $periodo->status}} )</div>
+                <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
             </div>
             <div class="block-content collapse in">
                 <div class="table-responsive">

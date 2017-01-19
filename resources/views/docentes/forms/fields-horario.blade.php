@@ -16,7 +16,7 @@
         @for($i = 0; $i < 9; $i++)
             @if($i == 4)
                 <tr style="background-color: #f2dede">
-                    <th style="text-align: center;" colspan="7"> RECREO </th>
+                    <th style="text-align: center; background-color: #d9edf7;" colspan="7"> RECREO </th>
                 </tr>
             @else
                 <tr>

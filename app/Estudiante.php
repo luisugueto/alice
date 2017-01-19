@@ -63,12 +63,11 @@ class Estudiante extends Model
 
     public function cursos(){
 
-        return $this->belongsToMany('App\Cursos','inscripciones','id_estudiante','id_curso')->withPivot('id_seccion','id_periodo')->withTimestamps();
+        return $this->belongsToMany('App\Cursos', 'inscripciones', 'id_estudiante','id_curso')->withPivot('id_seccion','id_periodo')->withTimestamps();
     }
 
     public function setFotoAttribute($foto)
     {
-
         $this->attributes['foto'] = Carbon::now()->second.$foto->getClientOriginalName();
         $name = Carbon::now()->second.$foto->getClientOriginalName();
         \Storage::disk('estudiante')->put($name, \File::get($foto));

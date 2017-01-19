@@ -37,7 +37,8 @@
                                     <td>{{$aula->created_at}}</td>
                                     <td>{{$aula->updated_at }}</td>
                                     <td align="center">
-                                        <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
+                                        <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
+                                        <a class="btn btn-danger btn-flat" onclick="codigo({{ $aula->id }})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -49,5 +50,36 @@
         </div>
     </div>
 
-            
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Eliminar Personal</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea eliminar esta aula en especifico?...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    {!! Form::open(['route' => ['aulas.destroy', 0133], 'method' => 'DELETE']) !!}
+                        {{ csrf_field() }}
+                        <input type="hidden" id="codigo" name="id">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+<script type="text/javascript">
+
+    function codigo(codigo){
+        $('#codigo').val(codigo);
+    }
+
+</script>

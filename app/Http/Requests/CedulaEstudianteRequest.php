@@ -24,7 +24,7 @@ class CedulaEstudianteRequest extends Request
     public function rules()
     {
         return [
-            'cedula' => 'required|digits:10'
+            'cedula' => 'required|digits_between:7,10'
         ];
     }
 }

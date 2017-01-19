@@ -117,7 +117,7 @@ class EstudiantesController extends Controller
         
         }else{
 
-            $capacidad_especial = 'Ninguna';
+            $capacidad_especial = 'NINGUNA';
         }
 
         if($request->patologia_e == 'Si')
@@ -126,7 +126,7 @@ class EstudiantesController extends Controller
         
         }else{
 
-            $patologia = 'Ninguna';
+            $patologia = 'NINGUNA';
         }
 
         if($request->medicinas_e == 'Si')
@@ -135,7 +135,7 @@ class EstudiantesController extends Controller
         
         }else{
 
-            $medicinas_contraindicadas = 'Ninguna';
+            $medicinas_contraindicadas = 'NINGUNA';
         }
 
         if($request->discapacidad == 'Si')
@@ -153,7 +153,7 @@ class EstudiantesController extends Controller
         
         }else{
 
-            $alergico_a = 'Nada';
+            $alergico_a = 'NADA';
         }
 
         $foto = $request->file('foto');
@@ -536,7 +536,11 @@ class EstudiantesController extends Controller
      */
     public function show($id)
     {
-        //
+        $estudiante = Estudiante::find($id);
+        $representante = $estudiante->representante;
+        $padres = $estudiante->padres()->get();
+
+        return view('estudiantes.show', compact('estudiante', 'representante', 'padres'));
     }
 
     /**
@@ -603,9 +607,24 @@ class EstudiantesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $estudiante = Estudiante::find($request->id);
+
+        if($estudiante->cursos()->exists()) {
+
+            Session::flash('message-error', 'DISCULPE NO SE PUEDE ELIMINAR EL ESTUDIANTE PORQUE SE ENCUENTRA INSCRITO EN ALGÚN PERIODO');
+
+            return redirect()->back();
+
+        } else {
+
+            $estudiante->delete();
+
+            Session::flash('message', 'ESTUDIANTE '.$estudiante->nombres.' SE HA ELIMINADO CORRECTAMENTE.');
+
+            return redirect()->back();
+        }
     }
 
     public function search(Request $request)

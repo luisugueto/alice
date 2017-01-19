@@ -7,9 +7,8 @@
 
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Horario</div>
-            <a href="{{ route('horarios.pdf', [$seccion->id,$curso->id,$periodo->id]) }}" class="pull-right"><i class="fa fa-print fa-2x"></i></a>
-
+            <div class="muted pull-left">HORARIO [CÓDIGO] [SECCIÓN] [AULA]</div>
+            <a href="{{ route('horarios.pdf', [$seccion->id,$curso->id,$periodo->id]) }}" class="btn pull-right"><i class="icon-print"></i></a>
         </div>
         <div class="block-content collapse in">
             <div class="span12">
@@ -24,12 +23,12 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th colspan="7" class="text-center bg-gray disabled color-palette"> DÍAS</th>
+                                    <th colspan="7" style="text-align: center; background-color: #dff0d8;"> DÍAS</th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center bg-light-blue color-palette" colspan="2"> HORA </th>
+                                    <th style="text-align: center;" colspan="2"> HORA </th>
                                     @foreach($dias as $dia)
-                                        <th class="text-center bg-light-blue color-palette"> {{ $dia->dia }}</th>
+                                        <th style="width: 180px; text-align: center;"> {{ $dia->dia }}</th>
                                     @endforeach
                                 </tr>
                                 </thead>
@@ -37,7 +36,7 @@
                                 @for($i = 0; $i < 9; $i++)
                                     @if($i == 4)
                                         <tr>
-                                            <th class="text-center bg-gray disabled color-palette" colspan="7"> RECREO </th>
+                                            <th style="text-align: center; background-color: #d9edf7;" colspan="7"> RECREO </th>
                                         </tr>
                                     @else
                                         <tr>
@@ -46,11 +45,12 @@
                                             @for($j=0; $j < 5; $j++)
 
                                                 @if($i == 0)
-                                                    <th class="text-center"> SALUDO</th>
+                                                    <th style="text-align: center;"> SALUDO</th>
                                                 @else
-                                                    <td class="text-center text-light-blue">
+                                                    <td style="text-align: center;">
                                                         @if(asignados($bloques2[$i][$j]->id,$bloques_asignados))
                                                             [{{ asignaturas_a($bloques2[$i][$j]->id,$asignaturas_asignadas,$seccion->id) }}]
+                                                            [{{ $seccion->literal }}]
                                                             [{{ aulas($bloques2[$i][$j]->id, $aulas, $seccion->id) }}]
                                                         @endif
                                                     </td>
@@ -63,9 +63,9 @@
                                 </tbody>
                             </table>
                             <div style="padding-top: 25px;">
-                                    <table class="table table-bordered table-striped">
+                                    <table class="table table-bordered">
                                         <thead>
-                                        <tr class="bg-light-blue color-palette">
+                                        <tr style="background-color: #dff0d8;">
                                             <th>ASIGNATURA</th>
                                             <th>CÓDIGO</th>
                                         </tr>
@@ -79,9 +79,9 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    <table class="table table-bordered table-striped">
+                                    <table class="table table-bordered">
                                         <thead>
-                                        <tr class="bg-light-blue color-palette">
+                                        <tr style="background-color: #dff0d8;">
                                             <th>CURSO</th>
                                             <th>SECCIÓN</th>
                                             <th>CAPACIDAD</th>

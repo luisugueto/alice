@@ -2,12 +2,12 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th colspan="7" class="text-center"> DÍAS</th>
+            <th colspan="7" style="text-align: center; background-color: #dff0d8;"> DÍAS</th>
         </tr>
         <tr>
-            <th class="text-center" colspan="2"> HORA </th>
+            <th style="text-align: center;" colspan="2"> HORA </th>
             @foreach($dias as $dia)
-                <th class="text-center"> {{ $dia->dia }}</th>
+                <th style="width: 180px; text-align: center;"> {{ $dia->dia }}</th>
             @endforeach
         </tr>
         </thead>
@@ -15,7 +15,7 @@
         @for($i = 0; $i < 9; $i++)
             @if($i == 4)
                 <tr>
-                    <th class="text-center" colspan="7"> RECREO </th>
+                    <th style="text-align: center; background-color: #d9edf7;" colspan="7"> RECREO </th>
                 </tr>
             @else
                 <tr>
@@ -23,13 +23,13 @@
                     @for($j=0; $j < 5; $j++)
 
                         @if($i == 0)
-                            <th class="text-center"> SALUDO</th>
+                            <th style="text-align: center;"> SALUDO</th>
                         @else
-                            <td class="text-center text-red">
+                            <td style="text-align: center;">
                                 @if(asignados($bloques2[$i][$j]->id,$bloques_asignados))
                                     {{ asignaturas_a($bloques2[$i][$j]->id,$asignaturas_asignadas,$seccion->id) }}
                                 @elseif(asignadas($bloques2[$i][$j]->id,$aulas_asignadas))
-                                    <span class="fa fa-close"></span>
+                                    <small style="color: red;|">NO DISPONIBLE</small>
                                 @else
                                     <input type="checkbox" name="id_bloque[]" value="{{ $bloques2[$i][$j]->id }}" title="Seleccione el día correspondiente de la asignatura" id="id_bloque">
                                 @endif
@@ -45,7 +45,7 @@
 <br>
     <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr style="background-color: #dff0d8;">
                 <th>ASIGNATURAS</th>
                 <th class="text-center">CÓDIGO</th>
             </tr>

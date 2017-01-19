@@ -4,7 +4,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="#"><i>Montessorí</i></a>
+        <a class="brand" href="#"><i>Montessori</i></a>
         <div class="nav-collapse collapse">
             <ul class="nav pull-right">
                 <li class="dropdown">
@@ -181,6 +181,7 @@
                         <ul class="dropdown-menu">
                             @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
                                 <li>
+                                    <a tabindex="-1" href="{{ route('periodos.index') }}">Activar Periodo</a>
                                     <a tabindex="-1" href="{{ route('aulas.index') }}">Aulas</a>
                                 </li>
                             @endif

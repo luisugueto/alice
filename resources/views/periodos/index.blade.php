@@ -1,42 +1,31 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Periodos')
 @section('contentheader_description', 'Activar')
 
 @section('main-content')
 
-    <div class="row" style="padding-top: 25px;">
-        <div class="col-xs-12">
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Nuevo Periodo</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+                    <fieldset>
+                        <legend>Activar Periodo</legend>
+                        <div class="control-group">
+                            {!! Form::label('Activar', 'Activar Periodo', ['class'=>'control-label']) !!}
 
-            <div class="col-xs-12">
-                @include('alerts.request')
-                @include('alerts.errors')
-            </div>
-
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Nuevo Periodo</h3>
-                    </div>
-
-                    <div class="box-body">
-                        <div class="col-md-4">
-                            {!! Form::label('Activar', 'Activar Periodo') !!} <small class="text-red">*</small>
-
-                            <div class="form-group form-inline">
-                                <div class="input-group">
-                                    <div class="form-group{{ $errors->has('activar') ? ' has-error' : '' }}">
-                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"> <i class="fa fa-check"></i></a>
-                                    </div>
+                            <div class="controls">
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Activar <i class="fa fa-check"></i></a>
                                 </div>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
+                    </fieldset>
+            </div>
         </div>
     </div>
+
      <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 

@@ -1,20 +1,20 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th colspan="7" class="text-center"> DÍAS</th>
+            <th colspan="7" style="text-align: center; background-color: #dff0d8;"> DÍAS</th>
         </tr>
         <tr>
-            <th class="text-center" colspan="2"> HORA </th>
+            <th style="text-align: center;" colspan="2"> HORA </th>
         	    @foreach($dias as $dia)
-	               <th class="text-center"> {{ $dia->dia }}</th>
+                    <th style="width: 180px; text-align: center;"> {{ $dia->dia }}</th>
                 @endforeach
         </tr>
     </thead>
     <tbody>
         @for($i = 0; $i < 9; $i++)
             @if($i == 4)
-                <tr>    
-                    <th class="text-center" colspan="7"> RECREO </th>
+                <tr>
+                    <th style="text-align: center; background-color: #d9edf7;" colspan="7"> RECREO </th>
                 </tr>   
             @else
                 <tr>
@@ -23,9 +23,9 @@
                     @for($j=0; $j < 5; $j++) 
                                                             
                         @if($i == 0)
-                            <th class="text-center"> SALUDO</th>                    
+                            <th style="text-align: center;"> SALUDO</th>
                         @else
-                            <td class="text-center text-red">                                 
+                            <td style="text-align: center;">
                         @if(count($aulas) != '')
                             @if(asignados($bloques2[$i][$j]->id,$bloques_asignados))  
                                 <a href="#" data-toggle="modal" data-target="#myModal" onclick="eliminar({{$curso->id}},{{asignaturas_id($bloques2[$i][$j]->id,$asignaturas_asignadas,$seccion->id)}},{{asignados_id($bloques2[$i][$j]->id,$bloques_asignados)}},{{ asignadas_id($bloques2[$i][$j]->id,$aulas)}},{{$seccion->id}})"> {{ asignaturas_a($bloques2[$i][$j]->id,$asignaturas_asignadas,$seccion->id) }} </a>
@@ -49,7 +49,7 @@
                 <h4 class="modal-title">ELIMINAR ASIGNATURA</h4>
             </div>
             <div class="modal-body">
-                
+                ¿Esta seguro que desea eliminar la asignatura de este horario, en el bloque específico?...
             </div>
             <div class="modal-footer">
                 <button type="reset" class="btn btn-flat pull-left" data-dismiss="modal">Cancelar</button>

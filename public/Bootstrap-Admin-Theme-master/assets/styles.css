@@ -11,6 +11,10 @@ body {
     }
 }
 
+.muted{
+    color: white;
+}
+
 .has-error{
     border: 1px solid red;
     border-radius: 5px;
@@ -118,7 +122,18 @@ a{
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
+    /*background-image: linear-gradient(#053059, white);
+    background-attachment: fixed;*/
+    background: rgba(19,94,164,1);
+    background: -moz-linear-gradient(left, rgba(19,94,164,1) 0%, rgba(16,72,137,1) 0%, rgba(16,72,137,1) 27%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(19,94,164,1)), color-stop(0%, rgba(16,72,137,1)), color-stop(27%, rgba(16,72,137,1)));
+    background: -webkit-linear-gradient(left, rgba(19,94,164,1) 0%, rgba(16,72,137,1) 0%, rgba(16,72,137,1) 27%);
+    background: -o-linear-gradient(left, rgba(19,94,164,1) 0%, rgba(16,72,137,1) 0%, rgba(16,72,137,1) 27%);
+    background: -ms-linear-gradient(left, rgba(19,94,164,1) 0%, rgba(16,72,137,1) 0%, rgba(16,72,137,1) 27%);
+    background: linear-gradient(to right, rgba(19,94,164,1) 0%, rgba(16,72,137,1) 0%, rgba(16,72,137,1) 27%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#135ea4', endColorstr='#104889', GradientType=1 );
 }
+
 .block-header div {
 	padding-top: 10px;
 }

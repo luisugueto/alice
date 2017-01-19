@@ -15,7 +15,7 @@ class CreateDatosRepresentantesTable extends Migration
         Schema::create('datos_representantes', function (Blueprint $table){
             $table->increments('id');
             $table->string('nombres_re', 50);
-            $table->string('cedula_re', 25)->unique();
+            $table->string('cedula_re', 25);
             $table->string('parentesco', 20);
             $table->string('nacionalidad_re', 50);
             $table->string('telefono_re', 50);

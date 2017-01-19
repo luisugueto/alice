@@ -16,12 +16,12 @@ class CreateDatosGeneralesEstudianteTable extends Migration
             $table->increments('id');
             $table->integer('id_representante')->unsigned();
             $table->foreign('id_representante')->references('id')->on('datos_representantes')->onDelete('Cascade');
-            $table->string('foto', 55)->unique();
+            $table->string('foto', 55);
             $table->string('codigo_matricula', 255)->unique();
             $table->string('apellido_paterno', 50);
             $table->string('apellido_materno', 50);
             $table->string('nombres', 25);
-            $table->string('cedula', 25)->unique();
+            $table->string('cedula', 25);
             $table->date('fecha_nacimiento');
             $table->date('fecha_registro');
             $table->string('genero', 25);
@@ -32,7 +32,7 @@ class CreateDatosGeneralesEstudianteTable extends Migration
             $table->string('provincia', 50);
             $table->string('ciudad_natal', 50);
             $table->string('telefono', 25);
-            $table->string('correo', 25)->unique();
+            $table->string('correo', 25);
             $table->timestamps();
         });
     }

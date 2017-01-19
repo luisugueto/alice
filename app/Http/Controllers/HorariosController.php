@@ -43,6 +43,7 @@ class HorariosController extends Controller
                              ->join('secciones', 'asignacion_bloques.id_seccion', '=', 'secciones.id')
                              ->join('periodos', 'asignacion_bloques.id_periodo', '=', 'periodos.id')
                              ->join('cursos', 'secciones.id_curso', '=', 'cursos.id')
+                             ->where('periodos.id', Session::get('periodo'))
                              ->groupBy('id_seccion')
                              ->get();
         //dd($horarios);
@@ -210,7 +211,7 @@ class HorariosController extends Controller
 
             foreach ($request->id_bloque as $key => $bloque) 
             {
-                $choca = \DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque]])->exists();
+                $choca = \DB::table('asignacion_bloques')->where([['id_aula', $request->id_aula], ['id_bloque', $bloque], ['id_periodo', Session::get('periodo')]])->exists();
                 //dd($choca);
             }
 
@@ -355,7 +356,7 @@ class HorariosController extends Controller
             {
                 foreach ($aulas as $aula)
                 {
-                     $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque->id]])->first();
+                     $asignadas = DB::table('asignacion_bloques')->where([['id_aula', $aula], ['id_bloque', $bloque->id], ['id_periodo', Session::get('periodo')]])->first();
                 }
 
                 if(count($asignadas) > 0)

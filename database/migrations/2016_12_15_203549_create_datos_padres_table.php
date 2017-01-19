@@ -15,7 +15,7 @@ class CreateDatosPadresTable extends Migration
         Schema::create('datos_padres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombres_pa', 25);
-            $table->string('cedula_pa', 25)->unique();
+            $table->string('cedula_pa', 25);
             $table->string('foto_pa', 255);
             $table->string('lugar_trabajo', 50);
             $table->text('direccion_pa');

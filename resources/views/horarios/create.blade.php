@@ -4,9 +4,10 @@
 @section('contentheader_description', 'Curso')
 
 @section('main-content')
+
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Horarios</div>
+            <div class="muted pull-left">Horario [CÓDIGO] [SECCIÓN] [AULA]</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">

@@ -24,14 +24,14 @@
                     <div class="span12">
                         <table id="example1" class="table table-striped table-bordered dataTable">
                             <thead>
-                            <tr>
-                                <th>Nombre(s)</th>
-                                <th>Apellidos</th>
-                                <th>Cédula</th>
-                                <th>Cargo</th>
-                                <th>Área de Trabajo</th>
-                                <th>Opciones</th>
-                            </tr>
+                                <tr>
+                                    <th>Nombre(s)</th>
+                                    <th>Apellidos</th>
+                                    <th>Cédula</th>
+                                    <th>Cargo</th>
+                                    <th>Área de Trabajo</th>
+                                    <th>Opciones</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach($personal as $per)
@@ -43,14 +43,13 @@
                                     <td>{{$per->cargo->area->nombre}}</td>
                                     @if(verificarPeriodo()=='activo')
                                         <td>
-                                            <a href="{{ route('personal.edit', $per->id) }}" class="btn btn-primary btn-flat"><i class="fa fa-refresh"></i></a>
-                                            <a class="btn btn-danger btn-flat" onclick="codigo({{ $per->id }})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('personal.edit', $per->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
+                                            <a class="btn btn-danger btn-flat" onclick="codigo({{ $per->id }})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
                                         </td>
                                     @else
                                         <td></td>
                                     @endif
                                 </tr>
-
                             @endforeach
                             </tbody>
                         </table>
@@ -71,8 +70,7 @@
                     <h4 class="modal-title">Eliminar Personal</h4>
                 </div>
                 <div class="modal-body">
-                    <strong>Seguro eliminar el personal?</strong>
-
+                    ¿Esta seguro que desea eliminar este personal en especifico?...
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
@@ -86,6 +84,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 <script type="text/javascript">

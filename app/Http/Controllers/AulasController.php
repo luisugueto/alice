@@ -96,7 +96,7 @@ class AulasController extends Controller
         $aula->nombre = strtoupper($request['nombre']);
         $aula->save();
 
-        Session::flash('message', 'Aula Editada Correctamente.');
+        Session::flash('message', 'AULA EDITADA CORRECTAMENTE.');
         $aula = Aula::all();
         return view("aulas.index", ['aula'=>$aula]);
     }
@@ -107,8 +107,23 @@ class AulasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $aula = Aula::find($request->id);
+
+        if($aula->asignacion_b()->exists()){
+
+            Session::flash('message-error', 'DISCULPE ESTA AULA YA SE ENCUENTRA ASIGNADA EN UN HORARIO.');
+
+            return redirect()->back();
+
+        } else {
+
+            $aula->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO EL AULA '.$aula->nombre.' EXITOSAMENTE.');
+
+            return redirect()->back();
+        }
     }
 }

@@ -6,7 +6,7 @@
 @section('main-content')
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Horarios</div>
+            <div class="muted pull-left">Horario</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">
@@ -28,19 +28,20 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        function eliminar(curso, asignatura, bloque, aula, seccion)
+        {
+
+            console.log(asignatura);
+            $('#seccion').val(seccion);
+            $('#curso').val(curso);
+            $('#asignatura').val(asignatura);
+            $('#bloque').val(bloque);
+            $('#aula').val(aula);
+        }
+
+    </script>
+
 @endsection
-
-<script type="text/javascript">
-
-    function eliminar(curso, asignatura, bloque, aula, seccion)
-    {
-
-        console.log(asignatura);
-        $('#seccion').val(seccion);
-        $('#curso').val(curso);
-        $('#asignatura').val(asignatura);
-        $('#bloque').val(bloque);
-        $('#aula').val(aula);
-    }
-
-</script>

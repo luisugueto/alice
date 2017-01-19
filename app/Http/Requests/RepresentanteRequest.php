@@ -24,7 +24,7 @@ class RepresentanteRequest extends Request
     public function rules()
     {
         return [
-            'cedula_re'       => 'required|unique:datos_representantes',
+            'cedula_re'       => 'required|digits_between:7,10|unique:datos_representantes',
             'nombres_re'      => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'nacionalidad_re' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'telefono_re'     => 'required',
