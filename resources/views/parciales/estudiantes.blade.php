@@ -52,6 +52,7 @@
                                         <?php
                                         $quimestre=buscar_quimestre($estudiante->id);
                                         $parcial=buscar_parcial($estudiante->id);
+                                        
                                         ?>
 
                                         @if($q==1 || $q==2)

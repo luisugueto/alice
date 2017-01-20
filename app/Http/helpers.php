@@ -494,9 +494,11 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		#opcion==1 solo se ha registrado uno
 		#opcion==0 no se ha registrado ninguno
 		$id_periodo=Session::get('periodo');
-
-		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$sql="SELECT * FROM quimestrales INNER JOIN quimestres ON quimestrales.id_quimestre=quimestres.id INNER JOIN periodos ON quimestres.id_periodo=periodos.id WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."";
+		//dd($sql);
+		$buscar_q=\DB::select($sql);
 		$opcion=count($buscar_q);
+		//dd($opcion);
 
 
 		return $opcion;
@@ -640,8 +642,8 @@ function cargas_completas_quimestre($id_estudiante,$num)
 					}
 
 					}
-
-					if ($cc2==0) {
+						//dd($cc);
+					if ($cc2==1) {
 						$encontrada=2;
 					} else {
 						$encontrada=0;
@@ -901,11 +903,11 @@ function cargas_completas_quimestre($id_estudiante,$num)
 				$nota=number_format($nota,2,".",",");
 
 			} else {
-				$nota="Sin cargar";
+				$nota="SIN CARGAR";
 			}
 			
 		}else{
-				$nota="Sin Cargar";
+				$nota="SIN CARGAR";
 			
 		}
 
@@ -1000,11 +1002,11 @@ function buscar_id_parcial($i,$id_estudiante){
 			if ($j==$i) {
 				$nota=$promedio;
 			} else {
-				$nota="Sin Cargar";
+				$nota="SIN CARGAR";
 			}
 			
 		}else{
-				$nota="Sin Cargar";
+				$nota="SIN CARGAR";
 			
 		}
 
@@ -1141,5 +1143,73 @@ function buscar_id_quimestre($i,$id_estudiante){
 						
 
 
+	}
+
+	function recuperativos_cargados($id_estudiante)
+	{
+
+		$id_periodo=Session::get('periodo');
+
+        //verificando si tiene recuperativos registrados para este periodo
+        
+        $sql="SELECT * FROM calificacion_recuperativos WHERE id_estudiante=".$id_estudiante." AND id_periodo=".$id_periodo;
+
+        $buscar = DB::select($sql);
+
+        $cuantos=count($buscar);
+
+        switch ($cuantos) {
+            case 0:
+                $tipo=TipoRecuperativos::find(1);
+                break;
+            case 1:
+
+                $tipo=TipoRecuperativos::find(2);
+                break;
+            case 2:
+                $tipo=TipoRecuperativos::find(3);
+                break;
+            case 3:
+                $tipo=TipoRecuperativos::find(4);
+                break;
+            
+            
+        }
+
+        return $tipo;
+	}
+
+	function cuantos_recuperativos_cargados($id_estudiante)
+	{
+
+		$id_periodo=Session::get('periodo');
+
+        //verificando si tiene recuperativos registrados para este periodo
+        
+        $sql="SELECT * FROM calificacion_recuperativos WHERE id_estudiante=".$id_estudiante." AND id_periodo=".$id_periodo;
+
+        $buscar = DB::select($sql);
+
+        $cuantos=count($buscar);
+
+
+        return $cuantos;
+	}
+
+	function calificacion_recuperativo($id_estudiante){
+		
+			$id_periodo=Session::get('periodo');
+			$sql="SELECT * FROM calificacion_recuperativos WHERE id_estudiante=".$id_estudiante." AND id_periodo=".$id_periodo;
+			//dd($sql);
+		$buscar=DB::select($sql);
+		$nota=0;
+		$cuantos=count($buscar);
+		if($cuantos>0){
+			foreach ($buscar as $b) {
+				$nota=$b->calificacion;
+			}
+		}
+		//dd($nota);
+		return $nota;
 	}
 

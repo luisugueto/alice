@@ -1,7 +1,7 @@
 @extends('welcome')
 
-@section('contentheader_title', 'Parciales')
-@section('contentheader_description', 'Quimestre')
+@section('contentheader_title', 'QUIMESTRE')
+@section('contentheader_description', 'CARGA DE CAIFICACIONES')
 
 
 @section('main-content')  

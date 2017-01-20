@@ -72,4 +72,17 @@ class Estudiante extends Model
         $name = Carbon::now()->second.$foto->getClientOriginalName();
         \Storage::disk('estudiante')->put($name, \File::get($foto));
     }
+
+    public function periodos()
+    {
+
+        return $this->belongsToMany('App\Periodos','calificacion_recuperativos','id_estudiante','id_periodo')->withPivot('id_recuperativo','calificacion')->withTimestamps();
+
+    }
+
+    public function recuperativos()
+    {
+
+        return $this->belongsToMany('App\TipoRecuperativos','calificacion_recuperativos','id_estudiante','id_recuperativo')->withPivot('id_periodo','calificacion')->withTimestamps();
+    }
 }
