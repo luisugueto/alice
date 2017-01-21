@@ -191,8 +191,17 @@
                                                     
                                                     
                                                     <div class="control-group">
-                                                        {!! Form::label('promedio', $promedio, ['class'=>'control-label']) !!}
+                                                        {!! Form::label('promedio', "Promedio Anual:".$promedio, ['class'=>'control-label']) !!}
                                                     </div>
+                                                    <?php $nota=calificacion_recuperativo($estudiante->id); ?>
+                                                    @if($nota>0)
+
+                                                        <div class="control-group">
+                                                        {!! Form::label('ultimo', "Último Recuperativo:".$nota, ['class'=>'control-label']) !!}
+                                                        </div>
+
+                                        
+                                                    @endif
                                                     
                                                     <div class="control-group">
                                                         <div class="controls">

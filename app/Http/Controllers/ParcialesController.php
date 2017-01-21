@@ -1102,6 +1102,8 @@ public function showcalificacionesquimestre($i,$id_estudiante){
 
     public function acciones_anuales(Request $request){
 
+        $estudiante=Estudiante::find($request->id_estudiante);
+
         switch ($request->accion) {
             case 1:
 
@@ -1110,9 +1112,9 @@ public function showcalificacionesquimestre($i,$id_estudiante){
                 break;
             case 2:
                 //recuperativos
-                $estudiante=Estudiante::find($request->id_estudiante);
+                
                 $cuantos=count($estudiante->recuperativos);
-                //dd($cuantos);
+                //dd($estudiante->recuperativos);
                     switch ($cuantos) {
                         case 0:
                             $tipo_recuperativo=TipoRecuperativos::find(1);
@@ -1132,6 +1134,23 @@ public function showcalificacionesquimestre($i,$id_estudiante){
                 break;
             case 3:
                 //rectificacion de recuperativos
+                $cuantos = count($estudiante->recuperativos);
+                //dd($cuantos);
+                //dd($estudiante->recuperativos);
+                $i=1;
+                //dd($estudiante->recuperativos);
+                    foreach ($estudiante->recuperativos as $recuperativos) {
+                        if($i==$cuantos){
+
+                            $id_recuperativo=$recuperativos->id;
+                            $tipo=$recuperativos->tipo;
+                            break;
+                        }
+                        $i++;
+
+                    }
+                    //dd($id_recuperativo);
+                    return View('parciales.rectificacion-recuperativos',compact('estudiante','id_recuperativo','tipo'));
                 break;
             
             default:
@@ -1144,7 +1163,8 @@ public function showcalificacionesquimestre($i,$id_estudiante){
         
 
     }
-    public function cargar_recuperativo(Request $request){
+    public function cargar_recuperativo(Request $request)
+    {
 
 
         $id_periodo=Session::get('periodo');
@@ -1160,6 +1180,21 @@ public function showcalificacionesquimestre($i,$id_estudiante){
         Session::flash('message', 'CALIFICACIÓN DE RECUPERATIVO CARGADA EXITOSAMENTE CON LA PONDERACIÓN DE '.$request->calificacion.' PUNTOS');
         return redirect(route('parciales.mostrarcalificaciones'));
 
+
+    }
+
+    public function rectificar_recuperativo(Request $request)
+    {
+            $id_periodo=Session::get('periodo');
+
+            $rectificar=DB::update('UPDATE calificacion_recuperativos SET calificacion ='.$request->calificacion.' WHERE 
+                id_recuperativo='.$request->id_recuperativo." AND 
+                id_estudiante=".$request->id_estudiante." AND 
+                id_periodo=".$id_periodo);
+
+             Session::flash('message', 'CALIFICACIÓN DE RECUPERATIVO CAMBIADA EXITOSAMENTE CON LA PONDERACIÓN DE '.$request->calificacion.' PUNTOS');
+
+            return redirect(route('parciales.mostrarcalificaciones'));             
 
     }
 

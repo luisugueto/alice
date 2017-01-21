@@ -242,6 +242,7 @@ use App\Quimestrales;
 							  	$p6=1;
 							}
 							break;
+						
 					}
 
 				}
@@ -268,6 +269,7 @@ use App\Quimestrales;
 			case 6:
 				return $p6;
 				break;
+
 
 			
 		}
@@ -488,6 +490,8 @@ function cargas_completas_quimestre($id_estudiante,$num)
             }
 		return $cargar;
 	}
+
+
 	function buscar_quimestre($id_estudiante){
 
 		#opcion==2 se han registrados los quimestres completos
@@ -547,6 +551,42 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		}
 		if (count($curso)>0) {
 			return $id_curso;
+		}else{
+			return  0;
+
+		}
+		
+	}
+	function buscar_curso2($id){
+
+		$id_periodo=Session::get('periodo');
+		$sql="SELECT cursos.* FROM inscripciones,secciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=secciones.id_curso AND inscripciones.id_seccion=secciones.id AND inscripciones.id_periodo=".$id_periodo;
+		//dd($sql);
+		$curso = DB::select($sql);
+		foreach ($curso as $curso) {
+			$id_curso=$curso->id;
+			$curso=$curso->curso;
+		}
+		if (count($curso)>0) {
+			return $curso;
+		}else{
+			return  0;
+
+		}
+		
+	}
+function buscar_seccion($id){
+
+		$id_periodo=Session::get('periodo');
+		$sql="SELECT secciones.* FROM inscripciones,secciones,cursos WHERE inscripciones.id_estudiante=".$id." AND cursos.id=secciones.id_curso AND inscripciones.id_seccion=secciones.id AND inscripciones.id_periodo=".$id_periodo;
+		//dd($sql);
+		$secciones = DB::select($sql);
+		foreach ($secciones as $secc) {
+			$id_seccion=$secc->id;
+			$seccion=$secc->literal;
+		}
+		if (count($secciones)>0) {
+			return $seccion;
 		}else{
 			return  0;
 
@@ -634,19 +674,31 @@ function cargas_completas_quimestre($id_estudiante,$num)
 					quimestrales.id_quimestre=quimestres.id AND 
 					quimestres.id_periodo=".$id_periodo." AND 
 					calificacion_quimestre.id_asignatura=".$asig->id_asignatura." 
-					GROUP BY calificacion_quimestre.id_quimestrales";
+					GROUP BY quimestrales.id";
 					//dd($sql);
 					$result=DB::select($sql);
-					if(count($result)>0){
+					if(count($result)==1){
+
 						$cc2++;
+					}else
+					{
+						if (count($result)==2) {
+							$cc2+=2;
+						}
+						
 					}
 
 					}
+					//echo $cc2;
 						//dd($cc);
 					if ($cc2==1) {
 						$encontrada=2;
 					} else {
-						$encontrada=0;
+						if($cc2==2){
+							$encontrada=3;
+						}else{
+							$encontrada=0;
+						}
 					}
 					
 
