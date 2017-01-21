@@ -409,7 +409,10 @@ function cargas_completas_quimestre($id_estudiante,$num)
 
 	}
 
-	function buscar_dr($id_estudiante){
+	function buscar_dr($id_estudiante,$i){
+		//para el caso de los docentes que son coordinadores de curso
+		//se debe buscar el id de la seccion donde se encuentra el estudiante
+		//y comparar con la seccion del coordinador
 		 $cc=0;
         $id_periodo=Session::get('periodo');
             $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
@@ -427,7 +430,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
 
 
 		                	//en caso de ser docente
-		                	if(Auth::user()->roles_id == 3){
+		                	if(Auth::user()->roles_id == 3 and $i==1){
 		                			//buscando la carga academica cargada del estudiante
 		                			$mias=bucar_mis_asignaturas_cargadas($id_estudiante,$p->id,$q->id);
 		                			//buscando la cantidad de asignaturas cargadas

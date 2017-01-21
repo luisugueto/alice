@@ -34,7 +34,7 @@
                                         <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                         <td> {{ $estudiante->nombres }}</td>
                                         <td> {{ buscar_curso2($estudiante->id) }} Secc: {{ buscar_seccion($estudiante->id) }}  </td>
-                                        <td>{{ buscar_dr($estudiante->id)  }}</td>
+                                        <td>{{ buscar_dr($estudiante->id,2)  }}</td>
                                         <td>
                                             @if(cargas_completas($estudiante->id,1)==1)
                                                 <?php $id_parcial=cargas_completas_parcial($estudiante->id,1); ?>

@@ -49,7 +49,7 @@
 
                                             @else
 
-                                                {{ buscar_dr($estudiante->id)  }}
+                                                {{ buscar_dr($estudiante->id,1)  }}
                                             @endif
                                         @endif
                                     </td>

@@ -37,7 +37,7 @@
                                     @else
                                         <td colspan="2">Sin Inscribir</td>
                                     @endif
-                                    <td>{{ buscar_dr($estudiante->id)  }}</td>
+                                    <td>{{ buscar_dr($estudiante->id,2)  }}</td>
                                     <td>
                                     </td>
                                 </tr>
