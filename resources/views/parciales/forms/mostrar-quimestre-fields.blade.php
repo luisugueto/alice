@@ -64,7 +64,7 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 
 								@endforeach	
 
-								<?PHP $sumatoria=0; ?>
+								<?php $sumatoria=0; ?>
 
 								@foreach($buscar2 as $b2)
 									@if($asig->id==$b2->id_asignatura AND $asig->id==$id_asig)

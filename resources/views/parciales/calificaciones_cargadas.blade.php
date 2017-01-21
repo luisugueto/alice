@@ -29,6 +29,7 @@
                                 <th>2P-2Q</th>
                                 <th>3P-2Q</th>
                                 <th>2Q</th>
+                                <th>Total Anual</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,7 +46,7 @@
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(1,$estudiante->id) != "Sin cargar")
+                                                @if(buscar_calificacion_parcial(1,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -62,7 +63,7 @@
                                             <td> {{buscar_calificacion_parcial(2,$estudiante->id)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(2,$estudiante->id) != "Sin cargar")
+                                                @if(buscar_calificacion_parcial(2,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -77,7 +78,7 @@
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(3,$estudiante->id) != "Sin cargar")
+                                                @if(buscar_calificacion_parcial(3,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(3,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 3 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -91,7 +92,7 @@
                                             <td> {{buscar_calificacion_quimestre(1,$estudiante->id)}} 
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(1,$estudiante->id) != "Sin Cargar")
+                                                @if(buscar_calificacion_quimestre(1,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -104,7 +105,7 @@
                                             </td>
                                             <td> {{buscar_calificacion_parcial(4,$estudiante->id)}} 
                                                 <br>
-                                             @if(buscar_calificacion_parcial(4,$estudiante->id) != "Sin cargar")
+                                             @if(buscar_calificacion_parcial(4,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(4,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -120,7 +121,7 @@
                                             </td>
                                             <td> {{buscar_calificacion_parcial(5,$estudiante->id)}} 
                                                 <br>
-                                             @if(buscar_calificacion_parcial(5,$estudiante->id) != "Sin cargar")
+                                             @if(buscar_calificacion_parcial(5,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(5,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -135,7 +136,7 @@
                                             <td> {{buscar_calificacion_parcial(6,$estudiante->id)}}  
                                                 <br>
 
-                                             @if(buscar_calificacion_parcial(6,$estudiante->id) != "Sin cargar")
+                                             @if(buscar_calificacion_parcial(6,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(6,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -146,11 +147,11 @@
 
                                                 
                                                 @endif
-</td>
+                                            </td>
                                             <td> {{buscar_calificacion_quimestre(2,$estudiante->id)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(2,$estudiante->id) != "Sin Cargar")
+                                                @if(buscar_calificacion_quimestre(2,$estudiante->id) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -161,7 +162,95 @@
 
                                                 
                                                 @endif
-                                                 </td>
+                                            </td>
+
+                                            <td align="center">
+                                                <?php 
+
+                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id);
+                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id);
+
+                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id);
+                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id);
+
+                                                    $suma=$uno+$dos;
+
+                                                    $promedio=$suma/2;
+
+                                                    $promedio=number_format($promedio,2,".",",");
+
+                                                ?>
+                                                
+
+                                                     
+                                                      @if($q1!="SIN CARGAR" AND $q2!="SIN CARGAR")
+
+                                                    {!! Form::open(['route' => 'parciales.acciones_anuales', 'method' => 'POST', 'id' => 'form', 'class'=>'form-vertical']) !!}
+
+                                                    {!! Form::hidden('id_estudiante',$estudiante->id) !!}
+                                                    
+                                                    
+                                                    <div class="control-group">
+                                                        {!! Form::label('promedio', "Promedio Anual:".$promedio, ['class'=>'control-label']) !!}
+                                                    </div>
+                                                    <?php $nota=calificacion_recuperativo($estudiante->id); ?>
+                                                    @if($nota>0)
+
+                                                        <div class="control-group">
+                                                        {!! Form::label('ultimo', "Último Recuperativo:".$nota, ['class'=>'control-label']) !!}
+                                                        </div>
+
+                                        
+                                                    @endif
+                                                    
+                                                    <div class="control-group">
+                                                        <div class="controls">
+                                                    <select name="accion" id="accion" class="input-xlarge select" title="SELECCIONE LA ACCIÓN QUE DESEA EJECUTAR" , style="width:10em">
+                                                    <option value="">SELECCIONE</option>
+                                                     @if($q1!="SIN CARGAR" AND $q2!="SIN CARGAR")
+                                                        
+                                                        <option value="1">REPORTE ANUAL</option>
+
+                                                        <?php 
+                                                        $cuantos=cuantos_recuperativos_cargados($estudiante->id); 
+                                                        //$nota=0;
+                                                        $nota=calificacion_recuperativo($estudiante->id);
+                                                        ?>
+
+                                                        @if($promedio<6 AND $cuantos<4 AND $nota<6)
+
+                                                           
+                                                             <option value="2">RECUPERATIVO</option>
+                                                                                    
+                                                        @endif
+
+                                                        @if($cuantos>0 AND $cuantos<=4 AND $nota<6)
+
+                                                        
+                                                            <option value="3">RECTIFICAR</option>
+                                                        @endif
+
+
+                                                     @endif   
+
+
+                                                    </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <div class="controls">
+
+                                                    <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
+                                                    </div>
+                                                </div>
+
+                                                    {!! Form::close() !!}
+                        
+
+                                                    @endif
+                                            </td>
+                                    
 
                                         </tr>
 

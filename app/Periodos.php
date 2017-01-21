@@ -56,4 +56,15 @@ class Periodos extends Model
     {
         return $this->hasMany('App\Rubros', 'id_periodo', 'id');
     }
+
+    public function estudiantes(){
+
+        return $this->belongsToMany('App\Estudiante','calificacion_recuperativos','id_periodo','id_estudiante')->withPivot('id_recuperativo','calificacion')->withTimestamp();
+    }
+
+    public function recuperativos()
+    {
+
+        return $this->belongsToMany('App\TipoRecuperativos','calificacion_recuperativos','id_periodo','id_recuperativo')->withPivot('id_estudiante','calificacion')->withTimestamp();
+    }
 }

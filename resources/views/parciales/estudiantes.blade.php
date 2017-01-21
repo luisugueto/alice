@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('contentheader_title', 'Estudiantes')
-@section('contentheader_description', 'Parciales')
+@section('contentheader_description', 'Registro de Calificaciones')
 
 @section('main-content')
 
@@ -33,7 +33,11 @@
                                     <td> {{ $estudiante->cedula }} </td>
                                     <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                     <td> {{ $estudiante->nombres }}</td>
-                                    <?php $q=buscar_mi_asignatura_parcial($estudiante->id,$id_seccion); ?>
+
+                                    <?php $q=buscar_mi_asignatura_parcial($estudiante->id,$id_seccion); 
+
+
+                                    ?>
 
                                     <td>
                                         @if($q==1)
@@ -44,6 +48,7 @@
                                                 2 do Quimestre
 
                                             @else
+
                                                 {{ buscar_dr($estudiante->id)  }}
                                             @endif
                                         @endif
@@ -52,17 +57,19 @@
                                         <?php
                                         $quimestre=buscar_quimestre($estudiante->id);
                                         $parcial=buscar_parcial($estudiante->id);
+                                        
                                         ?>
-
+                                        @if($q!=3)
                                         @if($q==1 || $q==2)
 
                                             {{--  @if($parcial==3) --}}
                                             <a href="{{ route('parciales.show',$estudiante->id) }}" class="btn"><i class="icon-eye-open"></i></a>
                                         @else
-
+                                                
                                             <a href="{{ route('parciales.edit',$estudiante->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
                                             {{--  @endif --}}
 
+                                        @endif
                                         @endif
                                     </td>
                                 </tr>

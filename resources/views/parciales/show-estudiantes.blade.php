@@ -1,14 +1,14 @@
 @extends('welcome')
 
-@section('contentheader_title', 'Estudiantes')
-@section('contentheader_description', 'Inscritos')
+@section('contentheader_title', 'Coordinación de Curso')
+@section('contentheader_description', 'Estudiantes Inscritos')
 
 @section('main-content')
 
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
+                <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} ) </div>
             </div>
             <div class="block-content collapse in">
                 <div class="table-responsive">
@@ -20,6 +20,7 @@
                                 <th>Cédula</th>
                                 <th>Apellido(s)</th>
                                 <th>Nombre(s)</th>
+                                <th>Curso</th>
                                 <th>Pendiente por Cargar:</th>
                                 <th>Parciales/Quimestres</th>
                                 <th>Anuales</th>
@@ -32,6 +33,7 @@
                                         <td> {{ $estudiante->cedula }} </td>
                                         <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                         <td> {{ $estudiante->nombres }}</td>
+                                        <td> {{ buscar_curso2($estudiante->id) }} Secc: {{ buscar_seccion($estudiante->id) }}  </td>
                                         <td>{{ buscar_dr($estudiante->id)  }}</td>
                                         <td>
                                             @if(cargas_completas($estudiante->id,1)==1)
@@ -74,6 +76,7 @@
                                             @endif
                                         </td>
                                         <td>
+
                                             @if(cargas_completas($estudiante->id,6)==1)
 
                                                 @if(cargas_completas_quimestre($estudiante->id,2)==1)

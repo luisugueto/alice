@@ -23,6 +23,7 @@ use App\Quimestres;
 use App\Seccion;
 use App\Quimestrales;
 use App\Calificacion_quimestre;
+use App\TipoRecuperativos;
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -338,17 +339,19 @@ class ParcialesController extends Controller
                             
                         
                             $mias=buscar_mis_asignaturas_cargadas_q($request->id_estudiante,$last->id,$q->id);
+                            $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
                             //dd($mias);
                             if($mias==0){
                                 //buscando las asignaturas cargadas
                                 
-                                $cargadas=buscando_asignaturas_cargadas2_q($request->id_estudiante,$last->id,$q->id);
+                                
                                 $id_quimestre=$q->id;
-                                //dd($id_quimestre);
                                 $mias=0;
-                                $laster=Quimestrales::find($last->id);
+                                $laster=Parciales::find($last->id);
                                 break;
 
+                             }else{
+                                $id_quimestre=$q->id;
                             }
                         }
 
@@ -368,6 +371,8 @@ class ParcialesController extends Controller
                      return redirect()->back();
 
             }else{
+
+
 
                         if (($cargadas==0 || $cargadas==$cuantas) && $mias==0 || $mias==1) {
 
@@ -487,6 +492,7 @@ class ParcialesController extends Controller
             }else{
                
         $cuantos_q=buscar_quimestre($id);
+        //dd($cuantos_q);
         $estudiantes=Estudiante::find($id);
 
         $id_curso=buscar_curso($id);
@@ -504,10 +510,28 @@ class ParcialesController extends Controller
         $promedio_comp=Comportamiento::lists('literal','id'); 
 
            
+        if($cuantos_q==0){
+                $id_parcial1=buscar_id_parcial(1,$id);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(2,$id);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(3,$id);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
-        $quimestres=Quimestres::find(1);
+            $quimestres=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
+        }else{
+            $id_parcial1=buscar_id_parcial(4,$id);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(5,$id);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(6,$id);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+            $quimestres=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
+        }
+        //dd($quimestres);
 
-        return View('parciales.quimestres',compact('parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+        return View('parciales.quimestres',compact('parcial1','parcial2','parcial3','parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
         }
 
     }
@@ -1076,5 +1100,102 @@ public function showcalificacionesquimestre($i,$id_estudiante){
 
     }
 
+    public function acciones_anuales(Request $request){
+
+        $estudiante=Estudiante::find($request->id_estudiante);
+
+        switch ($request->accion) {
+            case 1:
+
+                //mostrar vista de reporte anual
+                
+                break;
+            case 2:
+                //recuperativos
+                
+                $cuantos=count($estudiante->recuperativos);
+                //dd($estudiante->recuperativos);
+                    switch ($cuantos) {
+                        case 0:
+                            $tipo_recuperativo=TipoRecuperativos::find(1);
+                            break;
+                        case 1:
+                            $tipo_recuperativo=TipoRecuperativos::find(2);
+                            break;
+                        case 2:
+                            $tipo_recuperativo=TipoRecuperativos::find(3);
+                            break;
+                        case 3:
+                            $tipo_recuperativo=TipoRecuperativos::find(4);
+                            break;
+                        
+                    }
+                    return View('parciales.recuperativos',compact('estudiante','tipo_recuperativo'));
+                break;
+            case 3:
+                //rectificacion de recuperativos
+                $cuantos = count($estudiante->recuperativos);
+                //dd($cuantos);
+                //dd($estudiante->recuperativos);
+                $i=1;
+                //dd($estudiante->recuperativos);
+                    foreach ($estudiante->recuperativos as $recuperativos) {
+                        if($i==$cuantos){
+
+                            $id_recuperativo=$recuperativos->id;
+                            $tipo=$recuperativos->tipo;
+                            break;
+                        }
+                        $i++;
+
+                    }
+                    //dd($id_recuperativo);
+                    return View('parciales.rectificacion-recuperativos',compact('estudiante','id_recuperativo','tipo'));
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+
+        
+        
+
+    }
+    public function cargar_recuperativo(Request $request)
+    {
+
+
+        $id_periodo=Session::get('periodo');
+
+        
+
+        $cargar=DB::table('calificacion_recuperativos')->insert([
+                'id_estudiante' => $request->id_estudiante,
+                'id_periodo' => $id_periodo,
+                'id_recuperativo' => $request->id_recuperativo,
+                'calificacion' => $request->calificacion
+            ]);
+        Session::flash('message', 'CALIFICACIÓN DE RECUPERATIVO CARGADA EXITOSAMENTE CON LA PONDERACIÓN DE '.$request->calificacion.' PUNTOS');
+        return redirect(route('parciales.mostrarcalificaciones'));
+
+
+    }
+
+    public function rectificar_recuperativo(Request $request)
+    {
+            $id_periodo=Session::get('periodo');
+
+            $rectificar=DB::update('UPDATE calificacion_recuperativos SET calificacion ='.$request->calificacion.' WHERE 
+                id_recuperativo='.$request->id_recuperativo." AND 
+                id_estudiante=".$request->id_estudiante." AND 
+                id_periodo=".$id_periodo);
+
+             Session::flash('message', 'CALIFICACIÓN DE RECUPERATIVO CAMBIADA EXITOSAMENTE CON LA PONDERACIÓN DE '.$request->calificacion.' PUNTOS');
+
+            return redirect(route('parciales.mostrarcalificaciones'));             
+
+    }
 
 }

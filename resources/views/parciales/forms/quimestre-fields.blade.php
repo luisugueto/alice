@@ -32,37 +32,64 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 			@foreach($docentes as $doce)
 
 			{!! Form::hidden('id_personal',$doce->id_prof); !!}
-			<?php $i=1;
+			<?php $i=1; $j=0;
 			$id_asig=$doce->id_asignatura; ?>
 			@foreach($asignaturas as $asig)
-			@if($id_asig==$asig->id)
+					
 					<tr>
-						<td>{{$i}}</td>
-			<td>{!! Form::hidden('id_asignatura[]',$id_asig,['id' => 'id_asignatura']) !!}    {{$asig->asignatura}}</td>
-					<?php $suma=0; ?>
-					@foreach($parciales as $parcial)
-						<?php $id_parcial=$parcial->id; ?>
-						@foreach($parciales_asignatura as $pa)
-							@if($id_parcial== $pa->id_parcial and $id_asig==$pa->id_asignatura)
-							<?php $suma=$suma + $pa->avg_total; ?>
-								<td align="center"><strong>{{$pa->avg_total}}</strong></td>
-							@endif
+			
+					@if($id_asig==$asig->id)
+							
+								<td>{{$i}}</td>
+								<td>{!! Form::hidden('id_asignatura[]',$id_asig,['id' => 'id_asignatura']) !!}{{$asig->asignatura}}</td>
+							<?php $suma[$j]=0; ?>
+							
+					@endif
+					@foreach($parcial1 as $p1)
+						@if($asig->id==$p1->id_asignatura AND $asig->id==$id_asig)
+						<td>{{$p1->avg_total}}</td>
+							<?php $suma[$j]+=$p1->avg_total; ?>
+						@endif
 
-						@endforeach
-					@endforeach
+					@endforeach	
+					@foreach($parcial2 as $p2)
+					@if($asig->id==$p2->id_asignatura AND $asig->id==$id_asig)
+						<td>{{$p2->avg_total}}</td>
+							<?php $suma[$j]+=$p2->avg_total; ?>
+						@endif
 
-				{{-- 	cálculo de promedio de parciales --}}
-					<?php 
-					$sfsuma=$suma/3;
+					@endforeach	
 
-					 ?>
-					<td align="center"><strong>{!! Form::hidden('avg_gp[]',$sfsuma,['id' => 'avg_gp']) !!}   {{$suma}}</strong></td>
-					<?php $sfsuma80=($sfsuma*80)/100;
-							$cfsuma80=number_format($sfsuma80,2,".",","); ?>	
-						<td  align="center"><strong>{!! Form::hidden('avg_gp80[]',$cfsuma80,['required' => 'required','id' => 'avg_gp80']) !!}   {{$cfsuma80}}</strong></td>
+					@foreach($parcial3 as $p3)
+						@if($asig->id==$p3->id_asignatura AND $asig->id==$id_asig)
+						<td>{{$p3->avg_total}}</td>
+							<?php $suma[$j]+=$p3->avg_total; ?>
+						@endif
 
-						<td  align="center"> <div class="form-group">{!! Form::number('examen_q[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación del examen quimestral', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'examen_q', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar2()','onkeyup' => 'promediar2()'])!!} 
-				</div> </td>
+					@endforeach	
+				
+					@foreach($parcial3 as $p3)
+						@if($asig->id==$p3->id_asignatura AND $asig->id==$id_asig)
+						<?php $sfsuma=$suma[$j]/3; 
+							$sfsuma=number_format($sfsuma,2,".",",");
+
+						?>
+						{!! Form::hidden('avg_gp[]',$sfsuma,['id' => 'avg_gp']) !!} 
+						<td>{{$sfsuma}}</td>
+							<?php $sfsuma80=($sfsuma*80)/100;
+							$cfsuma80=number_format($sfsuma80,2,".",","); ?>
+
+						<td>{{$cfsuma80}}</td>	
+						{!! Form::hidden('avg_gp80[]',$cfsuma80,['required' => 'required','id' => 'avg_gp80']) !!} 
+
+
+						<td  align="center"> 
+						<div class="control-group">
+							<div class="controls">	
+							{!! Form::number('examen_q[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Ingrese la calificación del examen quimestral', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'examen_q', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','onchange' => 'promediar2()','onkeyup' => 'promediar2()'])!!}
+							</div> 
+						</div> 
+						</td>
 						<td>{!! Form::text('examen_q2[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Examen Quimestral 20%', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'examen_q2', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
 
 							{!! Form::hidden('examen_q20[]',1,['required' => 'required','id' => 'examen_q20'])!!} 
@@ -70,45 +97,60 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 						<td>{!! Form::text('avg_q_cuantitativa[]',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => 'Promedio quimestral cuantitativo por asignatura', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'avg_q_cuantitativa', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
 
 							{!! Form::hidden('avg_q_cuantitativa2[]',1,['required' => 'required','id' => 'avg_q_cuantitativa2'])!!} </td>
-						<td><div class="form-group">{!! Form::text('avg_q_cualitativa[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '','title' => 'Calificación Cualitativa', 'required' => 'required','id' => 'avg_q_cualitativa','disabled' => 'disabled'])!!} 
-				</div>
+						<td>
+						<div class="control-group">
+							<div class="controls">
+							{!! Form::text('avg_q_cualitativa[]',null,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '','title' => 'Calificación Cualitativa', 'required' => 'required','id' => 'avg_q_cualitativa','disabled' => 'disabled'])!!}
+							</div>
+						</div>
 				{!! Form::hidden('avg_q_cualitativa2[]',null,['id' => 'avg_q_cualitativa2'])!!} </td>
+						@endif
+
+					@endforeach	
+
 					</tr>
-			<?php $i++; ?>
-			@endif
+			<?php $i++; $j++; ?>
 			@endforeach
 			@endforeach
-{{-- fin del ciclo para traer todas as asignaturas --}}
 <tr>	
 	<td colspan="5"></td>
 	<td colspan="4"><strong>SUMATORIA DE PUNTOS</strong></td>
-	<td>{!! Form::text('sumatoria',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => '>Sumatoria de Calificaciones', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'sumatoria', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
+	<td>
+		<div class="control-group"> 
+			<div class="controls"> 
+				{!! Form::text('sumatoria',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => '>Sumatoria de Calificaciones', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'sumatoria', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
 
-		{!! Form::hidden('sumatoria2',1,['required' => 'required','id' => 'sumatoria2'])!!}</td>
+				{!! Form::hidden('sumatoria2',1,['required' => 'required','id' => 'sumatoria2'])!!}
+			</div>
+		</div>
+	</td>
 	<td></td>
 </tr>
 
 <tr>	
 	<td colspan="5"><strong></strong></td>
 	<td colspan="4"><strong>PROMEDIO DE APROVECHAMIENTO<strong></td>
-	<td>{!! Form::text('avg_aprovechamiento_q',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => '>Sumatoria de Calificaciones', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'avg_aprovechamiento_q', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
-		
-		{!! Form::hidden('avg_aprovechamiento_q2',1,['required' => 'required','id' => 'avg_aprovechamiento_q2'])!!}
+	<td>
+		<div class="control-group"> 
+			<div class="controls"> 
+				{!! Form::text('avg_aprovechamiento_q',1,['class' => 'form-control', 'style' => 'width:5em','placeholder' => '0.00','title' => '>Sumatoria de Calificaciones', 'min' => '1', 'max' => '10', 'required' => 'required','id' => 'avg_aprovechamiento_q', 'maxlength' => '4','oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);','disabled' => 'disabled'])!!}
+			
+				{!! Form::hidden('avg_aprovechamiento_q2',1,['required' => 'required','id' => 'avg_aprovechamiento_q2'])!!}
+			</div>
+		</div>
 
 	 </td>
 	<td></td>
 </tr>
-
-
 <tr>	
 	<td colspan="5"><strong></strong></td>
 	<td colspan="4"><strong>COMPORTAMIENTO  ESTUDIANTIL<strong></td>
-	<td><div class="form-group">
+	<td>
+		<div class="control-group"> 
+			<div class="controls"> 
 
-
-
-	{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp'])!!} 
-				
+				{!! Form::select('promedio_comp',$promedio_comp,null,['class' => 'form-control','title' => 'Seleccione el Promedio de Comportamiento','id' => 'promedio_comp','style' => 'width:5em'])!!} 
+			</div>	
 		</div>
 	</td>
 	<td></td>
@@ -118,9 +160,11 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 </tr>
 <tr>
 	<td colspan="11">
-		<div class="form-group">
-						{!! Form::textarea('recomendaciones',null,['class' => 'form-control', 'placeholder' => 'Felicitaciones por su desemppeño','title' => 'Ingrese alguna recomendación para el estudiante', 'rows' => '2']) !!}
-					</div>
+		<div class="control-group"> 
+			<div class="controls"> 
+						{!! Form::textarea('recomendaciones',null,['class' => 'form-control', 'placeholder' => 'Felicitaciones por su desempeño','title' => 'Ingrese alguna recomendación para el estudiante', 'rows' => '2']) !!}
+			</div>
+		</div>
 	</td>
 </tr>
 <tr>

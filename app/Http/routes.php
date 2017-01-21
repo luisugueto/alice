@@ -79,6 +79,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('parciales.rectificacion',['uses' => 'ParcialesController@rectificacion', 'as' => 'parciales.rectificacion']);
 	Route::get('parciales/{id}/show-rectificar-quimestral',['uses' => 'ParcialesController@show_rectificar_quimestral','as' => 'parciales.show-rectificar-quimestral']);
 	Route::post('parciales.rectificacion2',['uses' => 'ParcialesController@rectificacion2', 'as' => 'parciales.rectificacion2']);
+	Route::post('parciales/acciones_anuales',['uses' => 'ParcialesController@acciones_anuales', 'as' => 'parciales.acciones_anuales']);
+	Route::post('parciales/cargar_recuperativo',['uses' => 'ParcialesController@cargar_recuperativo', 'as' => 'parciales.cargar_recuperativo']);
+	Route::post('parciales/rectificar_recuperativo',['uses' => 'ParcialesController@rectificar_recuperativo', 'as' => 'parciales.rectificar_recuperativo']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
