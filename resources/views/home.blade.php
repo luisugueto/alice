@@ -70,10 +70,38 @@
                             <span class="help-inline" for="inputError" style="color:red;">PERIODO LECTIVO {{ Session::get('periodoNombre') }}</span>
                         </div>
                     </div>
+                    <div class="block">
+                        <div class="navbar navbar-inner block-header">
+                            <div class="muted pull-left">ATAJOS DE TECLADO</div>
+                        </div>
+                        <div class="block-content collapse in">
+                            <li>PRESTAMOS (SHIFT+P)</li>
+                            <li>INSCRIPCIONES (CONTROL+M)</li>
+                            <li>ESTUDIANTES (SHIFT+L)</li>
+                            <li>PERSONAL (CONTROL+C)</li>
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
+        @elseif(Auth::user()->roles_id == 3)
+            <div class="span12" id="content">
+
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">ATAJOS DE TECLADO</div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <li>PARCIALES (SHIFT+K)</li>
+                                <li>MOSTRAR CALIFICACIONES PARCIALES (CONTROL+B)</li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     @endif
 
 @endsection
@@ -92,11 +120,14 @@
         $(document).hotkey('ctrl+c', function() {
             window.location.href = '/personal';
         });
-        $(document).hotkey('shift+k', function() {
-            window.location.href = '/parciales/1';
-        });
-        $(document).hotkey('ctrl+b', function() {
-            window.location.href = '/parciales/mostrarcalificaciones';
-        });
+
+        @if(Auth::user()->roles_id == 3)
+            $(document).hotkey('shift+k', function() {
+                window.location.href = '/parciales/1';
+            });
+            $(document).hotkey('ctrl+b', function() {
+                window.location.href = '/parciales/mostrarcalificaciones';
+            });
+        @endif
     </script>
 @endsection

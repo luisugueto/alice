@@ -217,8 +217,9 @@ class AuthController extends Controller
             Session::put('periodo', $request['periodos']);
             return Redirect::to('/home');
         }
-        Session::flash('message-error', 'Datos incorrectos');
-        return Redirect::to('/');
+        else{
+            return Redirect()->back()->with('message-error-session', 'Datos Incorrectos');
+        }
     }
 
     /**

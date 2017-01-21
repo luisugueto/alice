@@ -11,11 +11,11 @@ class PeriodosSeeder extends Seeder
      */
     public function run()
     {
-        $valor = 2014;
+        $valor = 2005;
 
         for($i = 0; $i < 30; $i++)
         {
-            if($i == 3){
+            if($i == 12){
                 DB::table('periodos')->insert([
                     'nombre' => $valor+$i,
                     'status' => 'activo'

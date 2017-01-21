@@ -7,7 +7,7 @@
 
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Certificado Laboral</div>
+            <div class="muted pull-left">CERTIFICADO LABORAL</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">

@@ -85,6 +85,10 @@
                             <li>
                                 <a tabindex="-1" href="{{ route('inscripciones.show',[0]) }}">Inscritos</a>
                             </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a tabindex="-1" href="{{ route('representantes.index') }}">Representantes</a>
+                            </li>
                         </ul>
                     </li>
                 @endif

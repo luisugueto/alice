@@ -9,6 +9,14 @@
 	</div>
 @endif
 
+@if(Session::has('message-error-session'))
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<ul>
+			{{ Session::get('message-error-session') }}
+		</ul>
+	</div>
+@endif
+
 @if(Session::has('message'))
 	<div class="alert alert-success alert-dismissible" role="alert">
 		@if(Session::get('message')=='Bienvenido')

@@ -6,7 +6,7 @@
 @section('main-content')
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Certificado Comportamiento</div>
+            <div class="muted pull-left">CERTIFICADO DE COMPORTAMIENTO</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">

@@ -11,10 +11,7 @@
     </div>
     <body class="hold-transition login-page">
 
-
-            @include('alerts.request')
             @include('alerts.errors')
-
 
     <div id="login">
 

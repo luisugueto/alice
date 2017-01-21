@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Representante;
 use App\Http\Requests\RepresentanteRequest;
+use App\Http\Requests\RepresentanteEditRequest;
 use App\Http\Requests\CedulaRequest;
 use App\Padres;
 use Session;
@@ -32,7 +33,9 @@ class RepresentantesController extends Controller
      */
     public function index()
     {
-    	//
+    	$representantes = Representante::all();
+
+    	return view('representantes.index', compact('representantes'));
     }
 
     /**
@@ -128,7 +131,9 @@ class RepresentantesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $representante = Representante::find($id);
+        //dd(strlen(trim($representante->cedula_re)));
+        return view('representantes.edit', compact('representante'));
     }
 
     /**
@@ -138,9 +143,20 @@ class RepresentantesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RepresentanteEditRequest $request, $id)
     {
-        //
+        $representante = Representante::find($id);
+
+        $representante->fill($request->all())->save();
+
+        if(!empty($request->cedula)) {
+            $representante->cedula_re = $request->nacionalidad . $request->cedula;
+            $representante->save();
+        }
+
+        Session::flash('message', 'SE HA ACTUALIZADO EL REPRESENTANTE '.$representante->nombres_re.' EXITOSAMENTE.');
+
+        return redirect('representantes');
     }
 
     /**
@@ -149,9 +165,24 @@ class RepresentantesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $representante = Representante::find($request->id);
+
+        if($representante->estudiante()->first()->exists()){
+
+            Session::flash('message-error', 'DISCULPE ESTE REPRESENTANTE TIENE ASIGNADO UN ESTUDIANTE EN UN PERIODO.');
+
+            return redirect()->back();
+
+        } else {
+
+            $representante->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO EL REPRESENTANTE '.$representante->nombres_re.' EXITOSAMENTE.');
+
+            return redirect()->back();
+        }
     }
 
     public function search()
