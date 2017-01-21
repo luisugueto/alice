@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DiasTableSeeder::class);
         $this->call(BloquesTableSeeder::class);
         //$this->call(EstudiantesSeeder::class);
-        $this->call(RubrosSeeder::class);
+        //$this->call(RubrosSeeder::class);
         $this->call(CursosSeccionesSeeder::class);
         $this->call(TipoRecuperativosTableSeeder::class);
         Model::reguard();
