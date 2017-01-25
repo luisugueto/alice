@@ -1015,14 +1015,36 @@ function buscar_id_parcial($i,$id_estudiante){
 
 	}
 
-	function buscar_calificacion_quimestre($i,$id_estudiante){
-		$id_periodo=Session::get('periodo');
+	function buscar_calificacion_quimestre($i,$id_estudiante,$id_periodo){
+		
 		$correo=Auth::user()->email;
-
+		
 		$docente=Personal::where('correo',$correo)->first();
+		$c=count($docente);
+		if($c==0){
+			//quiere decir que el usuario que entra no es docente
+			//buscando el curso del estudiante en su ultimo periodo lectivo
+			
+				$sql="SELECT cursos.* FROM inscripciones,secciones,cursos WHERE inscripciones.id_estudiante=".$id_estudiante." AND cursos.id=secciones.id_curso AND inscripciones.id_seccion=secciones.id ";
+				//dd($sql);
+				$curso = DB::select($sql);
+				foreach ($curso as $curso) {
+					$id_curso=$curso->id;
+				}
+			//buscando las asignaturas que ve el estudiante
+			//
+			$asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id_curso=".$id_curso);
 
+
+		}else{
+		
+		
 
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." LIMIT 0,1");
+
+		}
+
+
 		foreach ($asignaturas as $asig) {
 			$id_asignatura=$asig->id_asignatura;
 		
@@ -1039,7 +1061,7 @@ function buscar_id_parcial($i,$id_estudiante){
 		}
 
 		$cuantos=count($buscar2);
-
+		//dd($cuantos);
 
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->get();
 		if(count($quimestrales)>0 && $cuantos>0){
@@ -1251,9 +1273,9 @@ function buscar_id_quimestre($i,$id_estudiante){
         return $cuantos;
 	}
 
-	function calificacion_recuperativo($id_estudiante){
+	function calificacion_recuperativo($id_estudiante,$id_periodo){
 		
-			$id_periodo=Session::get('periodo');
+			/*$id_periodo=Session::get('periodo');*/
 			$sql="SELECT * FROM calificacion_recuperativos WHERE id_estudiante=".$id_estudiante." AND id_periodo=".$id_periodo;
 			//dd($sql);
 		$buscar=DB::select($sql);
@@ -1268,3 +1290,110 @@ function buscar_id_quimestre($i,$id_estudiante){
 		return $nota;
 	}
 
+	function buscar_si_repite($id_estudiante){
+
+		$buscar=DB::select("SELECT * FROM inscripciones WHERE id_estudiante=".$id_estudiante);
+        $encontrado=count($buscar);
+        
+        if ($encontrado>0) {
+            foreach ($buscar as $enc) {
+                $id_periodo_last=$enc->id_periodo;
+                
+            }
+            	//dd($id_periodo_last);
+                $uno=buscar_calificacion_quimestre(1,$id_estudiante,$id_periodo_last);
+                $dos=buscar_calificacion_quimestre(2,$id_estudiante,$id_periodo_last);
+
+                $suma=$uno+$dos;
+
+                $promedio=$suma/2;
+
+                        $promedio=number_format($promedio,2,".",",");
+
+                        if ($promedio>=5.5) {
+                            $repite="No";
+                        } else {
+
+                        	$nota=calificacion_recuperativo($id_estudiante,$id_periodo_last);
+
+                        	if ($nota<=5.5) {
+                        		$repite="Si";
+                        	} else {
+                        		$repite="No";
+                        	}
+                        	
+                            
+                        }
+                        
+
+        } else {
+        $repite="No";
+
+        }
+        return $repite;
+	}
+	function buscar_curso_a_inscribir($id_estudiante){
+
+		$buscar=DB::select("SELECT * FROM inscripciones WHERE id_estudiante=".$id_estudiante);
+        $encontrado=count($buscar);
+
+        if ($encontrado>0) {
+            foreach ($buscar as $enc) {
+                $id_periodo_last=$enc->id_periodo;
+                $id_curso=$enc->id_curso;
+
+            }
+
+                $uno=buscar_calificacion_quimestre(1,$id_estudiante,$id_periodo_last);
+                $dos=buscar_calificacion_quimestre(2,$id_estudiante,$id_periodo_last);
+
+                $suma=$uno+$dos;
+
+                $promedio=$suma/2;
+
+                        $promedio=number_format($promedio,2,".",",");
+
+                        if ($promedio>=5.5) {
+                            
+                        } else {
+
+                        	$nota=calificacion_recuperativo($id_estudiante,$id_periodo_last);
+
+                        	if ($nota<=5.5) {
+                        		$repite="Si";
+                        		$id_curso=$id_curso;
+                        	} else {
+                        		$nota="No";
+                        		$id_c=$id_curso+1;
+                        		//dd($id_c);
+                        		$buscar3=DB::select("SELECT * FROM cursos WHERE id=".$id_c);
+                        		$cuantos=count($buscar3);
+                        		if ($cuantos>0) {
+                        			foreach ($buscar3 as $b3) {
+                        				$id_curso=$b3->id;
+                        			}
+                        		} else {
+                        			$id_curso="Ninguno";
+                        		}
+                        		
+                        	}
+                        	
+                            
+                        }
+                        
+
+        } else {
+        $id_curso="Todos";
+        }
+        return $id_curso;
+	}
+
+	function buscar_inscrito($id_estudiante,$id_periodo){
+
+		$buscar=DB::select("SELECT * FROM inscripciones WHERE id_estudiante=".$id_estudiante." AND id_periodo=".$id_periodo);
+
+		$encontrado=count($buscar);
+
+		return $encontrado;
+
+	}

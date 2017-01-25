@@ -11,7 +11,9 @@
                 <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
             </div>
 
-            <?php $tipo=tipo_docente(); ?>
+            <?php $tipo=tipo_docente();
+                $id_periodo=Session::get('periodo');
+             ?>
 
             <div class="block-content collapse in">
                 <div class="table-responsive">
@@ -89,10 +91,10 @@
                                                 
                                                 @endif
                                                 </td>
-                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id)}} 
+                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo)}} 
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(1,$estudiante->id) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -148,10 +150,10 @@
                                                 
                                                 @endif
                                             </td>
-                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id)}}
+                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(2,$estudiante->id) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -167,11 +169,11 @@
                                             <td align="center">
                                                 <?php 
 
-                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id);
-                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id);
+                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo);
+                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo);
 
-                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id);
-                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id);
+                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo);
+                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo);
 
                                                     $suma=$uno+$dos;
 
@@ -193,7 +195,7 @@
                                                     <div class="control-group">
                                                         {!! Form::label('promedio', "Promedio Anual:".$promedio, ['class'=>'control-label']) !!}
                                                     </div>
-                                                    <?php $nota=calificacion_recuperativo($estudiante->id); ?>
+                                                    <?php $nota=calificacion_recuperativo($estudiante->id,$id_periodo); ?>
                                                     @if($nota>0)
 
                                                         <div class="control-group">
@@ -217,14 +219,14 @@
                                                         $nota=calificacion_recuperativo($estudiante->id);
                                                         ?>
 
-                                                        @if($promedio<6 AND $cuantos<4 AND $nota<6)
+                                                        @if($promedio<5.5 AND $cuantos<4 AND $nota<5.5)
 
                                                            
                                                              <option value="2">RECUPERATIVO</option>
                                                                                     
                                                         @endif
 
-                                                        @if($cuantos>0 AND $cuantos<=4 AND $nota<6)
+                                                        @if($cuantos>0 AND $cuantos<=4 AND $nota<5.5)
 
                                                         
                                                             <option value="3">RECTIFICAR</option>

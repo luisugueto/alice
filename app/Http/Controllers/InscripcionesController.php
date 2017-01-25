@@ -51,8 +51,10 @@ class InscripcionesController extends Controller
         $id_periodo=Session::get('periodo');
         $curso=Cursos::find($request->id_curso);
         $seccion=Seccion::find($request->id_seccion);
+        //para saber si es regular se debe buscar el estudiante en inscripciones  en algun periodo lectivo
        
-        $inscripciones=DB::insert("INSERT INTO inscripciones(id_estudiante,id_curso,id_seccion,id_periodo,becado) VALUES(".$request->id_estudiante.",".$request->id_curso.",".$request->id_seccion.",".$id_periodo.",'".$request->becado."')");
+       
+        $inscripciones=DB::insert("INSERT INTO inscripciones(id_estudiante,id_curso,id_seccion,id_periodo,repite,becado) VALUES(".$request->id_estudiante.",".$request->id_curso.",".$request->id_seccion.",".$id_periodo.",'".$repite."','".$becado."')");
         
         $cuantos=count($request->id_rubro);
 
@@ -136,14 +138,14 @@ class InscripcionesController extends Controller
             } else {
                 $id_periodo_anterior = Session::get('periodo') - 1;
                 # es regular
-                $quimestres=DB::select('SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante='.$id.' AND quimestrales.id_quimestre=quimestres.id AND quimestres.id_periodo='.$id_periodo.'')->get();
+                $quimestres=DB::select('SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante='.$id.' AND quimestrales.id_quimestre=quimestres.id AND quimestres.id_periodo='.$id_periodo.'');
                 $estado="Regular";
                     
-                $buscar2=DB::select('SELECT * FROM inscripciones WHERE id='.$request->id_estudiante.' AND id_periodo='.$id_periodo.'');
+                $buscar2=DB::select('SELECT * FROM inscripciones WHERE id='.$id.' AND id_periodo='.$id_periodo.'');
             }
 
-                
-
+          $periodo=Periodos::find($id_periodo);            
+            return View('inscripciones.create',compact('estudiantes','periodo'));
 
     }
     

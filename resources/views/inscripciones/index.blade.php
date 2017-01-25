@@ -5,7 +5,7 @@
 
 
 @section('main-content')
-
+<?php $id_periodo = Session::get('periodo'); ?>
 
     <div class="block">
         <div class="box">
@@ -35,17 +35,14 @@
                                     <td> {{ $estudiante->nombres }}</td>
                                     <td> {{ $estudiante->genero }}</td>
                                     <td class="text-center">
-                                        <?php $encontrar=0;
+                                        <?php 
+
                                         $id_estudiante=$estudiante->id;
-
+                                            $encontrar=buscar_inscrito($id_estudiante,$id_periodo);
                                         ?>
-                                        @foreach($estudiante->cursos as $key)
-                                            @if($key->pivot->id_periodo == Session::get('periodo') and $key->id_estudiante== $id_estudiante)
+                                        
 
-                                                <?php $encontrar++; ?>
-                                            @endif
-                                        @endforeach
-                                        @if(count($estudiante->cursos)==0 and $encontrar==0)
+                                        @if($encontrar==0)
 
                                             <a href="{{ route('inscripciones.edit', $estudiante->id) }}" class="btn" title="Seleccione para realizar inscripción del estudiante en este periodo"><i class="icon-list-alt"></i></a>
                                         @endif

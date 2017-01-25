@@ -17,7 +17,9 @@ class PeriodosController extends Controller
      */
     public function index()
     {
-        return view('periodos.index');
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+        return view('periodos.index',compact('periodo'));
     }
 
     /**

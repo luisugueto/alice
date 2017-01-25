@@ -7,15 +7,16 @@
 
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Nuevo Periodo</div>
+            <div class="muted pull-left">Periodo Lectivo Activo: {{$periodo->nombre}}</div>
+        </div>
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Nuevo Periodo Lectivo para Activar: {{$periodo->nombre+1}}</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">
                     <fieldset>
-                        <legend>Activar Periodo</legend>
+                        <legend>Activar Periodo Lectivo {{$periodo->nombre+1}}</legend>
                         <div class="control-group">
-                            {!! Form::label('Activar', 'Activar Periodo', ['class'=>'control-label']) !!}
-
                             <div class="controls">
                                     <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">Activar <i class="fa fa-check"></i></a>
                                 </div>
