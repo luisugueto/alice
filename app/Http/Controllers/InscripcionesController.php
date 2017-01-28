@@ -48,6 +48,7 @@ class InscripcionesController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $id_periodo=Session::get('periodo');
         $curso=Cursos::find($request->id_curso);
         $seccion=Seccion::find($request->id_seccion);
@@ -125,7 +126,7 @@ class InscripcionesController extends Controller
                 $inscripto=DB::select('SELECT * FROM inscripciones WHERE id_estudiante='.$id.' AND id_periodo='.$id_periodo);
                 $listo=count($inscripto);
                 if ($listo>0) {
-                    Session::flash('message-error', 'DISCULPE, ESTE ESTUDIANTE YA SE ENCUENTRA INSCRITO EN EL PPERIODO LECTIVO ACTUAL');   
+                    Session::flash('message-error', 'DISCULPE, ESTE ESTUDIANTE YA SE ENCUENTRA INSCRITO EN EL PERIODO LECTIVO ACTUAL');   
 
                     return redirect('inscripciones');
                 }else{
@@ -152,7 +153,8 @@ class InscripcionesController extends Controller
 
     public function buscar($id)
     {
-        return $seccion = Seccion::where('id_curso',$id)->get();  
+        return $seccion = Seccion::where('id_curso',$id)->get(); 
+
     }
 
     public function buscarrubros($id){
@@ -160,7 +162,7 @@ class InscripcionesController extends Controller
         $id_periodo= Session::get('periodo');
 
         $rubros=Rubros::where('id_curso',$id)->where('id_periodo',$id_periodo)->get();
-
+        dd($rubros->all());
 
         return $rubros;
     }

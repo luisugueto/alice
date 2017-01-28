@@ -75,7 +75,7 @@ class DocentesController extends Controller
                                
                                 //BUSCANDO DE LOS ESTUDIANTES INSCRITOS SI SE LE HA CARGADO CALIFICACION
                                 foreach($buscar3 as $b){
-
+                                  
                                     $buscar4=DB::select("SELECT * FROM parciales WHERE id_estudiante=".$b->id_estudiante);
                                     $contar+=count($buscar4);
                                 }
@@ -109,7 +109,9 @@ class DocentesController extends Controller
 
                 //---- BUSCARNDO SI SE HAN CARGADO DE DICHA SECCION CALIFICACIONES
                     //BUSCANDO EN LA TABLA INSCRIPCIONES LA SECCION PARA VERIFICAR SI TIENE ESTUDIANTES INSCRITOS
-                    $buscar3=DB::select("SELECT * FROM inscripciones WHERE id_seccion=".$request->id_seccion2);
+                    $sql="SELECT * FROM asignacion INNER JOIN inscripciones ON asignacion.id_seccion=inscripciones.id_seccion INNER JOIN asignaturas ON asignaturas.id=asignacion.id_asignatura INNER JOIN secciones ON secciones.id_curso=asignaturas.id_curso WHERE secciones.id=".$request->id_seccion2." AND asignacion.id_prof=".$request->id_prof."";
+                    //dd($sql);
+                    $buscar3=DB::select($sql);
                     $n=count($buscar3);
                     $contar=0;
                             if($n>0){

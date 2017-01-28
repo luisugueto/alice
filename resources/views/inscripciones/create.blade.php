@@ -4,7 +4,13 @@
 @section('contentheader_description', 'Nuevo')
 
 @section('main-content')
+                        <?php 
 
+                       $repite=buscar_si_repite($estudiantes->id); 
+                       // $repite="SIN CARGAR TODAS";
+
+                        $id_curso=buscar_curso_a_inscribir($estudiantes->id);
+                       ?>
     <div class="block">
         <div class="navbar navbar-inner block-header">
             <div class="muted pull-left">Inscripción</div>
@@ -16,10 +22,9 @@
                         <legend> {{ $estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres }}</legend>
 
                         @include('inscripciones.forms.create-fields')
-                       <?php $repite=buscar_si_repite($estudiantes->id); 
-                        $id_curso=buscar_curso_a_inscribir($estudiantes->id);
-                       ?>
-                       @if($repite!="SIN CARGAR TODAS" || $id_curso=="Ninguno")
+
+                       
+                        @if($repite!="SIN CARGAR TODAS" || $id_curso=="Ninguno")
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                     <button type="reset" class="btn">Borrar</button>
@@ -35,8 +40,9 @@
 @endsection
 
 <script type="text/javascript">
-function seccion(){
 
+function seccion(){
+    //alert("hola");
    var id = $("#id_curso").val();
 
     $.get("/inscripciones/secciones/"+id+"/buscar", function(data) 
@@ -58,11 +64,13 @@ function seccion(){
 
     $.get("/inscripciones/rubros/"+id+"/buscar", function(data)
     {
+        //alert(data.length);
 
         $("#id_rubros").empty();
 
         if (data.length > 0)
         {
+
             $("#id_rubros").append('<table class="table table-bordered"><thead><tr><th class="text-center">AGREGAR</th><th>NOMBRE DEL RUBRO</th><th>FECHA LÍMITE DE PAGO</th><th class="text-center">MONTO</th></tr></thead><tbody id="rubros"></tbody></table><div id="boton"></div>');
 
             $.each(data, function(index, typeObj)

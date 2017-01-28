@@ -6,6 +6,7 @@ use App\Quimestres;
 use App\Quimestrales;
 use App\Calificacion_parcial_subtotal;
 use App\calificacion_quimestre;
+use App\Seccion;
 	function verificarPeriodo()
 	{
 		$periodo = Periodos::where('id', Session::get('periodo'))->first();
@@ -151,6 +152,7 @@ use App\calificacion_quimestre;
 
 
 	function buscar($id_estudiante){
+		//dd($id_estudiante);
 		$id_periodo=Session::get('periodo');
 
 		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
@@ -1243,7 +1245,7 @@ function buscar_id_parcial($i,$id_estudiante){
 			//buscando las asignaturas que ve el estudiante
 			//
 			$asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id_curso=".$id_curso);
-
+			//dd($asignaturas);
 
 		
 
@@ -1266,9 +1268,9 @@ function buscar_id_parcial($i,$id_estudiante){
 			$contar++;
 		}
 		}
-
+		//dd($total);
 		$cuantos=count($buscar2);
-		//dd($cuantos);
+		dd($id_periodo);
 
 		$quimestre=Quimestres::where('id_periodo',$id_periodo)->where('numero',$i)->first();
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
@@ -1524,7 +1526,9 @@ function buscar_id_quimestre($i,$id_estudiante){
 
 	function buscar_si_repite($id_estudiante){
 
+
 		$buscar=DB::select("SELECT * FROM inscripciones WHERE id_estudiante=".$id_estudiante);
+		//dd($buscar);
         $encontrado=count($buscar);
         
         if ($encontrado>0) {
@@ -1532,9 +1536,10 @@ function buscar_id_quimestre($i,$id_estudiante){
                 $id_periodo_last=$enc->id_periodo;
                 
             }
-            	//dd($id_periodo_last);
+            	//$id_periodo_last=$id_periodo_last-1;
                 $uno=buscar_calificacion_quimestre(1,$id_estudiante,$id_periodo_last,1);
                 $dos=buscar_calificacion_quimestre(2,$id_estudiante,$id_periodo_last,1);
+                //dd($uno);
                 if($uno!="SIN CARGAR TODAS" || $dos!="SIN CARGAR TODAS"){
                 $suma=$uno+$dos;
 
@@ -1632,4 +1637,11 @@ function buscar_id_quimestre($i,$id_estudiante){
 
 		return $encontrado;
 
+	}
+
+	function buscar_lista_secciones($id_curso)
+	{
+		$secciones=Seccion::where('id_curso',$id_curso)->lists('literal','id');
+
+		return $secciones;
 	}
