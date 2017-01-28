@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('welcome')
 
 @section('contentheader_title', 'Asistencia Personal')
 @section('contentheader_description', 'Salida')

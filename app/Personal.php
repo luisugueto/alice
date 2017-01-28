@@ -43,7 +43,7 @@ class Personal extends Model
 
     public function asistencias(){
 
-        return $this->hasMany('App\Asistencia','id_personal', 'id');
+        return $this->hasMany('App\Asistencia', 'id_personal', 'id');
     }
 
     public function asignaturas(){

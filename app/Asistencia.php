@@ -28,4 +28,9 @@ class Asistencia extends Model
     {
         return $this->belongsTo('App\Personal', 'id_personal');
     }
+
+    public function fecha()
+    {
+        return $this->belongsTo('App\FechasAsistencias', 'id_fecha');
+    }
 }

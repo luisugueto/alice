@@ -264,4 +264,115 @@ class AsistenciasController extends Controller
     {
         //
     }
+
+    public function archivo()
+    {
+        return view('asistencias.forms.fields-upload');
+    }
+
+    public function upload(Request $request)
+    {
+       $archivo = $request->file('archivo');
+
+        if(filesize($archivo) > 0){
+
+           $nombre = $archivo->getClientOriginalName();
+
+           $guardar = \Storage::disk('asistencias')->put($nombre,  \File::get($archivo));
+
+           $public_path = public_path();
+
+           $url = $public_path.'/file/'.$nombre;
+
+            if (\Storage::disk('asistencias')->exists($nombre))
+            {
+                $archivoGuardado = file($url);
+
+                unset($archivoGuardado[0]);
+
+                foreach($archivoGuardado as $item){
+
+                    list($fecha, $personal) = explode("\t", $item);
+
+                    $fecha = explode(" ", $fecha);
+
+
+                    $fechas[] = $fecha[0];
+                    $horas[] = $fecha[1];
+                    $nro_personal[] = $personal;
+
+                }
+
+                if(!empty($nro_personal)) {
+
+                    foreach ($nro_personal as $key => $personal) {
+
+                        $fechaExiste = FechasAsistencias::where('fecha', $fechas[$key])->exists();
+
+                        $personalExiste = Personal::where('cedula', trim($personal))->first();
+                        $fechaAsistencia = FechasAsistencias::where('fecha', $fechas[$key])->first();
+
+                        if (!$fechaExiste) {
+
+                            $newFecha = new FechasAsistencias;
+                            $newFecha->fecha = $fechas[$key];
+                            $newFecha->save();
+
+                            if (!empty($personalExiste)) {
+
+                                foreach ($horas as $keyUp => $hora) {
+
+                                    if (!$personalExiste->asistencias()->where('id_fecha', $newFecha->id)->exists()) {
+
+                                        $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
+                                    }
+                                }
+                            }
+
+                        } else {
+
+                            if (!empty($personalExiste)) {
+
+                                foreach ($horas as $keyUp => $hora) {
+
+                                    $asistencia = $personalExiste->asistencias()->where('id_fecha', $fechaAsistencia->id)->first();
+
+                                    if (!empty($asistencia)) {
+
+                                        $asistencia->salida = $horas[$key];
+                                        $asistencia->save();
+
+                                    } else {
+
+                                        $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return redirect('asistencias');
+
+                }else {
+
+                    Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA CORRUPTO VUELVA A INTENTARLO.');
+
+                    return redirect()->back();
+                }
+
+            } else {
+
+                Session::flash('message-error', 'ERROR AL GUARDAR EL ARCHIVO VUELVA A INTENTARLO NUEVAMENTE.');
+
+                return redirect()->back();
+            }
+
+        } else {
+
+            Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA VACÍO VUELVA A INTENTARLO.');
+
+            return redirect()->back();
+        }
+
+    }
 }
