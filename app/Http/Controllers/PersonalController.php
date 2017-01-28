@@ -82,6 +82,7 @@ class PersonalController extends Controller
      */
     public function store(PersonalRequest $request)
     {
+        // dd($request->all());
         $per = new Personal();
         $per->codigo_pesonal = $request['codigo_pesonal'];
         $per->nombres = strtoupper($request['nombres']);

@@ -22,16 +22,33 @@ class PersonalRequest extends Request
     }
 
     /**
+    * Get the error messages for the defined validation rules.
+    *
+    * @return array
+    */    
+    
+    public function messages()
+    {
+        return [
+            'id_cargo.required' => 'El campo cargo es requerido.',
+            'codigo_pesonal.required' => 'El campo codigo personal es requerido.',
+            'codigo_pesonal.digits_between' => 'El campo codigo personal debe tener entre 10 y 11 digitos.',
+            'codigo_pesonal.unique' => 'codigo personal ya ha sido registrado.',
+        ];
+    }
+    
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
+
     public function rules()
     {
         return [
             'codigo_pesonal' => 'required|digits_between:10,11|unique:datos_generales_personal,codigo_pesonal,'.  $this->route->getParameter('personal'),
-            'nombres' => 'required',
-            'apellido_paterno' => 'required',
+            'nombres' => 'required|string',
+            'apellido_paterno' => 'required|string',
             'cedula' => 'required|numeric|digits_between:10,11|unique:datos_generales_personal,cedula,'.  $this->route->getParameter('personal'),
             'fecha_nacimiento' => 'required',
             'fecha_ingreso' => 'required',

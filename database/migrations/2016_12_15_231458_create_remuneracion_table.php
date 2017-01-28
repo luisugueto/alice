@@ -20,7 +20,7 @@ class CreateRemuneracionTable extends Migration
             $table->double('descuento_iess', 10,2);
             $table->double('bono_responsabilidad', 10,2);
             $table->string('horas_extras', 2);
-            $table->bigInteger('cuenta_bancaria')->unique();
+            $table->bigInteger('cuenta_bancaria');
             $table->string('devolver_fondos', 2);
             $table->timestamps();
         });
