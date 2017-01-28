@@ -1,55 +1,40 @@
 @extends('layouts.auth')
 
 @section('htmlheader_title')
-    Password recovery
+    Cambiar Contraseña
 @endsection
 
 @section('content')
+    <br><br>
+    <div class="login-logo">
+        <h2><b>Sistema Administrativo y Académico<br>María Montessori</b></h2>
+    </div>
+    <body class="hold-transition login-page">
 
-<body class="login-page">
-    <div class="login-box">
-        <div class="login-logo">
-             <b>Sistema María Montessori</b>
-        </div><!-- /.login-logo -->
+            @include('alerts.errors')
 
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
+    <div id="login">
 
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                { trans('adminlte_lang::message.someproblems') }}<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div class="container">
 
-        <div class="login-box-body">
-            <p class="login-box-msg">Cambiar Contraseña</p>
-            <form action="{{ url('/password/email') }}" method="post">
+            <form class="form-signin" action="{{ url('/password/email') }}" method="post">
+                <p class="login-box-msg"> Cambiar Contraseña </p>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Correo" name="email" value="{{ old('email') }}"/>
+                    Correo: <input type="email" class="form-control" placeholder="Correo" name="email" value="{{ old('email') }}"/>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-2">
-                    </div><!-- /.col -->
-                    <div class="col-xs-8">
+                <div align="left">
+                   
+                    <div class="col-xs-8" align="center">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Enviar Contraseña</button>
                     </div><!-- /.col -->
-                    <div class="col-xs-2">
-                    </div><!-- /.col -->
+                   
+                    <br><a href="{{ url('/login') }}">Iniciar Sesión</a><br>
                 </div>
             </form>
 
-            <a href="{{ url('/login') }}">Iniciar Sesión</a><br>
         </div><!-- /.login-box-body -->
 
     </div><!-- /.login-box -->
