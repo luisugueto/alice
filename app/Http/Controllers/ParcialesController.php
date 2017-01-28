@@ -125,6 +125,13 @@ class ParcialesController extends Controller
                     $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
                     $id_quimestre=$quimestre->id;
                 }else{
+                    
+                    if ($cc<4) {
+                        $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->get();
+                    } else {
+                        $quimestre=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->get();
+                    }
+                    //dd($quimestre->id);
 
                     foreach ($quimestre as $q) {
                     
@@ -139,7 +146,7 @@ class ParcialesController extends Controller
                             if($mias==0){
                                 //buscando las asignaturas cargadas
                                 
-                                
+                                echo $mias;
                                 $id_quimestre=$q->id;
                                 $mias=0;
                                 $laster=Parciales::find($last->id);
@@ -147,6 +154,8 @@ class ParcialesController extends Controller
 
                             }
                             else{
+                                
+                                //$quimestre=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();  
                                 $id_quimestre=$q->id;
                             }
                         }
@@ -154,7 +163,7 @@ class ParcialesController extends Controller
                     }
 
                               
-                                
+                    //dd($id_quimestre);            
 
                 }
 
@@ -183,6 +192,12 @@ class ParcialesController extends Controller
                     //dd($cargadas."-".$cuantas."-".$mias);
                         
                                 if (($cargadas==0 || $cargadas==$cuantas) && $mias==0 || $mias==1) {
+                                    if($cc>=3){
+
+                                        $quimestre=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
+                                        $id_quimestre=$quimestre->id;
+
+                                    }
                                  $subidas=count($request->id_asignatura);
                             $parcial=Parciales::create(['id_estudiante' => $request->id_estudiante,/*
                                                          'id_personal' => $request->id_personal,*/
@@ -309,7 +324,7 @@ class ParcialesController extends Controller
     public function store2(Request $request){
 
         //buscando id del quimestre
-        $cc=0;
+        $cc=0;//contendra la cantida de quimestrales registrados para el estudiante en este periodo lectivo
         $id_periodo=Session::get('periodo');
             $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
             //dd(count($quimestre));
@@ -319,7 +334,7 @@ class ParcialesController extends Controller
                 $cc+=count($quimestral);
 
             }
-
+            //dd($cc);
              if(count($quimestre)>0){
 
 
@@ -329,12 +344,28 @@ class ParcialesController extends Controller
                     $mias=0;
                     $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
                     $id_quimestre=$quimestre->id;
+                    $cuantos_q=0;
+
                 }else{
+                    if ($cc==1) {
+                        $quimestre=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
+                        $ult=Quimestrales::where('id_quimestre',$quimestre->id)->where('id_estudiante',$request->id_estudiante)->get(); 
+                           $cuantos_q=count($ult);
+                    } else {
+                        $quimestre=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
+                        $ult=Quimestrales::where('id_quimestre',$quimestre->id)->where('id_estudiante',$request->id_estudiante)->get(); 
+                           $cuantos_q=count($ult);
+                    }
+                    
+
+                    $quimestre=Quimestres::where('id_periodo',$id_periodo)->get();
+
+                   //dd($cuantos_q);
 
                     foreach ($quimestre as $q) {
-                    
-                $ultimo=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
-                   //dd($ultimo);
+                    $ultimo=Quimestrales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
+                
+                   
                         foreach ($ultimo as $last) {
                             
                         
@@ -347,7 +378,7 @@ class ParcialesController extends Controller
                                 
                                 $id_quimestre=$q->id;
                                 $mias=0;
-                                $laster=Parciales::find($last->id);
+                                $laster=Quimestrales::find($last->id);
                                 break;
 
                              }else{
@@ -357,7 +388,7 @@ class ParcialesController extends Controller
 
                     }
 
-                }
+                }//cierre del condicional de cc!=0
 
          $cuantas=buscando_asignaturas_cursadas($request->id_estudiante);
                     $cont=0;
@@ -372,9 +403,13 @@ class ParcialesController extends Controller
 
             }else{
 
+                        //dd($cuantos_q);
 
-
-                        if (($cargadas==0 || $cargadas==$cuantas) && $mias==0 || $mias==1) {
+                        if ($cuantos_q==0 || ($mias==1 && $cuantos_q==1)) {
+                            if ($cc==1) {
+                                $quimestre=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
+                                $id_quimestre=$quimestre->id;
+                            }
 
                             $subidas=count($request->id_asignatura);
                             $parcial=Quimestrales::create(['id_estudiante' => $request->id_estudiante,
@@ -443,12 +478,12 @@ class ParcialesController extends Controller
                      Session::flash('message', 'CALIFICACIONES DEL QUIMESTRE REGISTRADAS EXITOSAMENTE');
                      return redirect(route('parciales.index'));
                 }
-            }else{
+            }else{ //cierre del condicional para verificar si hay quimestres registrados
                         Session::flash('message-error', 'NO SE HA REGISTRADO NINGÚN QUIMESTRE PARA ESTE PERIODO ESCOLAR');
                      return redirect(route('parciales.index'));       
             }
 
-    }
+    }//cierre de la funcion store2
     /**
      * Display the specified resource.
      *
@@ -509,8 +544,10 @@ class ParcialesController extends Controller
         $comportamiento=Comportamiento::all();
         $promedio_comp=Comportamiento::lists('literal','id'); 
 
+        //dd($cuantos_q);
            
         if($cuantos_q==0){
+
                 $id_parcial1=buscar_id_parcial(1,$id);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
                 $id_parcial2=buscar_id_parcial(2,$id);

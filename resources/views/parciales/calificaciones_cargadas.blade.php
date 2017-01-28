@@ -91,10 +91,10 @@
                                                 
                                                 @endif
                                                 </td>
-                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo)}} 
+                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0)}} 
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -150,10 +150,10 @@
                                                 
                                                 @endif
                                             </td>
-                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo)}}
+                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
                                                     <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -169,11 +169,11 @@
                                             <td align="center">
                                                 <?php 
 
-                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo);
-                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo);
+                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0);
+                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0);
 
-                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo);
-                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo);
+                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0);
+                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0);
 
                                                     $suma=$uno+$dos;
 
@@ -216,7 +216,7 @@
                                                         <?php 
                                                         $cuantos=cuantos_recuperativos_cargados($estudiante->id); 
                                                         //$nota=0;
-                                                        $nota=calificacion_recuperativo($estudiante->id);
+                                                        $nota=calificacion_recuperativo($estudiante->id,$id_periodo);
                                                         ?>
 
                                                         @if($promedio<5.5 AND $cuantos<4 AND $nota<5.5)

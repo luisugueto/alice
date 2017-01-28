@@ -16,11 +16,15 @@
                         <legend> {{ $estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres }}</legend>
 
                         @include('inscripciones.forms.create-fields')
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                            <button type="reset" class="btn">Borrar</button>
-                        </div>
+                       <?php $repite=buscar_si_repite($estudiantes->id); 
+                        $id_curso=buscar_curso_a_inscribir($estudiantes->id);
+                       ?>
+                       @if($repite!="SIN CARGAR TODAS" || $id_curso=="Ninguno")
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="reset" class="btn">Borrar</button>
+                                </div>
+                        @endif
                     </fieldset>
                 {!! Form::close() !!}
 
