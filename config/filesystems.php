@@ -60,6 +60,12 @@ return [
 
         ],
 
+        'asistencias' => [
+            'driver' => 'local',
+            'root' => public_path('file'),
+
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => 'your-key',

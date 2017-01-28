@@ -24,4 +24,9 @@ class FechasAsistencias extends Model
     protected $hidden = [
         
     ];
+
+    public function asistencia()
+    {
+        return $this->hasMany('App\Asistencia', 'id_fecha', 'id');
+    }
 }
