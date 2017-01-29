@@ -162,7 +162,6 @@ class InscripcionesController extends Controller
         $id_periodo= Session::get('periodo');
 
         $rubros=Rubros::where('id_curso',$id)->where('id_periodo',$id_periodo)->get();
-        dd($rubros->all());
 
         return $rubros;
     }
