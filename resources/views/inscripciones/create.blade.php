@@ -50,12 +50,12 @@ function seccion(){
         $("#id_seccion").empty();
         /*$("#id_seccion").append('<option value="" selected disabled> Seleccione </option>');*/
         if(data.length > 0){
-            for (var i = 0; i < data.length ; i++) 
-            {  
+            for (var i = 0; i < data.length ; i++)
+            {
                 $("#id_seccion").removeAttr('disabled');
                 $("#id_seccion").append('<option value="'+ data[i].id + '">' + data[i].literal +'</option>');
             }
-        }else{                           
+        }else{
              $("#id_seccion").attr('disabled', false);
         }
     });

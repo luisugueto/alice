@@ -36,19 +36,4 @@
         </div>
     </div>
 
-    <script>
-        function validar(archivo){
-
-            var b = archivo.split('.');
-            if(b[b.length-1] == 'txt')
-            return true;
-        else{
-                alert('Error: El archivo debe ser .txt');
-
-                document.getElementById('archivo').value ='';
-
-                return false;
-            }
-        }
-    </script>
 @endsection
