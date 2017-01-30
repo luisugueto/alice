@@ -111,7 +111,7 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 
 <tr>	
 	<td colspan="5"><strong></strong></td>
-	<td colspan="4"><strong>PROMEDIO DE APROVECHAMIENTO<strong></td>
+	<td colspan="4"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
 	<td>{{ $promedio}}
 	 </td>
 	<td></td>
@@ -120,7 +120,7 @@ $asistencia=['FALTAS JUSTIFICADAS','FALTAS INJUSTIFACADAS','ATRASOS JUSTIFICADOS
 
 <tr>	
 	<td colspan="5"><strong></strong></td>
-	<td colspan="4"><strong>COMPORTAMIENTO  ESTUDIANTIL<strong></td>
+	<td colspan="4"><strong>COMPORTAMIENTO  ESTUDIANTIL</strong></td>
 	<td>{{ $buscar4->comportamiento->literal }}</td>
 	<td></td>
 </tr>
