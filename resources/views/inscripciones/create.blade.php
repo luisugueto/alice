@@ -73,10 +73,10 @@ function seccion(){
 
             $("#id_rubros").append('<table class="table table-bordered"><thead><tr><th class="text-center">AGREGAR</th><th>NOMBRE DEL RUBRO</th><th>FECHA LÍMITE DE PAGO</th><th class="text-center">MONTO</th></tr></thead><tbody id="rubros"></tbody></table><div id="boton"></div>');
 
-            $.each(data, function(index, typeObj)
+            $.each(data, function(index, element)
             {
-                $("#rubros").append('<tr><td class="text-center" width="60"><input type="checkbox" id="id_rubro" name="id_rubro[]"" value='+ typeObj.id +'>'+
-                    '</td><td>'+ typeObj.nombre +'</td><td>'+ typeObj.fecha +'</td><td class="text-center">'+ typeObj.monto +'</td></tr></tbody></table>');
+                $("#rubros").append('<tr><td class="text-center" width="60"><input type="checkbox" id="id_rubro" name="id_rubro[]"" value='+ element.id +'>'+
+                    '</td><td>'+ element.nombre +'</td><td>'+ element.fecha +'</td><td class="text-center">'+ element.monto +'</td></tr></tbody></table>');
 
             });
 
