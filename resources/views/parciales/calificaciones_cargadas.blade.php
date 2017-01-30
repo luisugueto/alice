@@ -40,6 +40,7 @@
                                 <?php $id_seccion= $doc->id_seccion; ?>
 
                                 @foreach($estudiantes as $estudiante)
+                                
                                     @if($id_seccion==$estudiante->id_seccion)
                                         <tr>
                                             <td> {{ $estudiante->codigo_matricula }} </td>

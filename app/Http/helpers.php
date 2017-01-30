@@ -1005,7 +1005,9 @@ function buscar_id_seccion($id){
 	}
 
 	function buscar_calificacion_parcial($i,$id_estudiante){
+
 		$id_periodo=Session::get('periodo');
+
 		$correo=Auth::user()->email;
 		//buscando seccion del estudiante
 		$id_seccion=buscar_id_seccion($id_estudiante);
@@ -1013,6 +1015,7 @@ function buscar_id_seccion($id){
 
 		//echo $i;
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion."");
+		
 		foreach ($asignaturas as $asig) {
 			$id_asignatura=$asig->id_asignatura;
 		
@@ -1055,7 +1058,7 @@ function buscar_id_seccion($id){
 		$parciales=Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
 
 		$cp=count($parciales);
-		//echo $cp;
+		//dd($parciales->all());//echo $cp;
 		if(count($parciales)>0 && $cuantos>0){
 			$j=0;
 			foreach ($parciales as $p) {
@@ -1183,7 +1186,7 @@ function buscar_id_parcial($i,$id_estudiante){
 		
 		$docente=Personal::where('correo',$correo)->first();
 		$c=count($docente);
-		echo $c;
+		//echo $c;
 		if($c==0){
 			//quiere decir que el usuario que entra no es docente
 			//buscando el curso del estudiante en su ultimo periodo lectivo
@@ -1227,16 +1230,19 @@ function buscar_id_parcial($i,$id_estudiante){
 		$cuantos=count($buscar2);
 		//echo $cuantos;
 		//dd($asignaturas);
+		//echo $i;
 		$quimestre=Quimestres::where('id_periodo',$id_periodo)->where('numero',$i)->first();
+		
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
-
-		if(count($quimestrales)>0 && $cuantos>0){
-			$j=0;
+		$promedio=0;
+		$cuantos_q=count($quimestrales);
+		if($cuantos_q>0 && $cuantos>0){
+			//$j=1;
 			//dd($quimestrales);
 			foreach ($quimestrales as $q) {
-				
-				$j++;
-				if ($j==$i) {
+					
+				//if ($j==$i) {
+					//echo $cuantos_q;
 						$suma=0;
 						$divide=0;
 					$subtotal=DB::select("SELECT * FROM calificacion_quimestre WHERE id_quimestrales=".$q->id);
@@ -1253,22 +1259,27 @@ function buscar_id_parcial($i,$id_estudiante){
 					if($suma!=0){
 					$promedio=$suma/$divide;
 					$promedio=number_format($promedio,2,".",",");
+					
 					}else{	
 					$promedio=0;
+					
 					}
 					break;
-				} 
-				
+				//} 
+				//$j++;	
 			}
-			if ($j==$i) {
+			//dd($j);
+			
+			
+			//if ($j==$i) {
 				if($promedio!=0){
 					$nota=$promedio;
 				}else{
 					$nota="SIN CARGAR";
 				}
-			} else {
+			/*} else {
 				$nota="SIN CARGAR";
-			}
+			}*/
 			
 		}else{
 				$nota="SIN CARGAR";
