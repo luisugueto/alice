@@ -193,6 +193,55 @@ use App\Seccion;
 
 		return $cargar;
 	}
+
+	function pdf($id_estudiante){
+		//dd($id_estudiante);
+		$id_periodo=Session::get('periodo');
+
+		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$total_quimestres=count($buscar_q);
+
+		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
+		$cuantos=count($buscar_p);
+
+
+		if ($cuantos==1) {
+			
+			if($total_quimestres==0){
+
+				$b="PRIMER PARCIAL DEL 1ER QUIMESTRE";
+			
+			}else{
+				
+				$b="PRIMER PARCIAL DEL 2DO QUIMESTRE";
+			}
+			
+		} elseif($cuantos==2) {
+			
+			if($total_quimestres==0){
+
+				$b="SEGUNDO PARCIAL DEL 1ER QUIMESTRE";
+			
+			}else{
+				
+				$b="SEGUNDO PARCIAL DEL 2DO QUIMESTRE";
+			}
+		
+		} else {
+
+			if($total_quimestres==0){
+
+				$b="TERCER PARCIAL DEL 1ER QUIMESTRE";
+			
+			}else{
+				
+				$b="TERCER PARCIAL DEL 2DO QUIMESTRE";
+			}		
+		}
+
+		return $b;
+	}
+
 	function cargas_completas($id_estudiante,$num)
 	{
 		$p1=0;$p2=0;$p3=0;$p4=0;$p5=0;$p6=0;
@@ -1003,11 +1052,11 @@ function buscar_id_seccion($id){
 			$num=2;
 		}
 
-
+		//dd($id_periodo);
 		$quimestre=Quimestres::where('id_periodo',$id_periodo)->where('numero',$num)->first();
-		//echo $quimestre->id;
-		//$id_quimestre=$quimestre->id;
+		
 		$parciales=Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
+
 		$cp=count($parciales);
 		//echo $cp;
 		if(count($parciales)>0 && $cuantos>0){
@@ -1644,4 +1693,12 @@ function buscar_id_quimestre($i,$id_estudiante){
 		$secciones=Seccion::where('id_curso',$id_curso)->lists('literal','id');
 
 		return $secciones;
+	}
+
+	function periodo($id){
+		
+		$periodoLectivo = App\Periodos::find($id); 
+		$periodoActivo = $periodoLectivo->nombre.'-'.($periodoLectivo->nombre+1);
+
+		return $periodoActivo; 
 	}

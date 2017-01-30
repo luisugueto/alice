@@ -8,15 +8,15 @@
 
  <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Estudiante</div>
+            <div class="muted pull-left"><strong>MATRÍCULA NRO: </strong>{{ strtoupper($estudiantes->codigo_matricula)}}</div>
+            <a href="{{ route('quimestre.pdf', [$i, $id_estudiante]) }}" class="btn pull-right"><i class="icon-print"></i></a>
         </div>
         <div class="block-content collapse in">
             <div class="span12">
                 
                     {{ csrf_field() }}
                     <fieldset>
-                        <legend>{{ $estudiantes->apellidos }}, {{ $estudiantes->nombres }}
-                            <strong>MATRÍCULA NRO: </strong>{{$estudiantes->codigo_matricula}}</legend>
+                        <legend>{{ strtoupper($estudiantes->apellidos.', '. $estudiantes->nombres) }}</legend>
 
                         @include('parciales.forms.mostrar-quimestre-fields')
 

@@ -55,7 +55,7 @@ class InscripcionesController extends Controller
         //para saber si es regular se debe buscar el estudiante en inscripciones  en algun periodo lectivo
        
        
-        $inscripciones=DB::insert("INSERT INTO inscripciones(id_estudiante,id_curso,id_seccion,id_periodo,repite,becado) VALUES(".$request->id_estudiante.",".$request->id_curso.",".$request->id_seccion.",".$id_periodo.",'".$repite."','".$becado."')");
+        $inscripciones=DB::insert("INSERT INTO inscripciones(id_estudiante,id_curso,id_seccion,id_periodo,repite,becado) VALUES(".$request->id_estudiante.",".$request->id_curso.",".$request->id_seccion.",".$id_periodo.",'".$request->repite."','".$request->becado."')");
         
         $cuantos=count($request->id_rubro);
 

@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
 	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
 	Route::get('parciales/showquimestre/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesquimestre', 'as' => 'parciales.showquimestre']);
+	Route::get('parciales/print/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdf', 'as' => 'parciales.pdf']);
 	Route::get('docentes/asignar/{id}/show3',['uses' => 'DocentesController@show3', 'as' => 'docentes.asignar.show3']);
 	Route::post('docentes/store2',['uses' => 'DocentesController@store2', 'as' => 'docentes.store2']);
 
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('parciales/rectificar_recuperativo',['uses' => 'ParcialesController@rectificar_recuperativo', 'as' => 'parciales.rectificar_recuperativo']);
 	Route::post('asistencias/upload', ['uses' => 'AsistenciasController@upload', 'as' => 'archivo.upload']);
     Route::get('asistencias/archivo', ['uses' => 'AsistenciasController@archivo', 'as' => 'archivo.asistencias']);
+    Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
 
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');

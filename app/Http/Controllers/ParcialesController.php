@@ -24,6 +24,9 @@ use App\Seccion;
 use App\Quimestrales;
 use App\Calificacion_quimestre;
 use App\TipoRecuperativos;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class ParcialesController extends Controller
 {
     public function __construct(){
@@ -37,11 +40,13 @@ class ParcialesController extends Controller
             $this->middleware('administrador');
         }*/
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         
@@ -627,8 +632,6 @@ class ParcialesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-
 
 
     }
@@ -753,10 +756,52 @@ class ParcialesController extends Controller
 
 
 
-        return View('parciales.mostrar-parcial',compact('buscar4','buscar3','asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp'));
+        return View('parciales.mostrar-parcial',compact('buscar4','buscar3','asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp', 'i', 'id_estudiante'));
 
     }
-public function showcalificacionesquimestre($i,$id_estudiante){
+
+    public function pdf($i,$id_estudiante){
+
+        $correo=Auth::user()->email;
+        $personal=Personal::where('correo',$correo)->first();
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+
+            $contador=0;
+                //buscando la seccion del estudiante
+                $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
+                //dd($seccion);
+                foreach ($seccion as $secc) {
+                    
+                
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
+                    //dd($sql2);
+                }
+                    $docentes=DB::select($sql2);
+            
+             //dd($docentes);
+
+        $estudiantes=Estudiante::find($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante);
+        $promedio_comp=Comportamiento::lists('literal','id');
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        //dd($asignaturas);
+        $categorias=Categorias_parcial::all();
+
+        $id_parcial=buscar_id_parcial($i,$id_estudiante);
+
+        $buscar2=Calificacion_parcial::where('id_parcial',$id_parcial)->get();
+        $buscar3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial)->get();
+        $buscar4=Parciales::find($id_parcial); 
+        
+        $dompdf = \PDF::loadView('pdf.parcial.index', ['buscar4' => $buscar4, 'buscar3' => $buscar3, 'asignaturas' => $asignaturas, 'id_curso' => $id_curso, 'estudiantes' => $estudiantes, 'docentes' => $docentes, 'categorias' => $categorias, 'buscar2' => $buscar2, 'promedio_comp' => $promedio_comp, 'periodo' => $periodo])->setPaper('a4', 'landscape');
+
+        return $dompdf->stream();
+    }
+    
+    public function showcalificacionesquimestre($i,$id_estudiante){
 
         
             $correo=Auth::user()->email;
@@ -814,7 +859,7 @@ public function showcalificacionesquimestre($i,$id_estudiante){
 
 
 
-        return View('parciales.mostrar-quimestre',compact('parcial1','parcial2','parcial3','buscar4','asignaturas','id_curso','estudiantes','docentes','buscar2'));
+        return View('parciales.mostrar-quimestre',compact('parcial1','parcial2','parcial3','buscar4','asignaturas','id_curso','estudiantes','docentes','buscar2', 'i', 'id_estudiante'));
 
     }
 
@@ -1232,6 +1277,66 @@ public function showcalificacionesquimestre($i,$id_estudiante){
              Session::flash('message', 'CALIFICACIÓN DE RECUPERATIVO CAMBIADA EXITOSAMENTE CON LA PONDERACIÓN DE '.$request->calificacion.' PUNTOS');
 
             return redirect(route('parciales.mostrarcalificaciones'));             
+
+    }
+
+    public function pdfquimestre($i, $id_estudiante){
+
+            $correo=Auth::user()->email;
+            $personal=Personal::where('correo',$correo)->first();
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+                //buscando la seccion del estudiante
+                $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
+                //dd($seccion);
+                foreach ($seccion as $secc) {
+                    
+                
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
+                    //dd($sql2);
+                }
+                    $docentes=DB::select($sql2);
+            
+             //dd($docentes);
+
+        $estudiantes=Estudiante::find($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante);
+        $promedio_comp=Comportamiento::lists('literal','id');
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        
+        $id_quimestrales=buscar_id_quimestre($i,$id_estudiante);
+
+        $buscar2=Calificacion_quimestre::where('id_quimestrales',$id_quimestrales)->get();
+
+        $buscar4=Quimestrales::find($id_quimestrales);
+        //buscando los promedios de los parciales del estudiante segun el quimestral
+        //
+        if ($i==1) {
+            
+                $id_parcial1=buscar_id_parcial(1,$id_estudiante);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(2,$id_estudiante);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(3,$id_estudiante);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+        } else {
+
+                $id_parcial1=buscar_id_parcial(4,$id_estudiante);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(5,$id_estudiante);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(6,$id_estudiante);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+        }
+        
+        $dompdf = \PDF::loadView('pdf.quimestre.index', ['parcial1' => $parcial1, 'parcial2' => $parcial2, 'parcial3' => $parcial3, 'buscar4' => $buscar4, 'asignaturas' => $asignaturas, 'id_curso' => $id_curso, 'estudiantes' => $estudiantes, 'docentes' => $docentes, 'buscar2' => $buscar2, 'periodo' => $periodo])->setPaper('a4', 'landscape');
+
+        return $dompdf->stream();
 
     }
 
