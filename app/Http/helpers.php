@@ -1179,7 +1179,7 @@ function buscar_id_parcial($i,$id_estudiante){
 	function buscar_calificacion_quimestre($i,$id_estudiante,$id_periodo,$k){
 		//k controla si es par inscribir o para mostrar las calificaciones cargadas
 		//en caso de que seaa 0 quiere decir que es para las calificaciones cargadas
-		//
+		
 		if ($k==0) {
 			
 		$correo=Auth::user()->email;
