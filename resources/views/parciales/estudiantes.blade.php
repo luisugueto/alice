@@ -8,7 +8,7 @@
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">LISTA DE ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
+                <div class="muted pull-left">LISTA DE ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO: {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
             </div>
             <?php $id_seccion=$seccion->id; ?>
             <div class="block-content collapse in">
@@ -48,7 +48,7 @@
                                                 2 do Quimestre
 
                                             @else
-
+                                                    
                                                 {{ buscar_dr($estudiante->id,1)  }}
                                             @endif
                                         @endif

@@ -473,10 +473,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
             foreach ($quimestre as $q) {
                 $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$id_estudiante)->get();
                 $cuantos=count($parciales);
-                //echo $q->numero;
-                 if($q->numero==2){
-                 	$cuantos+=3;
-                 }
+                
                 //echo $cuantos;
                 if($cuantos>0){
                 	foreach ($parciales as $p) {
@@ -497,7 +494,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		                			$cargadas=buscando_asignaturas_cargadas2($id_estudiante,$p->id,$q->id);
 		                				//echo $cargadas."-".$cuantas;
 		                			if (($cargadas==0 || $cargadas==$cuantas) && $mias!=0) {
-		                					$cc+=$cuantos;
+		                					$cc+=1;
 		                					
 
 		                			}else{
@@ -1186,6 +1183,7 @@ function buscar_id_parcial($i,$id_estudiante){
 		
 		$docente=Personal::where('correo',$correo)->first();
 		$c=count($docente);
+		echo $c;
 		if($c==0){
 			//quiere decir que el usuario que entra no es docente
 			//buscando el curso del estudiante en su ultimo periodo lectivo
