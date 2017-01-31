@@ -1191,6 +1191,8 @@ class ParcialesController extends Controller
 
     public function acciones_anuales(Request $request){
 
+        
+
         $estudiante=Estudiante::find($request->id_estudiante);
 
         switch ($request->accion) {
