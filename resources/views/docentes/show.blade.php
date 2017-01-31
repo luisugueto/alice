@@ -8,7 +8,9 @@
     <div class="col-xs-12">
         <button class="btn btn-primary" title="Asignar" onclick="window.location.href = '{{ route('docentes.asignar.show2',[$docentes->id]) }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Asignar
-            <?php $id_prof=$docentes->id; ?>
+            <?php $id_prof=$docentes->id;
+
+            $id_periodo=Session::get('periodo'); ?>
         </button>
     </div>
 
@@ -57,10 +59,14 @@
                                 </thead>
                                 <tbody>
                                 @if($cuantos>0)
-                                    <?php $docentes2=$docentes; ?>
+                                    <?php $docentes2=$docentes; 
+
+                                    ?>
 
                                     @foreach($docentes2->asignaturas as $docentes)
                                         <?php $id_seccion=$docentes->pivot->id_seccion; ?>
+
+                                    @if($id_periodo==$docentes->pivot->id_periodo)
                                         <tr>
                                             <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->cursos->curso}}</a></td>
                                             <td><a href="{{ route('docentes.edit', [$docentes->pivot->id_prof]) }}"> {{$docentes->asignatura." ( ".$docentes->codigo." ) "}}</a></td>
@@ -77,6 +83,7 @@
                                                 <a class="btn btn-danger" onclick="codigo({{$docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }},{{$docentes->cursos->id}})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
                                             </td>
                                         </tr>
+                                    @endif
                                     @endforeach
                                 @endif
                                 </tbody>

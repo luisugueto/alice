@@ -189,11 +189,14 @@ class DocentesController extends Controller
 
             $docentes=Personal::find($id);
             $docentes2 = DB::select(DB::raw('select * from asignacion where id_periodo='.$id_periodo.' AND id_prof='.$id.' group by id_asignatura'));
+                //dd($docentes2);
                 $cuantos=count($docentes2);
 
                 if($cuantos==0){                   
                     return View('docentes.show',compact('cuantos','docentes'));
                 }else{
+                  //$docentes = DB::select(DB::raw('select * from asignacion where id_periodo='.$id_periodo.' AND id_prof='.$id.' group by id_asignatura'));
+                //dd($docentes);
                     return View('docentes.show',compact('docentes','cuantos'));
                 }
             

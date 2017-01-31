@@ -69,11 +69,16 @@ class Asignaturas extends Model
 
     public function personal(){
 
-        return $this->belongsToMany('App\Personal','asignacion','id_asignatura','id_prof')->withPivot('id_seccion')->withTimestamps();
+        return $this->belongsToMany('App\Personal','asignacion','id_asignatura','id_prof')->withPivot('id_seccion','id_periodo')->withTimestamps();
     }
 
     public function secciones(){
 
-        return $this->belongsToMany('App\Seccion','asignacion','id_asignatura','id_seccion')->withPivot('id_prof')->withTimestamps();
+        return $this->belongsToMany('App\Seccion','asignacion','id_asignatura','id_seccion')->withPivot('id_prof','id_periodo')->withTimestamps();
+    }
+
+    public function periodos(){
+
+        return $this->belongsToMany('App\Periodos','asignacion','id_asignatura','id_periodo')->withPivot('id_prof','id_seccion')->withTimestamps();
     }
 }
