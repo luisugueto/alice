@@ -45,11 +45,11 @@
                                         <tr>
                                             <td> {{ $estudiante->codigo_matricula }} </td>
                                             <td> {{ $estudiante->cedula }} </td>
-                                            <td> {{buscar_calificacion_parcial(1,$estudiante->id,$id_periodo,0)}}
+                                            <td> {{buscar_calificacion_parcial(1,$estudiante->id,$id_periodo,1)}}
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(1,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                                @if(buscar_calificacion_parcial(1,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -63,10 +63,10 @@
                                                 @endif
 
                                             </td>
-                                            <td> {{buscar_calificacion_parcial(2,$estudiante->id,$id_periodo,0)}}
+                                            <td> {{buscar_calificacion_parcial(2,$estudiante->id,$id_periodo,1)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(2,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                                @if(buscar_calificacion_parcial(2,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -77,11 +77,11 @@
                                                 
                                                 @endif
                                              </td>
-                                            <td> {{buscar_calificacion_parcial(3,$estudiante->id,$id_periodo,0)}} 
+                                            <td> {{buscar_calificacion_parcial(3,$estudiante->id,$id_periodo,1)}} 
 
                                                 <br>
 
-                                                @if(buscar_calificacion_parcial(3,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                                @if(buscar_calificacion_parcial(3,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(3,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 3 er parcial del 1 er quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -92,10 +92,10 @@
                                                 
                                                 @endif
                                                 </td>
-                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0)}} 
+                                            <td> {{buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,1)}} 
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,1) != "SIN CARGAR TODAS")
                                                     <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -106,9 +106,9 @@
                                                 
                                                 @endif
                                             </td>
-                                            <td> {{buscar_calificacion_parcial(4,$estudiante->id,$id_periodo,0)}} 
+                                            <td> {{buscar_calificacion_parcial(4,$estudiante->id,$id_periodo,1)}} 
                                                 <br>
-                                             @if(buscar_calificacion_parcial(4,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                             @if(buscar_calificacion_parcial(4,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(4,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -122,9 +122,9 @@
                                                 @endif
 
                                             </td>
-                                            <td> {{buscar_calificacion_parcial(5,$estudiante->id,$id_periodo,0)}} 
+                                            <td> {{buscar_calificacion_parcial(5,$estudiante->id,$id_periodo,1)}} 
                                                 <br>
-                                             @if(buscar_calificacion_parcial(5,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                             @if(buscar_calificacion_parcial(5,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(5,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 2 do parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -136,10 +136,10 @@
                                                 
                                                 @endif
  </td>
-                                            <td> {{buscar_calificacion_parcial(6,$estudiante->id,$id_periodo,0)}}  
+                                            <td> {{buscar_calificacion_parcial(6,$estudiante->id,$id_periodo,1)}}  
                                                 <br>
 
-                                             @if(buscar_calificacion_parcial(6,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                             @if(buscar_calificacion_parcial(6,$estudiante->id,$id_periodo,1) != "SIN CARGAR")
                                                     <?php $id_parcial=buscar_id_parcial(6,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar la calificación del 1 er parcial del 2 do quimestre" onclick="window.location.href = '{{ route('parciales.show-rectificar-parcial',$id_parcial) }}'";>
@@ -151,10 +151,10 @@
                                                 
                                                 @endif
                                             </td>
-                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0)}}
+                                            <td> {{buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,1)}}
                                                 <br>
 
-                                                @if(buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0) != "SIN CARGAR")
+                                                @if(buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,1) != "SIN CARGAR TODAS")
                                                     <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
 
                                                     <button class="btn btn-primary" title="Rectificar el examen quimestral" onclick="window.location.href = '{{ route('parciales.show-rectificar-quimestral',$id_quimestral) }}'";>
@@ -170,11 +170,11 @@
                                             <td align="center">
                                                 <?php 
 
-                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0);
-                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0);
+                                                    $q1=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,1);
+                                                    $q2=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,1);
 
-                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,0);
-                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,0);
+                                                    $uno=buscar_calificacion_quimestre(1,$estudiante->id,$id_periodo,1);
+                                                    $dos=buscar_calificacion_quimestre(2,$estudiante->id,$id_periodo,1);
 
                                                     $suma=$uno+$dos;
 

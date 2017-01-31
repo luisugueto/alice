@@ -535,7 +535,7 @@ class ParcialesController extends Controller
         //dd($cuantos_q);
         $estudiantes=Estudiante::find($id);
 
-        $id_curso=buscar_curso($id);
+        $id_curso=buscar_curso($id,$id_periodo);
 
         
         /*$parciales=Parciales::where('id_estudiante',$estudiantes->id)->where('id_personal',$id_prof)->get();*/
@@ -611,7 +611,7 @@ class ParcialesController extends Controller
 
  
         $estudiantes=Estudiante::find($id);
-        $id_curso=buscar_curso($id);
+        $id_curso=buscar_curso($id,$id_periodo);
 
         
         $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
@@ -745,7 +745,7 @@ class ParcialesController extends Controller
              //dd($docentes);
 
         $estudiantes=Estudiante::find($id_estudiante);
-        $id_curso=buscar_curso($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
         $promedio_comp=Comportamiento::lists('literal','id');
 
         
@@ -788,7 +788,7 @@ class ParcialesController extends Controller
              //dd($docentes);
 
         $estudiantes=Estudiante::find($id_estudiante);
-        $id_curso=buscar_curso($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
         $promedio_comp=Comportamiento::lists('literal','id');
 
         
@@ -829,7 +829,7 @@ class ParcialesController extends Controller
              //dd($docentes);
 
         $estudiantes=Estudiante::find($id_estudiante);
-        $id_curso=buscar_curso($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
         $promedio_comp=Comportamiento::lists('literal','id');
 
         
@@ -1042,6 +1042,7 @@ class ParcialesController extends Controller
                 //verificar cuantos quimestres tiene
                 //verificar el numero del parcial primero
                 $quimestres=Quimestres::where('id_periodo',$id_periodo)->get();
+                
                 foreach ($quimestres as $q) {
                     $parciales=Parciales::where('id_quimestre',$q->id)->where('id_estudiante',$request->id_estudiante)->get();
                             $i=0;
@@ -1305,7 +1306,7 @@ class ParcialesController extends Controller
         $docentes=DB::select($sql2);
 
         $estudiantes=Estudiante::find($id_estudiante);
-        $id_curso=buscar_curso($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
         $promedio_comp=Comportamiento::lists('literal','id');
 
         
@@ -1370,7 +1371,7 @@ class ParcialesController extends Controller
 
                     $contador++;
                         //dd($docente->asignaturas);
-                    return View('parciales.calificaciones_cargadas',compact('docente','docentes','periodo','estudiantes'));
+                    return View('parciales.calificaciones_cargadas_coord',compact('docente','docentes','periodo','estudiantes'));
                 
                 }
                 

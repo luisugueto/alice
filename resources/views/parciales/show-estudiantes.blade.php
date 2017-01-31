@@ -9,6 +9,7 @@
         <div class="box">
             <div class="navbar navbar-inner block-header">
                 <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} ) </div>
+                <?php $id_periodo=Session::get('periodo'); ?>
             </div>
             <div class="block-content collapse in">
                 <div class="table-responsive">
@@ -33,7 +34,7 @@
                                         <td> {{ $estudiante->cedula }} </td>
                                         <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                         <td> {{ $estudiante->nombres }}</td>
-                                        <td> {{ buscar_curso2($estudiante->id) }} Secc: {{ buscar_seccion($estudiante->id) }}  </td>
+                                        <td> {{ buscar_curso2($estudiante->id,$id_periodo) }} Secc: {{ buscar_seccion($estudiante->id) }}  </td>
                                         <td>{{ buscar_dr($estudiante->id,2)  }}</td>
                                         <td>
                                             
