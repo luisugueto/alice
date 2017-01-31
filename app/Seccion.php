@@ -51,12 +51,17 @@ class Seccion extends Model
     }
     public function asignaturas(){
 
-        return $this->belongsToMany('App\Asignaturas','asignacion','id_seccion','id_asignatura')->withPivot('id_prof');
+        return $this->belongsToMany('App\Asignaturas','asignacion','id_seccion','id_asignatura')->withPivot('id_prof','id_periodo')->withTimestamps();
     }
 
     public function personal(){
 
-        return $this->belongsToMany('App\Personal','asignacion','id_seccion','id_prof')->withPivot('id_asignatura');
+        return $this->belongsToMany('App\Personal','asignacion','id_seccion','id_prof')->withPivot('id_asignatura','id_periodo')->withTimestamps();
+    }
+
+    public function periodos(){
+
+        return $this->belongsToMany('App\Periodos','asignacion','id_seccion','id_periodo')->withPivot('id_asignatura','id_prof')->withTimestamps();
     }
 
     public function personal_coordinacion(){

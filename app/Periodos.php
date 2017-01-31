@@ -67,4 +67,21 @@ class Periodos extends Model
 
         return $this->belongsToMany('App\TipoRecuperativos','calificacion_recuperativos','id_periodo','id_recuperativo')->withPivot('id_estudiante','calificacion')->withTimestamp();
     }
+
+    public function asignaturas(){
+
+        return $this->belongsToMany('App\Asignaturas','asignacion','id_periodo','id_asignatura')->withPivot('id_prof','id_seccion')->withTimestamps();
+    }
+
+    public function personal(){
+
+        return $this->belongsToMany('App\Personal','asignacion','id_periodo','id_prof')->withPivot('id_asignatura','id_seccion')->withTimestamps();
+    }
+
+    public function secciones(){
+
+        return $this->belongsToMany('App\Seccion','asignacion','id_periodo','id_seccion')->withPivot('id_prof','id_asignatura')->withTimestamps();
+    }
+
+
 }

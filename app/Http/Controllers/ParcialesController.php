@@ -687,6 +687,9 @@ class ParcialesController extends Controller
             $id_periodo=Session::get('periodo');
             $periodo=Periodos::find($id_periodo);
             $contador=0;
+            $quimestres=Quimestres::where('id_periodo',$id_periodo);
+            $cuantos_q=count($quimestres);
+            if($cuantos_q==2){
             foreach ($personal as $personal) {
 
                 
@@ -713,6 +716,9 @@ class ParcialesController extends Controller
                // Session::flash('message-error', 'DISCULPE, USTED NO PUEDE REALIZAR CARGA DE CALIFICACIONES');
                  return View('home');
             }
+        }else{
+            return View('home');
+        }
        
 
     }

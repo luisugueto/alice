@@ -48,12 +48,17 @@ class Personal extends Model
 
     public function asignaturas(){
 
-        return $this->belongsToMany('App\Asignaturas','asignacion','id_prof','id_asignatura')->withPivot('id_seccion')->withTimestamps();
+        return $this->belongsToMany('App\Asignaturas','asignacion','id_prof','id_asignatura')->withPivot('id_seccion','id_periodo')->withTimestamps();
     }
     
     public function secciones(){
 
-        return $this->belongsToMany('App\Seccion','asignacion','id_prof','id_seccion')->withPivot('id_asignatura')->withTimestamps();
+        return $this->belongsToMany('App\Seccion','asignacion','id_prof','id_seccion')->withPivot('id_asignatura','id_periodo')->withTimestamps();
+    }
+
+    public function periodos(){
+
+        return $this->belongsToMany('App\Periodos','asignacion','id_prof','id_periodo')->withPivot('id_asignatura','id_seccion')->withTimestamps();
     }
 
     public function secciones_coordinacion(){
