@@ -23,13 +23,14 @@
                             </thead>
                             <tbody>
                             @if($cuantos>0)
+
                                 @foreach($docentes2 as $doc)
                                     <tr>
                                         <td> {{$doc->curso}}</td>
                                         <td> {{$doc->literal}}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('parciales.show-estudiantes', $doc->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+                                            <a href="{{ route('parciales.mostrarcalificaciones_coord', $doc->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

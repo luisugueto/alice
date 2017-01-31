@@ -687,7 +687,7 @@ class ParcialesController extends Controller
             $id_periodo=Session::get('periodo');
             $periodo=Periodos::find($id_periodo);
             $contador=0;
-            $quimestres=Quimestres::where('id_periodo',$id_periodo);
+            $quimestres=Quimestres::where('id_periodo',$id_periodo)->get();
             $cuantos_q=count($quimestres);
             if($cuantos_q==2){
             foreach ($personal as $personal) {
@@ -1341,6 +1341,49 @@ class ParcialesController extends Controller
         $dompdf = \PDF::loadView('pdf.quimestre.index', ['parcial1' => $parcial1, 'parcial2' => $parcial2, 'parcial3' => $parcial3, 'buscar4' => $buscar4, 'asignaturas' => $asignaturas, 'id_curso' => $id_curso, 'estudiantes' => $estudiantes, 'docentes' => $docentes, 'buscar2' => $buscar2, 'periodo' => $periodo])->setPaper('a4', 'landscape');
 
         return $dompdf->stream();
+
+    }
+
+    public function mostrarcalificaciones_coord($id_seccion){
+
+            $personal=Personal::all();
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+            $quimestres=Quimestres::where('id_periodo',$id_periodo)->get();
+            $cuantos_q=count($quimestres);
+            if($cuantos_q==2){
+            foreach ($personal as $personal) {
+
+                
+                if($correo==$personal->correo){
+
+                    $docente=Personal::find($personal->id);
+                    $sql2="SELECT * FROM asignacion_coordinador WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." AND id_seccion=".$id_seccion."";
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+                    $sql="SELECT inscripciones.*,datos_generales_estudiante.*,cursos.curso,cursos.id AS id_curso,secciones.literal FROM cursos,secciones, inscripciones,datos_generales_estudiante WHERE inscripciones.id_seccion=secciones.id AND inscripciones.id_curso=cursos.id AND inscripciones.id_estudiante=datos_generales_estudiante.id AND inscripciones.id_periodo=".$id_periodo." AND secciones.id=".$id_seccion." ";
+                   //dd($sql);
+                   $estudiantes=DB::select($sql);
+
+
+                    $contador++;
+                        //dd($docente->asignaturas);
+                    return View('parciales.calificaciones_cargadas',compact('docente','docentes','periodo','estudiantes'));
+                
+                }
+                
+            }
+
+            if($contador==0){
+               // Session::flash('message-error', 'DISCULPE, USTED NO PUEDE REALIZAR CARGA DE CALIFICACIONES');
+                 return View('home');
+            }
+        }else{
+            return View('home');
+        }
+       
 
     }
 

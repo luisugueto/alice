@@ -120,7 +120,7 @@ class DocentesController extends Controller
                                 //BUSCANDO DE LOS ESTUDIANTES INSCRITOS SI SE LE HA CARGADO CALIFICACION
                                 foreach($buscar3 as $b){
 
-                                    $buscar4=DB::select("SELECT * FROM parciales WHERE id_estudiante=".$b->id_estudiante);
+                                    $buscar4=DB::select("SELECT * FROM parciales,calificacion_parcial WHERE parciales.id_estudiante=".$b->id_estudiante." AND calificacion_parcial.id_asignatura=".$b->id_asignatura);
                                     $contar+=count($buscar4);
                                 }
 

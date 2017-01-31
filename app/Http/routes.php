@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/asignaturas',['uses' => 'ParcialesController@asignaturas', 'as' => 'parciales.asignaturas']);
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
+	Route::get('parciales/{id_seccion}/mostrarcalificaciones_coord',['uses' => 'ParcialesController@mostrarcalificaciones_coord', 'as' => 'parciales.mostrarcalificaciones_coord']);
 	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
 	Route::get('parciales/showquimestre/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesquimestre', 'as' => 'parciales.showquimestre']);
 	Route::get('parciales/print/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdf', 'as' => 'parciales.pdf']);
