@@ -19,8 +19,8 @@
 
                         <div class="span12 text-center">
                             <div class="form-actions">
-                                <button type="reset" class="btn btn-primary">Borrar</button>
-                                <button type="submit" class="btn">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="reset" class="btn">Borrar</button>
                             </div>
                         </div>
                     </fieldset>

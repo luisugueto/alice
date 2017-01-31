@@ -1282,23 +1282,21 @@ class ParcialesController extends Controller
 
     public function pdfquimestre($i, $id_estudiante){
 
-            $correo=Auth::user()->email;
-            $personal=Personal::where('correo',$correo)->first();
-            $id_periodo=Session::get('periodo');
-            $periodo=Periodos::find($id_periodo);
-            $contador=0;
-                //buscando la seccion del estudiante
-                $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
-                //dd($seccion);
-                foreach ($seccion as $secc) {
-                    
-                
-                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
-                    //dd($sql2);
-                }
-                    $docentes=DB::select($sql2);
-            
-             //dd($docentes);
+        $correo=Auth::user()->email;
+        $personal=Personal::where('correo',$correo)->first();
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+        $contador=0;
+
+        $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
+
+        foreach ($seccion as $secc) {
+
+            $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
+
+        }
+
+        $docentes=DB::select($sql2);
 
         $estudiantes=Estudiante::find($id_estudiante);
         $id_curso=buscar_curso($id_estudiante);

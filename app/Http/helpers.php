@@ -195,7 +195,7 @@ use App\Seccion;
 	}
 
 	function pdf($id_estudiante){
-		//dd($id_estudiante);
+
 		$id_periodo=Session::get('periodo');
 
 		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
@@ -998,9 +998,9 @@ function buscar_id_seccion($id){
 
 		$buscar2=DB::select($sql);
 
-                    $cuantos=count($buscar2);
+        $cuantos=count($buscar2);
 
-                    return $cuantos;
+        return $cuantos;
 
 	}
 
@@ -1053,9 +1053,9 @@ function buscar_id_seccion($id){
 		}
 
 		//dd($id_periodo);
-		$quimestre=Quimestres::where('id_periodo',$id_periodo)->where('numero',$num)->first();
-		
-		$parciales=Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
+		$quimestre = Quimestres::where('id_periodo',$id_periodo)->where('numero', $num)->first();
+
+		$parciales = Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre', $quimestre->id)->get();
 
 		$cp=count($parciales);
 		//dd($parciales->all());//echo $cp;
@@ -1110,7 +1110,9 @@ function buscar_id_seccion($id){
 		return $nota;
 
 	}
-function buscar_id_parcial($i,$id_estudiante){
+
+	function buscar_id_parcial($i,$id_estudiante){
+
 		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
 
@@ -1711,3 +1713,20 @@ function buscar_id_quimestre($i,$id_estudiante){
 
 		return $periodoActivo; 
 	}
+
+    function buscarQuimestre($id)
+    {
+        $quimestre = Quimestres::find($id);
+
+        if ($quimestre->numero == 1) {
+
+            $a = "1ER QUIMESTRE";
+
+        } else {
+
+            $a = "2DO QUIMESTRE";
+
+        }
+
+        return $a;
+    }

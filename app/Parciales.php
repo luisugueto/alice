@@ -15,7 +15,7 @@ class Parciales extends Model
     protected $table = 'parciales';
 
     protected $fillable = [
-        'id_estudiante'/*, 'id_personal'*/,'id_quimestre','id_comportamiento','faltas_j','faltas_i','atrasos_j','atrasos_i','observaciones','avg_aprovechamiento'
+        'id_estudiante' ,'id_quimestre','id_comportamiento','faltas_j','faltas_i','atrasos_j','atrasos_i','observaciones','avg_aprovechamiento'
     ];
 
     /**

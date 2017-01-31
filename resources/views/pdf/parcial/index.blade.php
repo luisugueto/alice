@@ -24,7 +24,7 @@
 <body>
 	<div align="center" style="padding-top: -10px;">
 		<h3>ESCUELA DE EDUCACIÓN BÁSICA PARTICULAR</h3>
-		<h4 style="padding-top: -20px;">MARIA MONTESSORI</h4>
+		<h4 style="padding-top: -20px;">"MARÍA MONTESSORI"</h4>
 	</div>
 
 	<div style="padding-left: 60px; padding-top: -30px;">
