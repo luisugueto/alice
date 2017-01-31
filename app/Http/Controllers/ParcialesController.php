@@ -919,7 +919,7 @@ class ParcialesController extends Controller
             $docente=Personal::where('correo',$correo)->first();
 
             foreach ($estudiante as $est) {
-            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion);    
+            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion." AND id_periodo=".$id_periodo);    
             }
             //dd($mis_asignaturas);
             $asignaturas=Asignaturas::all();
@@ -1047,7 +1047,7 @@ class ParcialesController extends Controller
                             $i=0;
                         foreach ($parciales as $p) {
                             $i++;
-                             if($parciales->id==$request->id_parcial){
+                             if($p->id==$request->id_parcial){
                                     $posicion=$i;
                                     break;
                              }
@@ -1125,7 +1125,7 @@ class ParcialesController extends Controller
             $docente=Personal::where('correo',$correo)->first();
 
             foreach ($estudiante as $est) {
-            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion);    
+            $mis_asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$est->id_seccion." AND id_periodo=".$id_periodo);    
             }
             //dd($mis_asignaturas);
             $asignaturas=Asignaturas::all();
