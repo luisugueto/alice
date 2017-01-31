@@ -27,7 +27,7 @@
                                             <option value="E-">E</option>
                                         </select>
 
-                                        {!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del representante.', 'placeholder' => '25607932']) !!}
+                                        {!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del estudiante.', 'placeholder' => '25607932']) !!}
 
                                     </div>
                                 </div>

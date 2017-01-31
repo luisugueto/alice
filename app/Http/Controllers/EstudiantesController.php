@@ -573,14 +573,20 @@ class EstudiantesController extends Controller
      */
     public function update(EstudianteRequest $request, $id)
     {
+        $cedula = $request->nacionalidad_es.$request->cedula;
+
         if(!empty($request->foto))
         {
-
             $estudiante = Estudiante::find($id);
 
-            Storage::delete($estudiante->foto);
+            Storage::disk('estudiante')->delete($estudiante->foto);
 
             $estudiante->fill($request->all())->save();
+
+            $estudiante->foto = $request->foto;
+            $estudiante->cedula = $cedula;
+            $estudiante->save();
+
             $estudiante->medicos->fill($request->all())->save();
 
             Session::flash('message', 'ESTUDIANTE ACTUALIZADO EXITOSAMENTE');
@@ -592,6 +598,10 @@ class EstudiantesController extends Controller
             $estudiante = Estudiante::find($id);
 
             $estudiante->fill($request->all())->save();
+
+            $estudiante->cedula = $cedula;
+            $estudiante->save();
+
             $estudiante->medicos->fill($request->all())->save();
 
             Session::flash('message', 'ESTUDIANTE ACTUALIZADO EXITOSAMENTE');

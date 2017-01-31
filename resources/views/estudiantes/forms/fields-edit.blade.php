@@ -1,21 +1,21 @@
 <div class="tab-pane active" id="tab1">
 	<div class="box-body">
-		<div class="col-md-3">
+		<div>
 			<div class="form-group">
 	            @if($estudiante->foto == '')
-	                {{ Form::label('Foto', 'Perfil') }}
+	                {{ Form::label('Foto', 'FOTO') }}
 					<div class="form-group">
 	                	<img src="/../../img/ingresar.jpg" style="width: 200px; height: 200px;" id="img_prev">
 					</div>
 	            @else
-	            	{{ Form::label('Foto', 'Foto ') }}
+	            	{{ Form::label('Foto', 'FOTO') }}
 	            	<div class="form-group">
 	                	<img src="{{ asset('img/'.$estudiante->foto)}}" style="width: 200px; height: 200px;">
 	            	</div>
 	            @endif
 	        </div>
 	    </div>
-	    <div class="col-md-4">
+	    <div>
 	    	<div class="form-group">
 	        	<input type="file" name="foto" onchange="readURL(this)">
 	        </div>
@@ -26,12 +26,30 @@
 <div class="tab-pane" id="tab2">
 	<div class="span11">
 		<div class="span4">
-			<div class="control-group">
-				{!! Form::label('cedula', 'Cédula', ['class' => 'control-label']) !!}
-				<div class="controls{{ $errors->has('cedula') ? ' has-error' : '' }}">
-					{!! Form::text('cedula', $estudiante->cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
+			@if(trim($estudiante->cedula) == '')
+				<div class="control-group">
+					<label class="control-label">Nacionalidad</label>
+					<div class="controls">
+						<select id="select01" name="nacionalidad_es" class="chzn-select" style="width: 50px">
+							<option value="N-">N</option>
+							<option value="E-">E</option>
+						</select>
+					</div>
 				</div>
-			</div>
+				<div class="control-group">
+					<label class="control-label" for="select01">Cédula</label>
+					<div class="controls{{ $errors->has('cedula_re') ? ' has-error' : '' }}">
+						{!! Form::text('cedula', null, ['class' => 'form-control', 'title' => 'Ingrese el número de cédula del estudiante.', 'placeholder' => '25607932']) !!}
+					</div>
+				</div>
+			@else
+				<div class="control-group">
+					{!! Form::label('cedula', 'Cédula', ['class' => 'control-label']) !!}
+					<div class="controls{{ $errors->has('cedula') ? ' has-error' : '' }}">
+						{!! Form::text('cedula', trim($estudiante->cedula), ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
+					</div>
+				</div>
+			@endif
 			<div class="control-group">
 				{!! Form::label('apellido_paterno', 'Apellido paterno', ['class' => 'control-label']) !!}
 				<div class="controls{{ $errors->has('apellido_paterno') ? ' has-error' : '' }}">

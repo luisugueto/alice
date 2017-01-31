@@ -21,6 +21,7 @@ class CreateDatosGeneralesEstudianteTable extends Migration
             $table->string('apellido_paterno', 50);
             $table->string('apellido_materno', 50);
             $table->string('nombres', 25);
+            $table->string('nacionalidad_ced', 50);
             $table->string('cedula', 25);
             $table->date('fecha_nacimiento');
             $table->date('fecha_registro');
