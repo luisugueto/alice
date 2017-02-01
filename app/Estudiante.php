@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Estudiante extends Model
 {
-    protected $fillable = ['id_representante', 'foto', 'codigo_matricula', 'apellido_paterno', 'apellido_materno', 'nombres', 'cedula', 'fecha_nacimiento', 'fecha_registro', 'genero', 'estado_actual', 'fecha_registro', 'genero', 'estado_actual', 'tipo_registro', 'direccion', 'nacionalidad', 'provincia', 'ciudad_natal', 'telefono', 'correo'];
+    protected $fillable = ['id_representante', 'foto', 'codigo_matricula', 'apellido_paterno', 'apellido_materno', 'nombres', 'nacionalidad_ced', 'cedula', 'fecha_nacimiento', 'fecha_registro', 'genero', 'estado_actual', 'fecha_registro', 'genero', 'estado_actual', 'tipo_registro', 'direccion', 'nacionalidad', 'provincia', 'ciudad_natal', 'telefono', 'correo'];
 
     protected $table = 'datos_generales_estudiante';
 

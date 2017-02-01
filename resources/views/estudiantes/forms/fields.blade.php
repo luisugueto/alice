@@ -9,7 +9,9 @@
 			<div class="control-group">
 				{!! Form::label('cedula', 'Cédula', ['class' => 'control-label']) !!}
 				<div class="controls{{ $errors->has('cedula') ? ' has-error' : '' }}">
-					{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!} {!! Form::hidden('cedula', $cedula) !!}
+					{!! Form::text('cedula', $cedula, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '1784559961', 'title' => 'Introduzca la cédula del estudiante', 'disabled' => 'disabled']) !!}
+                    {!! Form::hidden('nacionalidad_ced', $nacionalidad_ced) !!}
+                    {!! Form::hidden('cedula', $cedula) !!}
 				</div>
 			</div>
 			<div class="control-group">

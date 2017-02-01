@@ -30,7 +30,7 @@
 				<div class="control-group">
 					<label class="control-label">Nacionalidad</label>
 					<div class="controls">
-						<select id="select01" name="nacionalidad_es" class="chzn-select" style="width: 50px">
+						<select id="select01" name="nacionalidad_ced" class="chzn-select" style="width: 50px">
 							<option value="N-">N</option>
 							<option value="E-">E</option>
 						</select>

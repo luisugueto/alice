@@ -75,9 +75,7 @@ class EstudiantesController extends Controller
                 $madre = Padres::find($request->madre);
             }
 
-            $cedula = $request->nacionalidad.$request->cedula;
-
-            $existe = Estudiante::where('cedula', $cedula)->exists();
+            $existe = Estudiante::where([['nacionalidad_ced', $request->nacionalidad], ['cedula', $request->cedula]])->exists();
 
             if($existe)
             {
@@ -90,7 +88,10 @@ class EstudiantesController extends Controller
     		  
                 $cursos = Cursos::lists('curso', 'id');
 
-                return view('estudiantes.create', compact('representante', 'padre', 'madre', 'cedula', 'cursos'));
+                $cedula = $request->cedula;
+                $nacionalidad_ced = $request->nacionalidad;
+
+                return view('estudiantes.create', compact('representante', 'padre', 'madre', 'nacionalidad_ced' , 'cedula', 'cursos'));
             }
 
     	}else{
@@ -573,7 +574,6 @@ class EstudiantesController extends Controller
      */
     public function update(EstudianteRequest $request, $id)
     {
-        $cedula = $request->nacionalidad_es.$request->cedula;
 
         if(!empty($request->foto))
         {
@@ -584,8 +584,14 @@ class EstudiantesController extends Controller
             $estudiante->fill($request->all())->save();
 
             $estudiante->foto = $request->foto;
-            $estudiante->cedula = $cedula;
             $estudiante->save();
+
+            if(!empty($request->nacionalidad_ced)){
+
+                $estudiante->nacionalidad_ced = $request->nacionalidad_ced;
+                $estudiante->cedula = $request->cedula;
+                $estudiante->save();
+            }
 
             $estudiante->medicos->fill($request->all())->save();
 
@@ -599,8 +605,12 @@ class EstudiantesController extends Controller
 
             $estudiante->fill($request->all())->save();
 
-            $estudiante->cedula = $cedula;
-            $estudiante->save();
+            if(!empty($request->nacionalidad_ced)){
+
+                $estudiante->nacionalidad_ced = $request->nacionalidad_ced;
+                $estudiante->cedula = $request->cedula;
+                $estudiante->save();
+            }
 
             $estudiante->medicos->fill($request->all())->save();
 

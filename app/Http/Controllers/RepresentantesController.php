@@ -45,9 +45,7 @@ class RepresentantesController extends Controller
      */
     public function create(CedulaRequest $request)
     {
-        $cedula_re = $request->nacionalidad.$request->cedula_re;
-
-        $representante = Representante::where('cedula_re', $cedula_re)->first();
+        $representante = Representante::where([['nacionalidad_ce', $request->nacionalidad], ['cedula_re', $request->cedula_re]])->first();
         
         if(!empty($request->cedula_pa))
         {
@@ -90,7 +88,10 @@ class RepresentantesController extends Controller
 
         }else{
 
-            return view('representantes.create', compact('cedula_re', 'padre', 'madre'));
+            $cedula_re = $request->cedula_re;
+            $nacionalidad_ce = $request->nacionalidad;
+
+            return view('representantes.create', compact('nacionalidad_ce', 'cedula_re', 'padre', 'madre'));
         }
 
     }

@@ -6,6 +6,7 @@
 		<div class="controls{{ $errors->has('cedula_re') ? ' has-error' : '' }}">
 			{!! Form::text('cedula_re', $cedula_re, ['class' => 'form-control', 'id' => 'dni_cedula', 'placeholder' => '178455996-9', 'title' => 'Introduzca la cédula del representante', 'disabled' => 'disabled']) !!}
 			{!! Form::hidden('cedula_re', $cedula_re) !!}
+			{!! Form::hidden('nacionalidad_ce', $nacionalidad_ce) !!}
 		</div>
 	</div>
 	<div class="control-group">
