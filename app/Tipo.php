@@ -26,4 +26,9 @@ class Tipo extends Model
     protected $hidden = [
         
     ];
+
+    public function cantidaddescuento()
+    {
+        return $this->hasMany('App\CantidadDescuento', 'id_tipoempleado', 'id');
+    }
 }

@@ -144,6 +144,7 @@ use App\Http\helpers;
                 <ul class="treeview-menu">
                     @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 1)
                     <li><a href="{{ route('periodos.index') }}">Activar Nuevo Periodo</a></li>
+                    
                     @endif
                     @if(Auth::user()->roles_id == 4)
                     <li><a href="{{ route('iess.index') }}">IESS</a></li>

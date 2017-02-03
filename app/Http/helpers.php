@@ -1432,7 +1432,7 @@ function buscar_id_seccion($id){
         	
 		$buscar2=DB::select($sql);
 		if(count($buscar2)>0){
-			$contar++;
+				$contar++;
 		}
 		}
 		//dd($total);

@@ -229,6 +229,9 @@
                                 <li>
                                     <a tabindex="-1" href="{{ route('tipo_empleado.index') }}">Tipo Empleado</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('descuentos.index') }}">Descuentos</a>
+                                </li>
                             @endif
                         </ul>
                     </li>

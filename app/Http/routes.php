@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('facturaciones', 'FacturacionesController');
 	Route::resource('periodos', 'PeriodosController');
+	Route::resource('descuentos','DescuentoController');
 
 	
 });

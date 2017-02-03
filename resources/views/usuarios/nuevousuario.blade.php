@@ -18,7 +18,7 @@
 
                             <div class="form-actions">
                             <button type="reset" class="btn btn-default btn-flat">Borrar</button>
-                            <button type="submit" class="btn btn-primary btn-flat">Actualizar</button>
+                            <button type="submit" class="btn btn-primary btn-flat">Registrar</button>
                         </div>
                     {!! Form::close() !!}
 
