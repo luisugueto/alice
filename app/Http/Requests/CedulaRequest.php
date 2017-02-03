@@ -25,7 +25,7 @@ class CedulaRequest extends Request
     {
 
         return [
-            'cedula_re' => 'required|digits:10'
+            'cedula_re' => 'required|digits_between:7,10'
         ];
     }
 }

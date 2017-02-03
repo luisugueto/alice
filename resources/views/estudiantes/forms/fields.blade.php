@@ -73,7 +73,7 @@
 			<div class="control-group">
 				{!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']) !!}
 				<div class="controls{{ $errors->has('telefono') ? ' has-error' : '' }}">
-					{!! Form::text('telefono', null, ['class' => 'form-control', 'title' => 'Introduzca el número de teléfono del estudiante', 'placeholder' => '', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+					{!! Form::text('telefono', null, ['class' => 'form-control', 'title' => 'Introduzca el número de teléfono del estudiante', 'placeholder' => '',  'id' => 'phone']) !!}
 				</div>
 			</div>
 		</div>

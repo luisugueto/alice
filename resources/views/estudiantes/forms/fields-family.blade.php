@@ -29,7 +29,7 @@
             <div class="control-group">
                 {!! Form::label('telefono_pa', 'Teléfono', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
-                    {!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
             <div class="control-group">

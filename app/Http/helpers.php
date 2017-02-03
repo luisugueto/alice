@@ -195,51 +195,43 @@ use App\Asignaturas;
 		return $cargar;
 	}
 
-	function pdf($id_estudiante){
-		$id_periodo = Session::get('periodo');
+	function pdf($i, $quimestre){
 
-		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
-		$total_quimestres=count($buscar_q);
+		if ($i == 1 OR $i == 4)
+		{
+		    if($quimestre == 1){
 
-		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
-		$cuantos=count($buscar_p);
-        //dd($cuantos);
+                $parcial = '1ER PARCIAL DEL 1ER QUIMESTRE';
 
-		if ($cuantos == 1 OR $cuantos == 4) {
-			
-			if($total_quimestres==0){
+            } else {
 
-				$b="PRIMER PARCIAL DEL 1ER QUIMESTRE";
-			
-			}else{
-				
-				$b="PRIMER PARCIAL DEL 2DO QUIMESTRE";
-			}
-			
-		} elseif($cuantos == 2 OR $cuantos == 5) {
-			
-			if($total_quimestres==0){
+		        $parcial = '1ER PARCIAL DEL 2DO QUIMESTRE';
+		    }
 
-				$b="SEGUNDO PARCIAL DEL 1ER QUIMESTRE";
-			
-			}else{
-				
-				$b="SEGUNDO PARCIAL DEL 2DO QUIMESTRE";
-			}
-		
-		} else {
+        } elseif ($i == 2 OR $i == 5) {
 
-			if($total_quimestres==0){
+            if($quimestre == 1){
 
-				$b="TERCER PARCIAL DEL 1ER QUIMESTRE";
-			
-			}else{
-				
-				$b="TERCER PARCIAL DEL 2DO QUIMESTRE";
-			}		
-		}
+                $parcial = '2DO PARCIAL DEL 1ER QUIMESTRE';
 
-		return $b;
+            } else {
+
+                $parcial = '2DO PARCIAL DEL 2DO QUIMESTRE';
+            }
+
+        } elseif ($i== 3 OR $i == 6) {
+
+            if($quimestre == 1){
+
+                $parcial = '3ER PARCIAL DEL 1ER QUIMESTRE';
+
+            } else {
+
+                $parcial = '3ER PARCIAL DEL 2DO QUIMESTRE';
+            }
+        }
+
+        return $parcial;
 	}
 
 	function cargas_completas($id_estudiante,$num)
@@ -570,7 +562,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		$id_seccion=buscar_id_seccion($id_estudiante);
 
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
-		
+
 		foreach ($asignaturas as $asig) {
 			
 			$id_periodo=Session::get('periodo');
