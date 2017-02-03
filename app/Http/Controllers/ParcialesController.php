@@ -801,8 +801,9 @@ class ParcialesController extends Controller
         $buscar2=Calificacion_parcial::where('id_parcial',$id_parcial)->get();
         $buscar3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial)->get();
         $buscar4=Parciales::find($id_parcial); 
-        
-        $dompdf = \PDF::loadView('pdf.parcial.index', ['buscar4' => $buscar4, 'buscar3' => $buscar3, 'asignaturas' => $asignaturas, 'id_curso' => $id_curso, 'estudiantes' => $estudiantes, 'docentes' => $docentes, 'categorias' => $categorias, 'buscar2' => $buscar2, 'promedio_comp' => $promedio_comp, 'periodo' => $periodo])->setPaper('a4', 'landscape');
+        $quimestre = $buscar4->quimestres->numero;
+
+        $dompdf = \PDF::loadView('pdf.parcial.index', ['buscar4' => $buscar4, 'buscar3' => $buscar3, 'asignaturas' => $asignaturas, 'id_curso' => $id_curso, 'estudiantes' => $estudiantes, 'docentes' => $docentes, 'categorias' => $categorias, 'buscar2' => $buscar2, 'promedio_comp' => $promedio_comp, 'periodo' => $periodo, 'i' => $i, 'quimestre' => $quimestre])->setPaper('a4', 'landscape');
 
         return $dompdf->stream();
     }
@@ -1142,52 +1143,52 @@ class ParcialesController extends Controller
 
     public function rectificacion2(Request $request)
     {
-            $id_periodo=Session::get('periodo');
-           //primero calcular el valor de 20% del examen
-            $nuevo_examenq20=$request->calificacion*20/100;
-            //buscar el quimestral para la asignatura de ese estudiante
-            $buscar2=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->where('id_asignatura',$request->id_asignatura)->first();
-            //actualizar el vallor del examen
-                $buscar2->examen_q=$request->calificacion;
-                $buscar2->examen_q20=$nuevo_examenq20;
-                $nuevo_avg_q_cuantitativa=$buscar2->avg_gp80+$nuevo_examenq20;
-                $buscar2->avg_q_cuantitativa=$nuevo_avg_q_cuantitativa;
+        $id_periodo=Session::get('periodo');
+        //primero calcular el valor de 20% del examen
+        $nuevo_examenq20=$request->calificacion*20/100;
+        //buscar el quimestral para la asignatura de ese estudiante
+        $buscar2=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->where('id_asignatura',$request->id_asignatura)->first();
+        //actualizar el vallor del examen
+        $buscar2->examen_q=$request->calificacion;
+        $buscar2->examen_q20=$nuevo_examenq20;
+        $nuevo_avg_q_cuantitativa=$buscar2->avg_gp80+$nuevo_examenq20;
+        $buscar2->avg_q_cuantitativa=$nuevo_avg_q_cuantitativa;
 
-             //----- actualizando calificacion cualitativa de la asignatura
-                         if($nuevo_avg_q_cuantitativa>=9 AND $nuevo_avg_q_cuantitativa<=10){
-                            $buscar2->id_equivalencia=1;
-                         }
-                         if($nuevo_avg_q_cuantitativa>=7 AND $nuevo_avg_q_cuantitativa<9){
-                            $buscar2->id_equivalencia=2;
-                         }
-                         if($nuevo_avg_q_cuantitativa>4 AND $nuevo_avg_q_cuantitativa<7){
-                            $buscar2->id_equivalencia=3;
-                         }
-                         if($nuevo_avg_q_cuantitativa>=1 AND $nuevo_avg_q_cuantitativa<=4){
-                            $buscar2->id_equivalencia=4;
-                         }
-                         //----------------------------------------
-                $buscar2->save();
-            //actualizar promedio general del parcial
-            $buscar3=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->get();
-                    $suma=0;
-                    foreach ($buscar3 as $b3) {
-                        $suma+=$b3->avg_q_cuantitativa;
-                    }
+        //----- actualizando calificacion cualitativa de la asignatura
+        if($nuevo_avg_q_cuantitativa>=9 AND $nuevo_avg_q_cuantitativa<=10){
+            $buscar2->id_equivalencia=1;
+        }
+        if($nuevo_avg_q_cuantitativa>=7 AND $nuevo_avg_q_cuantitativa<9){
+            $buscar2->id_equivalencia=2;
+        }
+        if($nuevo_avg_q_cuantitativa>4 AND $nuevo_avg_q_cuantitativa<7){
+            $buscar2->id_equivalencia=3;
+        }
+        if($nuevo_avg_q_cuantitativa>=1 AND $nuevo_avg_q_cuantitativa<=4){
+            $buscar2->id_equivalencia=4;
+        }
+        //----------------------------------------
+        $buscar2->save();
+        //actualizar promedio general del parcial
+        $buscar3=Calificacion_quimestre::where('id_quimestrales',$request->id_quimestrales)->get();
+        $suma=0;
+        foreach ($buscar3 as $b3) {
+            $suma+=$b3->avg_q_cuantitativa;
+        }
 
-                    $nuevo_avg_aprovechamiento_q=$suma/count($buscar3);
-                $buscar=Quimestrales::find($request->id_quimestrales);
+        $nuevo_avg_aprovechamiento_q=$suma/count($buscar3);
+        $buscar=Quimestrales::find($request->id_quimestrales);
 
-                    $buscar->sumatoria=$suma;
-                    $buscar->avg_aprovechamiento_q=$nuevo_avg_aprovechamiento_q;
+        $buscar->sumatoria=$suma;
+        $buscar->avg_aprovechamiento_q=$nuevo_avg_aprovechamiento_q;
 
-                    $buscar->save();
-
-
+        $buscar->save();
 
 
-            Session::flash('message', 'CALIFICACIÓN DEL EXAMEN QUIMESTRAL CORREGIDA EXITOSAMENTE');
-                     return redirect(route('parciales.index'));            
+
+        Session::flash('message', 'CALIFICACIÓN DEL EXAMEN QUIMESTRAL CORREGIDA EXITOSAMENTE');
+
+        return redirect(route('parciales.index'));
 
 
     }

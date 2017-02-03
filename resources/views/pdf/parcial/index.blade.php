@@ -29,7 +29,7 @@
 
 	<div style="padding-left: 60px; padding-top: -30px;">
 		<h5>LIBRETA DE CALIFICACIONES CORRESPONDIENTES AL</h5>
-		<h5 style="color: #1E90FF; padding-top: -20px;">{{ pdf($estudiantes->id) }} AÑO LECTIVO: {{ periodo($periodo->id) }}</h5>
+		<h5 style="color: #1E90FF; padding-top: -20px;">{{ pdf($i, $quimestre) }} AÑO LECTIVO: {{ periodo($periodo->id) }}</h5>
 		<h5 style="padding-top: -20px;"><strong>NOMBRE:</strong>  {{ strtoupper($estudiantes->apellido_paterno." ".$estudiantes->apellido_materno.", ".$estudiantes->nombres) }}</h5>
 	</div>
 
@@ -47,7 +47,7 @@
 				<th>ASIGNATURA</th>
 				@foreach($categorias as $categ)
 					<th style="width: 10px;height: 150px;" align="center" bgcolor="<?=$color[$j]?>" >
-						<div class="texto-vertical-2" style=""> 
+						<div class="texto-vertical-2" style="">
 							{{ strtoupper($categ->categoria) }}
 						</div>
 					</th>
@@ -66,7 +66,7 @@
 				@foreach($asignaturas as $asig)
 										
 					@if($id_asig==$asig->id)
-				 		<tr align="center">
+				 		<tr align="center" style="font-size: 12px;">
 
 							<td>{{ $i }}</td>
 							<td style="width: 200px;">{{ $asig->asignatura }}</td>
@@ -164,7 +164,7 @@
 							@endforeach
 							@endforeach
 
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="7"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
 								<td align="center"><div class="form-group">
 									<?php $avg_aprovechamiento=$suma/count($buscar3); $avg_aprovechamiento=number_format($avg_aprovechamiento,2,".",","); ?>
@@ -172,12 +172,12 @@
 								</td>
 								<td>&nbsp;</td>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="7"><strong>PROMEDIO DE COMPORTAMIENTO</strong></td>
 								<td colspan="2" align="center"><div class="form-group">{{ $buscar4->comportamiento->literal }}</div>
 								</td>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="2"><strong>OBSERVACIONES</strong></td>
 								<td colspan="7">
 									<div class="form-group">
@@ -185,29 +185,29 @@
 									</div>
 								</td>
 							</tr>
-							<tr>	
+							<tr style="font-size: 12px;">
 								<th colspan="6" align="left"><span style="color: #1E90FF;">EQUIVALENCIA DE CALIFICACIÓN</span></th>
 								<th colspan="3">FALTAS</th>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="5"><span style="color: #1E90FF;">DAR -</span> DOMINA APRENDIZAJE REQUERIDO</td>			
 								<td>9 - 10</td>
 								<td colspan="2"> <strong>JUSTIFICADAS</strong> </td>
 								<td align="center">{{ $buscar4->faltas_j }} </td>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="5"><span style="color: #1E90FF;">AAR -</span> ALCANZA APRENDIZAJE REQUERIDO</td>			
 								<td>7 - 8,99</td>
 								<td colspan="2"> <strong>INJUSTIFICADAS</strong> </td>
 								<td align="center">{{ $buscar4->faltas_i }} </td>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="5"><span style="color: #1E90FF;">PAAR -</span> PROX. ALCANZAR APRENDIZAJE REQUERIDO</td>			
 								<td>5 - 6,99</td>
 								<td colspan="2"> <strong>ATRASOS JUSTIFICADOS</strong> </td>
 								<td align="center">{{ $buscar4->atrasos_j }} </td>
 							</tr>
-							<tr>
+							<tr style="font-size: 12px;">
 								<td colspan="5"><span style="color: #1E90FF;">NAAR -</span> NO ALCANZA APRENDIZAJE REQUERIDO</td>			
 								<td>1 - 4</td>
 								<td colspan="2"> <strong>ATRASOS INJUSTIFICADOS</strong> </td>
@@ -215,7 +215,7 @@
 							</tr>
 						</tbody>
 					</table>
-		<div align="center" style="padding-top: 40px;">
+		<div align="center" style="padding-top: 40px; font-size: 12px;">
 			_________________________________
 			<br>
 			<strong>FIRMA DEL TUTOR DE GRADO</strong>

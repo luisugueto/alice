@@ -44,7 +44,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td><strong>NRO</strong></td>
 			<td><strong>ASIGNATURA</strong></td>
 			<td><strong>PRIMER</strong></td>
@@ -67,7 +67,7 @@
 					@if($id_asig==$asig->id)
 
 						<td>{{ $i }}</td>
-						<td>{{ $asig->asignatura }}</td>
+						<td align="left" style="font-size: 11px;">{{  strtr(strtoupper($asig->asignatura),"àèìòùáéíóúçñäëïöü","ÀÈÌÒÙÁÉÍÓÚÇÑÄËÏÖÜ") }}</td>
 
 						<?php $suma=0; ?>
 
@@ -134,14 +134,14 @@
 			</tr>
 		@endforeach
 
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"></td>
 			<td colspan="4"><strong>SUMATORIA DE PUNTOS</strong></td>
 			<td align="center" style="background-color: #b6b3c1;">{{ $sumatoria }}</td>
 			<td></td>
 		</tr>
 
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong></strong></td>
 			<td colspan="4"><strong>PROMEDIO DE APROVECHAMIENTO</strong></td>
 			<td align="center" style="background-color: #b6b3c1;">{{ $promedio }}</td>
@@ -149,14 +149,14 @@
 		</tr>
 
 
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong></strong></td>
 			<td colspan="4"><strong>COMPORTAMIENTO  ESTUDIANTIL</strong></td>
 			<td align="center" style="background-color: #b6b3c1;" >{{ $buscar4->comportamiento->literal }}</td>
 			<td></td>
 		</tr>
 		<tr>
-			<td colspan="11"><strong>RECOMENDACIONES</strong></td>
+			<td colspan="11" style="font-size: 11px;"><strong>RECOMENDACIONES</strong></td>
 		</tr>
 		<tr>
 			<td colspan="11">
@@ -167,39 +167,39 @@
 				@endif
 			</td>
 		</tr>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5" align="center"><strong>ASISTENCIA QUIMESTRAL DETALLADA</strong></td>
 			<td><strong>TOTAL DE FALTAS</strong></td>
 			<td colspan="5"></td>
 		</tr>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong>{{ $asistencia[0] }}</strong></td>
 			<td align="center">{{$buscar4->total_faltas_j}}</td>
 			<td colspan="5"></td>
 		</tr>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong>{{ $asistencia[1] }}</strong></td>
 			<td align="center">{{$buscar4->total_faltas_i}}</td>
 			<td colspan="5"></td>
 		</tr>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong>{{ $asistencia[2] }}</strong></td>
 			<td align="center">{{$buscar4->total_atrasos_j}}</td>
 			<td colspan="5"></td>
 		</tr>
-		<tr>
+		<tr style="font-size: 11px;">
 			<td colspan="5"><strong>{{ $asistencia[3] }}</strong></td>
 			<td align="center">{{$buscar4->total_atrasos_i}}</td>
 			<td colspan="5"></td>
 		</tr>
 	</tbody>
 </table>
-<div style="padding-top: 10px; width: 400px; text-align: center; padding-left: -110px;">
+<div style="padding-top: 10px; width: 400px; text-align: center; padding-left: -110px; font-size: 13px;">
 	____________________
 	<br>
 	DIRECTORA
 </div>
-<div style="padding-top: -38px; width: 400px; text-align: center; padding-left: 300px">
+<div style="padding-top: -38px; width: 400px; text-align: center; padding-left: 300px; font-size: 13px;">
 	____________________
 	<br>
 	DOCENTE

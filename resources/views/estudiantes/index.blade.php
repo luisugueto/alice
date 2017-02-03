@@ -81,12 +81,12 @@
         </div>
     </div>
 
+
+    <script type="text/javascript">
+
+        function estudiante(estudiante){
+            $('#estudiante').val(estudiante);
+        }
+
+    </script>
 @endsection
-
-<script type="text/javascript">
-
-    function estudiante(estudiante){
-        $('#estudiante').val(estudiante);
-    }
-
-</script>

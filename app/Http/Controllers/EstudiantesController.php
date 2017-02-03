@@ -159,59 +159,14 @@ class EstudiantesController extends Controller
 
         $foto = $request->file('foto');
 
-        $this->validate($request, 
-        [
-            'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'nacionalidad'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'genero'           => 'required',
-            'direccion'        => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'codigo_matricula' => 'required',
-            'apellido_materno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'provincia'        => 'required',
-            'estado_actual'    => 'required',
-            'telefono'         => 'required|digits_between:10,11',
-            'fecha_registro'   => 'required',
-            'nombres'          => 'required',
-            'ciudad_natal'     => 'required',
-            'tipo_registro'    => 'required',
-            'correo'           => 'required|unique:datos_generales_estudiante',
-            'fecha_nacimiento' => 'required',
-            //
-            'grupo_sanguineo'           => 'required',
-            'capacidad_especial'        => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'medicinas_contraindicadas' => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'alergico_a'                => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'patologia'                 => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            //
-            'detalles'                  => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            //
-            'codigo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'titulo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-            'digitalizado'              => 'dimensions:min_width=809,min_height=1138',
-
-        ]);
+        $this->validarEstudiante($request);
 
         if ($request->padre == 'on' AND $request->padre2 == 'on') 
         {
 
-            $this->validate($request, 
-            [
-                'cedula_pa'        => 'required|digits_between:8,10', 
-                'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'telefono_pa'      => 'required|digits_between:10,11',
-                'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
-                'nacionalidad_pa'  => 'required',
-                'cedula_ma'        => 'required|digits_between:8,10', 
-                'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                'telefono_ma'      => 'required|digits_between:10,11',
-                'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
-                'nacionalidad_ma'  => 'required'
-            ]);
-            
+            $this->validarPadre($request);
+            $this->validarMadre($request);
+
             $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
             $cedula_madre = $request->nacionalidad_madre.$request->cedula_ma;
 
@@ -245,16 +200,7 @@ class EstudiantesController extends Controller
 
                         if(!empty($padre))
                         {
-                            $this->validate($request, 
-                            [
-                                'cedula_pa'        => 'required|digits_between:8,10', 
-                                'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'telefono_pa'      => 'required|digits_between:10,11',
-                                'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
-                                'nacionalidad_pa'  => 'required'
-                            ]);
+                            $this->validarPadre();
 
                             $estudiante = Estudiante::create($request->all());
 
@@ -290,16 +236,7 @@ class EstudiantesController extends Controller
 
                         }else{
 
-                            $this->validate($request, 
-                            [
-                                'cedula_ma'        => 'required|digits_between:8,10', 
-                                'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                                'telefono_ma'      => 'required|digits_between:10,11',
-                                'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
-                                'nacionalidad_ma'  => 'required',
-                            ]);
+                            $this->validarMadre($request);
 
                             $estudiante = Estudiante::create($request->all());
 
@@ -369,16 +306,7 @@ class EstudiantesController extends Controller
 
             if($request->padre == 'on')
             {
-                $this->validate($request, 
-                [
-                    'cedula_pa'        => 'required|digits_between:8,10', 
-                    'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'telefono_pa'      => 'required|digits_between:10,11',
-                    'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
-                    'nacionalidad_pa'  => 'required'
-                ]);
+                $this->validarPadre($request);
 
                 if(!empty($padre))
                 {
@@ -438,16 +366,7 @@ class EstudiantesController extends Controller
 
             }else{
 
-                $this->validate($request, 
-                [
-                    'cedula_ma'        => 'required|digits_between:8,10', 
-                    'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
-                    'telefono_ma'      => 'required|digits_between:10,11',
-                    'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
-                    'nacionalidad_ma'  => 'required',
-                ]);
+                $this->validarPadre($request);
 
                 if(!empty($madre))
                 {
@@ -654,5 +573,65 @@ class EstudiantesController extends Controller
         $madre = $request->madre;
     
         return view('estudiantes.forms.fields-search', compact('cedula', 'representante', 'padre', 'madre'));
+    }
+
+    protected function validarPadre(Request $request){
+
+        $this->validate($request,
+            [
+                'cedula_pa'        => 'required|digits_between:8,10',
+                'nombres_pa'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'lugar_trabajo'    => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_pa'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'correo_pa'        => 'required|email|unique:datos_padres,correo_pa',
+                'nacionalidad_pa'  => 'required'
+            ]);
+    }
+
+    protected  function validarMadre(Request $request){
+
+        $this->validate($request,
+            [
+                'cedula_ma'        => 'required|digits_between:8,10',
+                'nombres_ma'       => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'lugar_trabajo_ma' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'direccion_ma'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'correo_ma'        => 'required|email|unique:datos_padres,correo_pa',
+                'nacionalidad_ma'  => 'required',
+            ]);
+    }
+
+    protected function validarEstudiante(Request $request){
+
+        $this->validate($request,
+            [
+                'apellido_paterno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'nacionalidad'     => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'genero'           => 'required',
+                'direccion'        => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'codigo_matricula' => 'required',
+                'apellido_materno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'provincia'        => 'required',
+                'estado_actual'    => 'required',
+                'fecha_registro'   => 'required',
+                'nombres'          => 'required',
+                'ciudad_natal'     => 'required',
+                'tipo_registro'    => 'required',
+                'correo'           => 'required|unique:datos_generales_estudiante',
+                'fecha_nacimiento' => 'required',
+                //
+                'grupo_sanguineo'           => 'required',
+                'capacidad_especial'        => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'medicinas_contraindicadas' => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'alergico_a'                => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'patologia'                 => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                //
+                'detalles'                  => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                //
+                'codigo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'titulo'                    => 'regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+                'digitalizado'              => 'dimensions:min_width=809,min_height=1138',
+
+            ]);
     }
 }

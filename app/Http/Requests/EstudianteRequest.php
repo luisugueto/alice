@@ -37,7 +37,6 @@ class EstudianteRequest extends Request
             'apellido_materno' => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'provincia'        => 'required',
             'estado_actual'    => 'required',
-            'telefono'         => 'required|digits_between:10,11',
             'fecha_registro'   => 'required',
             'nombres'          => 'required',
             'ciudad_natal'     => 'required',

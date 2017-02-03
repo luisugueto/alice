@@ -131,7 +131,7 @@
                                                         <span class="fa fa-plus" aria-hidden="true"></span> Rectificar
                                                         
                                                     </button>
-                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                <a href="{{ route('parciales.showparcial',[5,$estudiante->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
