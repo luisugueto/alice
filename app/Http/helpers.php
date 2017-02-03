@@ -196,17 +196,16 @@ use App\Asignaturas;
 	}
 
 	function pdf($id_estudiante){
-
-		$id_periodo=Session::get('periodo');
+		$id_periodo = Session::get('periodo');
 
 		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
 		$total_quimestres=count($buscar_q);
 
 		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
 		$cuantos=count($buscar_p);
+        //dd($cuantos);
 
-
-		if ($cuantos==1) {
+		if ($cuantos == 1 OR $cuantos == 4) {
 			
 			if($total_quimestres==0){
 
@@ -217,7 +216,7 @@ use App\Asignaturas;
 				$b="PRIMER PARCIAL DEL 2DO QUIMESTRE";
 			}
 			
-		} elseif($cuantos==2) {
+		} elseif($cuantos == 2 OR $cuantos == 5) {
 			
 			if($total_quimestres==0){
 
@@ -567,9 +566,11 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		$correo=Auth::user()->email;
 
 		$docente=Personal::where('correo',$correo)->first();
+
 		$id_seccion=buscar_id_seccion($id_estudiante);
 
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
+		
 		foreach ($asignaturas as $asig) {
 			
 			$id_periodo=Session::get('periodo');
@@ -1074,6 +1075,7 @@ function buscar_id_seccion($id){
 					//dd($asignaturas);
 					$suma=0;
 					$divide=0;
+
 					foreach ($subtotal as $sub) {
 						foreach ($asignaturas as $asig) {
 							if($asig->id_asignatura==$sub->id_asignatura){

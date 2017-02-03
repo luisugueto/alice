@@ -1057,11 +1057,13 @@ class ParcialesController extends Controller
                 //ya encontrada la posicion determinar que quimestre se debe actualizar
                 if ($posicion<=3) {
                     //en este caso el parcial corresponde al primer quimestre
-                   $id_quimestre=$quimestres=Quimestres::where('id_periodo',$id_periodo)->first();
+                   $quimestres=Quimestres::where('id_periodo',$id_periodo)->first();
+                    $id_quimestre=$quimestres->id;
 
                 } else {
                     // en este caso el parcial corresponde al segundo quimestre
-                    $id_quimestre=$quimestres=Quimestres::where('id_periodo',$id_periodo)->last();
+                    $quimestres=Quimestres::where('id_periodo',$id_periodo)->last();
+                    $id_quimestre=$quimestres->id;
 
                 }
                     $parciales2=Calificacion_parcial_subtotal::where('id_parcial',$request->id_parcial)->where('id_asignatura',$request->id_asignatura)->get();
@@ -1076,6 +1078,7 @@ class ParcialesController extends Controller
 
                         $quimestral=Quimestrales::where('id_estudiante',$request->id_estudiante)->where('id_quimestre',$id_quimestre)->first();
 
+                        //dd($quimestral);
                         $calq=Calificacion_quimestre::where('id_quimestrales',$quimestral->id)->where('id_asignatura',$request->id_asignatura)->first();
 
                         $calq->avg_gp=$nuevo_avg_gp;

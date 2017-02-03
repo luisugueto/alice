@@ -44,7 +44,7 @@
                                     <td class="text-center">
                                         <a href="{{ route('estudiantes.show', $estudiante->id) }}" class="btn btn-default btn-flat"><i class="icon-eye-open"></i></a>
                                         <a href="{{ route('estudiantes.edit', $estudiante->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
-                                        <a href="{{ route('estudiantes.destroy', $estudiante->id) }}" class="btn btn-danger btn-flat" onclick="estudiante({{ $estudiante->id }})" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
+                                        <a href="#" class="btn btn-danger btn-flat" onclick="estudiante({{ $estudiante->id }})" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
