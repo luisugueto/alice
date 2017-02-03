@@ -15,9 +15,9 @@ class CreateRetardoAsistenciaTable extends Migration
         Schema::create('retardo_asistencia', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_personal')->unsigned();
-            $table->date('fecha');
+            $table->integer('id_fecha_asistencia')->unsigned();
             $table->integer('retardo');
-
+            $table->foreign('id_fecha_asistencia')->references('id')->on('fechas_asistencias')->onDelete('cascade');
             $table->foreign('id_personal')->references('id')->on('datos_generales_personal')->onDelete('cascade');
             $table->timestamps();
         });

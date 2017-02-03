@@ -29,6 +29,7 @@
                                 <th>Capital</th>
                                 <th>Prestamos y Anticipos</th>
                                 <th>Minutos de Retardo Asistencia</th>
+                                <th>Descuento por Retardo</th>
                                 <th>Pago Total</th>
                             </tr>
                             </thead>
@@ -42,7 +43,8 @@
                                     <td>{{ remuneracion($per->id) }}</td>
                                     <td>{{ totalPrestamos($per->id) }}</td>
                                     <td>{{ retardoAsistencia($per->id) }}</td>
-                                    <td>{{ remuneracion($per->id)-totalPrestamos($per->id) }}</td>
+                                    <td>{{ retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id) }}</td>
+                                    <td>{{ (remuneracion($per->id)-totalPrestamos($per->id)-retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id)) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -8,6 +8,8 @@ use App\Calificacion_parcial_subtotal;
 use App\calificacion_quimestre;
 use App\Seccion;
 use App\Asignaturas;
+use App\CantidadDescuento;
+
 	function verificarPeriodo()
 	{
 		$periodo = Periodos::where('id', Session::get('periodo'))->first();
@@ -57,7 +59,8 @@ use App\Asignaturas;
 	function retardoAsistencia($id_personal)
 	{
 		$date = date("m");
-		$per = DB::select('SELECT *, sum(retardo) as suma FROM retardo_asistencia WHERE id_personal = '.$id_personal.' AND MONTH(fecha) = '.$date.'');
+		$per = DB::select('SELECT *, sum(a.retardo) as suma FROM retardo_asistencia as a INNER JOIN fechas_asistencias as f ON a.id_fecha_asistencia = f.id WHERE a.id_personal = '.$id_personal.' AND MONTH(f.fecha) = '.$date.'');
+
 
 		foreach ($per as $key) {
 			$suma = $key->suma;
@@ -1833,4 +1836,10 @@ function buscar_id_quimestre($i,$id_estudiante){
         }
 
         return $a;
+    }
+
+    function descuentosPersonal($id){
+    	$descuentos = CantidadDescuento::where('id_tipoempleado', $id)->first();
+
+    	return $descuentos->cantidad;
     }
