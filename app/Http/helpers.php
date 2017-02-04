@@ -502,7 +502,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		                		//dd($cargadas);
 		                		if ($cargadas==$cuantas) {
 
-		                			$cc+=$cuantos;
+		                			$cc+=1;
 		                		}
 					
 		                	}
@@ -516,7 +516,8 @@ function cargas_completas_quimestre($id_estudiante,$num)
             }
 
 
-            //echo $cc;
+            //dd($cc);
+           
             switch ($cc) {
             	case 0:
             		$cargar="1 er Parcial del 1 er Quimestre";
@@ -543,6 +544,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
             	
             	
             }
+            //dd($cargar);
 		return $cargar;
 	}
 
@@ -1054,7 +1056,8 @@ function buscar_id_seccion($id){
 		$parciales = Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre', $quimestre->id)->get();
 
 		$cp=count($parciales);
-		//dd($parciales->all());//echo $cp;
+		//dd($parciales->all());
+		//echo $cp;
 		if(count($parciales)>0 && $cuantos>0){
 			$j=0;
 			foreach ($parciales as $p) {
@@ -1156,22 +1159,24 @@ function buscar_id_seccion($id){
 		$parciales = Parciales::where('id_estudiante',$id_estudiante)->where('id_quimestre', $quimestre->id)->get();
 
 		$cp=count($parciales);
-		//dd($parciales->all());//echo $cp;
+		//dd($parciales->all());
+		//echo $cp;
 		if(count($parciales)>0 && $cuantos>0){
 			$j=0;
 			foreach ($parciales as $p) {
 				
 				$j++;
+				//echo $i;
 				if ($j==$i) {
-
+					
 					//$subtotal=Calificacion_parcial_subtotal::where('id_parcial',$p->id);
 					$subtotal=DB::select("SELECT * FROM calificacion_parcial_subtotal WHERE id_parcial=".$p->id);
-					//dd($asignaturas);
+					
 					$suma=0;
 					$divide=0;
 					foreach ($subtotal as $sub) {
 						foreach ($asignaturas as $asig) {
-							if($asig->id_asignatura==$sub->id_asignatura){
+							if($asig->id==$sub->id_asignatura){
 								//echo $suma;
 								$suma+=$sub->avg_total;
 								$divide++;
@@ -1427,25 +1432,25 @@ function buscar_id_seccion($id){
 				$contar++;
 		}
 		}
-		//dd($total);
+		//dd($contar);
 		$cuantos=count($buscar2);
 		//dd($id_periodo);
 
 		$quimestre=Quimestres::where('id_periodo',$id_periodo)->where('numero',$i)->first();
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->where('id_quimestre',$quimestre->id)->get();
 		if(count($quimestrales)>0 && $cuantos>0 && $contar==$total){
-			$j=0;
+			//$j=0;
 			foreach ($quimestrales as $q) {
 				
-				$j++;
-				if ($j==$i) {
+				//$j++;
+				//if ($j==$i) {
 						$suma=0;
 						$divide=0;
 					$subtotal=DB::select("SELECT * FROM calificacion_quimestre WHERE id_quimestrales=".$q->id);
 					foreach ($subtotal as $sub) {
 						foreach ($asignaturas as $asig) {
 							if($asig->id_asignatura == $sub->id_asignatura){
-								$suma+=$sub->avg_total;
+								$suma+=$sub->avg_q_cuantitativa;
 								$divide++;
 							}
 						}
@@ -1458,19 +1463,19 @@ function buscar_id_seccion($id){
 					$promedio=0;
 					}
 					break;
-				} 
+				//} 
 				
 			}
-			if ($j==$i) {
+			//if ($j==$i) {
 				if($promedio!=0){
 				$nota=$promedio;
 				}else{
 					$nota="SIN CARGAR TODAS";
 				}
 			
-			} else {
+			/*} else {
 				$nota="SIN CARGAR TODAS";
-			}
+			}*/
 			
 		}else{
 				$nota="SIN CARGAR TODAS";

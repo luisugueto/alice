@@ -183,9 +183,10 @@
                                                     
                                                     <div class="control-group">
                                                         <div class="controls">
+
                                                     <select name="accion" id="accion" class="input-xlarge select" title="SELECCIONE LA ACCIÓN QUE DESEA EJECUTAR" , style="width:10em" required="required">
                                                     <option value="">SELECCIONE</option>
-                                                     @if($q1!="SIN CARGAR" AND $q2!="SIN CARGAR" AND $nota!=0)
+                                                     @if($q1!="SIN CARGAR" AND $q2!="SIN CARGAR")
                                                         
                                                         <option value="1">REPORTE ANUAL</option>
 
