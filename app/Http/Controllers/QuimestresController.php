@@ -73,6 +73,10 @@ class QuimestresController extends Controller
           
         $inicio = explode("-", $request['inicio']);
         $fin = explode("-", $request['fin']);
+        $anio1=date("Y", strtotime($request['inicio']));
+        $anio2=date("Y", strtotime($request['fin']));
+        $periodo=Periodos::find($request->id_periodo);
+        //dd($anio);
 
         $encontrado=DB::select('SELECT * FROM quimestres WHERE 
             MONTH(inicio) = '.$inicio[1].' AND YEAR(fin) = '.$inicio[0].'
@@ -88,7 +92,7 @@ class QuimestresController extends Controller
                          Session::flash('message-error', 'NO SE PUEDE CREAR EL QUIMESTRE, DEBIDO A QUE YA EXISTE UNO CREADO PARA ESAS FECHAS');
                 
                 }else{
-
+                    if($anio1==$periodo->nombre and $anio2==$periodo->nombre){
                         $quimestres1=Quimestres::where('id_periodo',$request->id_periodo)->get();
                         $cuantos=count($quimestres1);
                         if($cuantos==0){
@@ -107,9 +111,11 @@ class QuimestresController extends Controller
                         }
 
 
-
+                    }else{
+                                    Session::flash('message-error', 'DISCULPE, LAS FECHAS NO COINCIDEN CON EL PERIODO SELECCIONADO');
+                    }
                          
-                
+                //--
                 }
 
             }

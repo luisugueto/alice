@@ -149,10 +149,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a tabindex="-1" href="{{ route('quimestres.create') }}">Quimestre</a>
+                                <a tabindex="-1" href="{{ route('quimestres.create') }}">Registrar</a>
                             </li>
                             <li>
-                                <a tabindex="-1" href="{{ route('quimestres.index') }}">Quimestres</a>
+                                <a tabindex="-1" href="{{ route('quimestres.index') }}">Listar</a>
                             </li>
                         </ul>
                     </li>
