@@ -41,4 +41,9 @@ class User extends Authenticatable
             //$this->attributes['password'] = \Hash::make($valor);
         }
     }
+
+    public function personal(){
+
+        return $this->hasOne('App\Personal', 'correo', 'email');
+    }
 }

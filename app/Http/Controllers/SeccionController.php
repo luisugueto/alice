@@ -141,20 +141,23 @@ class SeccionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $seccion = Seccion::find($request->id);
 
-        $buscar=DB::table('asignacion_bloques')->where('id_seccion',$id)->first();
-        if(count($buscar)>0){
-            Session::flash('message-error', 'NO SE PUEDE ELIMINAR LA SECCION DEBIDO A QUE YA EXISTE ASIGNADA EN UN HORARIO');
-            
-        }else{
-            $secciones=Seccion::find($id);
-            $secciones->delete();
-             Session::flash('message', 'SECCION ELIMINADA CORRECTAMENTE');
+        if($seccion->asignacion_b()->exists()){
+
+            Session::flash('message-error', 'NO SE PUEDE ELIMINAR LA SECCION DEBIDO A QUE YA ESTA ASIGNADA A UN HORARIO EN ALGÚN PERIODO');
+
+            return redirect()->back();
+
+        } else {
+
+            $seccion->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO LA SECCION '.$seccion->literal.' CORRECTAMENTE');
+
+            return redirect()->back();
         }
-
-        $seccion = Seccion::all();
-        return view("secciones.index", ['seccion'=>$seccion]);
     }
 }

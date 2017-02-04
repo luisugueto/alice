@@ -299,11 +299,32 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        User::destroy($id);
-        Session::flash('message', 'USUARIO ELIMINADO CORRECTAMENTE');
+        $usuario = User::find($request->id);
 
-        return redirect::to('/usuarios');
+        if($usuario->personal()->exists()){
+
+            Session::flash('message-error', 'EL USUARIO NO SE PUEDE ELIMINAR PORQUE POSEE UN PERSONAL ASOCIADO');
+
+            return redirect()->back();
+
+        } else {
+
+            if($usuario->roles_id == 1){
+
+                Session::flash('message-error', 'DISCULPE NO PUEDE ELIMINAR UN USUARIO ADMINISTRADOR SOLO PUEDE ACTUALIZAR SUS DATOS');
+
+                return redirect()->back();
+
+            } else {
+
+                $usuario->delete();
+
+                Session::flash('message', 'SE HA ELIMINADO EL USUARIO ' . $usuario->name . ' CORRECTAMENTE');
+
+                return redirect()->back();
+            }
+        }
     }
 }

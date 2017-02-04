@@ -28,8 +28,8 @@
                                     <td> {{ $asig->asignatura }} </td>
                                     <td> {{ $asig->curso }} </td>
                                     <td> {{ $asig->literal }}</td>
-                                    <td>
-                                        <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}" class="btn"><i class=" icon-refresh"></i></a>
+                                    <td style="text-align: center; width: 100px;">
+                                        <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}" class="btn"><i class="icon-arrow-up"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

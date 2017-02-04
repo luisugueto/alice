@@ -36,7 +36,7 @@
                                     <td>{{$aula->nombre}}</td>
                                     <td>{{$aula->created_at}}</td>
                                     <td>{{$aula->updated_at }}</td>
-                                    <td align="center">
+                                    <td style="text-align: center; width: 150px;">
                                         <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
                                         <a class="btn btn-danger btn-flat" onclick="codigo({{ $aula->id }})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
                                     </td>
@@ -57,7 +57,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Eliminar Personal</h4>
+                    <h4 class="modal-title">ELIMINAR AULA</h4>
                 </div>
                 <div class="modal-body">
                     ¿Esta seguro que desea eliminar esta aula en especifico?...
@@ -74,12 +74,13 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+
+        function codigo(codigo){
+            $('#codigo').val(codigo);
+        }
+
+    </script>
+
 @endsection
 
-<script type="text/javascript">
-
-    function codigo(codigo){
-        $('#codigo').val(codigo);
-    }
-
-</script>

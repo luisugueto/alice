@@ -66,6 +66,10 @@ class Personal extends Model
         return $this->belongsToMany('App\Seccion','asignacion_coordinador','id_prof','id_seccion')->withPivot('id_periodo')->withTimestamps();
     }
 
+    public function usuario(){
+
+        return $this->belongsTo('App\User', 'correo');
+    }
     
 
 

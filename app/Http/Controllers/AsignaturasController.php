@@ -159,8 +159,23 @@ class AsignaturasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $asignatura = Asignaturas::find($request->id);
+
+        if($asignatura->personal()->exists())
+        {
+            Session::flash('message-error', 'NO SE PUEDE ELIMINAR ESTA ASIGNATURA, POSEE CARGA A UN PERSONAL EN ALGÚN PERIODO');
+
+            return redirect()->back();
+
+        } else {
+
+            $asignatura->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO LA ASIGNATURA '.$asignatura->asignatura.' CORRECTAMENTE');
+
+            return redirect()->back();
+        }
     }
 }

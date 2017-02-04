@@ -120,8 +120,24 @@ class CargosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $cargo = Cargo::find($request->id);
+
+        if($cargo->personal()->exists()){
+
+            Session::flash('message-error', 'EL CARGO NO SE PUEDE ELIMINAR PORQUE POSEE PERSONAL EN ALGÚN PERIODO');
+
+            return redirect()->back();
+
+        } else {
+
+            $cargo->delete();
+
+            Session::flash('message', ' SE HA ELIMINADO EL CARGO '.$cargo->nombre.' CORRECTAMENTE.');
+
+            return redirect()->back();
+
+        }
     }
 }

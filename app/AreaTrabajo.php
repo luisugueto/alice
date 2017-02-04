@@ -24,4 +24,9 @@ class AreaTrabajo extends Model
     protected $hidden = [
         
     ];
+
+    public function cargos(){
+
+        return $this->hasMany('App\Cargo', 'id_area', 'id');
+    }
 }

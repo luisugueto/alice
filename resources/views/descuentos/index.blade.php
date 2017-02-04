@@ -35,9 +35,8 @@
                                 <tr>
                                     <td>{{ $desc->tipoempleado->tipo_empleado}}</td>
                                     <td>{{ $desc->cantidad}}</td>
-                                    <td class="text-center">
-                                        
-                                       <a href="{{ route('descuentos.edit',[$desc->id]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-edit"></i></a>
+                                    <td style="text-align: center; width: 150px;">
+                                       <a href="{{ route('descuentos.edit',[$desc->id]) }}" class="btn btn-primary" title="Ver calificaciones del parcial cargadas"><i class="icon-refresh icon-white"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

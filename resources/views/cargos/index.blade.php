@@ -33,9 +33,10 @@
                                 <tr>
                                     <td>{{ $cargo->nombre}}</td>
                                     <td>{{ $cargo->area->nombre}}</td>
-                                    <td class="text-center">
+                                    <td style="text-align: center; width: 150px;">
                                         @if($cargo->nombre!="DOCENTE DE PLANTA" AND $cargo->nombre!="DOCENTE ROTATIVO")
-                                            {!!link_to_route('cargos.edit', $title = '', $parameters = $cargo->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}
+                                            <a href="{{ route('cargos.edit', $cargo->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
+                                            <a class="btn btn-danger btn-flat" onclick="codigo({{ $cargo->id }})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
                                         @endif
                                     </td>
                                 </tr>
@@ -48,4 +49,35 @@
         </div>
     </div>
 
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ELIMINAR CARGO</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea eliminar este cargo en especifico?...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    {!! Form::open(['route' => ['cargos.destroy', 0133], 'method' => 'DELETE']) !!}
+                    {{ csrf_field() }}
+                    <input type="hidden" id="cargo" name="id">
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function codigo(cargo){
+            $('#cargo').val(cargo);
+        }
+
+    </script>
 @endsection

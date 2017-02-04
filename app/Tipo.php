@@ -31,4 +31,9 @@ class Tipo extends Model
     {
         return $this->hasMany('App\CantidadDescuento', 'id_tipoempleado', 'id');
     }
+
+    public function cargo(){
+
+        return $this->hasMany('App\Cargo', 'id_tipo_empleado', 'id');
+    }
 }

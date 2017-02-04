@@ -105,19 +105,23 @@ class TipoEmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $tipo = Tipo::find($request->id);
 
-        $buscar=Cargos::where('id_tipo_empleado',$id)->first();
-        $n=count($buscar);
-        if ($n>0) {
-            Session::flash('message-error', 'DISCULPE NO SE PUEDE ELIMINAR ESTE TIPO DE EMPLEADO YA HA SIDO REGISTRADO A UN CARGO');
-           
+        if($tipo->cargo()->exists()){
+
+            Session::flash('message-error', 'DISCULPE NO SE PUEDE ELIMINAR ESTE TIPO DE EMPLEADO DEBIDO A QUE YA HA SIDO REGISTRADO EN UN CARGO.');
+
+            return redirect()->back();
+
         } else {
-            $tipo_empleado->delete();
-           Session::flash('message', 'TIPO DE EMPLEADO ELIMINADO EXITOSAMENTE'); 
+
+            $tipo->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO EL TIPO DE EMPLEADO '.$tipo->tipo_empleado.' CORRECTAMENTE.');
+
+            return redirect()->back();
         }
-        $tipo_empleado=Tipo::all();
-        return redirect(route('tipo_empleado.index',compact('tipo_empleado')));
     }
 }

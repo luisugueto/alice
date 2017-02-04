@@ -20,7 +20,7 @@
                                 <th>Cédula</th>
                                 <th>Apellido(s)</th>
                                 <th>Nombre(s)</th>
-                                <th colspan="2">Estado</th>
+                                <th>Estado</th>
                                 <th>Pendiente por Cargar:</th>
                                 <th>Opciones</th>
                             </tr>

@@ -122,8 +122,23 @@ class RubrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $rubro = Rubros::find($request->id);
+
+        if($rubro->facturacion_rubros()->exists()){
+
+            Session::flash('message-error', 'RUBRO NO SE PUEDE ELIMINAR PORQUE POSSE FACTURACIÓN EN ALGÚN PERIODO.');
+
+            return redirect()->back();
+
+        } else {
+
+            $rubro->delete();
+
+            Session::flash('message', 'SE HA ELIMINADO EL RUBRO '.$rubro->nombre.' CORRECTAMENTE.');
+
+            return redirect()->back();
+        }
     }
 }

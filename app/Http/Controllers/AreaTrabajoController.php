@@ -104,11 +104,23 @@ class AreaTrabajoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        AreaTrabajo::destroy($id);
+        $area = AreaTrabajo::find($request->id);
 
-        $area = AreaTrabajo::all();
-        return view('areas.index', compact('area'));
+        if($area->cargos()->exists()){
+
+            Session::flash('message-error', 'AREA DE TRABAJO NO SE PUEDE ELIMINAR');
+
+            return redirect()->back();
+
+        } else {
+
+            $area->delete();
+
+            Session::flash('message', 'AREA DE TRABAJO '.$area->nomrbe.' ELIMINADA CORRECTAMENTE.');
+
+            return redirect()->back();
+        }
     }
 }
