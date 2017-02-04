@@ -35,7 +35,7 @@
                                     <td>{{$horario->curso}}</td>
                                     <td>{{$horario->literal}}</td>
                                     <td>{{$horario->nombre}}</td>
-                                    <td class="text-center">
+                                    <td style="text-align: center; width: 150px;">
                                         <a href="{{ route('horarios.show', $horario->id_seccion) }}" class="btn btn-default btn-flat"><i class="icon-eye-open"></i></a>
                                         <a href="{{ route('horarios.edit', $horario->id_seccion) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
                                     </td>
