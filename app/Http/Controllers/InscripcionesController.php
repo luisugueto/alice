@@ -49,7 +49,13 @@ class InscripcionesController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-        $id_periodo=Session::get('periodo');
+        $id_p=Session::get('periodo');
+
+        $periodo=Periodos::where('status','activo')->find($id_p);
+        $cuan_p=count($periodo);
+        if($cuan_p>0){
+            $id_periodo=$periodo->id;
+
         $curso=Cursos::find($request->id_curso);
         $seccion=Seccion::find($request->id_seccion);
         //para saber si es regular se debe buscar el estudiante en inscripciones  en algun periodo lectivo
@@ -85,6 +91,10 @@ class InscripcionesController extends Controller
                 }
         Session::flash('message', 'ESTUDIANTE INSCRITO EXITOSAMENTE EN EL CURSO '.$curso->curso.' EN LA SECCIÓN '.$seccion->literal);   
         return redirect('inscripciones');
+    }else{
+        Session::flash('message-error', 'DISCULPE, NO PUEDE REALIZAR LA INSCRIPCIÓN DEBIDO A QUE EL PERIODO CON EL QUE INICIO SESION NO SE ENCUENTRA ACTIVO');   
+        return redirect('inscripciones');
+    }
 
     }
 
@@ -112,7 +122,12 @@ class InscripcionesController extends Controller
      */
     public function edit($id)
     {
-        $id_periodo = Session::get('periodo');
+         $id_p=Session::get('periodo');
+
+        $periodo=Periodos::where('status','activo')->find($id_p);
+        $cuan_p=count($periodo);
+        if($cuan_p>0){
+            $id_periodo=$periodo->id;
         $buscar=Quimestrales::where('id_estudiante',$id)->first();
         $estudiantes=Estudiante::find($id);
         $encontrado=count($buscar);
@@ -147,6 +162,11 @@ class InscripcionesController extends Controller
 
           $periodo=Periodos::find($id_periodo);            
             return View('inscripciones.create',compact('estudiantes','periodo'));
+            }else{
+
+        Session::flash('message-error', 'DISCULPE, NO PUEDE REALIZAR LA INSCRIPCIÓN DEBIDO A QUE EL PERIODO CON EL QUE INICIO SESION NO SE ENCUENTRA ACTIVO');   
+        return redirect('inscripciones');
+    }
 
     }
     
