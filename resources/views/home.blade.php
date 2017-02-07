@@ -46,13 +46,14 @@
                     <!-- block -->
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
-                            <div class="muted pull-left">TAREA COMUNES (ACCESO RÁPIDO)</div>
+                            <div class="muted pull-left">TAREAS COMUNES (ACCESO RÁPIDO)</div>
                         </div>
                         <div class="block-content collapse in">
                             <li><a href="{{ route('docentes.index') }}">LISTADO DE DOCENTES</a></li>
                             <li><a href="{{ route('personal.index') }}">LISTADO DEL PERSONAL</a></li>
                             <li><a href="{{ route('estudiantes.index') }}">LISTADO DE ESTUDIANTES</a></li>
                             <li><a href="{{ url('personal/control_de_pagos') }}">CONTROL DE PAGOS MENSUAL</a></li>
+                            <li><a href="{{ url('personal/control_de_pagos') }}">CALCULO DE RETARDO</a></li>
                             <li><a href="{{ url('facturaciones') }}">LISTADO TOTAL DE FACTURACIONES</a></li>
                             <li><a href="#">LISTADO DEL MES ACTUAL DE FACTURACIONES</a></li>
                             <li><a href="{{ url('verificarPrestamos') }}">VERIFICAR PRÉSTAMO</a></li>
@@ -104,6 +105,26 @@
             </div>
     @endif
 
+   <!--
+    function calcular_tiempo_trasnc($hora1,$hora2){
+        $separar[1]=explode(':',$hora1);
+        $separar[2]=explode(':',$hora2);
+
+        $total_minutos_trasncurridos[1] = ($separar[1][0]*60)+$separar[1][1];
+        $total_minutos_trasncurridos[2] = ($separar[2][0]*60)+$separar[2][1];
+        $total_minutos_trasncurridos = $total_minutos_trasncurridos[1]-$total_minutos_trasncurridos[2];
+        if($total_minutos_trasncurridos<=59) return($total_minutos_trasncurridos.' Minutos');
+        elseif($total_minutos_trasncurridos>59){
+            $HORA_TRANSCURRIDA = round($total_minutos_trasncurridos/60);
+            if($HORA_TRANSCURRIDA<=9) $HORA_TRANSCURRIDA='0'.$HORA_TRANSCURRIDA;
+            $MINUITOS_TRANSCURRIDOS = $total_minutos_trasncurridos%60;
+            if($MINUITOS_TRANSCURRIDOS<=9) $MINUITOS_TRANSCURRIDOS='0'.$MINUITOS_TRANSCURRIDOS;
+            return ($HORA_TRANSCURRIDA.':'.$MINUITOS_TRANSCURRIDOS.' Horas');
+
+        } }
+    //llamamos la función e imprimimos
+    echo calcular_tiempo_trasnc('13:00', '06:30');
+    -->
 @endsection
 
 @section('scripts')

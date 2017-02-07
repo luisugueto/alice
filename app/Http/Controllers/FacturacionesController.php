@@ -40,10 +40,9 @@ class FacturacionesController extends Controller
 		 */
 		public function create(CedulaEstudianteRequest $request)
 		{
-				$cedula = $request->nacionalidad.$request->cedula;
 
-				$estudiante = Estudiante::where('cedula', $cedula)->first();
- 
+				$estudiante = Estudiante::where([['nacionalidad_ced', $request->nacionalidad], ['cedula', $request->cedula]])->first();
+
 				if(!empty($estudiante))
 				{
 						$cursos = Cursos::lists('curso', 'id');
