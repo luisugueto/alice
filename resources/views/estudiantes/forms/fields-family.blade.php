@@ -64,13 +64,13 @@
             <div class="control-group">
                 {!! Form::label('cedula_pa', 'Cédula', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('cedula_pa') ? ' has-error' : '' }}">
-                    {!! Form::text('cedula_pa', $padre->cedula_pa, ['class' => 'form-control', 'placeholder' => '1784559961', 'tittle' => 'Introduzca la cédula del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::text('cedula_pa', $padre->cedula_pa, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
             <div class="control-group">
                 {!! Form::label('nombres_pa', 'Nombres', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('nombres_pa') ? ' has-error' : '' }}">
-                    {!! Form::text('nombres_pa', null, ['class' => 'form-control', 'placeholder' => 'Jésus Eduardo', 'title' => 'Introduzca los nombres del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::text('nombres_pa', $padre->nombres_pa, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
         </div>
@@ -78,19 +78,19 @@
             <div class="control-group">
                 {!! Form::label('telefono_pa', 'Teléfono', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('telefono_pa') ? ' has-error' : '' }}">
-                    {!! Form::text('telefono_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca el teléfono del padre o madre', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::text('telefono_pa', $padre->telefono_pa, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
             <div class="control-group">
                 {!! Form::label('nivel_educacion', 'Educación', ['class' => 'control-label']) !!}
                 <div class="controls">
-                    {!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'tittle' => 'Seleccione el nivel de educación del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::select('nivel_educacion', array('Educación General Básica' => 'Educación General Básica', 'Bachillerato General Unificado' => 'Bachillerato General Unificado', 'Universidad' => 'Universidad'), $padre->nivel_educacion, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
             <div class="control-group">
                 {!! Form::label('correo_pa', 'Correo', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('correo_pa') ? ' has-error' : '' }}">
-                    {!! Form::email('correo_pa', null, ['class' => 'form-control', 'placeholder' => 'ejemplo@ejemplo.com', 'title' => 'Introduzca el correo del padre o madre', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::email('correo_pa', $padre->correo_pa, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
         </div>
@@ -98,15 +98,16 @@
             <div class="control-group">
                 {!! Form::label('lugar_trabajo', 'Lugar trabajo', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('lugar_trabajo') ? ' has-error' : '' }}">
-                    {!! Form::textarea('lugar_trabajo', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección de trabajo del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::textarea('lugar_trabajo', $padre->lugar_trabajo, ['class' => 'form-control', 'rows' => '3', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
             <div class="control-group">
                 {!! Form::label('direccion_pa', 'Dirección', ['class' => 'control-label']) !!}
                 <div class="controls{{ $errors->has('direccion_pa') ? ' has-error' : '' }}">
-                    {!! Form::textarea('direccion_pa', null, ['class' => 'form-control', 'placeholder' => '', 'title' => 'Introduzca la dirección del padre o madre', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()', 'id' => 'padre', 'disabled' => 'disabled']) !!}
+                    {!! Form::textarea('direccion_pa', $padre->direccion_pa, ['class' => 'form-control', 'rows' => '3', 'disabled' => 'disabled']) !!}
                 </div>
             </div>
         </div>
+        {!! Form::hidden('padre_id', $padre->id) !!}
     @endif
 </div>

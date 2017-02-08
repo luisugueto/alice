@@ -47,7 +47,7 @@
 		<div class="control-group">
 			{!! Form::label('altura', 'Altura', ['class' => 'control-label']) !!}
 			<div class="controls">
-				{!! Form::number('altura', null, ['class' => 'form-control', 'title' => 'Introduzca la altura del estudiante', 'placeholder' => '1.60']) !!}
+				{!! Form::number('altura', null, ['class' => 'form-control', 'title' => 'Introduzca la altura del estudiante', 'placeholder' => '1.60', 'step' => 'any']) !!}
 			</div>
 		</div>
 		<div class="control-group">

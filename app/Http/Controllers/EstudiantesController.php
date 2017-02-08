@@ -80,7 +80,7 @@ class EstudiantesController extends Controller
             if($existe)
             {
 
-                Session::flash('message-error', 'ESTUDIANTE CON NÚMERO DE CÉDULA '.$cedula.' YA SE ENCUENTRA REGISTRADO');
+                Session::flash('message-error', 'ESTUDIANTE CON NÚMERO DE CÉDULA '.$request->cedula.' YA SE ENCUENTRA REGISTRADO');
 
                 return redirect('estudiantes');
 
@@ -161,17 +161,15 @@ class EstudiantesController extends Controller
 
         $this->validarEstudiante($request);
 
+
         if ($request->padre == 'on' AND $request->padre2 == 'on') 
         {
 
             $this->validarPadre($request);
             $this->validarMadre($request);
 
-            $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
-            $cedula_madre = $request->nacionalidad_madre.$request->cedula_ma;
-
-            $padre = Padres::where('cedula_pa', $cedula_padre)->first();
-            $madre = Padres::where('cedula_pa', $cedula_madre)->first();
+            $padre = Padres::where([['nacionalidad_pa', $request->nacionalidad_pa], ['cedula_pa', $request->cedula_pa]])->first();
+            $madre = Padres::where([['nacionalidad_pa', $request->nacionalidad_ma], ['cedula_pa', $request->cedula_ma]])->first();
 
                 if(!empty($padre) AND !empty($madre))
                 {
@@ -196,87 +194,28 @@ class EstudiantesController extends Controller
 
                     return redirect('estudiantes');
                 
-                    }elseif(!empty($padre) OR !empty($madre)){
+                }elseif(!empty($padre) OR !empty($madre)){
 
-                        if(!empty($padre))
-                        {
-                            $this->validarPadre();
-
-                            $estudiante = Estudiante::create($request->all());
-
-                            $padre = new Padres;
-
-                            $padre->cedula_pa = $request->cedula_pa;
-                            $padre->nombres_pa = $request->nombres_pa;
-                            $padre->lugar_trabajo = $request->lugar_trabajo;
-                            $padre->direccion_pa = $request->direccion_pa;
-                            $padre->telefono_pa = $request->telefono_pa;
-                            $padre->correo_pa = $request->nacionalidad_pa;
-                            $padre->nivel_educacion = $request->nivel_educacion;
-                            $padre->save();
-
-                            $padre->estudiante()->attach($estudiante);
-                            $madre->estudiante()->attach($estudiante);
-
-                            $medicos = new DatosMedico;
-                            $medicos->id_estudiante = $estudiante->id;
-                            $medicos->grupo_sanguineo = $request->grupo_sanguineo;
-                            $medicos->peso = $request->peso;
-                            $medicos->altura = $request->altura;
-                            $medicos->capacidad_especial = $capacidad_especial;
-                            $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
-                            $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
-                            $medicos->alergico_a = $alergico_a;
-                            $medicos->patologia = $patologia;
-                            $medicos->save();
-            
-                            Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
-
-                            return redirect('estudiantes');
-
-                        }else{
-
-                            $this->validarMadre($request);
-
-                            $estudiante = Estudiante::create($request->all());
-
-                            $madre = new Padres;
-
-                            $madre->cedula_pa = $request->cedula_ma;
-                            $madre->nombres_pa = $request->nombres_ma;
-                            $madre->lugar_trabajo = $request->lugar_trabajo_ma;
-                            $madre->direccion_pa = $request->direccion_ma;
-                            $madre->telefono_pa = $request->telefono_ma;
-                            $madre->correo_pa = $request->nacionalidad_ma;
-                            $madre->nivel_educacion = $request->nivel_educacion_ma;
-                            $madre->save();
-
-                            $madre->estudiante()->attach($estudiante);
-                            $padre->estudiante()->attach($estudiante);
-
-                            $medicos = new DatosMedico;
-                            $medicos->id_estudiante = $estudiante->id;
-                            $medicos->grupo_sanguineo = $request->grupo_sanguineo;
-                            $medicos->peso = $request->peso;
-                            $medicos->altura = $request->altura;
-                            $medicos->capacidad_especial = $capacidad_especial;
-                            $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
-                            $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
-                            $medicos->alergico_a = $alergico_a;
-                            $medicos->patologia = $patologia;
-                            $medicos->save();
-
-                            Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
-
-                            return redirect('estudiantes');
-                        }
-
-                    }else{
+                    if(!empty($padre))
+                    {
+                        $this->validarPadre();
 
                         $estudiante = Estudiante::create($request->all());
-                        
-                        $madre->estudiante()->attach($estudiante);
+
+                        $madre = new Padres;
+
+                        $madre->cedula_pa       = $request->cedula_ma;
+                        $madre->nombres_pa      = $request->nombres_ma;
+                        $madre->lugar_trabajo   = $request->lugar_trabajo_ma;
+                        $madre->direccion_pa    = $request->direccion_ma;
+                        $madre->telefono_pa     = $request->telefono_ma;
+                        $madre->correo_pa       = $request->correo_ma;
+                        $madre->nacionalidad_pa = $request->nacionalidad_ma;
+                        $madre->nivel_educacion = $request->nivel_educacion_ma;
+                        $madre->save();
+
                         $padre->estudiante()->attach($estudiante);
+                        $madre->estudiante()->attach($estudiante);
 
                         $medicos = new DatosMedico;
                         $medicos->id_estudiante = $estudiante->id;
@@ -289,31 +228,84 @@ class EstudiantesController extends Controller
                         $medicos->alergico_a = $alergico_a;
                         $medicos->patologia = $patologia;
                         $medicos->save();
+            
+                        Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                        return redirect('estudiantes');
+
+                    }else{
+
+                        $this->validarMadre($request);
+
+                        $estudiante = Estudiante::create($request->all());
+
+                        $padre = new Padres;
+
+                        $padre->cedula_pa       = $request->cedula_pa;
+                        $padre->nombres_pa      = $request->nombres_pa;
+                        $padre->lugar_trabajo   = $request->lugar_trabajo;
+                        $padre->direccion_pa    = $request->direccion_pa;
+                        $padre->telefono_pa     = $request->telefono_pa;
+                        $padre->correo_pa       = $request->correo_pa;
+                        $padre->nacionalidad_pa = $request->nacionalidad_pa;
+                        $padre->nivel_educacion = $request->nivel_educacion;
+                        $padre->save();
+
+
+                        $medicos = new DatosMedico;
+                        
+                        $medicos->id_estudiante = $estudiante->id;
+                        $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                        $medicos->peso = $request->peso;
+                        $medicos->altura = $request->altura;
+                        $medicos->capacidad_especial = $capacidad_especial;
+                        $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                        $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                        $medicos->alergico_a = $alergico_a;
+                        $medicos->patologia = $patologia;
+                        $medicos->save();
+
+                        $madre->estudiante()->attach($estudiante);
+                        $padre->estudiante()->attach($estudiante);
 
                         Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
 
                         return redirect('estudiantes');
                     }
 
-        }elseif($request->padre == 'on' OR $request->padre2 == 'on'){
+                }else{
 
-            $cedula_padre = $request->nacionalidad_padre.$request->cedula_pa;
-            $cedula_madre = $request->nacionalidad_madre.$request->cedula_ma;
-
-            $padre = Padres::where('cedula_pa', $cedula_padre)->first();
-            $madre = Padres::where('cedula_pa', $cedula_madre)->first();
-
-
-            if($request->padre == 'on')
-            {
-                $this->validarPadre($request);
-
-                if(!empty($padre))
-                {
                     $estudiante = Estudiante::create($request->all());
+                        
+                    $madre = new Padres;
+
+                    $madre->cedula_pa       = $request->cedula_ma;
+                    $madre->nombres_pa      = $request->nombres_ma;
+                    $madre->lugar_trabajo   = $request->lugar_trabajo_ma;
+                    $madre->direccion_pa    = $request->direccion_ma;
+                    $madre->telefono_pa     = $request->telefono_ma;
+                    $madre->correo_pa       = $request->correo_ma;
+                    $madre->nacionalidad_pa = $request->nacionalidad_ma;
+                    $madre->nivel_educacion = $request->nivel_educacion_ma;
+                    $madre->save();
+
+                    $padre = new Padres;
+
+                    $padre->cedula_pa       = $request->cedula_pa;
+                    $padre->nombres_pa      = $request->nombres_pa;
+                    $padre->lugar_trabajo   = $request->lugar_trabajo;
+                    $padre->direccion_pa    = $request->direccion_pa;
+                    $padre->telefono_pa     = $request->telefono_pa;
+                    $padre->correo_pa       = $request->correo_pa;
+                    $padre->nacionalidad_pa = $request->nacionalidad_pa;
+                    $padre->nivel_educacion = $request->nivel_educacion;
+                    $padre->save();
+
+                    $madre->estudiante()->attach($estudiante);
                     $padre->estudiante()->attach($estudiante);
 
                     $medicos = new DatosMedico;
+                    
                     $medicos->id_estudiante = $estudiante->id;
                     $medicos->grupo_sanguineo = $request->grupo_sanguineo;
                     $medicos->peso = $request->peso;
@@ -328,21 +320,69 @@ class EstudiantesController extends Controller
                     Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
 
                     return redirect('estudiantes');
-                
+                }
+
+        }elseif($request->padre == 'on' OR $request->padre2 == 'on'){
+
+            $padre = Padres::where([['nacionalidad_pa', $request->nacionalidad_pa], ['cedula_pa', $request->cedula_pa]])->first();
+            $madre = Padres::where([['nacionalidad_pa', $request->nacionalidad_ma], ['cedula_pa', $request->cedula_ma]])->first();
+
+            if($request->padre == 'on')
+            {
+                $this->validarPadre($request);
+
+                if(!empty($padre))
+                {
+                    $estudiante = Estudiante::create($request->all());
+                    
+                    if (!empty($request->madre_id))
+                    {
+                        $madre = Padres::find($request->madre_id);
+                        $madre->estudiante()->attach($estudiante);
+                    }
+                    
+                    $padre->estudiante()->attach($estudiante);
+
+                    $medicos = new DatosMedico;
+                    
+                    $medicos->id_estudiante = $estudiante->id;
+                    $medicos->grupo_sanguineo = $request->grupo_sanguineo;
+                    $medicos->peso = $request->peso;
+                    $medicos->altura = $request->altura;
+                    $medicos->capacidad_especial = $capacidad_especial;
+                    $medicos->porcentaje_discapacidad = $porcentaje_discapacidad;
+                    $medicos->medicinas_contraindicadas = $medicinas_contraindicadas;
+                    $medicos->alergico_a = $alergico_a;
+                    $medicos->patologia = $patologia;
+                    $medicos->save();
+
+                    Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
+
+                    return redirect('estudiantes');
+        
+
                 }else{
 
                     $estudiante = Estudiante::create($request->all());
 
+                    if (!empty($request->madre_id))
+                    {
+                        $madre = Padres::find($request->madre_id);
+                        $madre->estudiante()->attach($estudiante);
+                    }
+
                     $padre = new Padres;
 
-                    $padre->cedula_pa = $request->cedula_pa;
-                    $padre->nombres_pa = $request->nombres_pa;
-                    $padre->lugar_trabajo = $request->lugar_trabajo;
-                    $padre->direccion_pa = $request->direccion_pa;
-                    $padre->telefono_pa = $request->telefono_pa;
-                    $padre->correo_pa = $request->nacionalidad_pa;
+                    $padre->cedula_pa       = $request->cedula_pa;
+                    $padre->nombres_pa      = $request->nombres_pa;
+                    $padre->lugar_trabajo   = $request->lugar_trabajo;
+                    $padre->direccion_pa    = $request->direccion_pa;
+                    $padre->telefono_pa     = $request->telefono_pa;
+                    $padre->correo_pa       = $request->correo_pa;
+                    $padre->nacionalidad_pa = $request->nacionalidad_pa;
                     $padre->nivel_educacion = $request->nivel_educacion;
                     $padre->save();
+
 
                     $padre->estudiante()->attach($estudiante);
 
@@ -366,14 +406,23 @@ class EstudiantesController extends Controller
 
             }else{
 
-                $this->validarPadre($request);
+                $this->validarMadre($request);
 
                 if(!empty($madre))
                 {
                     $estudiante = Estudiante::create($request->all());
+
+                    if (!empty($request->padre_id))
+                    {
+                        $padre = Padres::find($request->padre_id);
+                        $padre->estudiante()->attach($estudiante);
+                    }
+                    
                     $madre->estudiante()->attach($estudiante);  
 
-                    $medicos = new DatosMedico;                        $medicos->id_estudiante = $estudiante->id;
+                    $medicos = new DatosMedico;                        
+
+                    $medicos->id_estudiante = $estudiante->id;
                     $medicos->grupo_sanguineo = $request->grupo_sanguineo;
                     $medicos->peso = $request->peso;
                     $medicos->altura = $request->altura;
@@ -392,14 +441,21 @@ class EstudiantesController extends Controller
 
                     $estudiante = Estudiante::create($request->all());
 
+                    if (!empty($request->padre_id))
+                    {
+                        $padre = Padres::find($request->padre_id);
+                        $padre->estudiante()->attach($estudiante);
+                    }
+
                     $madre = new Padres;
 
-                    $madre->cedula_pa = $request->cedula_ma;
-                    $madre->nombres_pa = $request->nombres_ma;
-                    $madre->lugar_trabajo = $request->lugar_trabajo_ma;
-                    $madre->direccion_pa = $request->direccion_ma;
-                    $madre->telefono_pa = $request->telefono_ma;
-                    $madre->correo_pa = $request->nacionalidad_ma;
+                    $madre->cedula_pa       = $request->cedula_ma;
+                    $madre->nombres_pa      = $request->nombres_ma;
+                    $madre->lugar_trabajo   = $request->lugar_trabajo_ma;
+                    $madre->direccion_pa    = $request->direccion_ma;
+                    $madre->telefono_pa     = $request->telefono_ma;
+                    $madre->correo_pa       = $request->correo_ma;
+                    $madre->nacionalidad_pa = $request->nacionalidad_ma;
                     $madre->nivel_educacion = $request->nivel_educacion_ma;
                     $madre->save();
 
@@ -441,6 +497,18 @@ class EstudiantesController extends Controller
             $medicos->alergico_a = $alergico_a;
             $medicos->patologia = $patologia;
             $medicos->save();
+
+            if (!empty($request->padre_id))
+            {
+                $padre = Padres::find($request->padre_id);
+                $padre->estudiante()->attach($estudiante);
+            }
+
+            if (!empty($request->madre_id))
+            {
+                $madre = Padres::find($request->madre_id);
+                $madre->estudiante()->attach($estudiante);
+            }
 
             Session::flash('message', 'ESTUDIANTE REGISTRADO EXITOSAMENTE');
 
