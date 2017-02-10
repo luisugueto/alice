@@ -87,7 +87,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('asistencias/upload', ['uses' => 'AsistenciasController@upload', 'as' => 'archivo.upload']);
     Route::get('asistencias/archivo', ['uses' => 'AsistenciasController@archivo', 'as' => 'archivo.asistencias']);
     Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
+    Route::get('respaldos/download/{file_name}', ['uses' => 'RespaldosController@download', 'as' => 'respaldos.download']);
 
+    Route::resource('respaldos', 'RespaldosController');
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');

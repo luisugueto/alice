@@ -10,9 +10,10 @@
         <h2><b>Sistema Administrativo y Académico<br>María Montessori</b></h2>
     </div>
     <body class="hold-transition login-page">
-
+    <div>
             @include('alerts.errors')
-
+    </div>
+    <br>
     <div id="login">
 
         <div class="container">
