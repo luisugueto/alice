@@ -42,7 +42,11 @@
                                     <td>{{$per->cargo->area->nombre}}</td>
                                     <td>{{ remuneracion($per->id) }}</td>
                                     <td>{{ totalPrestamos($per->id) }}</td>
-                                    <td>{{ retardoAsistencia($per->id) }}</td>
+                                    @if( retardoAsistencia($per->id) != '')
+                                        <td>{{ retardoAsistencia($per->id) }}</td>
+                                    @else
+                                        <td>0</td>
+                                    @endif
                                     <td>{{ retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id) }}</td>
                                     <td>{{ (remuneracion($per->id)-totalPrestamos($per->id)-retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id)) }}</td>
                                 </tr>
