@@ -24,10 +24,14 @@
                 <input type="email" required class="input-block-level" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email"/>
                 <input type="password" required class="input-block-level" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
                 {!! Form::select('periodos',$periodos, $periodos2->id, ['class' => 'input-block-level','title' => 'Introduzca el Tipo de Registro  del personal']) !!}
-                <div align="center">
-                    <button class="btn btn-large btn-primary" type="submit">Entrar</button>
+                <div align="left">
+                   
+                    <div class="col-xs-8" align="center">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+                    </div><!-- /.col -->
+                   
+                    <br><a href="{{ url('/password/reset') }}">Reestablecer Contraseña</a>
                 </div>
-                <br><a href="{{ url('/password/reset') }}">Reestablecer Contraseña</a>
             </form>
         </div>
     </div> <!-- /container -->

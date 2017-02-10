@@ -109,4 +109,30 @@ class RespaldosController extends Controller
     		
     	}
     }
+
+    public function vistaRestore(){  return view('respaldos.restore');   }
+
+    public function restore(Request $request){
+        $file = $request->file('file');
+ 
+       //obtenemos el nombre del archivo
+       $nombre = $file->getClientOriginalName();
+
+        try {
+
+            Artisan::call("db:restore ".$nombre);
+
+
+            Session::flash('message', 'SE A CREADO UN NUEVO RESPALDO CORRECTAMENTE.');
+
+            return redirect()->back();
+
+        } catch (Exception $e) {
+
+            Session::flash('message-error', 'ERROR AL PROCESAR LA SOLICITUD '. $e .' VUELVA A INTENTARLO.');
+
+            return redirect()->back();
+        }
+
+    }
 }

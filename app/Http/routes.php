@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('asistencias/archivo', ['uses' => 'AsistenciasController@archivo', 'as' => 'archivo.asistencias']);
     Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
     Route::get('respaldos/download/{file_name}', ['uses' => 'RespaldosController@download', 'as' => 'respaldos.download']);
+    Route::get('respaldos/restore', ['uses' => 'RespaldosController@vistaRestore', 'as' => 'respaldos.vistaRestore']);
+    Route::post('respaldos/subir_sql', ['uses' => 'RespaldosController@restore', 'as' => 'respaldos.restore']);
 
     Route::resource('respaldos', 'RespaldosController');
 	Route::resource('asistencias', 'AsistenciasController');
