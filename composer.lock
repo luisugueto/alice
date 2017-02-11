@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "4867e6473f73b09b7fda1559d08cb1a9",
+=======
+    "content-hash": "7aad13a40e56b00ec360e81d7b70e7b5",
+>>>>>>> db4dace462b2a625579947eeb417cd6aa7725ef8
     "packages": [
         {
             "name": "acacha/admin-lte-template-laravel",
@@ -227,6 +231,94 @@
                 "pdf"
             ],
             "time": "2017-01-24T18:12:54+00:00"
+        },
+        {
+            "name": "captcha-com/captcha",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.captcha.com/botdetect-php-captcha-library.git",
+                "reference": "0b647099184e6f830478ee55152c50162bdcd838"
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "suggest": {
+                "captcha-com/cakephp-captcha": "BotDetect 4 PHP Captcha generator integration for the CakePHP framework.",
+                "captcha-com/laravel-captcha": "BotDetect 4 PHP Captcha generator integration for the Laravel framework.",
+                "captcha-com/symfony-captcha-bundle": "BotDetect 4 PHP Captcha generator integration for the Symfony framework."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "BotDetect Captcha",
+                    "email": "botdetect.support@captcha.com",
+                    "homepage": "http://captcha.com/php-captcha.html"
+                }
+            ],
+            "description": "BotDetect 4 PHP Captcha Generator -- Free composer package.",
+            "homepage": "http://captcha.com/php-captcha.html",
+            "keywords": [
+                "captcha"
+            ],
+            "time": "2016-06-06T13:31:24+00:00"
+        },
+        {
+            "name": "captcha-com/laravel-captcha",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/captcha-com/laravel-captcha.git",
+                "reference": "6e30020bce79391e517b1bbdca674f42a33cfb8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/captcha-com/laravel-captcha/zipball/6e30020bce79391e517b1bbdca674f42a33cfb8d",
+                "reference": "6e30020bce79391e517b1bbdca674f42a33cfb8d",
+                "shasum": ""
+            },
+            "require": {
+                "captcha-com/captcha": "4.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelCaptcha\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "BotDetect Captcha",
+                    "email": "botdetect.support@captcha.com",
+                    "homepage": "http://captcha.com/doc/php/laravel-captcha-quickstart.html"
+                }
+            ],
+            "description": "BotDetect 4 PHP Captcha generator integration for the Laravel framework.",
+            "homepage": "http://captcha.com/doc/php/laravel-captcha-quickstart.html",
+            "keywords": [
+                "Laravel Captcha",
+                "captcha"
+            ],
+            "time": "2016-06-06T13:37:53+00:00"
         },
         {
             "name": "classpreloader/classpreloader",
