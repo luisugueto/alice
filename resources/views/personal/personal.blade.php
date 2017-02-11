@@ -85,12 +85,12 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+
+        function codigo(codigo){
+            $('#codigo').val(codigo);
+        }
+
+    </script>
+    
 @endsection
-
-<script type="text/javascript">
-
-    function codigo(codigo){
-        $('#codigo').val(codigo);
-    }
-
-</script>

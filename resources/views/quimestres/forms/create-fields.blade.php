@@ -1,5 +1,3 @@
-<div class="span2"></div>
-<div class="span4">
 <div class="control-group">
     {!! Form::label('inicio','Inicio', ['class' => 'control-label']) !!}
     <div class="controls{{ $errors->has('inicio') ? ' has-error' : '' }}">
@@ -27,5 +25,4 @@
         {!! Form::select('id_periodo', $periodos, null, ['class' => 'form-control', 'title' => 'Seleccione el periodo al cual asignará el quimestre']) !!}
     </div>
 </div>
-</div>
-</div>
+

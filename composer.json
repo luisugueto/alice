@@ -11,7 +11,8 @@
         "acacha/admin-lte-template-laravel": "2.*",
         "maatwebsite/excel": "~2.1.0",
         "barryvdh/laravel-dompdf": "^0.7.0",
-        "spatie/laravel-backup": "^3.0.0"
+        "backup-manager/backup-manager": "^1.1",
+        "backup-manager/laravel": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

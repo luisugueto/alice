@@ -1,61 +1,35 @@
-@extends('layouts.app')
+@extends('welcome')
 
-@section('htmlheader_title')
-    Quimestres
-@endsection
-
-@section('contentheader_title', 'Quimestre')
-
+@section('contentheader_title', 'Quimestres')
+@section('contentheader_description', 'Edit')
 
 @section('main-content')  
+	
+	<div class="block">
+        <div class="box">
+            <div class="navbar navbar-inner block-header">
+                <div class="muted pull-left">Actualizar quimestre</div>
+            </div>
+            <div class="block-content collapse in">
+                <div class="span3"></div>
+                <div class="span4">
+                   	{!!Form::model($quimestres, ['route' => ['quimestres.update', $quimestres->id], 'method' => 'PUT', 'id' => 'f1', 'name' => 'f1', 'class' => 'form-horizontal'])!!}
 
-            <div class="col-md-12">
+                        @include('quimestres.forms.create-fields')
 
-    <section class="content">
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                {{Session::get('message')}}
-            </ul>
-        </div>
-    @endif
-    @if(Session::has('message-error'))
-        <div class="alert alert-error alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <ul>
-                
-                {{Session::get('message-error')}}
-            </ul>
-        </div>
-    @endif
-    @include('alerts.request') 
-    <div class="row">
-      <div class="col-md-12">
-          {!!Form::model($quimestres, ['route'=>['quimestres.update', $quimestres->id], 'method'=>'PUT', 'id'=>'f1', 'name'=>'f1','files'=>false])!!}
-          
-            
-                     
-                    <div class="tab-content">
-                        <div class="box">
-                            <div class="box-header">
-                              <h3 class="box-title">
-                             Actualizando Quimestre:
-                              </h3>
-                            </div>
-                              <div class="box-body">
-                      @include('quimestres.forms.edit-fields')
-                    </div>
-                           
-                      <div align="center">
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" value="Actualizar">
+                    
+                        <div class="span12 text-center">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="reset" class="btn">Borrar</button>
                             </div>
                         </div>
+                        
+                    {!! Form::close() !!}
 
-                      </div>
-            </div>                        
-                      
-           {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
  
-@stop
+@endsection

@@ -5,7 +5,7 @@
 
 @section('main-content')
 
-<div class="block">
+    <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
                 <div class="muted pull-left">Usuario</div>
