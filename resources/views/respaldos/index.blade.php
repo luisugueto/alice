@@ -74,7 +74,6 @@
                 </div>
             </div>
         </div>
-        <img src="{{ asset('img/buffer-loading.gif') }}">
     </div>
 
     <script type="text/javascript">
