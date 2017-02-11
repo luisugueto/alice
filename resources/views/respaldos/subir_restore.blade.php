@@ -19,17 +19,16 @@
             </div>
             <div class="block-content collapse in">
                 <div class="span12">
-                    {!! Form::open(['route' => 'respaldos.restore', 'method' => 'post', 'class'=>'form-horizontal','name' => 'form', 'id' => 'form', 'files'=> true]) !!}
+                    {!! Form::open(['route' => 'respaldos.subirRestore', 'method' => 'post', 'class'=>'form-horizontal','name' => 'form', 'id' => 'form', 'files'=> true]) !!}
                    
                     {{ csrf_field() }}
                         <fieldset>
                             <legend>Restaurar Base de Datos</legend>
 
                             <div class="form-group">
-           {!! Form::label('Archivo', 'Archivo') !!}
-            <input type="file" name="file"> 
-           
-          </div>
+                                {!! Form::label('Archivo', 'Archivo') !!}
+                                <input type="file" name="file"> 
+                            </div>
 
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary">Subir</button>

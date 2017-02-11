@@ -7,8 +7,11 @@
 @section('main-content')
 
     <div class="col-xs-12">
-        <button class="btn btn-primary" title="Registrar Nuevo Usuario" onclick="window.location.href = '{{ URL::to('respaldos/create') }}'";>
+        <button class="btn btn-primary" title="Crear nuevo Respaldo" onclick="window.location.href = '{{ URL::to('respaldos/create') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
+        </button>
+        <button class="btn btn-primary" title="Subir Respaldo" onclick="window.location.href = '{{ URL::to('respaldos/subir') }}'";>
+            <span class="fa fa-plus" aria-hidden="true"></span> Subir
         </button>
     </div>
 
@@ -34,9 +37,9 @@
                                 <tr>
                                     <td>{{ $backup['file_name'] }}</td>
                                     <td>{{ $backup['file_size'] }} KB</td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center; width: 170px;">
                                         <input type="hidden" name="archivo" value="{{ $backup['file_name'] }}">
-                                        <a class="btn btn-default" href="{{ route('respaldos.download', $backup['file_name']) }}" title="Descargar Base de Datos"><i class="icon-download-alt"></i></a>
+                                        <a class="btn btn-default" href="{{ route('respaldos.download', $backup['file_name']) }}" title="Descargar Base de Datos"><i class="icon-download"></i></a>
                                         <a class="btn btn-primary" href="{{ route('respaldos.restore', $backup['file_name']) }}" title="Restaurar Base de Datos" id="cargando" onclick="cargando()"><i class="icon-upload icon-white"></i></a>
                                         <a class="btn btn-danger" href="#" onclick="codigo('{{ $backup['file_name'] }}')" title="Eliminar Resturación de Base de Datos" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
                                     </td>
@@ -84,7 +87,7 @@
     <script type="text/javascript">
         function cargando(){
             $(".navbar-inner").css('display', 'none');
-              $.blockUI({ message: '<h1 style="margin-top: 30px"><img src="{{ asset("img/buffer-loading.gif") }}" /> RESTAURANDO...</h1>' }); 
+              $.blockUI({ message: '<img src="{{ asset("img/Cargando.gif") }}" />' }); 
             test(); 
         }
     

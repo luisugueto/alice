@@ -74,9 +74,10 @@ class RespaldosController extends Controller
     }
 
     public function download($file_name){
+
         if ($disk =  Storage::disk('backup')->exists($file_name)) {
 
-            $fs = "../storage/backups/local/" . $file_name;
+            $fs = "../storage/local/" . $file_name;
     
             return response()->download($fs);
 
@@ -116,7 +117,19 @@ class RespaldosController extends Controller
     	}
     }
 
-  
+    public function subir() { 
+
+        return view('respaldos.subir_restore'); 
+    }
+    
+    public function subirRestore(Request $request) { 
+        
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+        Storage::disk('backup')->put('hola.'.$extension, $file);
+    }
 
     public function restore($file_name){
 
