@@ -26,7 +26,6 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Tamaño</th>
-                                    <th>Fecha</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -35,12 +34,11 @@
                                 <tr>
                                     <td>{{ $backup['file_name'] }}</td>
                                     <td>{{ $backup['file_size'] }} KB</td>
-                                    <td>{{ $backup['last_modified'] }}</td>
                                     <td style="text-align: center;">
                                         <input type="hidden" name="archivo" value="{{ $backup['file_name'] }}">
-                                        <a class="btn btn-default" href="{{ route('respaldos.download', $backup['file_name']) }}"><i class="icon-download-alt"></i></a>
-                                        <a class="btn btn-default" href="{{ route('respaldos.restore', $backup['file_name']) }}" id="cargando" onclick="cargando()"><i class="icon-upload"></i></a>
-                                        <a class="btn btn-danger" href="#" onclick="codigo('{{ $backup['file_name'] }}')" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
+                                        <a class="btn btn-default" href="{{ route('respaldos.download', $backup['file_name']) }}" title="Descargar Base de Datos"><i class="icon-download-alt"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('respaldos.restore', $backup['file_name']) }}" title="Restaurar Base de Datos" id="cargando" onclick="cargando()"><i class="icon-upload icon-white"></i></a>
+                                        <a class="btn btn-danger" href="#" onclick="codigo('{{ $backup['file_name'] }}')" title="Eliminar Resturación de Base de Datos" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
