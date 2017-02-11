@@ -11,13 +11,10 @@
         "acacha/admin-lte-template-laravel": "2.*",
         "maatwebsite/excel": "~2.1.0",
         "barryvdh/laravel-dompdf": "^0.7.0",
-<<<<<<< HEAD
         "backup-manager/backup-manager": "^1.1",
-        "backup-manager/laravel": "^1.1"
-=======
+        "backup-manager/laravel": "^1.1",
         "spatie/laravel-backup": "^3.0.0",
         "captcha-com/laravel-captcha": "4.*"
->>>>>>> db4dace462b2a625579947eeb417cd6aa7725ef8
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
