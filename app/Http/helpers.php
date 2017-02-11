@@ -158,46 +158,122 @@ use App\CantidadDescuento;
 	function buscar($id_estudiante){
 		//dd($id_estudiante);
 		$id_periodo=Session::get('periodo');
-
-		$buscar_q=\DB::select("SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo."");
+		$sql="SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestrales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."";
+		//dd($sql);
+		$buscar_q=\DB::select($sql);
 		$total_quimestres=count($buscar_q);
 
 		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
 		$cuantos=count($buscar_p);
 
-			if ($total_quimestres==0) {
+
+			switch ($total_quimestres) {
+				case 0:
 				$a="1 er Quimestre";
-			} else {
-				if ($total_quimestres==1) {
-
-					$a="2 do Quimestre";	
-				} else {
-					$a="Quimestres Completos";
-				}
-				
-				
-			}
-
-			if ($cuantos==0) {
-				$b="1 er  Parcial";
-			} else {
-				if ($cuantos==1) {
-					$b="2 do  Parcial";
-				} else {
-					if($cuantos==2){
-					$b="3 er Parcial";
-					}else{
-						$b="Parciales Completos";
+					switch ($cuantos) {
+						case 0:
+							$b="1 er Parcial";
+							break;
+						case 1:
+							$b="2 do Parcial";
+							break;
+						case 2:
+							$b="3 er Parcial";
+							break;
+						case 3:
+							$b="";
+							break;
+						
 					}
-				}
+				case 1:
+				$a="2 do Quimestre";
+					switch ($cuantos) {
+						case 3:
+							$b="1 er Parcial";
+							break;
+						case 4:
+							$b="2 do Parcial";
+							break;
+						case 5:
+							$b="3 er Parcial";
+							break;
+						case 6:
+							$b="";
+							break;
+						
+					}
+					
+					break;
 				
+				default:
+					$a="Carga Completa";
+					$b="";
+					break;
 			}
 
 				$cargar=$b." del  ".$a;
 
 		return $cargar;
 	}
+	function buscar_enlace($id_estudiante){
+		//dd($id_estudiante);
+		$id_periodo=Session::get('periodo');
+		$sql="SELECT * FROM quimestrales,quimestres WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestrales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."";
+		//dd($sql);
+		$buscar_q=\DB::select($sql);
+		$total_quimestres=count($buscar_q);
 
+		$buscar_p=\DB::select("SELECT * FROM parciales,quimestres WHERE parciales.id_estudiante=".$id_estudiante." AND parciales.id_quimestre=quimestres.id AND quimestres.id_periodo=".$id_periodo."");
+		$cuantos=count($buscar_p);
+
+
+			switch ($total_quimestres) {
+				case 0:
+				
+					switch ($cuantos) {
+						case 0:
+							$b=1;
+							break;
+						case 1:
+							$b=1;
+							break;
+						case 2:
+							$b=1;
+							break;
+						case 3:
+							$b=2;
+							break;
+						
+					}
+				case 1:
+					switch ($cuantos) {
+						case 3:
+							$b=1;
+							break;
+						case 4:
+							$b=1;
+							break;
+						case 5:
+							$b=1;
+							break;
+						case 6:
+							$b=2;
+							break;
+						
+					}
+					
+					break;
+				
+				default:
+					
+					$b=3;
+					break;
+			}
+
+				
+
+		return $b;
+	}
 	function pdf($i, $quimestre){
 
 		if ($i == 1 OR $i == 4)
@@ -483,7 +559,7 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		                	if(Auth::user()->roles_id == 3 and $i==1){
 
 		                			//buscando la carga academica cargada del estudiante
-		                			$mias=bucar_mis_asignaturas_cargadas($id_estudiante,$p->id,$q->id);
+		                			$mias=bucar_mis_asignaturas_cargadas($id_estudiante,$p->id,$q->id,0);
 		                			
 		                			//buscando la cantidad de asignaturas cargadas
 		                			$cargadas=buscando_asignaturas_cargadas2($id_estudiante,$p->id,$q->id);
@@ -560,17 +636,27 @@ function cargas_completas_quimestre($id_estudiante,$num)
 		#la búsqueda de quimestre debe ser de los registrados por el docente
 		#para saber si el docente subio notas en el quimestre debe de estar sus asignaturas registradas
 		//buscando las asignaturas del docente
+		
+		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
+		if(Auth::user()->roles_id == 5){
+			$id_curso=buscar_curso($id_estudiante,$id_periodo);
+			$sql2="SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id_curso=".$id_curso;
+			//dd($sql2);
+			$asignaturas=DB::select($sql2);
+			$id_seccion=buscar_id_seccion($id_estudiante);
 
+		}else{
 		$docente=Personal::where('correo',$correo)->first();
 
 		$id_seccion=buscar_id_seccion($id_estudiante);
 
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
-
+		}
+		//dd($asignaturas);
 		foreach ($asignaturas as $asig) {
 			
-			$id_periodo=Session::get('periodo');
+			
 			$sql="SELECT * FROM quimestrales INNER JOIN quimestres ON quimestrales.id_quimestre=quimestres.id INNER JOIN periodos ON quimestres.id_periodo=periodos.id INNER JOIN calificacion_quimestre ON calificacion_quimestre.id_quimestrales=quimestrales.id WHERE quimestrales.id_estudiante=".$id_estudiante." AND quimestres.id_periodo=".$id_periodo." AND calificacion_quimestre.id_asignatura=".$asig->id_asignatura."";
 			//dd($sql);
 			$buscar_q=\DB::select($sql);
@@ -690,13 +776,18 @@ function buscar_id_seccion($id){
 
 		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
+		if(Auth::user()->roles_id == 5){
+			$id_curso=buscar_curso($id_estudiante,$id_periodo);
+			$asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id_curso=".$id_curso);
 
+
+		}else{
 		$docente=Personal::where('correo',$correo)->first();
 
 
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND 
 			id_seccion=".$id_seccion." LIMIT 0,1");
-
+		}
 
 		$cuantas=count($asignaturas);
 
@@ -717,9 +808,9 @@ function buscar_id_seccion($id){
 					GROUP BY calificacion_parcial.id_parcial";
 					//dd($sql);
 					$resultado=DB::select($sql);
-					if(count($resultado)>0){
-						$cc++;
-					}
+						if(count($resultado)>0){
+							$cc++;
+						}
 
 					}
 
@@ -917,18 +1008,20 @@ function buscar_id_seccion($id){
                     return $suma;
 	}
 
-	function bucar_mis_asignaturas_cargadas($id_estudiante,$id_parcial,$id_quimestre){
+	function bucar_mis_asignaturas_cargadas($id_estudiante,$id_parcial,$id_quimestre,$id_asignatura){
 
 		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
 		//buscando seccion del estudiante
 		$id_seccion=buscar_id_seccion($id_estudiante);
-		$docente=Personal::where('correo',$correo)->first();
+		if(Auth::user()->roles_id != 5){
+			$docente=Personal::where('correo',$correo)->first();
 
 
-		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
-		foreach ($asignaturas as $asig) {
-			$id_asignatura=$asig->id_asignatura;
+			$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
+			foreach ($asignaturas as $asig) {
+				$id_asignatura=$asig->id_asignatura;
+			}
 		}
 			$sql="SELECT * FROM parciales, calificacion_parcial,quimestres WHERE 
                         id_estudiante=".$id_estudiante." AND 
@@ -1005,7 +1098,7 @@ function buscar_id_seccion($id){
 
 	function buscar_calificacion_parcial($i,$id_estudiante,$id_periodo,$k){
 		//k controlará si es 1 para calificaciones del coordinador
-		//y si es 0 paara mostrar las calificaciones del profesor
+		//y si es 0 para mostrar las calificaciones del profesor
 		
 		if($k==0){
 
@@ -1115,7 +1208,9 @@ function buscar_id_seccion($id){
 		$correo=Auth::user()->email;
 		//buscando seccion del estudiante
 		$id_seccion=buscar_id_seccion($id_estudiante);
+		
 		$docente=Personal::where('correo',$correo)->first();
+		
 		$id_curso=buscar_curso($id_estudiante,$id_periodo);
 		
 		$asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
@@ -1136,7 +1231,7 @@ function buscar_id_seccion($id){
 		}
 
 		$cuantos=count($buscar2);
-
+		//dd($cuantos);
 		if($i>0 and $i<4){
 			$num=1;
 
@@ -1218,16 +1313,30 @@ function buscar_id_seccion($id){
 
 	}
 
-	function buscar_id_parcial($i,$id_estudiante){
+	function buscar_id_parcial($i,$id_estudiante,$id_docente){
 
 		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
+		if($id_docente==0){
 
 		$docente=Personal::where('correo',$correo)->first();
+		}else{
+			
+			$docente=Personal::find($id_docente);
+
+		}
 
 		//buscando seccion del estudiante
 		$id_seccion=buscar_id_seccion($id_estudiante);
+		if(Auth::user()->roles_id!=5){
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
+		}else{
+			$asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura FROM inscripciones,cursos,asignaturas WHERE 
+						                inscripciones.id_curso=cursos.id AND 
+						                asignaturas.id_curso=cursos.id AND 
+						                inscripciones.id_estudiante=".$id_estudiante);
+		}
+		//dd($asignaturas);
 		foreach ($asignaturas as $asig) {
 			$id_asignatura=$asig->id_asignatura;
 		
@@ -1580,11 +1689,17 @@ function buscar_id_seccion($id){
 function buscar_id_quimestre($i,$id_estudiante){
 		$id_periodo=Session::get('periodo');
 		$correo=Auth::user()->email;
-
+		$cuantos=0;
 		$docente=Personal::where('correo',$correo)->first();
 		$id_seccion=buscar_id_seccion($id_estudiante);
-
+		if(Auth::user()->roles_id!=5){
 		$asignaturas=DB::select("SELECT * FROM asignacion WHERE id_prof=".$docente->id." AND id_seccion=".$id_seccion." LIMIT 0,1");
+		}else{
+			$asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura	 FROM inscripciones,cursos,asignaturas WHERE 
+                    inscripciones.id_curso=cursos.id AND 
+                    asignaturas.id_curso=cursos.id AND 
+                    inscripciones.id_estudiante=".$id_estudiante);
+		}
 		foreach ($asignaturas as $asig) {
 			$id_asignatura=$asig->id_asignatura;
 		
@@ -1598,9 +1713,10 @@ function buscar_id_quimestre($i,$id_estudiante){
                         //dd($sql);
         
 		$buscar2=DB::select($sql);
+		$cuantos+=count($buscar2);
 		}
 
-		$cuantos=count($buscar2);
+		
 
 		$id_quimestre=0;
 		$quimestrales=Quimestrales::where('id_estudiante',$id_estudiante)->get();
@@ -1842,4 +1958,33 @@ function buscar_id_quimestre($i,$id_estudiante){
     	$descuentos = CantidadDescuento::where('id_tipoempleado', $id)->first();
 
     	return $descuentos->cantidad;
+    }
+
+    function buscar_asignatura_asignada($id_asignatura){
+    	$id_periodo=Session::get('periodo');
+    	$buscar=DB::select("SELECT * FROM asignacion WHERE id_asignatura=".$id_asignatura." AND id_periodo=".$id_periodo);
+    	$encontrada=count($buscar);
+
+    	return $encontrada;
+    	
+    }
+
+    function buscar_cargadas_todas($id_seccion,$id_estudiante){
+
+    	$id_periodo=Session::get('periodo');
+
+    	$id_curso=buscar_curso($id_estudiante,$id_periodo);
+    	$buscar=DB::select("SELECT * FROM asignacion WHERE id_seccion=".$id_seccion." AND id_periodo=".$id_periodo);
+    	$encontrada=count($buscar);
+
+    	$buscar2=DB::select("SELECT asignaturas.* FROM asignaturas WHERE asignaturas.id_curso=".$id_curso."");
+    	$encontrado=count($buscar2);
+
+    	if ($encontrado==$encontrada) {
+    		return 1;
+    	} else {
+    		return 0;
+    	}
+    	
+
     }

@@ -26,6 +26,7 @@ use App\Calificacion_quimestre;
 use App\TipoRecuperativos;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Cursos;
 
 class ParcialesController extends Controller
 {
@@ -144,8 +145,11 @@ class ParcialesController extends Controller
                    $p=count($ultimo);
                         foreach ($ultimo as $last) {
                             
-                        
-                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id);
+                            if(Auth::user()->roles_id == 5){
+                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id,$request->id_asignatura[0]);
+                            }else{
+                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id,0);    
+                            }
                             $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
                             //dd($mias);
                             if($mias==0){
@@ -373,8 +377,13 @@ class ParcialesController extends Controller
                    
                         foreach ($ultimo as $last) {
                             
-                        
-                            $mias=buscar_mis_asignaturas_cargadas_q($request->id_estudiante,$last->id,$q->id);
+                            if(Auth::user()->roles_id == 5){
+                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id,$request->id_asignatura[0]);
+                            }else{
+                            $mias=bucar_mis_asignaturas_cargadas($request->id_estudiante,$last->id,$q->id,0);    
+                            }
+                            //$mias=buscar_mis_asignaturas_cargadas_q($request->id_estudiante,$last->id,$q->id);
+
                             $cargadas=buscando_asignaturas_cargadas2($request->id_estudiante,$last->id,$q->id);
                             //dd($mias);
                             if($mias==0){
@@ -553,20 +562,20 @@ class ParcialesController extends Controller
            
         if($cuantos_q==0){
 
-                $id_parcial1=buscar_id_parcial(1,$id);
+                $id_parcial1=buscar_id_parcial(1,$id,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(2,$id);
+                $id_parcial2=buscar_id_parcial(2,$id,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(3,$id);
+                $id_parcial3=buscar_id_parcial(3,$id,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
             $quimestres=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
         }else{
-            $id_parcial1=buscar_id_parcial(4,$id);
+            $id_parcial1=buscar_id_parcial(4,$id,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(5,$id);
+                $id_parcial2=buscar_id_parcial(5,$id,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(6,$id);
+                $id_parcial3=buscar_id_parcial(6,$id,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
             $quimestres=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
@@ -723,7 +732,7 @@ class ParcialesController extends Controller
 
     }
 
-    public function showcalificacionesparcial($i,$id_estudiante){
+    public function showcalificacionesparcial($i,$id_estudiante,$tipo_user){
 
         
             $correo=Auth::user()->email;
@@ -734,11 +743,18 @@ class ParcialesController extends Controller
                 //buscando la seccion del estudiante
                 $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
                 //dd($seccion);
-                foreach ($seccion as $secc) {
-                    
-                
-                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
-                    //dd($sql2);
+                if($tipo_user==0){
+                        foreach ($seccion as $secc) {
+                            
+                        
+                            $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
+                            //dd($sql2);
+                        }
+                }else{
+                    $sql2="SELECT asignaturas.id AS id_asignatura     FROM inscripciones,cursos,asignaturas WHERE 
+                    inscripciones.id_curso=cursos.id AND 
+                    asignaturas.id_curso=cursos.id AND 
+                    inscripciones.id_estudiante=".$id_estudiante;
                 }
                     $docentes=DB::select($sql2);
             
@@ -753,7 +769,7 @@ class ParcialesController extends Controller
         //dd($asignaturas);
         $categorias=Categorias_parcial::all();
 
-        $id_parcial=buscar_id_parcial($i,$id_estudiante);
+        $id_parcial=buscar_id_parcial($i,$id_estudiante,0);
 
         $buscar2=Calificacion_parcial::where('id_parcial',$id_parcial)->get();
         $buscar3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial)->get();
@@ -762,11 +778,11 @@ class ParcialesController extends Controller
 
 
 
-        return View('parciales.mostrar-parcial',compact('buscar4','buscar3','asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp', 'i', 'id_estudiante'));
+        return View('parciales.mostrar-parcial',compact('tipo_user','buscar4','buscar3','asignaturas','id_curso','estudiantes','docentes','categorias','buscar2','promedio_comp', 'i', 'id_estudiante'));
 
     }
 
-    public function pdf($i,$id_estudiante){
+    public function pdf($i,$id_estudiante,$tipo_user){
 
         $correo=Auth::user()->email;
         $personal=Personal::where('correo',$correo)->first();
@@ -777,12 +793,21 @@ class ParcialesController extends Controller
                 //buscando la seccion del estudiante
                 $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
                 //dd($seccion);
+                if($tipo_user==0){
                 foreach ($seccion as $secc) {
                     
                 
                     $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
                     //dd($sql2);
                 }
+                }else{
+                    $sql2="SELECT asignaturas.id AS id_asignatura    FROM inscripciones,cursos,asignaturas WHERE 
+                    inscripciones.id_curso=cursos.id AND 
+                    asignaturas.id_curso=cursos.id AND 
+                    inscripciones.id_estudiante=".$id_estudiante;
+                    
+                }
+
                     $docentes=DB::select($sql2);
             
              //dd($docentes);
@@ -796,7 +821,7 @@ class ParcialesController extends Controller
         //dd($asignaturas);
         $categorias=Categorias_parcial::all();
 
-        $id_parcial=buscar_id_parcial($i,$id_estudiante);
+        $id_parcial=buscar_id_parcial($i,$id_estudiante,0);
 
         $buscar2=Calificacion_parcial::where('id_parcial',$id_parcial)->get();
         $buscar3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial)->get();
@@ -808,7 +833,7 @@ class ParcialesController extends Controller
         return $dompdf->stream();
     }
     
-    public function showcalificacionesquimestre($i,$id_estudiante){
+    public function showcalificacionesquimestre($i,$id_estudiante,$tipo_user){
 
         
             $correo=Auth::user()->email;
@@ -819,14 +844,21 @@ class ParcialesController extends Controller
                 //buscando la seccion del estudiante
                 $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
                 //dd($seccion);
+                if($tipo_user==0){
                 foreach ($seccion as $secc) {
                     
                 
                     $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
                     //dd($sql2);
                 }
-                    $docentes=DB::select($sql2);
-            
+                }else{
+                    $sql2="SELECT asignaturas.id AS id_asignatura    FROM inscripciones,cursos,asignaturas WHERE 
+                    inscripciones.id_curso=cursos.id AND 
+                    asignaturas.id_curso=cursos.id AND 
+                    inscripciones.id_estudiante=".$id_estudiante;
+                    
+                }
+            $docentes=DB::select($sql2);
              //dd($docentes);
 
         $estudiantes=Estudiante::find($id_estudiante);
@@ -845,20 +877,20 @@ class ParcialesController extends Controller
         //
         if ($i==1) {
             
-                $id_parcial1=buscar_id_parcial(1,$id_estudiante);
+                $id_parcial1=buscar_id_parcial(1,$id_estudiante,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(2,$id_estudiante);
+                $id_parcial2=buscar_id_parcial(2,$id_estudiante,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(3,$id_estudiante);
+                $id_parcial3=buscar_id_parcial(3,$id_estudiante,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
         } else {
 
-                $id_parcial1=buscar_id_parcial(4,$id_estudiante);
+                $id_parcial1=buscar_id_parcial(4,$id_estudiante,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(5,$id_estudiante);
+                $id_parcial2=buscar_id_parcial(5,$id_estudiante,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(6,$id_estudiante);
+                $id_parcial3=buscar_id_parcial(6,$id_estudiante,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
         }
@@ -866,7 +898,7 @@ class ParcialesController extends Controller
 
 
 
-        return View('parciales.mostrar-quimestre',compact('parcial1','parcial2','parcial3','buscar4','asignaturas','id_curso','estudiantes','docentes','buscar2', 'i', 'id_estudiante'));
+        return View('parciales.mostrar-quimestre',compact('tipo_user','parcial1','parcial2','parcial3','buscar4','asignaturas','id_curso','estudiantes','docentes','buscar2', 'i', 'id_estudiante'));
 
     }
 
@@ -1293,7 +1325,7 @@ class ParcialesController extends Controller
 
     }
 
-    public function pdfquimestre($i, $id_estudiante){
+    public function pdfquimestre($i, $id_estudiante,$tipo_user){
 
         $correo=Auth::user()->email;
         $personal=Personal::where('correo',$correo)->first();
@@ -1302,12 +1334,19 @@ class ParcialesController extends Controller
         $contador=0;
 
         $seccion=DB::select("SELECT * FROM inscripciones WHERE id_periodo=".$id_periodo." AND id_estudiante=".$id_estudiante);
-
+        if($tipo_user==0){
         foreach ($seccion as $secc) {
 
             $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_seccion=".$secc->id_seccion." AND id_periodo=".$id_periodo."";
 
         }
+        }else{
+                    $sql2="SELECT asignaturas.id AS id_asignatura    FROM inscripciones,cursos,asignaturas WHERE 
+                    inscripciones.id_curso=cursos.id AND 
+                    asignaturas.id_curso=cursos.id AND 
+                    inscripciones.id_estudiante=".$id_estudiante;
+                    
+                }
 
         $docentes=DB::select($sql2);
 
@@ -1327,20 +1366,20 @@ class ParcialesController extends Controller
         //
         if ($i==1) {
             
-                $id_parcial1=buscar_id_parcial(1,$id_estudiante);
+                $id_parcial1=buscar_id_parcial(1,$id_estudiante,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(2,$id_estudiante);
+                $id_parcial2=buscar_id_parcial(2,$id_estudiante,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(3,$id_estudiante);
+                $id_parcial3=buscar_id_parcial(3,$id_estudiante,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
         } else {
 
-                $id_parcial1=buscar_id_parcial(4,$id_estudiante);
+                $id_parcial1=buscar_id_parcial(4,$id_estudiante,0);
                 $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
-                $id_parcial2=buscar_id_parcial(5,$id_estudiante);
+                $id_parcial2=buscar_id_parcial(5,$id_estudiante,0);
                 $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
-                $id_parcial3=buscar_id_parcial(6,$id_estudiante);
+                $id_parcial3=buscar_id_parcial(6,$id_estudiante,0);
                 $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
             
         }
@@ -1394,4 +1433,219 @@ class ParcialesController extends Controller
 
     }
 
+    public function mostrarasignaturas($i,$id_estudiante){
+
+        $id_periodo=Session::get('periodo');
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
+        $id_seccion=buscar_id_seccion($id_estudiante);
+        $periodo=Periodos::find($id_periodo);
+        $sql="SELECT asignaturas.id AS id_asignatura,asignaturas.asignatura,secciones.id AS id_seccion,secciones.literal,cursos.* FROM asignaturas,secciones,cursos WHERE asignaturas.id_curso=cursos.id AND cursos.id=".$id_curso." AND secciones.id_curso=cursos.id AND secciones.id=".$id_seccion;
+        //dd($sql);
+ $asignaturas=DB::select($sql);
+
+       // $asignaturas=DB::select("SELECT asignaturas.id AS id_asignatura,asignaturas FROM asignaturas WHERE  id_curso=".$id_curso);
+
+        return View('parciales.asignaturas',compact('periodo','asignaturas','i','id_estudiante'));
+
+    }
+
+    public function parcial_admin($id_estudiante,$id_asignatura){
+
+
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+              $estudiantes=Estudiante::find($id_estudiante);
+                $id_curso=buscar_curso($id_estudiante,$id_periodo);
+
+            $contador=0;
+            //dd($id_curso);
+                    if($id_curso<4){
+                         $sql2="SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id_curso=".$id_curso."";
+                    }else{
+                    $sql2="SELECT asignaturas.id AS id_asignatura FROM asignaturas WHERE id=".$id_asignatura."";
+                    }
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+            
+
+
+ 
+      
+
+        if($id_curso>3){
+        $asignaturas=Asignaturas::where('id',$id_asignatura)->get();
+        }else{
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        }
+
+        $categorias=Categorias_parcial::all();
+        $equivalencias=Equivalencias::all();
+        $comportamiento=Comportamiento::all();
+        $promedio_comp=Comportamiento::lists('literal','id');
+        return View('parciales.create',compact('docentes','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+    
+    }
+
+    public function asignaturas_admin($id_docente){
+
+        $correo=Auth::user()->email;
+        $personal=Personal::find($id_docente);
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+       /* dd($personal->asignaturas);*/
+
+       $asignaturas=DB::select("SELECT * FROM asignacion,asignaturas,secciones,cursos WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo." AND asignaturas.id=asignacion.id_asignatura AND asignacion.id_seccion=secciones.id AND secciones.id_curso=cursos.id");
+
+        return View('parciales.asignaturas',compact('personal','periodo','asignaturas'));
+    }
+
+    public function parcial_admin2($id_estudiante,$id_docente){
+
+
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+            
+
+
+
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$id_docente." AND id_periodo=".$id_periodo."";
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+                
+    
+        $estudiantes=Estudiante::find($id_estudiante);
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
+
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        $categorias=Categorias_parcial::all();
+        $equivalencias=Equivalencias::all();
+        $comportamiento=Comportamiento::all();
+        $promedio_comp=Comportamiento::lists('literal','id');
+        return View('parciales.create',compact('docentes','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+    
+    }
+
+    public function estudiantes2($id_seccion,$id_docente){
+
+        $seccion=Seccion::find($id_seccion);
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+
+        $personal=Personal::find($id_docente);
+        //dd($personal);
+        $estudiantes=DB::select("SELECT datos_generales_estudiante.* FROM 
+            datos_generales_estudiante,secciones,cursos,inscripciones WHERE 
+            inscripciones.id_estudiante = datos_generales_estudiante.id AND
+            inscripciones.id_seccion = secciones.id AND 
+            secciones.id_curso= cursos.id AND 
+            inscripciones.id_seccion= ".$id_seccion);
+
+        //dd($estudiantes);
+        return View('parciales.estudiantes',compact('seccion','estudiantes','periodo','personal'));
+
+    }
+
+    public function quimestre_admin($id_estudiante,$id_docente){
+
+        $personal=Personal::find($id_docente);
+            $correo=Auth::user()->email;
+            $id_periodo=Session::get('periodo');
+            $periodo=Periodos::find($id_periodo);
+            $contador=0;
+            
+                    $sql2="SELECT * FROM asignacion WHERE id_prof=".$personal->id." AND id_periodo=".$id_periodo."";
+                    //dd($sql2);
+                    $docentes=DB::select($sql2);
+                
+            
+
+            
+               
+        $cuantos_q=buscar_quimestre($id_estudiante);
+        //dd($cuantos_q);
+        $estudiantes=Estudiante::find($id_estudiante);
+
+        $id_curso=buscar_curso($id_estudiante,$id_periodo);
+
+        
+        /*$parciales=Parciales::where('id_estudiante',$estudiantes->id)->where('id_personal',$id_prof)->get();*/
+        $parciales=Parciales::where('id_estudiante',$estudiantes->id)->get();
+        //dd($parciales);
+        $parciales_asignatura=Calificacion_parcial_subtotal::all();
+        
+        $asignaturas=Asignaturas::where('id_curso',$id_curso)->get();
+        $categorias=Categorias_parcial::all();
+        $equivalencias=Equivalencias::all();
+        $comportamiento=Comportamiento::all();
+        $promedio_comp=Comportamiento::lists('literal','id'); 
+
+        //dd($cuantos_q);
+           
+        if($cuantos_q==0){
+
+                $id_parcial1=buscar_id_parcial(1,$id_estudiante,$id_docente);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(2,$id_estudiante,$id_docente);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(3,$id_estudiante,$id_docente);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+            $quimestres=Quimestres::where('numero',1)->where('id_periodo',$id_periodo)->first();
+        }else{
+            $id_parcial1=buscar_id_parcial(4,$id_estudiante,$id_docente);
+                $parcial1=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial1)->get();
+                $id_parcial2=buscar_id_parcial(5,$id_estudiante,$id_docente);
+                $parcial2=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial2)->get();
+                $id_parcial3=buscar_id_parcial(6,$id_estudiante,$id_docente);
+                $parcial3=Calificacion_parcial_subtotal::where('id_parcial',$id_parcial3)->get();
+            
+            $quimestres=Quimestres::where('numero',2)->where('id_periodo',$id_periodo)->first();
+        }
+        //dd($quimestres);
+
+        return View('parciales.quimestres',compact('parcial1','parcial2','parcial3','parciales_asignatura','docentes','parciales','quimestres','estudiantes','asignaturas','categorias','equivalencias','comportamiento','promedio_comp'));
+        
+    }
+
+
+    public function buscarseccion(){
+
+        $cursos=Cursos::lists('curso','id');
+        $periodos=Periodos::lists('nombre','id');
+
+        return View('parciales.secciones',compact('cursos','periodos'));
+    }
+
+    public function mostrarcalificaciones_admin(Request $request){
+
+            //dd($request->all());
+            $periodo=Periodos::find($request->id_periodo);
+            $contador=0;
+            $quimestres=Quimestres::where('id_periodo',$periodo->id)->get();
+            $cuantos_q=count($quimestres);
+            $id_seccion=$request->id_seccion;
+            if($cuantos_q==2){
+            
+                
+
+                    $sql="SELECT inscripciones.*,datos_generales_estudiante.*,cursos.curso,cursos.id AS id_curso,secciones.literal FROM cursos,secciones, inscripciones,datos_generales_estudiante WHERE inscripciones.id_seccion=secciones.id AND inscripciones.id_curso=cursos.id AND inscripciones.id_estudiante=datos_generales_estudiante.id AND inscripciones.id_periodo=".$periodo->id." AND secciones.id=".$request->id_seccion." ";
+                   //dd($sql);
+                   $estudiantes=DB::select($sql);
+
+                   $contador=count($estudiantes);
+                        
+                    return View('parciales.calificaciones_cargadas_admin',compact('periodo','estudiantes','id_seccion'));
+                    
+                    
+
+        }else{
+            return View('home');
+        }
+       
+
+    }
 }

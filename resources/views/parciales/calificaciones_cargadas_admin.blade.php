@@ -11,8 +11,8 @@
                 <div class="muted pull-left">ESTUDIANTES INSCRITOS EN EL PERIODO LECTIVO : {{ $periodo->nombre }} ( {{ strtoupper($periodo->status) }} )</div>
             </div>
 
-            <?php $tipo=tipo_docente();
-                $id_periodo=Session::get('periodo');
+            <?php 
+                $id_periodo=$periodo->id;
              ?>
 
             <div class="block-content collapse in">
@@ -35,9 +35,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($docentes as $doc)
-
-                                <?php $id_seccion= $doc->id_seccion; ?>
+                           
 
                                 @foreach($estudiantes as $estudiante)
                                 
@@ -53,7 +51,7 @@
                                                     <?php $id_parcial=buscar_id_parcial(1,$estudiante->id,0); ?>
 
                                                   
-                                                  <a href="{{ route('parciales.showparcial',[1,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                  <a href="{{ route('parciales.showparcial',[1,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -66,7 +64,7 @@
                                                     <?php $id_parcial=buscar_id_parcial(2,$estudiante->id,0); ?>
 
                                                     
-                                                 <a href="{{ route('parciales.showparcial',[2,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                 <a href="{{ route('parciales.showparcial',[2,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                              </td>
@@ -78,7 +76,7 @@
                                                     <?php $id_parcial=buscar_id_parcial(3,$estudiante->id,0); ?>
 
                                                     
-                                                  <a href="{{ route('parciales.showparcial',[3,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                  <a href="{{ route('parciales.showparcial',[3,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                                 </td>
@@ -89,7 +87,7 @@
                                                     <?php $id_quimestral=buscar_id_quimestre(1,$estudiante->id); ?>
 
                                                    
-                                                 <a href="{{ route('parciales.showquimestre',[1,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
+                                                 <a href="{{ route('parciales.showquimestre',[1,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
                                                 
                                                 @endif
                                             </td>
@@ -100,7 +98,7 @@
 
                                                 
                                                   
-                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -112,7 +110,7 @@
                                                     <?php $id_parcial=buscar_id_parcial(5,$estudiante->id,0); ?>
 
                                                   
-                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                <a href="{{ route('parciales.showparcial',[4,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -124,7 +122,7 @@
                                                     <?php $id_parcial=buscar_id_parcial(6,$estudiante->id,0); ?>
 
                                                     
-                                                 <a href="{{ route('parciales.showparcial',[6,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
+                                                 <a href="{{ route('parciales.showparcial',[6,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del parcial cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -136,7 +134,7 @@
                                                     <?php $id_quimestral=buscar_id_quimestre(2,$estudiante->id); ?>
 
                                                    
-                                                 <a href="{{ route('parciales.showquimestre',[2,$estudiante->id,1]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
+                                                 <a href="{{ route('parciales.showquimestre',[2,$estudiante->id,2]) }}" class="btn" title="Ver calificaciones del quimestre cargadas"><i class="icon-eye-open"></i></a>
 
                                                 
                                                 @endif
@@ -221,7 +219,7 @@
 
                                     @endif
                                 @endforeach
-                            @endforeach
+                          
                             </tbody>
                         </table>
                     </div>

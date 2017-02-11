@@ -47,22 +47,25 @@
                                                 <td>{{ buscar($estudiante->id_estudiante)  }}</td>
                                                 <td>
                                                     <?php
-                                                    $quimestre=buscar_quimestre($estudiante->id);
-                                                    $parcial=buscar_parcial($estudiante->id); ?>
+                                                    $b=buscar_enlace($estudiante->id_estudiante); ?>
 
-                                                    @if($quimestre!=2)
 
-                                                        @if($parcial==3)
+                                                    @if($b==1)
+                                                        
+                                                            <a href="{{ route('parciales.edit',$estudiante->id_estudiante) }}" title="Seleccione para Agregar Parcial" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+                                                    @else
+                                                        @if($b==2)
                                                             <a href="{{ url('parciales.show', $estudiante->id_estudiante) }}" class="btn"><i class="icon-eye-open"></i></a>
                                                         @else
+                                                                Carga Completa
 
-                                                            {!! link_to_route('parciales.edit', $title = '', $parameters = $estudiante->id_estudiante, $attributes = ['class'=>'fa fa-plus-square fa-2x','title' => 'Seleccione para Agregar Parcial']) !!}
-                                                            <a href="{{ route('parciales.edit',$estudiante->id_estudiante) }}">P</a>
+                                                        @endif
 
+                                                        
                                                     @endif
 
 
-                                            @endif
+                                            
                                                 </td>
                                             @endif
                                         </tr>

@@ -12,7 +12,7 @@
     <div class="block">
         <div class="navbar navbar-inner block-header">
             <div class="muted pull-left"> PARCIAL </div>
-            <a class="btn pull-right" href="{{ route('parciales.pdf', [$i,$id_estudiante]) }}"><i class="icon-print"></i></a>
+            <a class="btn pull-right" href="{{ route('parciales.pdf', [$i,$id_estudiante,$tipo_user]) }}"><i class="icon-print"></i></a>
         </div>
         <div class="block-content collapse in">
             <div class="span12">

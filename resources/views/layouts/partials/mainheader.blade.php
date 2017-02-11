@@ -117,9 +117,20 @@
 
                         </a>
                         <ul class="dropdown-menu">
+                            
                             @if(Auth::user()->roles_id == 1)
                                 <li>
                                     <a tabindex="-1" href="{{ route('parciales.show',1) }}">Estudiantes</a>
+                                </li>
+                                
+                            @endif
+
+                            @if(Auth::user()->roles_id == 5)
+                                <li>
+                                    <a href="{{ route('docentes.index') }}">Docentes</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('parciales.secciones') }}">Calificaciones</a>
                                 </li>
                             @endif
                             <?php $tipo=tipo_docente(); ?>
@@ -131,7 +142,7 @@
                                     <a tabindex="-1" href="{{ route('parciales.asignaturas') }}">Asignaturas</a>
                                 </li>
                             @endif
-                            @if(Auth::user()->roles_id == 3)
+                            @if(Auth::user()->roles_id == 3 )
                                 <li>
                                     <a tabindex="-1" href="{{ route('parciales.index') }}">Estudiantes</a>
                                 </li>

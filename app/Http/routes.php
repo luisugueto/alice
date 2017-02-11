@@ -61,9 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parciales/{id}/estudiantes',['uses' => 'ParcialesController@estudiantes', 'as' => 'parciales.estudiantes']);
 	Route::get('parciales/mostrarcalificaciones',['uses' => 'ParcialesController@mostrarcalificaciones', 'as' => 'parciales.mostrarcalificaciones']);
 	Route::get('parciales/{id_seccion}/mostrarcalificaciones_coord',['uses' => 'ParcialesController@mostrarcalificaciones_coord', 'as' => 'parciales.mostrarcalificaciones_coord']);
-	Route::get('parciales/showparcial/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
-	Route::get('parciales/showquimestre/{i}/{id_estudiante}',['uses' => 'ParcialesController@showcalificacionesquimestre', 'as' => 'parciales.showquimestre']);
-	Route::get('parciales/print/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdf', 'as' => 'parciales.pdf']);
+	Route::get('parciales/showparcial/{i}/{id_estudiante}/{tipo_user}',['uses' => 'ParcialesController@showcalificacionesparcial', 'as' => 'parciales.showparcial']);
+	Route::get('parciales/showquimestre/{i}/{id_estudiante}/{tipo_user}',['uses' => 'ParcialesController@showcalificacionesquimestre', 'as' => 'parciales.showquimestre']);
+	Route::get('parciales/print/{i}/{id_estudiante}/{tipo_user}', ['uses' => 'ParcialesController@pdf', 'as' => 'parciales.pdf']);
 	Route::get('docentes/asignar/{id}/show3',['uses' => 'DocentesController@show3', 'as' => 'docentes.asignar.show3']);
 	Route::post('docentes/store2',['uses' => 'DocentesController@store2', 'as' => 'docentes.store2']);
 
@@ -86,8 +86,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('parciales/rectificar_recuperativo',['uses' => 'ParcialesController@rectificar_recuperativo', 'as' => 'parciales.rectificar_recuperativo']);
 	Route::post('asistencias/upload', ['uses' => 'AsistenciasController@upload', 'as' => 'archivo.upload']);
     Route::get('asistencias/archivo', ['uses' => 'AsistenciasController@archivo', 'as' => 'archivo.asistencias']);
-    Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
-
+    Route::get('parciales/printquimestre/{i}/{id_estudiante}/{tipo_user}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
+    Route::get('parciales/mostrarasignaturas/{i}/{id_estudiante}',['uses' => 'ParcialesController@mostrarasignaturas', 'as' => 'parciales.mostrarasignaturas']);
+    Route::get('parciales/parcial_admin/{id_estudiante}/{id_asignatura}',['uses' => 'ParcialesController@parcial_admin', 'as' => 'parciales.parcial_admin']);
+    Route::get('parciales/asignaturas_admin/{id_docente}',['uses' => 'ParcialesController@asignaturas_admin', 'as' => 'parciales.asignaturas_admin']);
+    Route::get('parciales/parcial_admin2/{id_estudiante}/{id_docente}',['uses' => 'ParcialesController@parcial_admin2', 'as' => 'parciales.parcial_admin2']);
+    Route::get('parciales/estudiantes2/{id_seccion}/{id_docente}',['uses' => 'ParcialesController@estudiantes2', 'as' => 'parciales.estudiantes2']);
+    Route::get('parciales/quimestre_admin/{id_seccion}/{id_docente}',['uses' => 'ParcialesController@quimestre_admin', 'as' => 'parciales.quimestre_admin']);
+    //---admin dace---
+    Route::get('parciales/secciones',['uses' => 'ParcialesController@buscarseccion', 'as' => 'parciales.secciones']);
+    Route::post('parciales/mostrarcalificaciones_admin',['uses' => 'ParcialesController@mostrarcalificaciones_admin', 'as' => 'parciales.mostrarcalificaciones_admin']);
+    
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');

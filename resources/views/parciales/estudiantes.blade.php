@@ -34,6 +34,8 @@
                                     <td> {{ $estudiante->apellido_paterno }} {{$estudiante->apellido_materno}}</td>
                                     <td> {{ $estudiante->nombres }}</td>
 
+                                    
+
                                     <?php $q=buscar_mi_asignatura_parcial($estudiante->id,$id_seccion); 
 
 
@@ -53,25 +55,39 @@
                                             @endif
                                         @endif
                                     </td>
+                                     @if(buscar_cargadas_todas($id_seccion,$estudiante->id)==1)
                                     <td>
+                                   
                                         <?php
                                         $quimestre=buscar_quimestre($estudiante->id);
                                         $parcial=buscar_parcial($estudiante->id);
                                         
                                         ?>
                                         @if($q!=3)
-                                        @if($q==1 || $q==2)
+                                        @if($q==1 || $q==2) 
 
-                                            {{--  @if($parcial==3) --}}
+                                            @if(Auth::user()->roles_id == 5)
+                                                <a href="{{ route('parciales.quimestre_admin',[$estudiante->id,$personal->id]) }}" class="btn"><i class="icon-eye-open"></i></a>
+                                            @else             
                                             <a href="{{ route('parciales.show',$estudiante->id) }}" class="btn"><i class="icon-eye-open"></i></a>
+                                            @endif
                                         @else
-                                                
-                                            <a href="{{ route('parciales.edit',$estudiante->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
-                                            {{--  @endif --}}
+                                                @if(Auth::user()->roles_id == 5)
+                                                    <a href="{{ route('parciales.parcial_admin2',[$estudiante->id,$personal->id]) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+                                                @else   
+                                                <a href="{{ route('parciales.edit',$estudiante->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+                                                @endif
+                                            
 
                                         @endif
                                         @endif
+                                    
                                     </td>
+                                    @else
+                                        <td>No se han asignado todas las asignaturas</td>
+
+                                    @endif
+                                    
                                 </tr>
 
                             @endforeach

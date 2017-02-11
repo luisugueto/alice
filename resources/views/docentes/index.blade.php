@@ -30,6 +30,7 @@
                                         <td> {{$docentes->apellido_paterno." ".$docentes->apellido_materno.", ".$docentes->nombres}}</td>
                                         <td> {{$docentes->cedula}}</td>
                                         <td> {{$docentes->cargo->nombre}}</td>
+                                        @if(Auth::user()->roles_id == 1)
                                         <td class="text-center">
                                             <a href="{{ route('docentes.show', $docentes->id) }}" class="btn"><i class="icon-eye-open"></i></a>
 
@@ -37,6 +38,18 @@
                                                 <a href="{{ route('docentes.coordinacion', $docentes->id) }}" class="btn"><i class="icon-asterisk"></i></a>
                                             @endif
                                         </td>
+                                        @else
+
+                                            @if(Auth::user()->roles_id == 5)
+
+                                                <td><a tabindex="-1" title="Ver asignaturas asignadas" href="{{ route('docentes.show',[$docentes->id]) }}" class="btn"><i class="icon-eye-open"></i></a></td>
+            
+
+                                            @endif
+
+
+
+                                        @endif
                                     </tr>
                                 @endif
                             @endforeach

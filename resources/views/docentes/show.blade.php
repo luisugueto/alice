@@ -34,12 +34,20 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <?php //dd($docentes2); ?>
                             @foreach($docentes2 as $docentes)
                                 <tr>
                                     <td> {{$docentes->curso}}</td>
                                     <td>{{ $docentes->literal }}</td>
                                     <td class="text-center">
+                                    @if(Auth::user()->roles_id != 5)
                                         <a class="btn btn-danger btn-flat" onclick="codigo({{ $docentes->id}},{{$id_prof}},{{$docentes->id_seccion }},{{$docentes->id_curso}})" data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i></a>
+
+                                    @else
+                                        <a href="{{ route('parciales.estudiantes2',[$docentes->id_seccion,$docentes->id_prof]) }}" class="btn"><i class="icon-arrow-up"></i></a>
+
+
+                                    @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,7 +88,13 @@
                                                 </a>
                                             </td>
                                             <td class="text-center">
+                                                @if(Auth::user()->roles_id != 5)
                                                 <a class="btn btn-danger" onclick="codigo({{$docentes->id}},{{$docentes->pivot->id_prof}},{{$id_seccion }},{{$docentes->cursos->id}})" data-toggle="modal" data-target="#myModal"> <i class="icon-trash icon-white"></i></a>
+                                                @else
+                                                    <a href="{{ route('parciales.estudiantes2',[$id_seccion,$docentes->pivot->id_prof]) }}" class="btn"><i class="icon-arrow-up"></i></a>
+
+
+                                                @endif
                                             </td>
                                         </tr>
                                     @endif

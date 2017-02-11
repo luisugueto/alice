@@ -39,7 +39,7 @@ $j=0; ?>
 			
 			@foreach($docentes as $doce)
 
-			{!! Form::hidden('id_personal',$doce->id_prof); !!}
+			
 			<?php 
 			$id_asig=$doce->id_asignatura; ?>
 			@foreach($asignaturas as $asig)
