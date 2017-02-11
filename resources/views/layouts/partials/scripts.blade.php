@@ -2,7 +2,7 @@
 
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('Bootstrap-Admin-Theme-master/assets/jquery.blockUI.js') }}"></script>
 <script src="{{ asset('Bootstrap-Admin-Theme-master/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('Bootstrap-Admin-Theme-master/vendors/easypiechart/jquery.easy-pie-chart.js') }}"></script>
 <script src="{{ asset('Bootstrap-Admin-Theme-master/assets/scripts.js') }}"></script>

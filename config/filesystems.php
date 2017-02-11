@@ -68,7 +68,7 @@ return [
 
         'backup' => [
             'driver' => 'local',
-            'root' => storage_path('laravel-backups'),
+            'root' => storage_path('local'),
         ],
 
         's3' => [

@@ -17,6 +17,7 @@
             <div class="navbar navbar-inner block-header">
                 <div class="muted pull-left">Respaldos</div>
             </div>
+            <div class="loader"></div>
             <div class="block-content collapse in">
                 <div class="table-responsive">
                     <div class="span12">
@@ -36,7 +37,9 @@
                                     <td>{{ $backup['file_size'] }} KB</td>
                                     <td>{{ $backup['last_modified'] }}</td>
                                     <td style="text-align: center;">
+                                        <input type="hidden" name="archivo" value="{{ $backup['file_name'] }}">
                                         <a class="btn btn-default" href="{{ route('respaldos.download', $backup['file_name']) }}"><i class="icon-download-alt"></i></a>
+                                        <a class="btn btn-default" href="{{ route('respaldos.restore', $backup['file_name']) }}" id="cargando" onclick="cargando()"><i class="icon-upload"></i></a>
                                         <a class="btn btn-danger" href="#" onclick="codigo('{{ $backup['file_name'] }}')" data-toggle="modal" data-target="#myModal"><i class="icon-trash icon-white"></i></a>
                                     </td>
                                 </tr>
@@ -71,6 +74,7 @@
                 </div>
             </div>
         </div>
+        <img src="{{ asset('img/buffer-loading.gif') }}">
     </div>
 
     <script type="text/javascript">
@@ -80,5 +84,12 @@
         }
 
     </script>
-
+    <script type="text/javascript">
+        function cargando(){
+            $(".navbar-inner").css('display', 'none');
+              $.blockUI({ message: '<h1 style="margin-top: 30px"><img src="{{ asset("img/buffer-loading.gif") }}" /> RESTAURANDO...</h1>' }); 
+            test(); 
+        }
+    
+    </script>
 @endsection

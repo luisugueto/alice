@@ -11,41 +11,50 @@ use Log;
 use Storage;
 use Response;
 use Session;
+use File;
+use Carbon\Carbon;
+use BackupManager\Filesystems\Destination;
 
 class RespaldosController extends Controller
 {
     public function index(){
 
-        $disk = Storage::disk('backup');
         $files = Storage::disk('backup')->allFiles();
-
+        $storage = Storage::disk('backup');
         $backups = [];
 
         foreach ($files as $k => $f) {
-
-            if (substr($f, -4) == '.zip' && $disk->exists($f)) {
+            if (substr($f, -3) == '.gz' && $storage->exists($f)) {
 
                 $e = explode('/', $f);
-        
+                
                 $backups[] = [
                     'file_path' => $f,
-                    'file_name' => $e[1],
-                    'file_size' => $disk->size($f),
-                    'last_modified' => $disk->lastModified($f),
+                    'file_name' => $e[0],
+                    'file_size' => $storage->size($f),
+                    'last_modified' => $storage->lastModified($f),
                 ];
             }
         }
 
         $backups = array_reverse($backups);
-
         return view('respaldos.index', compact('backups'));
     }
 
     public function create(){
 
+        $date = Carbon::now()->toW3cString();
+        $environment = env('APP_ENV');
+
         try {
 
-            Artisan::call("backup:run");
+            Artisan::call("db:backup", [
+                "--database"        => "mysql",
+                "--destination"     => "local",
+                "--destinationPath" => "/{$environment}/montessori_{$environment}_{$date}",
+                "--compression"     => "gzip"
+ 
+            ]);
 
             $output = Artisan::output();
 
@@ -65,10 +74,9 @@ class RespaldosController extends Controller
     }
 
     public function download($file_name){
-     
-        if ($disk =  Storage::disk('backup')->exists('http---localhost/' . $file_name)) {
+        if ($disk =  Storage::disk('backup')->exists($file_name)) {
 
-            $fs = "../storage/laravel-backups/http---localhost/" . $file_name;
+            $fs = "../storage/backups/local/" . $file_name;
     
             return response()->download($fs);
 
@@ -80,12 +88,10 @@ class RespaldosController extends Controller
     }
 
     public function destroy(Request $request)
-    {	
-    	$fs = "http---localhost/" . $request->file_name;
-    
-    	if($disk =  Storage::disk('backup')->exists('http---localhost/' . $request->file_name))
+    {	    
+    	if($disk =  Storage::disk('backup')->exists($request->file_name))
     	{
-    		$delete = Storage::disk('backup')->delete($fs);
+    		$delete = Storage::disk('backup')->delete($request->file_name);
 
     		if($delete){
 
@@ -110,29 +116,30 @@ class RespaldosController extends Controller
     	}
     }
 
-    public function vistaRestore(){  return view('respaldos.restore');   }
+  
 
-    public function restore(Request $request){
-        $file = $request->file('file');
- 
-       //obtenemos el nombre del archivo
-       $nombre = $file->getClientOriginalName();
+    public function restore($file_name){
 
-        try {
+        if($disk = Storage::disk('backup')->exists($file_name)){
 
-            Artisan::call("db:restore ".$nombre);
+            Artisan::call("db:restore", [
+                "--source"      => "s3",
+                "--sourcePath"  => $file_name,
+                "--database"    => "mysql",
+                "--compression" => "gzip"
+            ]);
 
-
-            Session::flash('message', 'SE A CREADO UN NUEVO RESPALDO CORRECTAMENTE.');
+            Session::flash('message', 'SE HA REALIZADO LA RESTAURACION DE LA BASE DE DATOS EXITOSAMENTE.');
 
             return redirect()->back();
 
-        } catch (Exception $e) {
+        } else {
 
-            Session::flash('message-error', 'ERROR AL PROCESAR LA SOLICITUD '. $e .' VUELVA A INTENTARLO.');
+             Session::flash('message-error', 'DISCULPE A OCURRIDO UN ERROR EN LA RESTAURACION DE LA BASE DE DATOS (ARCHIVO CORRUPTO).');
 
             return redirect()->back();
         }
-
+        
     }
+        
 }

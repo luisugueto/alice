@@ -65,6 +65,8 @@ return [
             'prefix' => '',
             'strict' => false,
             'engine' => null,
+            'singleTransaction' => false,
+            'ignoreTables' => [],
         ],
 
         'pgsql' => [
@@ -116,6 +118,32 @@ return [
             'database' => 0,
         ],
 
+    ],
+
+    'development' => [
+        'type' => 'mysql',
+        'host' => 'localhost',
+        'port' => '3306',
+        'user' => 'root',
+        'pass' => 'root',
+        'database' => 'montessori',
+        // If singleTransaction is set to true, the --single-transcation flag will be set.
+        // This is useful on transactional databases like InnoDB.
+        // http://dev.mysql.com/doc/refman/5.7/en/mysqldump.html#option_mysqldump_single-transaction
+        'singleTransaction' => false,
+        // Do not dump the given tables
+        // Set only table names, without database name
+        // Example: ['table1', 'table2']
+        // http://dev.mysql.com/doc/refman/5.7/en/mysqldump.html#option_mysqldump_ignore-table
+        'ignoreTables' => [],
+    ],
+    'production' => [
+        'type' => 'postgresql',
+        'host' => 'localhost',
+        'port' => '5432',
+        'user' => 'postgres',
+        'pass' => 'password',
+        'database' => 'test',
     ],
 
 ];

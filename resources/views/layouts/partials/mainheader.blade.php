@@ -244,11 +244,9 @@
                                     <a href="{{ route('descuentos.index') }}">Descuentos</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('respaldos.index') }}">Respaldo de BD</a>
+                                    <a href="{{ route('respaldos.index') }}">Respaldo y Restauración</a>
                                 </li>
-                                <!-- <li>
-                                    <a href="{{ route('respaldos.vistaRestore') }}">Resturación de BD</a>
-                                </li> -->
+                              
                             @endif
                         </ul>
                     </li>

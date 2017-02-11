@@ -3,15 +3,15 @@
 return [
     'local' => [
         'type' => 'Local',
-        'root' => storage_path('backups'),
+        'root' => storage_path(),
     ],
     's3' => [
-        'type' => 'AwsS3',
+        'type' => 'Local',
         'key'    => '',
         'secret' => '',
         'region' => 'us-east-1',
         'bucket' => '',
-        'root'   => '',
+        'root'   => storage_path('local'),
     ],
     'gcs' => [
         'type' => 'Gcs',
