@@ -77,62 +77,71 @@ class UsuariosController extends Controller
      */
     public function store(UsuarioRequest $request)
     {
-        if($request->roles == 1){
-            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
-            foreach ($user as $key) { $suma = $key->suma; }
-            
-            if($suma>0) {
-                Session::flash('message-error', 'ERROR: NO PUEDE EXISTIR MÁS DE UN USUARIO ADMINISTRADOR');
-                $user = User::all();
+        $code = $request->input('CaptchaCode');
+        $isHuman = captcha_validate($code);
+
+        if ($isHuman) {
+            if($request->roles == 1){
+                $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+                foreach ($user as $key) { $suma = $key->suma; }
                 
-                return view('usuarios.usuario', compact('user'));
-            }else{
-            
-            $user = new User();
-            $user->name = $request['name'];
-            $user->email = $request['email'];
-            $user->password = bcrypt($request['password']);
-            $user->roles_id = $request['roles_id'];
-            $user->remember_token = Session::token();
-            $user->save();
+                if($suma>0) {
+                    Session::flash('message-error', 'ERROR: NO PUEDE EXISTIR MÁS DE UN USUARIO ADMINISTRADOR');
+                    $user = User::all();
+                    
+                    return view('usuarios.usuario', compact('user'));
+                }else{
+                
+                $user = new User();
+                $user->name = $request['name'];
+                $user->email = $request['email'];
+                $user->password = bcrypt($request['password']);
+                $user->roles_id = $request['roles_id'];
+                $user->remember_token = Session::token();
+                $user->save();
 
-            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+                Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
 
-           }
-        }
-        elseif($request->roles == 5){
-            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
-            foreach ($user as $key) { $suma = $key->suma; }
-
-            if($suma>0) {
-                Session::flash('message-error', 'ERROR: NO PUEDE EXISTIR MÁS DE UN USUARIO DACE');
-                $user = User::all();
-                return view('usuarios.usuario', compact('user'));
+               }
             }
-            else{
-            $user = new User();
-            $user->name = strtoupper($request['name']);
-            $user->email = strtolower($request['email']);
-            $user->password = bcrypt($request['password']);
-            $user->roles_id = $request['roles_id'];
-            $user->remember_token = Session::token();
-            $user->save();
-            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
-           }
-       
-        }else{
+            elseif($request->roles == 5){
+                $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
+                foreach ($user as $key) { $suma = $key->suma; }
 
-            $user = new User();
-            $user->name = strtoupper($request['name']);
-            $user->email = strtolower($request['email']);
-            $user->password = bcrypt($request['password']);
-            $user->roles_id = $request['roles_id'];
-            $user->remember_token = Session::token();
-            $user->save();
-            Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+                if($suma>0) {
+                    Session::flash('message-error', 'ERROR: NO PUEDE EXISTIR MÁS DE UN USUARIO DACE');
+                    $user = User::all();
+                    return view('usuarios.usuario', compact('user'));
+                }
+                else{
+                $user = new User();
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->password = bcrypt($request['password']);
+                $user->roles_id = $request['roles_id'];
+                $user->remember_token = Session::token();
+                $user->save();
+                Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+               }
+           
+            }else{
+
+                $user = new User();
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->password = bcrypt($request['password']);
+                $user->roles_id = $request['roles_id'];
+                $user->remember_token = Session::token();
+                $user->save();
+                Session::flash('message', 'USUARIO REGISTRADO CORRECTAMENTE');
+            }
+
+            return redirect('usuarios');
+        } else {
+            Session::flash('message-error', 'CAPTCHA INCORRECTO');
+            return redirect('usuarios');
         }
-
-        return redirect('usuarios');
+        
     }
 
     /**
@@ -186,111 +195,120 @@ class UsuariosController extends Controller
      */
     public function update(EditarUsuarioRequest $request, $id)
     {
-        $userr = User::find($id);
-        $email = $userr->email;
+        $code = $request->input('CaptchaCode');
+        $isHuman = captcha_validate($code);
 
-        $personall = Personal::where('correo', $email)->exists();
-        if($personall == true){
-            $personal = Personal::where('correo', $email)->first();
+        if ($isHuman) {
+            $userr = User::find($id);
+            $email = $userr->email;
 
-            $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$personal->id.' AND id_periodo='.Session::get('periodo'));
-            $contarCarga = count($cargaAcademica);
-
-            if($contarCarga>0)
-            {
-                Session::flash('message-error', 'DISCULPE: ESTE USUARIO POSEE CARGA ACADÉMICA');
-                return redirect()->action('UsuariosController@index');
-            }
-        }
-
-        if($request['roles_id']==1)
-        {
-            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
-            foreach ($user as $key) { $suma = $key->suma; }
-            if($suma>0 && $userr->roles_id != 1) {
-                Session::flash('message-error', 'ERROR: DISCULPE.');
-                return redirect()->action('UsuariosController@index');
-            }
-            else{
-                $user = User::find($id);
-                $user->name = strtoupper($request['name']);
-                $user->email = strtolower($request['email']);
-                $user->roles_id = $request['roles_id'];
-                 
-                $user->save();
-                if($personall){
-                    $personal = Personal::find($personal->id);
-                    $personal->correo = strtolower($request['email']);
-                    $personal->save();
-                }
-                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
-                return redirect()->action('UsuariosController@index');
-            }
-        }
-        if($request['roles_id']==2)
-        {
-            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=2');
-            foreach ($user as $key) { $suma = $key->suma; }
-            if($suma>0 && $userr->roles_id != 2) {
-                Session::flash('message-error', 'ERROR: DISCULPE.');
-                return redirect()->action('UsuariosController@index');
-            }
-            else{
-                $user = User::find($id);
-                $user->name = strtoupper($request['name']);
-                $user->email = strtolower($request['email']);
-                $user->roles_id = $request['roles_id'];
-                 
-                $user->save();
-                if($personall){
-                    $personal = Personal::find($personal->id);
-                    $personal->correo = strtolower($request['email']);
-                    $personal->save();
-                }
-                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
-                return redirect()->action('UsuariosController@index');
-            }
-        }
-        elseif($request['roles_id']==5)
-        {
-            $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
-            foreach ($user as $key) { $suma = $key->suma; }
-            
-
-            if($suma>0 && $userr->roles_id != 5){
-                Session::flash('message-error', 'ERROR: DISCULPE.');
-                return redirect()->action('UsuariosController@index');
-            }
-            else{
-                $user = User::find($id);
-                $user->name = strtoupper($request['name']);
-                $user->email = strtolower($request['email']);
-                $user->roles_id = $request['roles_id'];
-                if($personall){
-                    $personal = Personal::find($personal->id);
-                    $personal->correo = strtolower($request['email']);
-                    $personal->save();
-                }
-                 
-                $user->save();
-                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
-                return redirect()->action('UsuariosController@index');
-            }
-        }
-        else{
-            $user = User::find($id);
-            $user->name = strtoupper($request['name']);
-            $user->email = strtolower($request['email']);
-            $user->roles_id = $request['roles_id'];
-             
-            $user->save();
+            $personall = Personal::where('correo', $email)->exists();
             if($personall == true){
-                $personal->correo = strtolower($request['email']);
-                $personal->save();
+                $personal = Personal::where('correo', $email)->first();
+
+                $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$personal->id.' AND id_periodo='.Session::get('periodo'));
+                $contarCarga = count($cargaAcademica);
+
+                if($contarCarga>0)
+                {
+                    Session::flash('message-error', 'DISCULPE: ESTE USUARIO POSEE CARGA ACADÉMICA');
+                    return redirect()->action('UsuariosController@index');
+                }
             }
-            Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
-            return redirect()->action('UsuariosController@index');
+
+            if($request['roles_id']==1)
+            {
+                $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=1');
+                foreach ($user as $key) { $suma = $key->suma; }
+                if($suma>0 && $userr->roles_id != 1) {
+                    Session::flash('message-error', 'ERROR: DISCULPE.');
+                    return redirect()->action('UsuariosController@index');
+                }
+                else{
+                    $user = User::find($id);
+                    $user->name = strtoupper($request['name']);
+                    $user->email = strtolower($request['email']);
+                    $user->roles_id = $request['roles_id'];
+                     
+                    $user->save();
+                    if($personall){
+                        $personal = Personal::find($personal->id);
+                        $personal->correo = strtolower($request['email']);
+                        $personal->save();
+                    }
+                    Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                    return redirect()->action('UsuariosController@index');
+                }
+            }
+            if($request['roles_id']==2)
+            {
+                $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=2');
+                foreach ($user as $key) { $suma = $key->suma; }
+                if($suma>0 && $userr->roles_id != 2) {
+                    Session::flash('message-error', 'ERROR: DISCULPE.');
+                    return redirect()->action('UsuariosController@index');
+                }
+                else{
+                    $user = User::find($id);
+                    $user->name = strtoupper($request['name']);
+                    $user->email = strtolower($request['email']);
+                    $user->roles_id = $request['roles_id'];
+                     
+                    $user->save();
+                    if($personall){
+                        $personal = Personal::find($personal->id);
+                        $personal->correo = strtolower($request['email']);
+                        $personal->save();
+                    }
+                    Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                    return redirect()->action('UsuariosController@index');
+                }
+            }
+            elseif($request['roles_id']==5)
+            {
+                $user = DB::select('SELECT u.*, r.*, count(roles_id) as suma FROM users as u INNER JOIN roles as r ON r.id = u.roles_id WHERE r.id=5');
+                foreach ($user as $key) { $suma = $key->suma; }
+                
+
+                if($suma>0 && $userr->roles_id != 5){
+                    Session::flash('message-error', 'ERROR: DISCULPE.');
+                    return redirect()->action('UsuariosController@index');
+                }
+                else{
+                    $user = User::find($id);
+                    $user->name = strtoupper($request['name']);
+                    $user->email = strtolower($request['email']);
+                    $user->roles_id = $request['roles_id'];
+                    if($personall){
+                        $personal = Personal::find($personal->id);
+                        $personal->correo = strtolower($request['email']);
+                        $personal->save();
+                    }
+                     
+                    $user->save();
+                    Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                    return redirect()->action('UsuariosController@index');
+                }
+            }
+            else{
+                $user = User::find($id);
+                $user->name = strtoupper($request['name']);
+                $user->email = strtolower($request['email']);
+                $user->roles_id = $request['roles_id'];
+                 
+                $user->save();
+                if($personall == true){
+                    $personal->correo = strtolower($request['email']);
+                    $personal->save();
+                }
+                Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
+                return redirect()->action('UsuariosController@index');
+            }
+        } else {
+            Session::flash('message-error', 'CAPTCHA INCORRECTO');
+            return redirect('usuarios');
         }
+        
     }
 
     /**

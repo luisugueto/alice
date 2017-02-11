@@ -9,6 +9,7 @@
 <link href="{{ asset('Bootstrap-Admin-Theme-master/vendors/chosen.min.css') }}" rel="stylesheet" media="screen">
 <link href="{{ asset('Bootstrap-Admin-Theme-master/vendors/uniform.default.css') }}" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="{{ asset('Bootstrap-Admin-Theme-master/vendors/chosen.css') }}">
+<link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
 <style type="text/css" media="all">
     .chosen-rtl .chosen-drop { left: -9000px; }
 </style>
