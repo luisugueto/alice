@@ -163,62 +163,69 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if(Auth::check())
-        {
-            Session::flash('message-error', 'Usuario ya conectado.');
-            return Redirect::to('/home');
-        }
-        if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
-        {
+        $code = $request->input('CaptchaCode');
+        $isHuman = captcha_validate($code);
 
-            // define('mes', date('m'));
-            // $prestamo = DB::select('SELECT p.*, pr.*, r.*, pa.*, SUM(pr.monto) as suma, (r.sueldo_mens+r.bono_responsabilidad) as totales, SUM(pa.monto_pagado) as pagado FROM datos_generales_personal as p INNER JOIN prestamos as pr ON pr.id_personal=p.id INNER JOIN remuneracion as r ON r.id_personal=p.id INNER JOIN pagos_realizados as pa ON pa.id_prestamo=pr.id  WHERE MONTH(pr.fecha)= '.mes.' AND pr.tipo = "Prestamo" AND pr.id_personal = p.id');
-            // foreach ($prestamo as $per) {
-            //     $totales = $per->totales;
-            //     $suma = $per->suma;
-            //     $pagado = $per->pagado;
-            //     $i = 0;
-            //     if($pagado<$suma) $i++;
-            // }
-
-            $prestamo = Prestamo::all();
-            $suma = 0;
-            foreach($prestamo as $per){
-                $i = 0; $monto = 0;
-                foreach ($per->pagosrealizados as $key) {
-                    $i += $key->monto_pagado;
-                    $monto = $key->monto_adeudado;
-                }                    
-                $per->fecha;
-                $per->personal->nombres;                
-                $per->tipo;
-                $per->monto;
-                $per->monto-$i;
-                if($per->tipo == 'Prestamo')
-                {
-                    if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
-                    {
-
-                    }
-                    else $suma++;
-                }                
+        if ($isHuman) {
+            if(Auth::check())
+            {
+                Session::flash('message-error', 'Usuario ya conectado.');
+                return Redirect::to('/home');
             }
+            if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']]))
+            {
 
-            /*
-                MOROSOS
-            */
-            $query = DB::select("SELECT * FROM morosos");
-            $contarMororos = count($query);
-            $nombrePeriodo = Periodos::where('id', $request['periodos'])->first();
-            Session::flash('message', 'Bienvenido');
-            Session::put('periodoNombre', $nombrePeriodo->nombre);
-            Session::put('morosos', $contarMororos);
-            Session::put('valor', $suma);
-            Session::put('periodo', $request['periodos']);
-            return Redirect::to('/home');
-        }
-        else{
-            return Redirect()->back()->with('message-error-session', 'Datos Incorrectos');
+                // define('mes', date('m'));
+                // $prestamo = DB::select('SELECT p.*, pr.*, r.*, pa.*, SUM(pr.monto) as suma, (r.sueldo_mens+r.bono_responsabilidad) as totales, SUM(pa.monto_pagado) as pagado FROM datos_generales_personal as p INNER JOIN prestamos as pr ON pr.id_personal=p.id INNER JOIN remuneracion as r ON r.id_personal=p.id INNER JOIN pagos_realizados as pa ON pa.id_prestamo=pr.id  WHERE MONTH(pr.fecha)= '.mes.' AND pr.tipo = "Prestamo" AND pr.id_personal = p.id');
+                // foreach ($prestamo as $per) {
+                //     $totales = $per->totales;
+                //     $suma = $per->suma;
+                //     $pagado = $per->pagado;
+                //     $i = 0;
+                //     if($pagado<$suma) $i++;
+                // }
+
+                $prestamo = Prestamo::all();
+                $suma = 0;
+                foreach($prestamo as $per){
+                    $i = 0; $monto = 0;
+                    foreach ($per->pagosrealizados as $key) {
+                        $i += $key->monto_pagado;
+                        $monto = $key->monto_adeudado;
+                    }                    
+                    $per->fecha;
+                    $per->personal->nombres;                
+                    $per->tipo;
+                    $per->monto;
+                    $per->monto-$i;
+                    if($per->tipo == 'Prestamo')
+                    {
+                        if(($per->monto-$i)==0 || ($per->monto-$i)<=0)
+                        {
+
+                        }
+                        else $suma++;
+                    }                
+                }
+
+                /*
+                    MOROSOS
+                */
+                $query = DB::select("SELECT * FROM morosos");
+                $contarMororos = count($query);
+                $nombrePeriodo = Periodos::where('id', $request['periodos'])->first();
+                Session::flash('message', 'Bienvenido');
+                Session::put('periodoNombre', $nombrePeriodo->nombre);
+                Session::put('morosos', $contarMororos);
+                Session::put('valor', $suma);
+                Session::put('periodo', $request['periodos']);
+                return Redirect::to('/home');
+            }
+            else{
+                return Redirect()->back()->with('message-error-session', 'Datos Incorrectos');
+            }
+        } else {
+            return Redirect()->back()->with('message-error-session', 'Captcha Incorrecto');
         }
     }
 

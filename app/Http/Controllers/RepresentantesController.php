@@ -167,7 +167,7 @@ class RepresentantesController extends Controller
     {
         $representante = Representante::find($request->id);
 
-        if($representante->estudiante()->first()->exists()){
+        if(!empty($representante->estudiante()->first())){
 
             Session::flash('message-error', 'DISCULPE ESTE REPRESENTANTE TIENE ASIGNADO UN ESTUDIANTE EN UN PERIODO.');
 

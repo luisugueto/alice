@@ -40,6 +40,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="control-group">
+                            {{ Form::label('Captcha', 'Captcha', ['class'=>'control-label']) }}
+                            <div class="controls">
+                                {!! captcha_image_html('ExampleCaptcha') !!}
+                                        <input type="text" id="CaptchaCode" name="CaptchaCode">
+                            </div>
+                        </div>
 
                         <div class="form-actions">
                             <button type="reset" class="btn btn-default btn-flat">Borrar</button>

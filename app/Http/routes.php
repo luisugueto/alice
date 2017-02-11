@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('parciales/rectificar_recuperativo',['uses' => 'ParcialesController@rectificar_recuperativo', 'as' => 'parciales.rectificar_recuperativo']);
 	Route::post('asistencias/upload', ['uses' => 'AsistenciasController@upload', 'as' => 'archivo.upload']);
     Route::get('asistencias/archivo', ['uses' => 'AsistenciasController@archivo', 'as' => 'archivo.asistencias']);
+<<<<<<< HEAD
     Route::get('parciales/printquimestre/{i}/{id_estudiante}/{tipo_user}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
     Route::get('parciales/mostrarasignaturas/{i}/{id_estudiante}',['uses' => 'ParcialesController@mostrarasignaturas', 'as' => 'parciales.mostrarasignaturas']);
     Route::get('parciales/parcial_admin/{id_estudiante}/{id_asignatura}',['uses' => 'ParcialesController@parcial_admin', 'as' => 'parciales.parcial_admin']);
@@ -97,6 +98,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('parciales/secciones',['uses' => 'ParcialesController@buscarseccion', 'as' => 'parciales.secciones']);
     Route::post('parciales/mostrarcalificaciones_admin',['uses' => 'ParcialesController@mostrarcalificaciones_admin', 'as' => 'parciales.mostrarcalificaciones_admin']);
     
+=======
+    Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
+    Route::get('respaldos/download/{file_name}', ['uses' => 'RespaldosController@download', 'as' => 'respaldos.download']);
+    Route::get('respaldos/restore', ['uses' => 'RespaldosController@vistaRestore', 'as' => 'respaldos.vistaRestore']);
+    Route::post('respaldos/subir_sql', ['uses' => 'RespaldosController@restore', 'as' => 'respaldos.restore']);
+
+    Route::resource('respaldos', 'RespaldosController');
+>>>>>>> 292667e8242a69f3982ad34015cedc9de56ed490
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');

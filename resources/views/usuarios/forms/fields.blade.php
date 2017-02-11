@@ -29,3 +29,11 @@
 		{{ Form::password('password', ['class'=>'input-xlarge', 'required']) }}
 	</div>
 </div>
+
+<div class="control-group">
+	{{ Form::label('Captcha', 'Captcha', ['class'=>'control-label']) }}
+	<div class="controls">
+		{!! captcha_image_html('ExampleCaptcha') !!}
+                <input type="text" id="CaptchaCode" name="CaptchaCode">
+	</div>
+</div>

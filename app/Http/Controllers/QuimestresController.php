@@ -206,7 +206,7 @@ class QuimestresController extends Controller
                         $cuantos=count($quimestres1);
                             if($cuantos==1){
                                     $quimestre->update($request->all());
-                                    Session::flash('message', 'LA CREACIÓN DEL QUIMESTRE HA SIDO EXITOSA');      
+                                    Session::flash('message', 'LA ACTUALIZACIÓN DEL QUIMESTRE HA SIDO EXITOSA');      
 
                             }
                             else{

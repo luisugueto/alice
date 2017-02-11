@@ -41,16 +41,20 @@ class TipoEmpleadoController extends Controller
     {
 
         $buscar=Tipo::where('tipo_empleado',$request->tipo_empleado)->first();
+        
         $n=count($buscar);
+
         if ($n>0) {
-            dd(count($buscar));
+
             Session::flash('message-error', 'DISCULPE ESTE TIPO DE EMPLEADO YA HA SIDO REGISTRADO');
-           
+
         } else {
 
             $tipo_empleado=Tipo::create($request->all());
-           Session::flash('message', 'TIPO DE EMPLEADO REGISTRADO EXITOSAMENTE'); 
+
+            Session::flash('message', 'TIPO DE EMPLEADO REGISTRADO EXITOSAMENTE'); 
         }
+
         return redirect()->back();
     }
 

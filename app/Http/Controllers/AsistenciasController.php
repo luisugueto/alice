@@ -263,9 +263,17 @@ class AsistenciasController extends Controller
                 foreach($archivoGuardado as $item){
                     list($fecha, $personal) = explode("\t", $item);
                     $fecha = explode(" ", $fecha);
+                    
                     $fechas[] = $fecha[0];
                     $horas[] = $fecha[1];
                     $nro_personal[] = $personal;
+
+                    $fechass[] = $fecha[0];
+                    $horass[] = $fecha[1];
+                    $nro_personals[] = $personal;
+                    $fechas = array_reverse($fechass);
+                    $horas = array_reverse($horass);
+                    $nro_personal = array_reverse($nro_personals);
                 }
 
                 if(!empty($nro_personal)) {
@@ -273,9 +281,11 @@ class AsistenciasController extends Controller
                     foreach ($nro_personal as $key => $personal) {
 
                         $fechaExiste = FechasAsistencias::where('fecha', $fechas[$key])->exists();
+
                         $personalExiste = Personal::where('cedula', trim($personal))->first();
                         $fechaAsistencia = FechasAsistencias::where('fecha', $fechas[$key])->first();
 
+                        
                         if (!$fechaExiste) {
 
                             $newFecha = new FechasAsistencias;
@@ -283,28 +293,117 @@ class AsistenciasController extends Controller
                             $newFecha->save();
 
                             if (!empty($personalExiste)) {
+
                                 foreach ($horas as $keyUp => $hora) {
+
                                     if (!$personalExiste->asistencias()->where('id_fecha', $newFecha->id)->exists()) {
+ 
+
                                         $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
+                                    
+                                        // 1-Administrativo 6:10 - 13
+                                        // 2-Docente 6:30 - 13
+                                        // 3-Obrero 6:20 - 14
+                                        
+                                        //RETARDO DE PERSONAL ADMINISTRATIVO
+                                        if($personalExiste->tipo_registro == 1){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:10'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }                                
+                                        }
+
+                                        //RETARDO DOCENTE PLANTA
+                                        elseif($personalExiste->tipo_registro == 2 && $personalExiste->cargo->nombre == 'DOCENTE DE PLANTA'){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:30'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }
+                                        }
+
+                                        // RETARDO DE DOCENTE ROTATIVO
+                                        elseif($personalExiste->cargo->nombre == 'DOCENTE ROTATIVO'){
+
+                                            $horaAc = $horas[$key];
+
+                                            //  DOMINGO = 0; SABADO = 6;
+                                            $dias = array("0","1","2","3","4","5","6");
+                                            $sql = "SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = ".$personalExiste->id." AND bl.id_dia = ".$dias[date('w')]." ORDER BY b.id ASC LIMIT 1";
+
+                                            $bloque=DB::select($sql);
+                                               
+                                            foreach ($bloque as $key) {
+                                                $bloqueInicial = $key->bloque;
+                                            }
+                                            
+                                            $bloquee = explode(" - ", $bloqueInicial);
+                                                                           
+                                            $diferencia = $this->diferencia_Horas($horaAc, $bloquee[0]);
+                                            if($diferencia > 0)  DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');                                          
+                                        }
+                                        //RETARDO DE PERSONAL ADMINISTRATIVO
+                                        elseif($personalExiste->tipo_registro == 3){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:20'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }
+                                        }
+
                                     }
                                 }
                             }
 
                         } else {
+
                             if (!empty($personalExiste)) {
+
                                 foreach ($horas as $keyUp => $hora) {
+
                                     $asistencia = $personalExiste->asistencias()->where('id_fecha', $fechaAsistencia->id)->first();
+
                                     if (!empty($asistencia)) {
+
                                         $asistencia->salida = $horas[$key];
                                         $asistencia->save();
+
                                     } else {
+                                        
+                                        //RETARDO DE PERSONAL ADMINISTRATIVO
+                                        if($personalExiste->tipo_registro == 1){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:10'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }                                
+                                        }
+                                        //RETARDO DOCENTE PLANTA
+                                        elseif($personalExiste->tipo_registro == 2 && $personalExiste->cargo->nombre == 'DOCENTE DE PLANTA'){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:30'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }
+                                        }
+
+                                        //RETARDO DE PERSONAL ADMINISTRATIVO
+                                        elseif($personalExiste->tipo_registro == 3){
+                                            $diferencia = $this->diferencia_Horas($horas[$key], date('06:20'));
+
+                                            if($diferencia > 0){
+                                                DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
+                                            }
+                                        }
+ 
                                         $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
                                     }
                                 }
                             }
                         }
                     }
-
+                    Session::flash('message', 'ASISTENCIAS REGISTRADAS EXITOSAMENTE.');
                     return redirect('asistencias');
 
                 }else {
@@ -326,6 +425,6 @@ class AsistenciasController extends Controller
             Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA VACÍO VUELVA A INTENTARLO.');
 
             return redirect()->back();
-        }
+         }
     }
 }

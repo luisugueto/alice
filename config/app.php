@@ -159,6 +159,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
+<<<<<<< HEAD
+        BackupManager\Laravel\Laravel5ServiceProvider::class,
+=======
+        Spatie\Backup\BackupServiceProvider::class,
+        LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
+>>>>>>> db4dace462b2a625579947eeb417cd6aa7725ef8
 
     ],
 
