@@ -10,9 +10,10 @@
         <button class="btn btn-primary" title="Crear nuevo Respaldo" onclick="window.location.href = '{{ URL::to('respaldos/create') }}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Nuevo
         </button>
-        <button class="btn btn-primary" title="Subir Respaldo" onclick="window.location.href = '{{ URL::to('respaldos/subir') }}'";>
+
+        <!-- <button class="btn btn-primary" title="Subir Respaldo" onclick="window.location.href = '{{-- URL::to('respaldos/subir') --}}'";>
             <span class="fa fa-plus" aria-hidden="true"></span> Subir
-        </button>
+        </button> -->
     </div>
 
     <div class="block">
@@ -87,9 +88,9 @@
     <script type="text/javascript">
         function cargando(){
             $(".navbar-inner").css('display', 'none');
-              $.blockUI({ message: '<img src="{{ asset("img/Cargando.gif") }}" />' }); 
-            test(); 
+              $.blockUI({ message: '<img src="{{ asset("img/Cargando.gif") }}" />' });
+            test();
         }
-    
+
     </script>
 @endsection

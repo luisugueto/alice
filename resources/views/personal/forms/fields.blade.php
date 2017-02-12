@@ -161,9 +161,9 @@
 				</div>
 			</div>
 		</div>
-	</div>	  			
+	</div>
 </div>
-	
+
 <div class="tab-pane" id="tab3">
 	<div class="box-body">
 		<div class="span6">
@@ -228,9 +228,9 @@
 			$("#verificarr").prop("checked", false);
 		});
 
-		function verificar(){ 
-			for (i=0;i<document.f1.elements.length;i++) 
-				if(document.f1.elements[i].type == "checkbox") 
+		function verificar(){
+			for (i=0;i<document.f1.elements.length;i++)
+				if(document.f1.elements[i].type == "checkbox")
 					if(document.f1.seleccionar.checked == 1){
 						document.f1.elements[i].checked=1;
 						document.getElementById('clave').disabled = false;
@@ -243,7 +243,7 @@
 					}
 		}
 
-		function verificarDescuento(){ 
+		function verificarDescuento(){
 			if( $('#verificarr').prop('checked') ) {
 			    $('#descuenta').attr('disabled', false);
 			}else $('#descuenta').attr('disabled', true);
@@ -256,21 +256,21 @@
 
 
 	                var id = $("#tipoRegistro").val();
-	                $.get("/cargosPersonal/"+id+"", function(data) 
+	                $.get("/cargosPersonal/"+id+"", function(data)
 	                {
 	                    $("#cargo").empty();
 	                    $("#cargo").append('<option value="" selected disabled> Seleccione </option>');
 
 	                    if(data.length > 0){
 
-	                        for (var i = 0; i < data.length ; i++) 
-	                        {  
+	                        for (var i = 0; i < data.length ; i++)
+	                        {
 	                            $("#cargo").removeAttr('disabled');
 	                            $("#cargo").append('<option value="'+ data[i].id + '">' + data[i].nombre +'</option>');
 	                        }
 
 	                    }else{
-	                        
+
 	                        $("#seccion").attr('disabled', true);
 
 	                    }
@@ -286,4 +286,3 @@
 			$('#seQuincena').val(parseFloat(sueldo/2));
 		}
 </script>
-

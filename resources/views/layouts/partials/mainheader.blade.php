@@ -117,12 +117,12 @@
 
                         </a>
                         <ul class="dropdown-menu">
-                            
+
                             @if(Auth::user()->roles_id == 1)
                                 <li>
                                     <a tabindex="-1" href="{{ route('parciales.show',1) }}">Estudiantes</a>
                                 </li>
-                                
+
                             @endif
 
                             @if(Auth::user()->roles_id == 5)
@@ -188,7 +188,7 @@
                     @endif
                 </li>
                 @endif
-                @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1)
+                @if(Auth::user()->roles_id == 5 || Auth::user()->roles_id == 4 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 1 || Auth::user()->roles_id == 6)
                     <li class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Configuración <i class="caret"></i>
 
@@ -243,11 +243,12 @@
                                 <li>
                                     <a href="{{ route('descuentos.index') }}">Descuentos</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('respaldos.index') }}">Respaldo y Restauración</a>
-                                </li>
-                              
                             @endif
+                                @if(Auth::user()->roles_id == 6)
+                                  <li>
+                                      <a href="{{ route('respaldos.index') }}">Respaldo y Restauración</a>
+                                  </li>
+                                @endif
                         </ul>
                     </li>
                 @endif
