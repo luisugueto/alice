@@ -5,12 +5,12 @@
 
 @section('main-content')
 
-    <div class="col-xs-1">
-        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel.">
-            <a href="{{ url('descargarPagosMensual') }}"> <span class="text-light-blue">Excel</span></a>
+    <div>
+        <button type="button" class="btn btn-default" title="Hacer click aquí para exportar los datos a formato Excel.">
+            <a href="{{ url('descargarPagosMensual') }}" style="text-decoration: none;"> <span class="text-muted"> <i class="icon-file"></i> .EXCEL</span></a>
         </button>
     </div>
-
+    
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
@@ -54,7 +54,9 @@
                                             <td></td>
                                         @else
                                             <td>0</td>
-                                            <td> {!!link_to_route('pagos.update', $title = '', $parameters = $per->id, $attributes = ['class'=>'btn btn-primary btn-flat'])!!}</td>
+                                            <td>
+                                              <a href="{{ route('pagos.update', $per->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
+                                            </td>
                                         @endif
                                     @endif
                                 </tr>

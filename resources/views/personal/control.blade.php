@@ -5,11 +5,11 @@
 
 @section('main-content')
 
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-block btn-default btn-flat" title="Hacer click aquí para exportar los datos a formato Excel.">
-            <a href="{{ url('descargarControl') }}"> <span class="text-muted">Excel</span></a>
-        </button>
-    </div>
+<div>
+    <button type="button" class="btn btn-default" title="Hacer click aquí para exportar los datos a formato Excel.">
+        <a href="{{ url('descargarControl') }}" style="text-decoration: none;"> <span class="text-muted"> <i class="icon-file"></i> .EXCEL</span></a>
+    </button>
+</div>
 
     <div class="block">
         <div class="box">
@@ -31,6 +31,7 @@
                                 <th>Minutos de Retardo Asistencia</th>
                                 <th>Descuento por Retardo</th>
                                 <th>Pago Total</th>
+                                <th>Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,6 +50,9 @@
                                     @endif
                                     <td>{{ retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id) }}</td>
                                     <td>{{ (remuneracion($per->id)-totalPrestamos($per->id)-retardoAsistencia($per->id) * descuentosPersonal($per->cargo->empleado->id)) }}</td>
+                                    <td>
+                                      <a href="{{ route('pagos.recibo', $per->id) }}" class="btn btn-primary btn-flat"><i class="icon-refresh icon-white"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

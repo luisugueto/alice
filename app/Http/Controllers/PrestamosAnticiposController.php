@@ -75,9 +75,9 @@ class PrestamosAnticiposController extends Controller
 //         foreach ($f as $k => $v) {
 //                 $prestamos[$k] = $v;
 //         }
-// }    
+// }
 
-        
+
         $prestamo = Prestamo::all();
             $suma = 0;
             foreach($prestamo as $per){
@@ -85,9 +85,9 @@ class PrestamosAnticiposController extends Controller
                 foreach ($per->pagosrealizados as $key) {
                     $i += $key->monto_pagado;
                     $monto = $key->monto_adeudado;
-                }                    
+                }
                 $per->fecha;
-                $per->personal->nombres;                
+                $per->personal->nombres;
                 $per->tipo;
                 $per->monto;
                 $per->monto-$i;
@@ -98,7 +98,7 @@ class PrestamosAnticiposController extends Controller
 
                     }
                     else $suma++;
-                }                
+                }
             }
 
             Session::forget('valor');
@@ -133,7 +133,7 @@ class PrestamosAnticiposController extends Controller
         }
 
         $pagadoTotal = $monto_prestamos-$monto_pagos;
-        
+
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
         $descuento = ($suma*$per->descuento_iess)/100;
         $capital = $suma-$descuento;
@@ -150,15 +150,15 @@ class PrestamosAnticiposController extends Controller
                 $prestamo->motivo = $request['motivo'];
                 $prestamo->fecha = new \DateTime();
             if($request['tipo']=='P')
-            {   
+            {
                 $prestamo->tipo = 'Prestamo';
-                
+
             }elseif ($request['tipo']=='A') {
                 $prestamo->tipo = 'Anticipo';
             }
             $prestamo->save();
             Session::flash('message', 'PRESTAMO REGISTRADO CORRECTAMENTE');
-            
+
             $prestamo = Prestamo::all();
             $suma = 0;
             foreach($prestamo as $per){
@@ -166,9 +166,9 @@ class PrestamosAnticiposController extends Controller
                 foreach ($per->pagosrealizados as $key) {
                     $i += $key->monto_pagado;
                     $monto = $key->monto_adeudado;
-                }                    
+                }
                 $per->fecha;
-                $per->personal->nombres;                
+                $per->personal->nombres;
                 $per->tipo;
                 $per->monto;
                 $per->monto-$i;
@@ -179,7 +179,7 @@ class PrestamosAnticiposController extends Controller
 
                     }
                     else $suma++;
-                }                
+                }
             }
 
             Session::forget('valor');
@@ -224,7 +224,7 @@ class PrestamosAnticiposController extends Controller
     }
 
     public function listado(Request $request)
-    {   
+    {
         $per = Remuneracion::where('id_personal', $request['persona'])
                ->orderBy('id', 'desc')
                ->first();
@@ -241,7 +241,7 @@ class PrestamosAnticiposController extends Controller
         }
 
         $pagadoTotal = $monto_prestamos-$monto_pagos;
-    
+
         $suma = $per->sueldo_mens + $per->bono_responsabilidad;
 
         #$capital = $suma-$pagadoTotal;
@@ -254,7 +254,7 @@ class PrestamosAnticiposController extends Controller
             $total = $value->monto;
         }
 
-        $busqueda = DB::select('SELECT * FROM prestamos as pr INNER JOIN pagos as pa ON pr.id = pa.id_prestamo INNER JOIN datos_generales_personal as pe ON pe.id = pr.id WHERE pe.id = '.$request['persona'].'');
+        $busqueda = DB::select('SELECT * FROM prestamos as pr INNER JOIN pagos as pa ON pr.id = pa.id_prestamo INNER JOIN datos_generales_personal as pe ON pe.id = pr.id_personal WHERE pe.id = '.$request['persona'].'');
 
         $countBusqueda = count($busqueda);
 
@@ -269,7 +269,7 @@ class PrestamosAnticiposController extends Controller
         //              ->select(DB::raw('sum(monto) as monto, id_personal, tipo, fecha'))
         //              ->groupBy('tipo')
         //              ->get();
-        
+
         $pres = Prestamo::where('id_personal', $request['persona'])->get();
         return view('prestamos.listado', ['total' => $total, 'prestamo' => $pres, 'capital' =>$monto_prestamos]);
     }
