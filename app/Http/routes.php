@@ -15,12 +15,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::auth();
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
-<<<<<<< HEAD
-	//URLS REST
-=======
+
 
 	// -------- PERSONAL --------//
->>>>>>> 990865cc38dfc6375894d329cb1a388c3436a952
+
 	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');	
 	Route::get('personal/destroy',['uses' => 'PersonalController@destroy','as'  => 'personal.destroy']);
 	Route::get('/nuevo_personal', 'PersonalController@nuevo');
@@ -63,13 +61,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('descargarMorosos', 'FacturacionesController@descargarMorosos');
 	Route::get('facturaciones/buscar/estudiante', ['uses' => 'FacturacionesController@search', 'as' => 'facturaciones.buscar']);
 	Route::get('morosos', ['uses' => 'FacturacionesController@morosos', 'as' => 'facturaciones.morosos']);
-<<<<<<< HEAD
+
 	Route::get('facturaciones/pdf/{nro_factura}', ['uses' => 'FacturacionesController@pdf', 'as' => 'facturaciones.pdf']);
     Route::get('horario/profesor', ['uses' => 'HorariosController@index2', 'as' => 'horario.profesor']);
-	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {
-=======
->>>>>>> 990865cc38dfc6375894d329cb1a388c3436a952
-
+	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {*/
 	
 	//-------- REPRESENTANTES --------//
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
@@ -149,11 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('respaldos/subirRestore', ['uses' => 'RespaldosController@subirRestore', 'as' => 'respaldos.subirRestore']);
     Route::get('respaldos/restore/{file_name}', ['uses' => 'RespaldosController@restore', 'as' => 'respaldos.restore']);
 
-<<<<<<< HEAD
-=======
-
 	//-------- URLS REST --------//
->>>>>>> 990865cc38dfc6375894d329cb1a388c3436a952
     Route::resource('respaldos', 'RespaldosController');
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
