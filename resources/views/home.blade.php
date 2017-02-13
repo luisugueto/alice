@@ -5,7 +5,7 @@
 
 @section('main-content')
 
-    @if(Auth::user()->roles_id == 1)
+
 
         <div class="span12" id="content">
 
@@ -20,6 +20,7 @@
                             <li>{{ strtoupper(Auth::user()->roles->nombre) }}</li>
                         </div>
                     </div>
+                    @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
 
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
@@ -40,28 +41,37 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
 
-                <div class="span5">
-                    <!-- block -->
-                    <div class="block">
-                        <div class="navbar navbar-inner block-header">
-                            <div class="muted pull-left">TAREAS COMUNES (ACCESO RÁPIDO)</div>
-                        </div>
-                        <div class="block-content collapse in">
-                            <li><a href="{{ route('docentes.index') }}">LISTADO DE DOCENTES</a></li>
-                            <li><a href="{{ route('personal.index') }}">LISTADO DEL PERSONAL</a></li>
-                            <li><a href="{{ route('estudiantes.index') }}">LISTADO DE ESTUDIANTES</a></li>
-                            <li><a href="{{ url('personal/control_de_pagos') }}">CONTROL DE PAGOS MENSUAL</a></li>
-                            <li><a href="{{ url('personal/control_de_pagos') }}">CALCULO DE RETARDO</a></li>
-                            <li><a href="{{ url('facturaciones') }}">LISTADO TOTAL DE FACTURACIONES</a></li>
-                            <li><a href="#">LISTADO DEL MES ACTUAL DE FACTURACIONES</a></li>
-                            <li><a href="{{ url('verificarPrestamos') }}">VERIFICAR PRÉSTAMO</a></li>
-                            <li><a href="{{ url('/prestamosTotal') }}">LISTADO TOTAL DE PRESTAMOS</a></li>
-                            <li><a href="{{ route('prestamos.index') }}">LISTADO TOTAL DE PRESTAMOS DEL MES ACTUAL</a></li>
-                        </div>
-                    </div>
-                </div>
+                  <div class="span5">
+                      <!-- block -->
+                      <div class="block">
+                          <div class="navbar navbar-inner block-header">
+                              <div class="muted pull-left">TAREAS COMUNES (ACCESO RÁPIDO)</div>
+                          </div>
+                          <div class="block-content collapse in">
+                              @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
+                                <li><a href="{{ route('docentes.index') }}">LISTADO DE DOCENTES</a></li>
+                              @endif
+                              @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
+                                <li><a href="{{ route('personal.index') }}">LISTADO DEL PERSONAL</a></li>
+                              @endif
+                              @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
+                                <li><a href="{{ route('estudiantes.index') }}">LISTADO DE ESTUDIANTES</a></li>
+                              @endif
+                              @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
+                                <li><a href="{{ url('personal/control_de_pagos') }}">CONTROL DE PAGOS MENSUAL</a></li>
+                                <li><a href="{{ url('personal/control_de_pagos') }}">CALCULO DE RETARDO</a></li>
+                                <li><a href="{{ url('facturaciones') }}">LISTADO TOTAL DE FACTURACIONES</a></li>
+                                <li><a href="#">LISTADO DEL MES ACTUAL DE FACTURACIONES</a></li>
+                                <li><a href="{{ url('verificarPrestamos') }}">VERIFICAR PRÉSTAMO</a></li>
+                                <li><a href="{{ url('/prestamosTotal') }}">LISTADO TOTAL DE PRESTAMOS</a></li>
+                                <li><a href="{{ route('prestamos.index') }}">LISTADO TOTAL DE PRESTAMOS DEL MES ACTUAL</a></li>
+                              @endif
+                          </div>
+                      </div>
+                  </div>
                 <div class="span3">
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
@@ -76,34 +86,27 @@
                             <div class="muted pull-left">ATAJOS DE TECLADO</div>
                         </div>
                         <div class="block-content collapse in">
+                          @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
                             <li>PRESTAMOS (SHIFT+P)</li>
+                          @endif
+                          @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
                             <li>INSCRIPCIONES (CONTROL+M)</li>
                             <li>ESTUDIANTES (SHIFT+L)</li>
+                          @endif
+                          @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
                             <li>PERSONAL (CONTROL+C)</li>
+                          @endif
+                          @if(Auth::user()->roles_id == 3)
+                            <li>PARCIALES (SHIFT+K)</li>
+                            <li>MOSTRAR CALIFICACIONES PARCIALES (CONTROL+B)</li>
+                          @endif
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-        @elseif(Auth::user()->roles_id == 3)
-            <div class="span12" id="content">
 
-                <div class="row-fluid">
-                    <div class="span4">
-                        <div class="block">
-                            <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left">ATAJOS DE TECLADO</div>
-                            </div>
-                            <div class="block-content collapse in">
-                                <li>PARCIALES (SHIFT+K)</li>
-                                <li>MOSTRAR CALIFICACIONES PARCIALES (CONTROL+B)</li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    @endif
 
    <!--
     function calcular_tiempo_trasnc($hora1,$hora2){
@@ -129,26 +132,32 @@
 
 @section('scripts')
     <script>
+      @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
         $(document).hotkey('shift+p', function() {
             window.location.href = '/prestamos/create';
         });
+      @endif
+      @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 5)
         $(document).hotkey('ctrl+m', function() {
             window.location.href = '/inscripciones';
         });
         $(document).hotkey('shift+l', function() {
             window.location.href = '/estudiantes';
         });
+      @endif
+      @if(Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
         $(document).hotkey('ctrl+c', function() {
             window.location.href = '/personal';
         });
+      @endif
 
-        @if(Auth::user()->roles_id == 3)
-            $(document).hotkey('shift+k', function() {
-                window.location.href = '/parciales/1';
-            });
-            $(document).hotkey('ctrl+b', function() {
-                window.location.href = '/parciales/mostrarcalificaciones';
-            });
-        @endif
+      @if(Auth::user()->roles_id == 3)
+          $(document).hotkey('shift+k', function() {
+              window.location.href = '/parciales/{{ Auth::user()->id }}';
+          });
+          $(document).hotkey('ctrl+b', function() {
+              window.location.href = '/parciales/mostrarcalificaciones';
+          });
+      @endif
     </script>
 @endsection
