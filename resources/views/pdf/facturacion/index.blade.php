@@ -80,7 +80,9 @@
 			@foreach($rubros as $key => $rubro)
 				<tr>
 					@if($i == 0)
-					<td rowspan="{{ count($rubro->realizados)+2 }}" style="text-align: center;">{{ count($rubros) }}</td>
+					<td rowspan="{{ count($rubro->realizados)+1 }}" style="text-align: center;">{{ count($rubros) }}</td>
+					@else
+					<td></td>
 					@endif
 					<td colspan="5"></td>
 					@foreach($rubro->realizados as $rubrosRealizados)
