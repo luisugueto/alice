@@ -37,7 +37,7 @@ class Cursos extends Model
 
     public function rubros()
     {
-        return $this->hasMany('App\Rubros', 'id_curos', 'id');
+        return $this->hasMany('App\Rubros', 'id_curso', 'id');
     }
 
     public function estudiantes(){

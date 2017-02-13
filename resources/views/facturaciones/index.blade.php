@@ -53,9 +53,12 @@
                                     <td>{{$facturaciones->factura->estudiante->nombres}}</td>
                                     <td>{{$facturaciones->factura->total_pago}}</td>
                                     <td>{{$monto}}</td>
-                                    <td>
+                                    <td style="text-align: center; width: 150px;">
                                         @if($monto != '0')
                                             <a href="{{ route('facturaciones.edit', $facturaciones->id) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a>
+                                        @endif
+                                        @if(count($facturaciones->realizados) > 0)
+                                            <a href="{{ route('facturaciones.pdf', $facturaciones->id_factura) }}" class="btn btn-inverse"><i class="icon-print icon-white"></i></a>
                                         @endif
                                     </td>
                                 </tr>

@@ -1,13 +1,46 @@
+<?php $i = 0; ?>
+
 <div class="span11">
-	<div class="span4">
-		<div class="control-group">
-			{!! Form::label('curso', 'Cursos', ['class' => 'control-label']) !!}
-			<div class="controls">
-				{!! Form::select('id_curso', $cursos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione', 'title' => 'Debe seleccionar un curso', 'id' => 'id_curso','onchange' => 'seccion()']) !!}
-			</div>
-		</div>
-	</div>
 
 	{!! Form::hidden('id_estudiante', $estudiante->id) !!}
-	<div id="id_rubros"></div>
+
+	<table class="table table-bordered">
+        <thead>
+            <tr>
+            	<th></th>
+                <th>NOMBRE</th>
+                <th>MONTO</th>
+                <th style="width: 250px;">FECHA MAX. DE PAGO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($rubros as $rubro)
+
+                @if(!buscarRubro($rubro->id, $estudiante->id))
+
+                    <tr>
+                    	<td style="text-align: center;"><input type="checkbox" id="id_rubro" name="id_rubro[]"" value="{{ $rubro->id }}"></td>
+                       	<td>{{ $rubro->nombre }}</td>
+                        <td>{{ $rubro->monto }}</td>
+                        <td>{{ $rubro->fecha }}</td>
+                    </tr>
+
+                    <?php $i++ ?> 
+                    
+                @endif
+
+            @endforeach
+
+            @if($i > 0)
+                <tr>
+                    <td colspan="4"><button type="reset" class="btn btn-default btn-flat">Cancelar</button><button type="submit" class="btn btn-primary pull-right btn-flat">Guardar</button></td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4" style="text-align: center;"> No hay rubros disponibles </td>
+                </tr>
+            @endif
+
+        </tbody>
+    </table>
 </div>

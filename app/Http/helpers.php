@@ -56,6 +56,18 @@ use App\CantidadDescuento;
         }
     }
 
+    function buscarRubro($rubro, $estudiante){
+
+    	$facturas = \DB::table('facturacion')->where('id_estudiante', $estudiante)->get();
+    	
+    	foreach ($facturas as $key => $factura) {
+    		if($rubros = \DB::table('facturas_rubros')->where([['id_factura', $factura->id], ['id_rubro', $rubro]])->exists()){
+    			
+    			return true;
+    		}
+    	}
+    }
+
 	function retardoAsistencia($id_personal)
 	{
 		$date = date("m");

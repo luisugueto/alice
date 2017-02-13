@@ -15,12 +15,14 @@ use App\FacturasRubros;
 use App\Facturacion;
 use App\Cursos;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Session;
 use DB;
 use Excel;
 
 class FacturacionesController extends Controller
 {
+	
 		/**
 		 * Display a listing of the resource.
 		 *
@@ -40,21 +42,37 @@ class FacturacionesController extends Controller
 		 */
 		public function create(CedulaEstudianteRequest $request)
 		{
+			$periodo = Session::get('periodo');
 
-				$estudiante = Estudiante::where([['nacionalidad_ced', $request->nacionalidad], ['cedula', $request->cedula]])->first();
+			$estudiante = Estudiante::where([['nacionalidad_ced', $request->nacionalidad], ['cedula', $request->cedula]])->first();
+			if(!empty($estudiante))
+			{
+					
+				if($estudiante->cursos()->where('id_periodo', $periodo)->exists()){
 
-				if(!empty($estudiante))
-				{
-						$cursos = Cursos::lists('curso', 'id');
-						
-						return view('facturaciones.create', compact('estudiante', 'cursos'));
-				
-				}else{
+					$curso = $estudiante->cursos()->where('id_periodo', $periodo)->first();
+					
+					$cursos = Cursos::where('id', $curso->pivot->id_curso)->first();
 
-						Session::flash('message-error', 'ESTUDIANTE NO SE ENCUENTRA REGISTRADO EN LA BASE DE DATOS');
+					$rubros = $cursos->rubros;
 
-						return redirect()->back();
+					return view('facturaciones.create', compact('estudiante', 'rubros'));
+					
+
+				} else {
+
+					Session::flash('message-error', 'ESTUDIANTE NO SE ENCUENTRA INSCRITO EN ESTE PERIODO');
+
+					return redirect()->back();
 				}
+
+			}else{
+
+				Session::flash('message-error', 'ESTUDIANTE NO SE ENCUENTRA REGISTRADO EN LA BASE DE DATOS');
+
+				return redirect()->back();
+			}
+
 		}
 
 		public function morosos()
@@ -96,6 +114,7 @@ class FacturacionesController extends Controller
 
 			if(count($request->id_rubro) > 0)
 			{
+
 				$suma = 0;
 				
 				$string="0123456789";
@@ -332,4 +351,19 @@ class FacturacionesController extends Controller
 		{
 			return view('facturaciones.forms.fields-search');
 		}
+
+	public function pdf($nro_factura)
+	{
+		$periodo = Session::get('periodo');
+
+		$facturacion = Facturacion::find($nro_factura);
+		$estudiante = $facturacion->estudiante;
+		$rubros = $facturacion->facturacion_rubros;
+		$curso = $estudiante->cursos()->where('id_periodo', $periodo)->first();
+	
+
+		$dompdf = \PDF::loadView('pdf.facturacion.index', ['facturacion' => $facturacion, 'estudiante' => $estudiante, 'rubros' => $rubros, 'curso' => $curso])->setPaper('a4', 'landscape');
+
+        return $dompdf->stream();
+	}
 }

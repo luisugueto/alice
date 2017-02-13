@@ -16,7 +16,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
 	//URLS REST
-	//Route::resource('app', 'AppController');
 	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');	
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
@@ -40,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 	Route::get('facturaciones/buscar/estudiante', ['uses' => 'FacturacionesController@search', 'as' => 'facturaciones.buscar']);
 	Route::get('morosos', ['uses' => 'FacturacionesController@morosos', 'as' => 'facturaciones.morosos']);
+	Route::get('facturaciones/pdf/{nro_factura}', ['uses' => 'FacturacionesController@pdf', 'as' => 'facturaciones.pdf']);
     Route::get('horario/profesor', ['uses' => 'HorariosController@index2', 'as' => 'horario.profesor']);
 	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {
 
@@ -108,7 +108,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('respaldos/restore/{file_name}', ['uses' => 'RespaldosController@restore', 'as' => 'respaldos.restore']);
 
     Route::resource('respaldos', 'RespaldosController');
-
 	Route::resource('asistencias', 'AsistenciasController');
 	Route::resource('horarios', 'HorariosController');
 	Route::resource('usuarios', 'UsuariosController');
