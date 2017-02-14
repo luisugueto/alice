@@ -43,5 +43,17 @@ class CursosTableSeeder extends Seeder
 
             'curso' => '7 mo'
         ]);
+        DB::table('cursos')->insert([
+
+            'curso' => '8 vo'
+        ]);
+        DB::table('cursos')->insert([
+
+            'curso' => '9 no'
+        ]);
+        DB::table('cursos')->insert([
+
+            'curso' => '10 mo'
+        ]);
     }
 }

@@ -198,6 +198,7 @@
                                 <li>
                                     <a tabindex="-1" href="{{ route('periodos.index') }}">Activar Periodo</a>
                                     <a tabindex="-1" href="{{ route('aulas.index') }}">Aulas</a>
+                                    <a tabindex="-1" href="{{ route('cursos.index') }}">Cursos</a>
                                 </li>
                             @endif
                             @if(Auth::user()->roles_id == 4 || Auth::user()->roles_id == 1)
@@ -242,6 +243,9 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('descuentos.index') }}">Descuentos</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('descontar_mensualidad.index') }}">Descuentos Mensualidad</a>
                                 </li>
                             @endif
                                 @if(Auth::user()->roles_id == 6)

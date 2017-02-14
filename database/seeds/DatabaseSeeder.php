@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CursosSeccionesSeeder::class);
         $this->call(TipoRecuperativosTableSeeder::class);
         $this->call(CantidadDescuento::class);
+        $this->call(DescontarMensualidadSeeder::class);
         Model::reguard();
     }
 }
