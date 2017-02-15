@@ -15,7 +15,7 @@ class CreateFacturacionTable extends Migration
         Schema::create('facturacion', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_estudiante')->unsigned();
-            $table->integer('numero')->unique();
+            $table->integer('numero');
             $table->date('fecha');
             $table->double('total_pago');
 

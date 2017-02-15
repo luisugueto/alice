@@ -14,6 +14,7 @@ use App\FormasPago;
 use App\FacturasRubros;
 use App\Facturacion;
 use App\Cursos;
+use App\Periodos;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Session;
@@ -28,11 +29,106 @@ class FacturacionesController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function index()
+		public function index(Request $request)
 		{
-				$facturacion = FacturasRubros::groupBy('id_factura')->get();
-				//dd($facturacion);
-				return view('facturaciones.index', compact('facturacion'));
+
+			$cursos = Cursos::lists('curso', 'id');
+			$periodos = Periodos::lists('nombre', 'id');
+			$estudiantes = Estudiante::all();
+
+			if(!empty($request->inic) AND !empty($request->fin))
+			{
+				$this->validate($request, [
+					'literal' => 'required',
+					'curso'   => 'required'
+				]);
+
+				$curso = Cursos::find($request->curso);
+
+				$estudiantes2 = Estudiante::where('apellido_paterno', 'like', $request->literal . '%')->get();
+				
+				if (Estudiante::where('apellido_paterno', 'like', $request->literal . '%')->exists()) {
+
+					foreach ($estudiantes2 as $estudiante) {
+
+						if($estudiante->cursos()->where('id_curso', $curso->id)->exists()){
+
+							$facturaciones = $estudiante->facturaciones()->whereBetween('fecha', [$request->inic, $request->fin])->get();
+
+							if (count($facturaciones) > 0) {
+								
+								foreach ($facturaciones as $key => $facturas) {
+
+									if(count($facturas->facturacion_rubros) > 0) {
+
+										$facturacion = $facturas->facturacion_rubros;
+
+									} 
+								}
+
+							} else {
+
+								Session::flash('message-error', 'DISCULPE NO SE ENCONTRARON RESULTADOS COINCIDENTES.');
+
+								return redirect('facturaciones');
+							}
+						
+						} else {
+
+							Session::flash('message-error', 'DISCULPE NO SE ENCONTRARON RESULTADOS COINCIDENTES.');
+
+							return redirect('facturaciones');
+						} 
+
+
+					}
+
+
+					return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes'));
+
+
+				} else {
+
+					Session::flash('message-error', 'DISCULPE NO SE PUDO ORDENAR POR '.$request->literal.' YA QUE NO EXISTEN ESTUDIANTES CON ESE NOMBRE.');
+
+					return redirect('facturaciones');
+
+				}
+
+			} else {
+
+				if (!empty($request->periodo) AND !empty($request->id_estudiante)) {
+
+					$this->validate($request, [
+						'periodo'       => 'required',
+						'id_estudiante' => 'required'
+					]);
+
+					$periodo = Periodos::find($request->periodo);
+					$estudiante = Estudiante::find($request->id_estudiante);
+
+					$facturaciones = $estudiante->facturaciones()->whereYear('fecha', '=', $periodo->nombre)->get();
+					
+					if(count($facturaciones) > 0) {
+
+						foreach($facturaciones as $facturas) {
+
+							$facturacion = $facturas->facturacion_rubros()->groupBy('id_factura')->get();
+						}
+
+					} else {
+							
+						$facturacion = array();
+					}
+
+
+					return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes'));
+				} 
+
+
+			}
+
+			return view('facturaciones.index', compact('cursos', 'periodos', 'estudiantes'));
 		}
 
 		/**

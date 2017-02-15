@@ -5,8 +5,6 @@
 
 @section('main-content')
 
-
-
         <div class="span12" id="content">
 
             <div class="row-fluid">
