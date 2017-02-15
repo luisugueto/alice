@@ -252,8 +252,72 @@ class AsistenciasController extends Controller
 
     public function upload(Request $request)
     {
-
         $archivo = $request->file('archivo');
+        $name = $archivo->getClientOriginalName();
+       
+        
+        $archivoGuardado = file($archivo);
+
+                foreach($archivoGuardado as $key => $item){
+                    list($numeroFactura, $codigoEstudiante, $nombreRubro, $fechaRubro ,$fechaPago, $montoPagado, $montoTotal, $deuda) = explode("\t", $item);
+
+
+                    $fecha = explode(" ", $fechaPago);
+
+                    $nombreeRubro = explode(" - ", trim($nombreRubro));
+                    $fechas = $fecha[0];
+                    $estudianteExist = Estudiante::where('codigo_matricula', '=',$codigoEstudiante)->exists();          
+
+
+                    $fechaaRubro = explode(" ", $fechaRubro);
+                    $rubrosExist = Rubros::where('nombre', $nombreeRubro[0])->whereDate('fecha', '=',$fechaaRubro[0])->exists();
+
+
+                    if($estudianteExist AND $rubrosExist)
+                    {
+
+                        $estudiante = Estudiante::where('codigo_matricula', '=',$codigoEstudiante)->first();
+                        $rubro = Rubros::where('nombre', $nombreeRubro[0])->whereDate('fecha', '=',$fechaaRubro[0])->first();
+                       
+                        $forma = FormasPago::find(1);
+                        $monto = ($rubro->monto == '') ? 0 : $rubro->monto;
+                        $newFactura = new Facturacion;
+                        $newFactura->id_estudiante = $estudiante->id;
+                        $newFactura->numero = $numeroFactura;
+                        $newFactura->fecha = $fechas;
+                        $newFactura->total_pago = $monto;
+                        $newFactura->save();
+
+                        $rubro->facturacion_rubros()->saveMany([new FacturasRubros(['id_factura' => $newFactura->id], ['id_rubro' => $rubro->id])]);
+
+                        $rubross = FacturasRubros::all()->last();
+                        $idLastRubro = $rubross->id;
+
+                        $rubroRealizado = new RubrosRealizados;
+                        $rubroRealizado->id_factura_rubro = $idLastRubro;
+                        $rubroRealizado->monto_pagado = $montoPagado;
+                        $rubroRealizado->monto_adeudado = $deuda;
+                        $rubroRealizado->fecha = $fechas;
+                        $rubroRealizado->id_modalidad = 1;
+                        $rubroRealizado->no_transferencia = 0;
+                        $rubroRealizado->no_cheque = 0;
+                        $rubroRealizado->save();
+
+                        $forma->rubro()->attach($rubroRealizado->id);
+
+                    }
+
+
+                }
+
+
+
+        // if(filesize($archivo)>0){
+        //     $x = array_chunk($archivo, 100);
+            
+        // }
+
+       /* $archivo = $request->file('archivo');
 
         if(filesize($archivo) > 0){
 
@@ -433,6 +497,6 @@ class AsistenciasController extends Controller
             Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA VACÍO VUELVA A INTENTARLO.');
 
             return redirect()->back();
-        } 
+         } */
     }
 }
