@@ -25,8 +25,8 @@ class PersonalRequest extends Request
     * Get the error messages for the defined validation rules.
     *
     * @return array
-    */    
-    
+    */
+
     public function messages()
     {
         return [
@@ -36,7 +36,7 @@ class PersonalRequest extends Request
             'codigo_pesonal.unique' => 'codigo personal ya ha sido registrado.',
         ];
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -46,7 +46,7 @@ class PersonalRequest extends Request
     public function rules()
     {
         return [
-            'codigo_pesonal' => 'required|digits_between:10,11|unique:datos_generales_personal,codigo_pesonal,'.  $this->route->getParameter('personal'),
+            'codigo_pesonal' => 'required|between:10,11|unique:datos_generales_personal,codigo_pesonal,'.  $this->route->getParameter('personal'),
             'nombres' => 'required|string',
             'apellido_paterno' => 'required|string',
             'cedula' => 'required|numeric|digits_between:10,11|unique:datos_generales_personal,cedula,'.  $this->route->getParameter('personal'),

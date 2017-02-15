@@ -26,6 +26,7 @@ class Authenticate
             }
            
         }
+        ini_set('max_execution_time', 0);
         return $next($request);
     }
 }

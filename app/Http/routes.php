@@ -16,15 +16,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index');
 	Route::get('/salir', 'LoginController@logout');
 
+
 	// -------- PERSONAL --------//
-	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');	
+
+	Route::get('cargosPersonal/{id}/', 'PersonalController@getCargos');
 	Route::get('personal/destroy',['uses' => 'PersonalController@destroy','as'  => 'personal.destroy']);
 	Route::get('/nuevo_personal', 'PersonalController@nuevo');
 	Route::get('personal/control_de_pagos', 'PersonalController@control');
+  Route::get('descargarRecibo/{id}', ['uses' => 'PersonalController@recibo', 'as' => 'pagos.recibo']);
 
 
 	//-------- HORARIOS --------//
-	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');	
+	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');
 	Route::get('asignaturasHorarios/{id}/', 'HorariosController@getAsignaturas');
 	Route::get('horarios/buscar', ['uses' => 'HorariosController@search','as' => 'horarios.buscar']);
 	Route::get('seccionesHorarios/{id}/', 'HorariosController@getSecciones');
@@ -42,29 +45,32 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/prestamosTotal', 'PrestamosAnticiposController@total');
 	Route::get('/verificarPrestamos', 'PrestamosAnticiposController@ver');
 
-	
+
 	//-------- USUARIOS --------//
 	Route::get('/usuario', 'UsuariosController@index');
 	Route::get('/nuevo_usuario', 'UsuariosController@nuevo');
 
-	
+
 	//-------- PAGOS --------//
 	Route::get('/descargarPagosMensual', ['uses' => 'PagosController@descargarPagosMensual', 'as' => 'pagos.mensual']);
 	Route::get('descargarPagos', 'PagosController@descargar');
 	Route::get('descargarListado', 'PagosController@descargarListado');
 	Route::get('descargarControl', 'PagosController@descargarControl');
 
-	
+
 	//-------- FACTURACIONES --------//
 	Route::get('descargarMorosos', 'FacturacionesController@descargarMorosos');
 	Route::get('facturaciones/buscar/estudiante', ['uses' => 'FacturacionesController@search', 'as' => 'facturaciones.buscar']);
 	Route::get('morosos', ['uses' => 'FacturacionesController@morosos', 'as' => 'facturaciones.morosos']);
 
-	
+	Route::get('facturaciones/pdf/{nro_factura}', ['uses' => 'FacturacionesController@pdf', 'as' => 'facturaciones.pdf']);
+    Route::get('horario/profesor', ['uses' => 'HorariosController@index2', 'as' => 'horario.profesor']);
+	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {*/
+
 	//-------- REPRESENTANTES --------//
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);
 
-	
+
 	//-------- ESTUDIANTES --------//
 	Route::get('estudiante/buscar', ['uses' => 'EstudiantesController@search', 'as' => 'estudiantes.cedula']);
 
@@ -83,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//-------- INSCRIPCIONES --------//
 	Route::get('inscripciones/rubros/{id}/buscar',['uses' => 'InscripcionesController@buscarrubros', 'as' => 'inscripciones.rubros.buscar']);
 	Route::get('inscripciones/cambiarseccion/{id}/buscar',['uses' => 'InscripcionesController@cambiarseccion', 'as' => 'inscripciones.cambiarseccion.buscar']);
-	
+
 
 	//-------- CERTIFICADOS --------//
 	Route::get('certificados/listado_estudiantes_inscritos', 'CertificadosController@listado_estudiantes_inscritos');
@@ -92,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('certificados/listado_personal',['uses' => 'CertificadosController@personal', 'as' => 'certificados.personal']);
 	Route::get('certificados/comportamiento',['uses' => 'CertificadosController@comportamiento', 'as' => 'certificados.comportamiento']);
 	Route::get('certificados/listado_estudiantes_comportamiento',['uses' => 'CertificadosController@estudiantesComportamiento', 'as' => 'certificados.estudiantesComportamiento']);
-	
+
 
 	//-------- PARCIALES --------//
 	Route::post('parciales/store2',['uses' => 'ParcialesController@store2', 'as' => 'parciales.store2']);
@@ -123,7 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('parciales/secciones',['uses' => 'ParcialesController@buscarseccion', 'as' => 'parciales.secciones']);
     Route::post('parciales/mostrarcalificaciones_admin',['uses' => 'ParcialesController@mostrarcalificaciones_admin', 'as' => 'parciales.mostrarcalificaciones_admin']);
     Route::get('parciales/printquimestre/{i}/{id_estudiante}', ['uses' => 'ParcialesController@pdfquimestre', 'as' => 'quimestre.pdf']);
-	
+
 
 	//-------- ASISTENCIAS --------//
 	Route::get('asistencias/salida', 'AsistenciasController@salida');
@@ -138,7 +144,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('respaldos/subir', ['uses' => 'RespaldosController@subir', 'as' => 'respaldos.subir']);
     Route::post('respaldos/subirRestore', ['uses' => 'RespaldosController@subirRestore', 'as' => 'respaldos.subirRestore']);
     Route::get('respaldos/restore/{file_name}', ['uses' => 'RespaldosController@restore', 'as' => 'respaldos.restore']);
-
 
 	//-------- URLS REST --------//
     Route::resource('respaldos', 'RespaldosController');
@@ -170,5 +175,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('periodos', 'PeriodosController');
 	Route::resource('descuentos','DescuentoController');
 
-	
+
 });

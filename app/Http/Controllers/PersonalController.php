@@ -19,6 +19,7 @@ use Mail;
 use DB;
 use PDO;
 use Auth;
+use PDF;
 
 class PersonalController extends Controller
 {
@@ -106,8 +107,8 @@ class PersonalController extends Controller
         define('correo', $request['correo']);
         define('nombres', $request['nombres']);
         $data['clave'] = $request['clave'];
-       
-        
+
+
         if($request['seleccionar']=='on'){
             $per->clave = $request['clave'];
         }else $per->clave = '';
@@ -150,13 +151,13 @@ class PersonalController extends Controller
                 $user->password = bcrypt($request['clave']);
                 $user->roles_id = '3';
                 $user->save();
-                
+
             }
         }
         if($request['tipo_registro']==2){
         //      \Mail::send('emails.message', $data, function($message)
         // {
-        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');;
         // });
             Session::flash('message', 'DOCENTE REGISTRADO CORRECTAMENTE, RECIBIRÁ UN CORREO CON SU USUARIO Y CONTRASEÑA DE ACCESO');
         }
@@ -164,7 +165,7 @@ class PersonalController extends Controller
             Session::flash('message', 'PERSONAL REGISTRADO CORRECTAMENTE');
         //  \Mail::send('emails.message', $data, function($message)
         // {
-        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');; 
+        //     $message->to(correo)->subject('Usuario Aplicación María Montessori');;
         // });
         }
             return redirect()->route('personal.index');
@@ -191,13 +192,13 @@ class PersonalController extends Controller
     {
         define('id', $id);
         DB::connection()->setFetchMode(PDO::FETCH_ASSOC);
-    
+
         $personal = DB::table('datos_generales_personal')
             ->join('informacion_academica', 'informacion_academica.id_personal', '=', 'datos_generales_personal.id')
             ->join('remuneracion', 'remuneracion.id_personal', '=', 'informacion_academica.id')
             ->where('remuneracion.id_personal', '=', id)
             ->first();
-        
+
         $cargo = Cargo::lists('nombre', 'id');
         $tipo = Tipo::lists('tipo_empleado', 'id');
 
@@ -212,7 +213,7 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(PersonalRequest $request, $id)
-    { 
+    {
             $personal = Personal::where('id',$id)->first();
             $user = User::where('email', $personal->correo)->exists();
             if($user)
@@ -238,7 +239,7 @@ class PersonalController extends Controller
             $per->telefono = $request['telefono'];
             $per->correo = strtolower($request['correo']);
             $per->ingreso_notas = 1;
-                      
+
             if($request['seleccionar']=='on'){
                 $per->clave = $request['clave'];
             }else {
@@ -255,7 +256,7 @@ class PersonalController extends Controller
                     $usuario->save();
                 }
             }
-            
+
             $ina = InformacionAcademica::find($id);
             $ina->primaria = strtoupper($request['primaria']);
             $ina->secundaria = strtoupper($request['secundaria']);
@@ -264,7 +265,7 @@ class PersonalController extends Controller
             $ina->cursos = strtoupper($request['cursos']);
             $ina->historial_laboral = strtoupper($request['historial_laboral']);
             $ina->save();
-            
+
             $ren = Remuneracion::find($id);
             $ren->sueldo_mens  = $request['sueldo_mens'];
             $ren->descuento_iess = $request['descuento_iess'];
@@ -275,7 +276,7 @@ class PersonalController extends Controller
             if($request['devolver_fondos']=='on') $ren->devolver_fondos = 'Y';
             else $ren->devolver_fondos = 'N';
             $ren->save();
-            
+
             Session::flash('message', 'USUARIO EDITADO CORRECTAMENTE');
 
             $cargaAcademica = DB::select('SELECT * FROM asignacion WHERE id_prof = '.$id.'');
@@ -292,8 +293,39 @@ class PersonalController extends Controller
                     return redirect()->action('PersonalController@index');
                 }
             }
-        
+
         return redirect()->action('PersonalController@index');
+    }
+
+    public function recibo($id){
+      $firstDay = explode('-', $this->_data_first_month_day());
+      $lastDay = explode('-', $this->_data_last_month_day());
+
+      $personal = Personal::find($id);
+      $capital = remuneracion($id);
+      $prestamos = totalPrestamos($id);
+      $mes = date('m');
+      $prestamoss = DB::select('SELECT * FROM prestamos WHERE id_personal = '.$id.' AND MONTH(fecha) = '.$mes.'');
+      $minutosRetardo = retardoAsistencia($id);
+      $retardoAsistencia = retardoAsistencia($id) * descuentosPersonal($personal->cargo->empleado->id);
+      $pagoTotal = (remuneracion($id)-totalPrestamos($id)-retardoAsistencia($id) * descuentosPersonal($personal->cargo->empleado->id));
+
+      $datos['firstDay'] = $firstDay[2].'-'.$firstDay['1'].'-'.$firstDay[0];
+      $datos['lastDay'] = $lastDay[2].'-'.$lastDay['1'].'-'.$lastDay[0];
+      $datos['nombres'] = $personal->nombres;
+      $datos['apellido'] = $personal->apellido_paterno;
+      $datos['cedula'] = $personal->cedula;
+      $datos['cargo'] = $personal->cargo->nombre;
+      $datos['capital'] = $capital;
+      $datos['minutosRetardo'] = $minutosRetardo;
+      $datos['retardo'] = $retardoAsistencia;
+      $datos['prestamos'] = $prestamos;
+      $datos['contadorPrestamos'] = count($prestamoss);
+      $datos['pagosTotal'] = $pagoTotal;
+
+      $pdf = PDF::loadView('pdf.pago.index', $datos);
+
+      return $pdf->download('RECIBO DE PAGO '.$personal->nombres.' '.$personal->apellido_paterno.'-'.date('Y-m-d').'.pdf');
     }
 
     /**
@@ -317,5 +349,21 @@ class PersonalController extends Controller
             return redirect()->action('PersonalController@index');
         }
     }
+
+    /** Actual month last day **/
+    private function _data_last_month_day() {
+      $month = date('m');
+      $year = date('Y');
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+
+      return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+  }
+
+  /** Actual month first day **/
+  private function _data_first_month_day() {
+      $month = date('m');
+      $year = date('Y');
+      return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+  }
 
 }

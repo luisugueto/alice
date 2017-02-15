@@ -9,6 +9,13 @@ use App\Asistencia;
 use DB;
 use Session;
 
+use App\Estudiante;
+use App\Rubros;
+use App\Facturacion;
+use App\FacturasRubros;
+use App\RubrosRealizados;
+use App\FormasPago;
+
 class AsistenciasController extends Controller
 {
     /*public function __construct(){
@@ -425,6 +432,6 @@ class AsistenciasController extends Controller
             Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA VACÍO VUELVA A INTENTARLO.');
 
             return redirect()->back();
-         }
+         } 
     }
 }

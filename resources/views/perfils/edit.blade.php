@@ -21,7 +21,7 @@
                         @include('perfils.forms.fields')
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Actulizar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
                             <button type="reset" class="btn">Cancelar</button>
                         </div>
                     </fieldset>
