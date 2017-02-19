@@ -4,8 +4,13 @@
 
 	{!! Form::hidden('id_estudiante', $estudiante->id) !!}
 
+	@if(date('d') == ('1'||'2'))
+		<div><legend>Descuento Pronto Pago <input type="checkbox" name="descontarMensualidad" value="{{ $descontarMensualidad->cantidad }}">&nbsp; {{ $descontarMensualidad->cantidad }} $</legend></div>
+	@endif
+
 	<table class="table table-bordered">
         <thead>
+
             <tr>
             	<th></th>
                 <th>NOMBRE</th>
@@ -25,8 +30,8 @@
                         <td>{{ $rubro->fecha }}</td>
                     </tr>
 
-                    <?php $i++ ?> 
-                    
+                    <?php $i++ ?>
+
                 @endif
 
             @endforeach

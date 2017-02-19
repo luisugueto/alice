@@ -42,11 +42,7 @@ class DescontarMensualidadController extends Controller
      */
     public function store(Request $request)
     {
-        extract($request->all());
-     
-
         return redirect('descontar_mensualidad.index');
-        
     }
 
     /**

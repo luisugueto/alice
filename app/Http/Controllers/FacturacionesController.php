@@ -15,6 +15,7 @@ use App\FacturasRubros;
 use App\Facturacion;
 use App\Cursos;
 use App\Periodos;
+use App\DescontarMensualidad;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Session;
@@ -23,7 +24,7 @@ use Excel;
 
 class FacturacionesController extends Controller
 {
-	
+
 		/**
 		 * Display a listing of the resource.
 		 *
@@ -46,7 +47,7 @@ class FacturacionesController extends Controller
 				$curso = Cursos::find($request->curso);
 
 				$estudiantes2 = Estudiante::where('apellido_paterno', 'like', $request->literal . '%')->get();
-				
+
 				if (Estudiante::where('apellido_paterno', 'like', $request->literal . '%')->exists()) {
 
 					foreach ($estudiantes2 as $estudiante) {
@@ -56,14 +57,14 @@ class FacturacionesController extends Controller
 							$facturaciones = $estudiante->facturaciones()->whereBetween('fecha', [$request->inic, $request->fin])->get();
 
 							if (count($facturaciones) > 0) {
-								
+
 								foreach ($facturaciones as $key => $facturas) {
 
 									if(count($facturas->facturacion_rubros) > 0) {
 
 										$facturacion = $facturas->facturacion_rubros;
 
-									} 
+									}
 								}
 
 							} else {
@@ -72,13 +73,13 @@ class FacturacionesController extends Controller
 
 								return redirect('facturaciones');
 							}
-						
+
 						} else {
 
 							Session::flash('message-error', 'DISCULPE NO SE ENCONTRARON RESULTADOS COINCIDENTES.');
 
 							return redirect('facturaciones');
-						} 
+						}
 
 
 					}
@@ -108,7 +109,7 @@ class FacturacionesController extends Controller
 					$estudiante = Estudiante::find($request->id_estudiante);
 
 					$facturaciones = $estudiante->facturaciones()->whereYear('fecha', '=', $periodo->nombre)->get();
-					
+
 					if(count($facturaciones) > 0) {
 
 						foreach($facturaciones as $facturas) {
@@ -117,13 +118,13 @@ class FacturacionesController extends Controller
 						}
 
 					} else {
-							
+
 						$facturacion = array();
 					}
 
 
 					return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes'));
-				} 
+				}
 
 
 			}
@@ -143,17 +144,17 @@ class FacturacionesController extends Controller
 			$estudiante = Estudiante::where([['nacionalidad_ced', $request->nacionalidad], ['cedula', $request->cedula]])->first();
 			if(!empty($estudiante))
 			{
-					
+
 				if($estudiante->cursos()->where('id_periodo', $periodo)->exists()){
 
 					$curso = $estudiante->cursos()->where('id_periodo', $periodo)->first();
-					
+
 					$cursos = Cursos::where('id', $curso->pivot->id_curso)->first();
 
 					$rubros = $cursos->rubros;
+					$descontarMensualidad = DescontarMensualidad::all()->last();
+					return view('facturaciones.create', compact('estudiante', 'rubros','descontarMensualidad'));
 
-					return view('facturaciones.create', compact('estudiante', 'rubros'));
-					
 
 				} else {
 
@@ -190,7 +191,7 @@ class FacturacionesController extends Controller
 						  ->join('facturacion', 'facturacion.id', '=', 'morosos.id_factura')
 						  ->get();
 			Excel::create("Listado Total de Morosos", function ($excel) use ($morosos) {
-               
+
                 $excel->setTitle("Listado Total de Morosos");
                 $excel->sheet("Pestaña 1", function ($sheet) use ($morosos) {
                     $sheet->loadView('facturaciones.excel.descargarMorosos')->with('morosos', $morosos);
@@ -212,7 +213,7 @@ class FacturacionesController extends Controller
 			{
 
 				$suma = 0;
-				
+
 				$string="0123456789";
                 $su=strlen($string)-1;
                 $numero= substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1).substr($string,rand(0,$su),1);
@@ -224,22 +225,25 @@ class FacturacionesController extends Controller
 				$factura->total_pago = 0;
 				$factura->save();
 
-				for ($i=0; $i < count($request->id_rubro); $i++) 
-				{ 
+				for ($i=0; $i < count($request->id_rubro); $i++)
+				{
 
 	                $rubros = Rubros::find($request->id_rubro[$i]);
-                    
-                    $suma += $rubros->monto;
+
+                  $suma += $rubros->monto;
 
                 	$rubros->facturacion_rubros()->saveMany([new FacturasRubros(['id_factura' => $factura->id], ['id_rubro' => $rubros->id[$i]])]);
-                     
+
                 }
-                
+
+								$descontarMensualidad = (isset($request->descontarMensualidad)) ? $request->descontarMensualidad : 0 ;
+								$suma = (isset($request->descontarMensualidad)) ? $suma-$request->descontarMensualidad : $suma ;
+
                 $factura = Facturacion::find($factura->id);
                 $factura->total_pago = $suma;
                 $factura->save();
 
-                Session::flash('message', 'FACTURACIÓN SE REALIZO EXITOSAMENTE AL ESTUDIANTE '.$estudiante->cedula.' '.$estudiante->nombres.'');  
+                Session::flash('message', 'FACTURACIÓN SE REALIZO EXITOSAMENTE AL ESTUDIANTE '.$estudiante->cedula.' '.$estudiante->nombres.'');
 
                 return redirect('facturaciones');
 
@@ -287,50 +291,50 @@ class FacturacionesController extends Controller
 		public function update(Request $request, $id)
 		{
 				$facturacion = FacturasRubros::find($id);
-	
+
 				$existe = $facturacion->realizados()->exists();
 
 				$forma_pago = Modalidad::find($request->id_modalidad);
-				
- 
+
+
 				if($request->nro_transferencia == "")
 				{
- 
+
 					$nro_transferencia="0";
-	
+
 				}else{
- 
+
 							$nro_transferencia = $request->nro_transferencia;
 				}
- 
+
 				if($request->nro_cheque=="")
-				{ 
+				{
 
 						$nro_cheque="0";
- 
+
 				}else{
-	
+
 						$nro_cheque = $request->nro_cheque;
 				}
- 
- 
+
+
 				if($existe)
 				{
 						$rubros_realizados = $facturacion->realizados->last();
-						
+
 						if($request->monto_pagar > $rubros_realizados->monto_adeudado)
 						{
 								Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
- 
+
 								return redirect()->back();
- 
+
 							}else{
- 
+
 									if($forma_pago->modalidad == 'Exacto')
 									{
- 
+
 											$monto_deuda = $rubros_realizados->monto_adeudado-$rubros_realizados->monto_adeudado;
-	
+
 											$rubros_realizado = new RubrosRealizados;
 											$rubros_realizado->id_factura_rubro = $id;
 											$rubros_realizado->monto_pagado = $rubros_realizados->monto_adeudado;
@@ -340,19 +344,19 @@ class FacturacionesController extends Controller
 											$rubros_realizado->no_transferencia = $nro_transferencia;
 											$rubros_realizado->no_cheque = $nro_cheque;
 											$rubros_realizado->save();
-	
+
 											for($i=0; $i < count($request->id_forma); $i++)
 											{
 													$rubros_realizado->formas()->attach($request->id_forma[$i]);
-											}   
-										
+											}
+
 											Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 									}else{
-	
+
 											$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
- 
+
 											$rubros_realizado = new RubrosRealizados;
-											$rubros_realizado->id_factura_rubro = $id; 
+											$rubros_realizado->id_factura_rubro = $id;
 											$rubros_realizado->monto_pagado = $request->monto_pagar;
 											$rubros_realizado->monto_adeudado = $monto_deuda;
 											$rubros_realizado->fecha = new \DateTime();
@@ -360,33 +364,33 @@ class FacturacionesController extends Controller
 											$rubros_realizado->no_transferencia = $nro_transferencia;
 											$rubros_realizado->no_cheque = $nro_cheque;
 											$rubros_realizado->save();
-	
+
 											for($i=0; $i < count($request->id_forma); $i++)
 											{
 													$rubros_realizado->formas()->attach($request->id_forma[$i]);
-											}   
+											}
 									}
 
 									Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
-									
+
 									return redirect('facturaciones');
 						}
-	
+
 					}else{
-	
+
 							if($request->monto_pagar > $facturacion->factura->total_pago)
 							{
 									Session::flash('message-error', 'EL MONTO A PAGAR NO PUEDE SER MAYOR QUE EL DE LA DEUDA');
-	
+
 									return redirect()->back();
-	
+
 							}else{
-									
+
 									if($forma_pago->modalidad == 'Exacto')
 									{
-											
+
 										$monto_deuda = $facturacion->factura->total_pago-$facturacion->factura->total_pago;
-	
+
 										$rubros_realizados = new RubrosRealizados;
 										$rubros_realizados->id_factura_rubro = $id;
 										$rubros_realizados->monto_pagado = $facturacion->factura->total_pago;
@@ -396,16 +400,16 @@ class FacturacionesController extends Controller
 										$rubros_realizados->no_transferencia = $nro_transferencia;
 										$rubros_realizados->no_cheque = $nro_cheque;
 										$rubros_realizados->save();
-	
+
 										 for($i=0; $i < count($request->id_forma); $i++)
 										 {
 													$rubros_realizados->formas()->attach($request->id_forma[$i]);
 										 }
- 
+
 									}else{
-	
+
 											$monto_deuda = $facturacion->factura->total_pago-$request->monto_pagar;
- 
+
 											$rubros_realizados = new RubrosRealizados;
 											$rubros_realizados->id_factura_rubro = $id;
 											$rubros_realizados->monto_pagado = $request->monto_pagar;
@@ -415,7 +419,7 @@ class FacturacionesController extends Controller
 											$rubros_realizados->no_transferencia = $nro_transferencia;
 											$rubros_realizados->no_cheque = $nro_cheque;
 											$rubros_realizados->save();
-	
+
 										for($i=0; $i < count($request->id_forma); $i++)
 										{
 													$rubros_realizados->formas()->attach($request->id_forma[$i]);
@@ -429,7 +433,7 @@ class FacturacionesController extends Controller
 				}
 
 				return redirect('facturaciones');
-		
+
 		}
 
 		/**
@@ -456,7 +460,7 @@ class FacturacionesController extends Controller
 		$estudiante = $facturacion->estudiante;
 		$rubros = $facturacion->facturacion_rubros;
 		$curso = $estudiante->cursos()->where('id_periodo', $periodo)->first();
-	
+
 
 		$dompdf = \PDF::loadView('pdf.facturacion.index', ['facturacion' => $facturacion, 'estudiante' => $estudiante, 'rubros' => $rubros, 'curso' => $curso])->setPaper('a4', 'landscape');
 
