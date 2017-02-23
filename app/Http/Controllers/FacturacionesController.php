@@ -152,8 +152,7 @@ class FacturacionesController extends Controller
 					$cursos = Cursos::where('id', $curso->pivot->id_curso)->first();
 
 					$rubros = $cursos->rubros;
-					$descontarMensualidad = DescontarMensualidad::all()->last();
-					return view('facturaciones.create', compact('estudiante', 'rubros','descontarMensualidad'));
+					return view('facturaciones.create', compact('estudiante', 'rubros'));
 
 
 				} else {
@@ -237,7 +236,7 @@ class FacturacionesController extends Controller
                 }
 
 								$descontarMensualidad = (isset($request->descontarMensualidad)) ? $request->descontarMensualidad : 0 ;
-								$suma = (isset($request->descontarMensualidad)) ? $suma-$request->descontarMensualidad : $suma ;
+								$suma = (isset($request->descontarMensualidad)) ? $suma : $suma ;
 
                 $factura = Facturacion::find($factura->id);
                 $factura->total_pago = $suma;
@@ -277,8 +276,9 @@ class FacturacionesController extends Controller
 				$facturacion = FacturasRubros::find($id);
 				$modalidad = Modalidad::lists('modalidad', 'id');
 				$formas_pago = FormasPago::get();
+				$descontarMensualidad = DescontarMensualidad::all()->last();
 
-				return view('facturaciones.edit', compact('facturacion', 'modalidad', 'formas_pago'));
+				return view('facturaciones.edit', compact('facturacion', 'modalidad', 'formas_pago', 'descontarMensualidad'));
 		}
 
 		/**
@@ -295,7 +295,6 @@ class FacturacionesController extends Controller
 				$existe = $facturacion->realizados()->exists();
 
 				$forma_pago = Modalidad::find($request->id_modalidad);
-
 
 				if($request->nro_transferencia == "")
 				{
@@ -317,10 +316,10 @@ class FacturacionesController extends Controller
 						$nro_cheque = $request->nro_cheque;
 				}
 
-
 				if($existe)
 				{
 						$rubros_realizados = $facturacion->realizados->last();
+
 
 						if($request->monto_pagar > $rubros_realizados->monto_adeudado)
 						{
@@ -353,7 +352,12 @@ class FacturacionesController extends Controller
 											Session::flash('message', 'SE HA REGISTRADO UN NUEVO PAGO EXITOSAMENTE');
 									}else{
 
-											$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
+											if(isset($request->descontarMensualidad)){
+												$monto_deuda = ($rubros_realizados->monto_adeudado-$request->descontarMensualidad)-$request->monto_pagar;
+											}
+											else{
+												$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
+											}
 
 											$rubros_realizado = new RubrosRealizados;
 											$rubros_realizado->id_factura_rubro = $id;
@@ -408,7 +412,12 @@ class FacturacionesController extends Controller
 
 									}else{
 
-											$monto_deuda = $facturacion->factura->total_pago-$request->monto_pagar;
+											if(isset($request->descontarMensualidad)){
+												$monto_deuda = ($rubros_realizados->monto_adeudado-$request->descontarMensualidad)-$request->monto_pagar;
+											}
+											else{
+												$monto_deuda = $rubros_realizados->monto_adeudado-$request->monto_pagar;
+											}
 
 											$rubros_realizados = new RubrosRealizados;
 											$rubros_realizados->id_factura_rubro = $id;
