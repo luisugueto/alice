@@ -65,7 +65,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('facturaciones/pdf/{nro_factura}', ['uses' => 'FacturacionesController@pdf', 'as' => 'facturaciones.pdf']);
     Route::get('horario/profesor', ['uses' => 'HorariosController@index2', 'as' => 'horario.profesor']);
+    Route::get('facturaciones/anuladas', ['uses' => 'FacturacionesController@anulaciones', 'as' => 'facturaciones.anuladas']);
 	/*Route::get('bloques/{bloque}/{aula}/', function ($bloque, $aula) {*/
+	
+	//-------- MOROSOS --------//
+	Route::get('facturaciones/vencidas', ['uses' => 'MorososController@vencidas', 'as' => 'facturaciones.vencidas']);
+	Route::get('facturaciones/por-vencer', ['uses' => 'MorososController@porvencer', 'as' => 'facturaciones.porvencer']);
+
 
 	//-------- REPRESENTANTES --------//
 	Route::get('representante/buscar', ['uses' => 'RepresentantesController@search', 'as' => 'representantes.cedula']);

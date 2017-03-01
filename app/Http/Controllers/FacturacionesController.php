@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\CedulaEstudianteRequest;
+
 use App\RubrosRealizados;
 use App\Estudiante;
 use App\Rubros;
@@ -16,8 +17,12 @@ use App\Facturacion;
 use App\Cursos;
 use App\Periodos;
 use App\DescontarMensualidad;
+use App\DescuentoFactura;
+use App\Anulacion;
+
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+
 use Session;
 use DB;
 use Excel;
@@ -37,6 +42,9 @@ class FacturacionesController extends Controller
 		$cursos = Cursos::lists('curso', 'id');
 		$periodos = Periodos::lists('nombre', 'id');
 		$estudiantes = Estudiante::all();
+		$facturacion = FacturasRubros::orderBy('created_at', 'DESC')->groupBy('id_factura')->get()->take(100);
+
+		$abcedario = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G', 'H' => 'H', 'I' => 'I', 'J' => 'J', 'K' => 'K', 'L' => 'L', 'LL' => 'LL', 'M' => 'M', 'N' => 'N', 'O' => 'O', 'P' => 'P', 'Q' => 'Q', 'R' => 'R', 'S' => 'S', 'T' => 'T', 'U' => 'U', 'V' => 'V', 'W' => 'W', 'X' => 'X', 'Y' => 'Y', 'Z' => 'Z'];
 
 		if(!empty($request->inic) AND !empty($request->fin))
 		{
@@ -86,7 +94,7 @@ class FacturacionesController extends Controller
 				}
 
 
-				return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes'));
+				return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes', 'abcedario'));
 
 
 			} else {
@@ -123,13 +131,13 @@ class FacturacionesController extends Controller
 					$facturacion = array();
 				}
 	
-				return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes'));
+				return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes', 'abcedario'));
 			}
 
 
 		}
 
-		return view('facturaciones.index', compact('cursos', 'periodos', 'estudiantes'));
+		return view('facturaciones.index', compact('facturacion', 'cursos', 'periodos', 'estudiantes', 'abcedario'));
 	}
 
 	/**
@@ -345,9 +353,8 @@ class FacturacionesController extends Controller
 
 				if($forma_pago->modalidad == 'Exacto')
 				{
-
 					$monto_deuda = $rubros_realizados->monto_adeudado-$rubros_realizados->monto_adeudado;
-
+					
 					$rubros_realizado = new RubrosRealizados;
 					$rubros_realizado->id_factura_rubro = $id;
 					$rubros_realizado->monto_pagado = $rubros_realizados->monto_adeudado;
@@ -357,6 +364,14 @@ class FacturacionesController extends Controller
 					$rubros_realizado->no_transferencia = $nro_transferencia;
 					$rubros_realizado->no_cheque = $nro_cheque;
 					$rubros_realizado->save();
+
+					if(isset($request->descontarMensualidad))
+					{
+						$descuento = new DescuentoFactura();
+						$descuento->id_factura = $rubros_realizados->id;
+						$descuento->descuento  = $request->descontarMensualidad;
+						$descuento->save();
+					}
 
 					for($i=0; $i < count($request->id_forma); $i++)
 					{
@@ -383,6 +398,14 @@ class FacturacionesController extends Controller
 					$rubros_realizado->no_transferencia = $nro_transferencia;
 					$rubros_realizado->no_cheque = $nro_cheque;
 					$rubros_realizado->save();
+
+					if(isset($request->descontarMensualidad))
+					{
+						$descuento = new DescuentoFactura();
+						$descuento->id_factura = $rubros_realizados->id;
+						$descuento->descuento  = $request->descontarMensualidad;
+						$descuento->save();
+					}
 
 					for($i=0; $i < count($request->id_forma); $i++)
 					{
@@ -419,21 +442,20 @@ class FacturacionesController extends Controller
 				$rubros_realizados->no_cheque = $nro_cheque;
 				$rubros_realizados->save();
 
+				if(isset($request->descontarMensualidad))
+				{
+					$descuento = new DescuentoFactura();
+					$descuento->id_factura = $rubros_realizados->id;
+					$descuento->descuento  = $request->descontarMensualidad;
+					$descuento->save();
+				}
+
 				for($i=0; $i < count($request->id_forma); $i++)
 				{
 					$rubros_realizados->formas()->attach($request->id_forma[$i]);
 				}
 
 			}else{
-
-				if(isset($request->descontarMensualidad))
-				{
-					$monto_deuda = ($facturacion->factura->total_pago-$request->descontarMensualidad)-$request->monto_pagar;
-
-				}else{
-
-					$monto_deuda = $facturacion->factura->total_pago-$request->monto_pagar;
-				}
 
 				if($request->monto_pagar > $facturacion->factura->total_pago)
 				{
@@ -442,6 +464,15 @@ class FacturacionesController extends Controller
 					return redirect()->back();
 
 				}else{
+
+					if(isset($request->descontarMensualidad))
+					{
+						$monto_deuda = ($facturacion->factura->total_pago-$request->descontarMensualidad)-$request->monto_pagar;
+					}else{
+
+						$monto_deuda = $facturacion->factura->total_pago-$request->monto_pagar;
+					}
+
 
 					$rubros_realizados = new RubrosRealizados;
 					$rubros_realizados->id_factura_rubro = $id;
@@ -452,6 +483,14 @@ class FacturacionesController extends Controller
 					$rubros_realizados->no_transferencia = $nro_transferencia;
 					$rubros_realizados->no_cheque = $nro_cheque;
 					$rubros_realizados->save();
+
+					if(isset($request->descontarMensualidad))
+					{
+						$descuento = new DescuentoFactura();
+						$descuento->id_factura = $rubros_realizados->id;
+						$descuento->descuento  = $request->descontarMensualidad;
+						$descuento->save();
+					}
 
 					for($i=0; $i < count($request->id_forma); $i++)
 					{
@@ -477,9 +516,17 @@ class FacturacionesController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 
-	public function destroy($id)
+	public function destroy(Request $request)
 	{
-		//
+		$anulacion = new Anulacion();
+		$anulacion->descripcion = $request->descripcion;
+
+		$factura = Facturacion::find($request->id);
+		$factura->anulacion()->save($anulacion);
+
+		Session::flash('message', 'SE HA ANULADO LA FACTURA CORRECTAMENTE.');
+
+		return redirect()->back();
 	}
 
 	public function search()
@@ -501,4 +548,12 @@ class FacturacionesController extends Controller
 
         return $dompdf->stream();
 	}
+
+	public function anulaciones()
+	{
+		$facturaciones = Anulacion::get()->take(100);
+		
+		return view('facturaciones.anuladas.index', compact('facturaciones'));
+	}
+
 }

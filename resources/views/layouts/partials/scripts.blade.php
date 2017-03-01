@@ -34,7 +34,11 @@
     });
 </script>
 
-
+<script>
+    $(function() {
+        $(".chzn-select").chosen();
+    });
+</script>
 
 <script>
     $(function () {

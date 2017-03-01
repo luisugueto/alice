@@ -15,11 +15,6 @@ class RubrosRealizados extends Model
     	return $this->belongsTo('App\Estudiante', 'id_estudiante');
     }
 
-   /* public function facturacion()
-    {
-    	return $this->belongsTo('App\Facturacion', 'id_factura');
-    }*/
-
     public function modalidad()
     {
     	return $this->belongsTo('App\Modalidad', 'id_modalidad');
@@ -33,5 +28,10 @@ class RubrosRealizados extends Model
     public function rubros_factura()
     {
         return $this->belongsTo('App\FacturasRubros', 'id_factura_rubro', 'id');
+    }
+
+    public function descuento()
+    {
+        return $this->hasOne('App\DescuentoFactura', 'id_factura', 'id');
     }
 }

@@ -13,9 +13,7 @@ class Descuentos extends Model
      */
     
     protected $table = 'descuentos';
-    protected $fillable = [
-        'descuento'
-    ];
+    protected $fillable = ['descuento'];
 
     /**
      * The attributes that should be hidden for arrays.

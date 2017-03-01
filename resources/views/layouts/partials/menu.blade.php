@@ -35,6 +35,7 @@ use App\Http\helpers;
                     <li><a href="{{ url('facturaciones') }}">Listado Total</a></li>
                     <li class="divider"></li>
                     <li><a href="#">Listado del Mes Actual</a></li>
+                    <li></li>
                     <li class="divider"></li>
                     <li><a href="{{ url('morosos') }}">Morosos</a></li>
                 </ul>
