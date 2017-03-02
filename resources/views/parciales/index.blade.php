@@ -22,6 +22,7 @@
                                 <th>Nombre(s)</th>
                                 <th>Curso</th>
                                 <th>Sección</th>
+
                                 @if($tipo!="DOCENTE ROTATIVO")
                                     <th>Pendiente porCargar:</th>
                                     <th>Opciones</th>
@@ -42,7 +43,7 @@
                                             <td> {{ $estudiante->nombres }}</td>
                                             <td> {{ $estudiante->curso }} </td>
                                             <td> {{ $estudiante->literal }} </td>
-
+                                            
                                             @if($tipo!="DOCENTE ROTATIVO")
                                                 <td>{{ buscar($estudiante->id_estudiante)  }}</td>
                                                 <td>

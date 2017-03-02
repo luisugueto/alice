@@ -19,7 +19,8 @@
                                 <th>Asignatura</th>
                                 <th>Curso</th>
                                 <th>Sección</th>
-                                <th>Opciones</th>
+                                <th>Cargar Completa</th>
+                                <th>Cargar p/categoría</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,15 +33,21 @@
                                     @if(Auth::user()->roles_id == 5 && buscar_asignatura_asignada($asig->id_asignatura)>0)
                                         @if($i==1)
                                             <td><a href="{{ route('parciales.parcial_admin',[$id_estudiante,$asig->id_asignatura]) }}" class="btn btn-primary"><i class="icon-refresh icon-white"></i></a></td>
+                                            <td></td>
                                         @else
                                             <td><a href="{{ route('parciales.estudiantes2',[$asig->id_seccion]) }}" class="btn"><i class="icon-eye-open"></i></a> </td>
+                                            <td></td>
                                         @endif
                                     @else
                                         @if(Auth::user()->roles_id == 3)
                                             <td style="text-align: center; width: 100px;">
                                                 <a href="{{ route('parciales.estudiantes',$asig->id_seccion) }}" class="btn"><i class="icon-arrow-up"></i></a>
                                             </td>
+                                            <td style="text-align: center; width: 100px; ">
+                                                <a href="{{ route('parciales.estudiantes_asignaturas',[$asig->id_seccion,$asig->id_asignatura])}}" class="btn btn-success"><i class="icon-arrow-up"></i></a>
+                                            </td>
                                         @else
+                                            <td></td>
                                             <td></td>
                                         @endif
 

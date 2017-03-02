@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('parciales/parcial_admin2/{id_estudiante}/{id_docente}',['uses' => 'ParcialesController@parcial_admin2', 'as' => 'parciales.parcial_admin2']);
     Route::get('parciales/estudiantes2/{id_seccion}/{id_docente}',['uses' => 'ParcialesController@estudiantes2', 'as' => 'parciales.estudiantes2']);
     Route::get('parciales/quimestre_admin/{id_seccion}/{id_docente}',['uses' => 'ParcialesController@quimestre_admin', 'as' => 'parciales.quimestre_admin']);
+    Route::get('parciales/estudiantes_asignaturas/{id_seccion}/{id_asignatura}',['uses' => 'ParcialesController@estudiantes_asignaturas', 'as' => 'parciales.estudiantes_asignaturas']);
     //-------- ADMIN DACE --------//
     Route::get('parciales/secciones',['uses' => 'ParcialesController@buscarseccion', 'as' => 'parciales.secciones']);
     Route::post('parciales/mostrarcalificaciones_admin',['uses' => 'ParcialesController@mostrarcalificaciones_admin', 'as' => 'parciales.mostrarcalificaciones_admin']);

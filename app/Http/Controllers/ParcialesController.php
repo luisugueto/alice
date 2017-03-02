@@ -57,6 +57,7 @@ class ParcialesController extends Controller
             $id_periodo=Session::get('periodo');
             $periodo=Periodos::find($id_periodo);
             $contador=0;
+            $categorias=Categorias_parcial::all();
             foreach ($personal as $personal) {
 
                 
@@ -72,8 +73,8 @@ class ParcialesController extends Controller
 
 
                     $contador++;
-                        //dd($docente->asignaturas);
-                    return View('parciales.index',compact('docente','docentes','periodo','estudiantes'));
+                        //dd($categorias);
+                    return View('parciales.index',compact('docente','docentes','periodo','estudiantes','categorias'));
                 
                 }
                 
@@ -1647,5 +1648,28 @@ class ParcialesController extends Controller
         }
        
 
+    }
+
+    public function estudiantes_asignaturas($id_seccion,$id_asignatura)
+    {
+
+        $seccion=Seccion::find($id_seccion);
+        $id_periodo=Session::get('periodo');
+        $periodo=Periodos::find($id_periodo);
+        $categorias=Categorias_parcial::all();
+        $asignatura=Asignaturas::find($id_asignatura);
+
+
+        $estudiantes=DB::select("SELECT datos_generales_estudiante.* FROM 
+            datos_generales_estudiante,secciones,cursos,inscripciones WHERE 
+            inscripciones.id_estudiante = datos_generales_estudiante.id AND
+            inscripciones.id_seccion = secciones.id AND 
+            secciones.id_curso= cursos.id AND 
+            inscripciones.id_seccion= ".$id_seccion);
+
+        //dd($estudiantes);
+        return View('parciales.estudiantes_asignaturas',compact('seccion','estudiantes','periodo','asignatura','categorias'));
+
+    
     }
 }

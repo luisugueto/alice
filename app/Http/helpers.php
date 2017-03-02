@@ -2000,3 +2000,13 @@ function buscar_id_quimestre($i,$id_estudiante){
     	
 
     }
+
+    function buscar_categoria_cargar($id_estudiante,$id_asignatura,$id_categoria)
+    {
+    		if (condition) {
+    			# code...
+    		} else {
+    			# code...
+    		}
+    		
+    }
