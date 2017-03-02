@@ -6,6 +6,7 @@
 
 	<table class="table table-bordered">
         <thead>
+
             <tr>
             	<th></th>
                 <th>NOMBRE</th>
@@ -25,8 +26,8 @@
                         <td>{{ $rubro->fecha }}</td>
                     </tr>
 
-                    <?php $i++ ?> 
-                    
+                    <?php $i++ ?>
+
                 @endif
 
             @endforeach

@@ -28,7 +28,6 @@ class RubrosRequest extends Request
             'nombre'   => 'required|regex:/^([a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
             'monto'    => 'required|numeric',
             'fecha'    => 'required',
-            'id_curso' => 'required'
         ];
     }
 }

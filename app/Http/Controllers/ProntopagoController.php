@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\DescontarMensualidad;
-use DB;
-use Redirect;
-use Session;
 
-class DescontarMensualidadController extends Controller
+class ProntopagoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +15,7 @@ class DescontarMensualidadController extends Controller
      */
     public function index()
     {
-        $descuentos=DescontarMensualidad::all();
-
-        return View('descontar_mensualidad.index',compact('descuentos'));
+        //
     }
 
     /**
@@ -31,7 +25,7 @@ class DescontarMensualidadController extends Controller
      */
     public function create()
     {
-        return View('descontar_mensualidad.create');
+        //
     }
 
     /**
@@ -42,7 +36,7 @@ class DescontarMensualidadController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect('descontar_mensualidad.index');
+        //
     }
 
     /**
@@ -53,7 +47,7 @@ class DescontarMensualidadController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -64,10 +58,7 @@ class DescontarMensualidadController extends Controller
      */
     public function edit($id)
     {
-        $descuentos=DescontarMensualidad::find($id);
-
-
-        return View('descontar_mensualidad.edit',compact('descuentos'));
+        //
     }
 
     /**
@@ -79,12 +70,7 @@ class DescontarMensualidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $descuentos=DescontarMensualidad::find($id);
-
-        $descuentos->cantidad=$request->cantidad;
-        $descuentos->save();
-        Session::flash('message', 'DESCUENTO DE MENSUALIDAD MODIFICADO CORRECTAMENTE');
-        return redirect()->route('descontar_mensualidad.index');
+        //
     }
 
     /**

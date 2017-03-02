@@ -5,9 +5,6 @@
 
 
 @section('main-content')
-    <?php 
-        $abcedario = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G', 'H' => 'H', 'I' => 'I', 'J' => 'J', 'K' => 'K', 'L' => 'L', 'LL' => 'LL', 'M' => 'M', 'N' => 'N', 'O' => 'O', 'P' => 'P', 'Q' => 'Q', 'R' => 'R', 'S' => 'S', 'T' => 'T', 'U' => 'U', 'V' => 'V', 'W' => 'W', 'X' => 'X', 'Y' => 'Y', 'Z' => 'Z'];
-    ?>
 
     <div class="col-xs-12">
         <button class="btn btn-primary" title="Registrar facturación" onclick="window.location.href = '{{ URL::to('facturaciones/buscar/estudiante') }}'";>
@@ -86,7 +83,7 @@
     <div class="block">
         <div class="box">
             <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">Facturaciones</div>
+                <div class="muted pull-left">FACTURACIONES</div>
             </div>
             <div class="block-content collapse in">
                 <div class="table-responsive">
@@ -105,6 +102,7 @@
                             <tbody>
                                 @if(!empty($facturacion))
                                     @foreach($facturacion as $key => $facturaciones)
+                                    @if(!$facturacion->first()->factura->anulacion()->exists())
                                     <tr>
                                         @if(count($facturaciones->realizados) > 0)
                                             <?php $i = 0; $monto = 0; ?>
@@ -132,8 +130,10 @@
                                             @if(count($facturaciones->realizados) > 0)
                                                 <a href="{{ route('facturaciones.pdf', $facturaciones->id_factura) }}" class="btn btn-inverse"><i class="icon-print icon-white"></i></a>
                                             @endif
+                                            <a href="#" class="btn btn-danger" onclick="anulacion({{ $facturaciones->id_factura }})" data-toggle="modal" data-target="#myModal"><i class="icon-ban-circle icon-white"></i></a>
                                         </td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 @endif
                             </tbody>
@@ -143,10 +143,51 @@
             </div>
         </div>
     </div>
+
+    <div id="myModal" class="modal fade" role="dialog" style="display: none;">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Anular Factura</h4>
+                </div>
+                    {!! Form::open(['route' => ['facturaciones.destroy', 0133], 'method' => 'DELETE']) !!}
+                <div class="modal-body">
+                    ¿Esta seguro que desea anular esta factura en especifico?...
+                </div>
+                <div class="modal-body">
+                    {!! Form::label('descripcion', 'MOTIVO') !!}
+                    {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'required' => 'required', 'rows' => '3', 'onkeyup' => 'javascript:this.value=this.value.toUpperCase()']) !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+
+                        <input type="hidden" id="factura" name="id">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
     
+
+
 @endsection
+
 @section('scripts')
-<script type="text/javascript">
+
+    <script type="text/javascript">
+
+        function anulacion(factura)
+        {   
+            $('#factura').val(factura);
+        }
+    </script>
+    <script type="text/javascript">
+
         $(document).ready(function(){
 
             $('#periodo').on('change', function() {

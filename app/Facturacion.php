@@ -20,4 +20,8 @@ class Facturacion extends Model
     	return $this->hasMany('App\FacturasRubros', 'id_factura', 'id');
     }
 
+    public function anulacion()
+    {
+        return $this->hasOne('App\Anulacion', 'id_factura', 'id');
+    }
 }

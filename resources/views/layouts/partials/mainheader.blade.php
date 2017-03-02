@@ -104,9 +104,18 @@
                             <li>
                                 <a tabindex="-1" href="{{ url('facturaciones') }}">Facturaciones</a>
                             </li>
+                            <li>
+                                <a tabindex="-1" href="{{ url('facturaciones/anuladas') }}">Anuladas</a>
+                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a tabindex="-1" href="{{ url('morosos') }}">Morosos</a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="{{ url('facturaciones/vencidas') }}">Vencidas</a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="{{ url('facturaciones/por-vencer') }}">Por vencer</a>
                             </li>
                         </ul>
                     </li>

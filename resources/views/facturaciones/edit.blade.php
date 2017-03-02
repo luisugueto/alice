@@ -7,13 +7,13 @@
 
     <div class="block">
         <div class="navbar navbar-inner block-header">
-            <div class="muted pull-left">Facturación</div>
+            <div class="muted pull-left">FACTURACIÓN</div>
         </div>
         <div class="block-content collapse in">
             <div class="span12">
                 {!! Form::open(['route' => ['facturaciones.update', $facturacion->id], 'method' => 'PUT', 'name' => 'form', 'class' => 'form-horizontal']) !!}
                     <fieldset>
-                        <legend>{{ $facturacion->factura->estudiante->nombres }}</legend>
+                        <legend>{{ $facturacion->factura->estudiante->nombres }} </legend>
 
                         @include('facturaciones.forms.fields-edit')
 

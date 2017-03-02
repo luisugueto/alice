@@ -34,37 +34,37 @@ class AsistenciasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     private function horaMinutos($hora){
         list($horas, $minutos) = explode(':', $hora);
         $hora_en_minutos = ($horas*60)+$minutos;
-        return $hora_en_minutos;  
+        return $hora_en_minutos;
     }
-    
-    private function diferencia_Horas($hora1,$hora2){ 
-        $separar[1]=explode(':',$hora1); 
-        $separar[2]=explode(':',$hora2); 
-        $total_minutos_trasncurridos[1] = ($separar[1][0]*60)+$separar[1][1]; 
-        $total_minutos_trasncurridos[2] = ($separar[2][0]*60)+$separar[2][1]; 
-        $total_minutos_trasncurridos = $total_minutos_trasncurridos[1]-$total_minutos_trasncurridos[2]; 
+
+    private function diferencia_Horas($hora1,$hora2){
+        $separar[1]=explode(':',$hora1);
+        $separar[2]=explode(':',$hora2);
+        $total_minutos_trasncurridos[1] = ($separar[1][0]*60)+$separar[1][1];
+        $total_minutos_trasncurridos[2] = ($separar[2][0]*60)+$separar[2][1];
+        $total_minutos_trasncurridos = $total_minutos_trasncurridos[1]-$total_minutos_trasncurridos[2];
         return $total_minutos_trasncurridos;
     }
-    
+
     public function index()
     {
         $asistencia = Asistencia::all();
         $i = 0;
         if(count($asistencia)>0){
-            foreach ($asistencia as $key => $asistencia) 
+            foreach ($asistencia as $key => $asistencia)
             {
                $asistencias[$i] = $asistencia->personal;
-               $fecha[$i] = $asistencia; 
+               $fecha[$i] = $asistencia;
                $i++;
             }
         }
-    
+
         $asistencias = (isset($asistencias)) ? $asistencias : [];
-        
+
         return view('asistencias.index', compact('asistencias', 'fecha'));
     }
     /**
@@ -72,19 +72,19 @@ class AsistenciasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function create()
     {
         $personal = Personal::all();
         return view('asistencias.create', compact('personal'));
     }
-    
+
     public function salida()
     {
         $personal = Personal::all();
         return view('asistencias.salida', compact('personal'));
     }
-    
+
     public function salidas(Request $request)
     {
         $asistencia = DB::select('SELECT *, a.id as id_asistencia FROM asistencia_personal as a INNER JOIN fechas_asistencias as f ON a.id_fecha = f.id WHERE a.id_personal = '.$request->id_personal.' AND f.fecha = "'.date('Y-m-d').'"');
@@ -111,7 +111,7 @@ class AsistenciasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function store(Request $request)
     {
         $fecha = FechasAsistencias::where('fecha', date('Y-m-d'))->count();
@@ -121,9 +121,9 @@ class AsistenciasController extends Controller
             $fechaa->fecha = date('Y-m-d');
             $fechaa->save();
             $FechasAsistencias = FechasAsistencias::all()->last();
-            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();            
+            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();
             if($verificarEntrada>0)
-            {                
+            {
                 Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
                 return redirect()->action('AsistenciasController@index');
             }
@@ -134,7 +134,7 @@ class AsistenciasController extends Controller
                     //  DOMINGO = 0; SABADO = 6;
                     $dias = array("0","1","2","3","4","5","6");
                     $bloque=DB::select('SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = '.$request->id_personal.' AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
-                    
+
                     $contadorBloque = count($bloque);
                     foreach ($bloque as $key) {
                         $bloqueInicial = $key->bloque;
@@ -143,9 +143,9 @@ class AsistenciasController extends Controller
                         Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE HORARIO');
                         return redirect()->action('AsistenciasController@index');
                     }
-                        
+
                     $explode = explode(" - ", $bloqueInicial);
-                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]); 
+                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]);
                     if($diferencia > 0){
                         // DB::insert('INSERT INTO retardo_asistencia(id_personal,fecha,retardo) VALUES('.$request->id_personal.','.date('Y-m-d').','.$diferencia.')');
                     }
@@ -166,7 +166,7 @@ class AsistenciasController extends Controller
                     //  DOMINGO = 0; SABADO = 6;
                     $dias = array("0","1","2","3","4","5","6");
                     $bloque=DB::select('SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = '.$request->id_personal.' AND bl.id_dia = '.$dias[date("w")].' ORDER BY b.id ASC LIMIT 1');
-                    
+
                     $contadorBloque = count($bloque);
                     foreach ($bloque as $key) {
                         $bloqueInicial = $key->bloque;
@@ -175,16 +175,16 @@ class AsistenciasController extends Controller
                         Session::flash('message-error', 'DISCULPE: ESTE PERSONAL NO POSEE CARGA ACADÉMICA');
                         return redirect()->action('AsistenciasController@index');
                     }
-                        
+
                     $explode = explode(" - ", $bloqueInicial);
-                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]); 
+                    $diferencia = $this->diferencia_Horas(date('H:i:s'), $explode[0]);
                     if($diferencia > 0){
                         // DB::insert('INSERT INTO retardo_asistencia(id_personal,fecha,retardo) VALUES('.$request->id_personal.',now(),'.$diferencia.')');
                     }
                 }
-            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();            
+            $verificarEntrada = Asistencia::where('id_personal', $request->id_personal)->where('id_fecha', $FechasAsistencias->id)->count();
             if($verificarEntrada>0)
-            {                
+            {
                 Session::flash('message-error', 'DISCULPE: PERSONAL YA REGISTRADO EN LA ASISTENCIA');
                 return redirect()->action('AsistenciasController@index');
             }
@@ -197,7 +197,7 @@ class AsistenciasController extends Controller
                 Session::flash('message', 'ASISTENCIA REGISTRADA CORRECTAMENTE');
             }
         }
-        return redirect()->action('AsistenciasController@index');   
+        return redirect()->action('AsistenciasController@index');
     }
     /**
      * Display the specified resource.
@@ -205,7 +205,7 @@ class AsistenciasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function show($id)
     {
         //
@@ -216,7 +216,7 @@ class AsistenciasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function edit($id)
     {
         //
@@ -228,7 +228,7 @@ class AsistenciasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, $id)
     {
         //
@@ -239,12 +239,12 @@ class AsistenciasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function destroy($id)
     {
         //
     }
-    
+
     public function archivo()
     {
         return view('asistencias.forms.fields-upload');
@@ -270,7 +270,7 @@ class AsistenciasController extends Controller
                 foreach($archivoGuardado as $item){
                     list($fecha, $personal) = explode("\t", $item);
                     $fecha = explode(" ", $fecha);
-                    
+
                     $fechas[] = $fecha[0];
                     $horas[] = $fecha[1];
                     $nro_personal[] = $personal;
@@ -292,7 +292,7 @@ class AsistenciasController extends Controller
                         $personalExiste = Personal::where('cedula', trim($personal))->first();
                         $fechaAsistencia = FechasAsistencias::where('fecha', $fechas[$key])->first();
 
-                        
+
                         if (!$fechaExiste) {
 
                             $newFecha = new FechasAsistencias;
@@ -304,21 +304,21 @@ class AsistenciasController extends Controller
                                 foreach ($horas as $keyUp => $hora) {
 
                                     if (!$personalExiste->asistencias()->where('id_fecha', $newFecha->id)->exists()) {
- 
+
 
                                         $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
-                                    
+
                                         // 1-Administrativo 6:10 - 13
                                         // 2-Docente 6:30 - 13
                                         // 3-Obrero 6:20 - 14
-                                        
+
                                         //RETARDO DE PERSONAL ADMINISTRATIVO
                                         if($personalExiste->tipo_registro == 1){
                                             $diferencia = $this->diferencia_Horas($horas[$key], date('06:10'));
 
                                             if($diferencia > 0){
                                                 DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
-                                            }                                
+                                            }
                                         }
 
                                         //RETARDO DOCENTE PLANTA
@@ -340,15 +340,15 @@ class AsistenciasController extends Controller
                                             $sql = "SELECT * FROM asignacion as a INNER JOIN datos_generales_personal as p ON p.id = a.id_prof INNER JOIN asignacion_bloques as b ON b.id_asig = a.id_asignatura INNER JOIN bloques as bl ON bl.id=b.id_bloque WHERE p.id = ".$personalExiste->id." AND bl.id_dia = ".$dias[date('w')]." ORDER BY b.id ASC LIMIT 1";
 
                                             $bloque=DB::select($sql);
-                                               
+
                                             foreach ($bloque as $key) {
                                                 $bloqueInicial = $key->bloque;
                                             }
-                                            
+
                                             $bloquee = explode(" - ", $bloqueInicial);
-                                                                           
+
                                             $diferencia = $this->diferencia_Horas($horaAc, $bloquee[0]);
-                                            if($diferencia > 0)  DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');                                          
+                                            if($diferencia > 0)  DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
                                         }
                                         //RETARDO DE PERSONAL ADMINISTRATIVO
                                         elseif($personalExiste->tipo_registro == 3){
@@ -377,14 +377,14 @@ class AsistenciasController extends Controller
                                         $asistencia->save();
 
                                     } else {
-                                        
+
                                         //RETARDO DE PERSONAL ADMINISTRATIVO
                                         if($personalExiste->tipo_registro == 1){
                                             $diferencia = $this->diferencia_Horas($horas[$key], date('06:10'));
 
                                             if($diferencia > 0){
                                                 DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
-                                            }                                
+                                            }
                                         }
                                         //RETARDO DOCENTE PLANTA
                                         elseif($personalExiste->tipo_registro == 2 && $personalExiste->cargo->nombre == 'DOCENTE DE PLANTA'){
@@ -403,7 +403,7 @@ class AsistenciasController extends Controller
                                                 DB::insert('INSERT INTO retardo_asistencia(id_personal,id_fecha_asistencia,retardo) VALUES('.$personalExiste->id.','.$newFecha->id.','.$diferencia.')');
                                             }
                                         }
- 
+
                                         $personalExiste->asistencias()->saveMany([new Asistencia(['id_fecha' => $newFecha->id, 'entrada' => $horas[$key]])]);
                                     }
                                 }
@@ -432,6 +432,6 @@ class AsistenciasController extends Controller
             Session::flash('message-error', 'EL ARCHIVO QUE ESTA INTENTANDO CARGAR ESTA VACÍO VUELVA A INTENTARLO.');
 
             return redirect()->back();
-         } 
+         }
     }
 }

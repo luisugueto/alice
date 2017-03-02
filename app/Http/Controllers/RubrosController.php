@@ -55,22 +55,32 @@ class RubrosController extends Controller
      */
     public function store(RubrosRequest $request)
     {
-        $existe = Rubros::where([['nombre', $request->nombre], ['id_periodo', $request->id_periodo]])->exists();
+        foreach ($request->id_curso as $key => $curso) 
+        {
+            $existe = Rubros::where([['nombre', $request->nombre], ['id_periodo', $request->id_periodo], ['id_curso', $curso]])->exists();
+       
 
-        if($existe){
+            if($existe){
 
-            Session::flash('message-error', 'RUBRO "'.$request->nombre.'" YA EXISTE EN LA BASE DE DATOS');
+                Session::flash('message-error', 'RUBRO "'.$request->nombre.'" YA EXISTE EN LA BASE DE DATOS');
 
-            return redirect()->back();
+                return redirect()->back();
 
-        }else{
+            }else{
 
-            $rubros = Rubros::create($request->all())->save();
-
-            Session::flash('message', 'RUBRO REGISTRADO CORRECTAMENTE');
-            
-            return redirect('rubros');    
+                $rubros = new Rubros();
+                $rubros->nombre     = $request->nombre;
+                $rubros->monto      = $request->monto;
+                $rubros->fecha      = $request->fecha;
+                $rubros->id_curso   = $curso;
+                $rubros->id_periodo = $request->id_periodo;
+                $rubros->save();
+            }
         }
+
+        Session::flash('message', 'RUBRO '.$request->nombre.' REGISTRADO CORRECTAMENTE');
+        
+        return redirect('rubros');
     }
 
     /**
